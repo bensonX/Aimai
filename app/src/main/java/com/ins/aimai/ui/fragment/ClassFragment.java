@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.ins.aimai.R;
 import com.ins.aimai.ui.base.BaseFragment;
@@ -14,15 +13,13 @@ import com.ins.aimai.ui.base.BaseFragment;
 /**
  * Created by liaoinstan
  */
-public class BuildingFragment extends BaseFragment {
+public class ClassFragment extends BaseFragment {
 
     private int position;
     private View rootView;
 
-    private TextView text_building;
-
     public static Fragment newInstance(int position) {
-        BuildingFragment fragment = new BuildingFragment();
+        ClassFragment fragment = new ClassFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("position", position);
         fragment.setArguments(bundle);
@@ -38,7 +35,7 @@ public class BuildingFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_building, container, false);
+        rootView = inflater.inflate(R.layout.fragment_class, container, false);
         return rootView;
     }
 
@@ -55,13 +52,11 @@ public class BuildingFragment extends BaseFragment {
     }
 
     private void initView() {
-        text_building = (TextView) rootView.findViewById(R.id.text_building);
     }
 
     private void initData() {
     }
 
     private void initCtrl() {
-        text_building.setText("building " + position);
     }
 }

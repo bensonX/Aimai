@@ -1,21 +1,30 @@
 package com.ins.aimai.ui.activity;
 
+import android.app.Activity;
+import android.content.res.TypedArray;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.ins.aimai.R;
 import com.ins.aimai.ui.adapter.PagerAdapterHome;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
+import com.ins.common.utils.DensityUtil;
+import com.ins.common.utils.StatusBarTextUtil;
 
 public class HomeActivity extends BaseAppCompatActivity {
 
     private RadioGroup group_tab;
     private ViewPager pager;
     private PagerAdapterHome pagerAdapter;
-    private int[] tabsId = new int[]{R.id.tab_1, R.id.tab_2, R.id.tab_3, R.id.tab_4, R.id.tab_5};
+    private int[] tabsId = new int[]{R.id.tab_1, R.id.tab_2, R.id.tab_3, R.id.tab_4};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,18 +33,26 @@ public class HomeActivity extends BaseAppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        StatusBarTextUtil.transparencyBar(HomeActivity.this);
+        StatusBarTextUtil.StatusBarLightMode(HomeActivity.this);
+
         initBase();
         initView();
         initCtrl();
         initData();
+
     }
 
     private void initBase() {
+//        TypedArray actionbarSizeTypedArray = this.obtainStyledAttributes(new int[] { android.R.attr.actionBarSize });
+//        float result = actionbarSizeTypedArray.getDimension(0, 0);
+//        Toast.makeText(HomeActivity.this,result+":"+ DensityUtil.px2dp(this,result),Toast.LENGTH_SHORT).show();
     }
 
     private void initView() {
         pager = (ViewPager) findViewById(R.id.pager_home);
         group_tab = (RadioGroup) findViewById(R.id.group_tab);
+//        pager.setOffscreenPageLimit(4);
     }
 
     private void initCtrl() {
@@ -50,6 +67,22 @@ public class HomeActivity extends BaseAppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 group_tab.check(tabsId[position]);
+                switch (position){
+                    case 0:
+                        StatusBarTextUtil.transparencyBar(HomeActivity.this);
+                        StatusBarTextUtil.StatusBarLightMode(HomeActivity.this);
+                        break;
+                    case 1:
+                        StatusBarTextUtil.StatusBarLightMode(HomeActivity.this);
+                        break;
+                    case 2:
+                        StatusBarTextUtil.StatusBarLightMode(HomeActivity.this);
+                        break;
+                    case 3:
+                        StatusBarTextUtil.transparencyBar(HomeActivity.this);
+                        StatusBarTextUtil.StatusBarDarkMode(HomeActivity.this);
+                        break;
+                }
             }
 
             @Override
