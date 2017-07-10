@@ -57,4 +57,9 @@ dependencies {
     })
     testCompile 'junit:junit:4.12'
     compile project(':common')
+
+    //阿里巴巴vlayout
+    compile ('com.alibaba.android:vlayout:1.0.9@aar') {
+        transitive = true
+    }
 }

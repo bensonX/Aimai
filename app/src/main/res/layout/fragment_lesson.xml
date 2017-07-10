@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="AIMAI"
+            android:text="LESSON"
             android:textColor="@color/com_text_blank"
             android:textSize="@dimen/text_big" />
 

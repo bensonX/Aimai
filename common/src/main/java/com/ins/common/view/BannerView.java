@@ -8,6 +8,7 @@ import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 
 import com.ins.common.R;
 import com.ins.common.entity.Image;
+import com.ins.common.utils.L;
 
 import java.util.List;
 
@@ -135,16 +137,17 @@ public class BannerView extends FrameLayout implements Runnable {
 
         dotView.setViewPager(mViewPager, DEFAULT_BANNER_SIZE);
 
-//        if (images.size()>=1) {
-//            mViewPager.setCurrentItem(1);
-//        }
+        //TODO:在recyclerView中使用的时候第一次加载第一张图无法显示的情况，目前暂时将其设置在其他位置来规避，有待后期优化排查
+        if (images.size()>=1) {
+            mViewPager.setCurrentItem(1,false);
+        }
     }
 
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == AUTO_SCROLL_WHAT) {
-                if (images.size()>=2) {
+                if (images.size() >= 2) {
                     //至少2张图才滚蛋
                     int size = mViewPager.getAdapter().getCount();
                     int position = (mViewPager.getCurrentItem() + 1) % size;
@@ -193,14 +196,16 @@ public class BannerView extends FrameLayout implements Runnable {
             imageView.setLayoutParams(layoutParams);
 
 
-            if ("default".equals(images.get(position).getImg())){
-                imageView.setScaleType(ImageView.ScaleType.CENTER);
-                imageView.setImageResource(R.drawable.default_pic);
-            }else {
+            if ("default".equals(images.get(position).getImg())) {
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageView.setImageResource(R.drawable.default_bk_img);
+                L.e("load:" + "default");
+            } else {
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 //绑定网络图片
-                if (onLoadImgListener!=null){
-                    onLoadImgListener.onloadImg(imageView,images.get(position).getImg(),R.drawable.default_bk);
+                if (onLoadImgListener != null) {
+                    L.e("load:" + images.get(position).getImg());
+                    onLoadImgListener.onloadImg(imageView, images.get(position).getImg(), R.drawable.default_bk_img);
                 }
             }
 
@@ -276,8 +281,9 @@ public class BannerView extends FrameLayout implements Runnable {
     }
 
     public interface OnLoadImgListener {
-        void onloadImg(ImageView imageView,String imgurl,int defaultSrc);
+        void onloadImg(ImageView imageView, String imgurl, int defaultSrc);
     }
+
     //#######################对外方法
     public void setDatas(List<Image> images) {
         this.images = images;

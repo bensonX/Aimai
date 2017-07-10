@@ -13,13 +13,13 @@ import com.ins.aimai.ui.base.BaseFragment;
 /**
  * Created by liaoinstan
  */
-public class ClassFragment extends BaseFragment {
+public class StudyFragment extends BaseFragment {
 
     private int position;
     private View rootView;
 
     public static Fragment newInstance(int position) {
-        ClassFragment fragment = new ClassFragment();
+        StudyFragment fragment = new StudyFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("position", position);
         fragment.setArguments(bundle);
@@ -35,7 +35,7 @@ public class ClassFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_class, container, false);
+        rootView = inflater.inflate(R.layout.fragment_lesson, container, false);
         return rootView;
     }
 

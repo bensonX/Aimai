@@ -5,26 +5,28 @@
     android:layout_height="match_parent"
     android:background="@color/com_bk">
 
-    <LinearLayout
-        android:id="@+id/showingroup"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler"
+        <LinearLayout
+            android:id="@+id/showingroup"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/none"
+        android:layout_height="76dp"
+        android:background="?attr/colorPrimary"
+        android:paddingTop="20dp"
         app:popupTheme="@style/AppTheme.PopupOverlay">
 
         <TextView
@@ -32,8 +34,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="AIMAI"
-            android:textColor="@color/white"
+            android:text="STUDY"
+            android:textColor="@color/com_text_blank"
             android:textSize="@dimen/text_big" />
 
     </android.support.v7.widget.Toolbar>
