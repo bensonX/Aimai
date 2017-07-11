@@ -5,10 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.ins.aimai.ui.fragment.BuildingFragment;
-import com.ins.aimai.ui.fragment.HomeFragment;
-import com.ins.aimai.ui.fragment.LessonFragment;
-import com.ins.aimai.ui.fragment.MeFragment;
-import com.ins.aimai.ui.fragment.StudyFragment;
+import com.ins.aimai.ui.fragment.VideoCommentFragment;
 
 /**
  * Created by Administrator on 2017/7/7.
@@ -43,7 +40,7 @@ public class PagerAdapterVideo extends FragmentPagerAdapter {
             case 2:
                 return BuildingFragment.newInstance(position);
             case 3:
-                return BuildingFragment.newInstance(position);
+                return VideoCommentFragment.newInstance(position);
             default:
                 return null;
         }

@@ -17,6 +17,7 @@
     <color name="blank">#000000</color>
     <color name="defaut">#cccccc</color>
     <color name="com_dark">#999999</color>
+    <color name="com_light">#bbbbbb</color>
     <color name="com_bk">#f1f1f1</color>
     <color name="com_line">#55999999</color>
 

@@ -67,7 +67,7 @@ public class HomeActivity extends BaseAppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 group_tab.check(tabsId[position]);
-                switch (position){
+                switch (position) {
                     case 0:
                         StatusBarTextUtil.StatusBarLightMode(HomeActivity.this);
                         break;
@@ -93,7 +93,7 @@ public class HomeActivity extends BaseAppCompatActivity {
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
                 for (int i = 0; i < tabsId.length; i++) {
                     if (tabsId[i] == checkedId) {
-                        pager.setCurrentItem(i);
+                        pager.setCurrentItem(i, false);
                     }
                 }
             }

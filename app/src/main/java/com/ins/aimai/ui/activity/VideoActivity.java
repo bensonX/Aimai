@@ -18,12 +18,15 @@ import com.ins.aimai.bean.TestBean;
 import com.ins.aimai.ui.adapter.PagerAdapterVideo;
 import com.ins.aimai.ui.adapter.RecycleAdapterLesson;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
+import com.ins.common.utils.App;
 import com.ins.common.utils.DensityUtil;
+import com.ins.common.utils.GlideUtil;
 import com.ins.common.utils.StatusBarTextUtil;
 import com.liaoinstan.springview.container.AliFooter;
 import com.liaoinstan.springview.container.AliHeader;
 import com.liaoinstan.springview.widget.SpringView;
 
+import jp.wasabeef.glide.transformations.BlurTransformation;
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 
 public class VideoActivity extends BaseAppCompatActivity {
@@ -55,7 +58,6 @@ public class VideoActivity extends BaseAppCompatActivity {
         initView();
         initCtrl();
         initData();
-
     }
 
     @Override
@@ -75,6 +77,7 @@ public class VideoActivity extends BaseAppCompatActivity {
         super.onDestroy();
         player.onDestroy();
     }
+
     //旋转屏幕后播放器要处理先后旋转的样式
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -97,7 +100,7 @@ public class VideoActivity extends BaseAppCompatActivity {
         tab.setupWithViewPager(pager);
 
         //播放器初始化
-        Glide.with(this).load(IMAGE_URL).fitCenter().into(player.mPlayerThumb);
+        GlideUtil.loadBlurImg(this,player.mPlayerThumb, IMAGE_URL);
         player.mPlayerThumb.setImageResource(R.mipmap.ic_launcher);
         player.init()
                 .setTitle("这是个跑马灯TextView，标题要足够长才会跑。-(゜ -゜)つロ 乾杯~")

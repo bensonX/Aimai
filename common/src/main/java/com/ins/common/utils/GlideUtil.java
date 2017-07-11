@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
@@ -38,33 +39,26 @@ public class GlideUtil {
 
     //加载网络图，并设置占位图
     public static void loadCircleImg(ImageView imageView, int errorSrc, String url) {
-        if (context instanceof Activity && ((Activity) context).isFinishing()) {
-            return;
-        }
         DrawableRequestBuilder<Integer> error = Glide.with(context).load(errorSrc).bitmapTransform(new CropCircleTransformation(context));
         Glide.with(context).load(url).thumbnail(error).bitmapTransform(new CropCircleTransformation(context)).crossFade().into(imageView);
     }
 
     public static void loadImg(ImageView imageView, int errorSrc, String url) {
-        if (context instanceof Activity && ((Activity) context).isFinishing()) {
-            return;
-        }
         DrawableRequestBuilder<Integer> error = Glide.with(context).load(errorSrc);
         Glide.with(context).load(url).thumbnail(error).crossFade().into(imageView);
     }
 
     public static void loadCircleImg(ImageView imageView, int src) {
-        if (context instanceof Activity && ((Activity) context).isFinishing()) {
-            return;
-        }
         Glide.with(context).load(src).bitmapTransform(new CropCircleTransformation(context)).crossFade().into(imageView);
     }
 
     public static void loadImg(ImageView imageView, int src) {
-        if (context instanceof Activity && ((Activity) context).isFinishing()) {
-            return;
-        }
         Glide.with(context).load(src).crossFade().into(imageView);
+    }
+
+    //加载一张图进行高斯模糊处理
+    public static void loadBlurImg(Context context, ImageView imageView, String url) {
+        Glide.with(context).load(url).bitmapTransform(new BlurTransformation(context)).crossFade().into(imageView);
     }
 
     //#########################################
