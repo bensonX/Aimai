@@ -15,6 +15,8 @@ import com.ins.common.base.CommonBaseAppCompatActivity;
 import com.ins.common.common.ActivityCollector;
 import com.ins.common.utils.StatusBarTextUtil;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 
 /**
  * Created by liaoinstan on 2016/7/1 0001.
@@ -32,10 +34,10 @@ public class BaseAppCompatActivity extends CommonBaseAppCompatActivity {
 //        }
     }
 
-//    @Override
-//    protected void attachBaseContext(Context newBase) {
-//        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-//    }
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
     public void setToolbar() {
         setToolbar(null, true);

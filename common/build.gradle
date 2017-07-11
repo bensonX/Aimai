@@ -71,7 +71,7 @@ dependencies {
 
     //################# 音频 ##############
     //mp3recorder音频格式转换
-    compile 'com.czt.mp3recorder:library:1.0.4'
+//    compile 'com.czt.mp3recorder:library:1.0.4'
 
     //################# 工具 ##############
     //沉浸式状态栏工具库

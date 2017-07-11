@@ -69,7 +69,6 @@ public class HomeActivity extends BaseAppCompatActivity {
                 group_tab.check(tabsId[position]);
                 switch (position){
                     case 0:
-                        StatusBarTextUtil.transparencyBar(HomeActivity.this);
                         StatusBarTextUtil.StatusBarLightMode(HomeActivity.this);
                         break;
                     case 1:
@@ -79,7 +78,6 @@ public class HomeActivity extends BaseAppCompatActivity {
                         StatusBarTextUtil.StatusBarLightMode(HomeActivity.this);
                         break;
                     case 3:
-                        StatusBarTextUtil.transparencyBar(HomeActivity.this);
                         StatusBarTextUtil.StatusBarDarkMode(HomeActivity.this);
                         break;
                 }

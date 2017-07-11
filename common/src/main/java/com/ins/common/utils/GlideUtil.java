@@ -1,13 +1,22 @@
 package com.ins.common.utils;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.DrawableRequestBuilder;
 import com.bumptech.glide.Glide;
+import com.ins.common.R;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 /**
  * Created by liaoinstan on 2016/10/27.
@@ -15,38 +24,68 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
  */
 
 public class GlideUtil {
-    //加载网络图，并设置展位图
-    public static void loadCircleImg(Context context, ImageView imageView, int errorSrc, String url) {
-        if (context instanceof Activity && ((Activity) context).isFinishing()){
+
+    @SuppressLint("StaticFieldLeak")
+    private static Context context;
+
+    private GlideUtil() {
+        throw new UnsupportedOperationException();
+    }
+
+    public static void init(Application application) {
+        context = application.getApplicationContext();
+    }
+
+    //加载网络图，并设置占位图
+    public static void loadCircleImg(ImageView imageView, int errorSrc, String url) {
+        if (context instanceof Activity && ((Activity) context).isFinishing()) {
             return;
         }
         DrawableRequestBuilder<Integer> error = Glide.with(context).load(errorSrc).bitmapTransform(new CropCircleTransformation(context));
         Glide.with(context).load(url).thumbnail(error).bitmapTransform(new CropCircleTransformation(context)).crossFade().into(imageView);
     }
 
-    public static void loadImg(Context context, ImageView imageView, int errorSrc, String url) {
-        if (context instanceof Activity && ((Activity) context).isFinishing()){
+    public static void loadImg(ImageView imageView, int errorSrc, String url) {
+        if (context instanceof Activity && ((Activity) context).isFinishing()) {
             return;
         }
         DrawableRequestBuilder<Integer> error = Glide.with(context).load(errorSrc);
         Glide.with(context).load(url).thumbnail(error).crossFade().into(imageView);
     }
 
-    public static void loadCircleImg(Context context, ImageView imageView, int src) {
-        if (context instanceof Activity && ((Activity) context).isFinishing()){
+    public static void loadCircleImg(ImageView imageView, int src) {
+        if (context instanceof Activity && ((Activity) context).isFinishing()) {
             return;
         }
         Glide.with(context).load(src).bitmapTransform(new CropCircleTransformation(context)).crossFade().into(imageView);
     }
 
-    public static void loadImg(Context context, ImageView imageView, int src) {
-        if (context instanceof Activity && ((Activity) context).isFinishing()){
+    public static void loadImg(ImageView imageView, int src) {
+        if (context instanceof Activity && ((Activity) context).isFinishing()) {
             return;
         }
         Glide.with(context).load(src).crossFade().into(imageView);
     }
 
-//    public static void LoadCircleImgTest(Context context, View imageView) {
-//        loadCircleImg(context, (ImageView) imageView, R.drawable.default_header, "http://tupian.qqjay.com/tou3/2016/0725/037697b0e2cbb48ccb5a8c4d1ef0f65c.jpg");
-//    }
+    //#########################################
+    //########## 以下方法仅用于测试
+    //#########################################
+    private static List<String> urls = new ArrayList<String>() {{
+        add("http://tupian.qqjay.com/tou3/2016/0725/037697b0e2cbb48ccb5a8c4d1ef0f65c.jpg");
+        add("http://img05.tooopen.com/images/20150529/tooopen_sy_127162097995.jpg");
+        add("http://rescdn.qqmail.com/dyimg/20140630/7D38689E0A7A.jpg");
+        add("http://img15.3lian.com/2016/h1/143/2.jpg");
+        add("http://img3.duitang.com/uploads/item/201512/10/20151210101534_4jRcJ.thumb.700_0.jpeg");
+        add("http://img4.duitang.com/uploads/item/201402/01/20140201220806_JKXsh.thumb.600_0.jpeg");
+    }};
+
+    public static void LoadCircleImgTest(ImageView imageView) {
+        if (imageView == null) return;
+        loadCircleImg(imageView, R.drawable.default_bk_img, urls.get(new Random(imageView.hashCode()).nextInt(urls.size() - 1)));
+    }
+
+    public static void LoadImgTest(ImageView imageView) {
+        if (imageView == null) return;
+        loadImg(imageView, R.drawable.default_bk_img, urls.get(new Random(imageView.hashCode()).nextInt(urls.size() - 1)));
+    }
 }

@@ -7,8 +7,8 @@ android {
         applicationId "com.ins.aimai"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 5
+        versionName "1.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         //使用矢量图兼容库
         vectorDrawables.useSupportLibrary = true
@@ -55,11 +55,15 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testCompile 'junit:junit:4.12'
     compile project(':common')
-
     //阿里巴巴vlayout
-    compile ('com.alibaba.android:vlayout:1.0.9@aar') {
+    compile('com.alibaba.android:vlayout:1.0.9@aar') {
         transitive = true
     }
+    //加载自定义字体
+    compile 'com.liaoinstan.springview:library:1.2.7'
+    compile 'uk.co.chrisjenx:calligraphy:2.2.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
+    compile project(':playerview')
 }

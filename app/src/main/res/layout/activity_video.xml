@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/com_bk"
+    tools:context="com.ins.aimai.ui.activity.LessionActivity">>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/none"
+        app:popupTheme="@style/AppTheme.PopupOverlay">
+
+        <ImageView
+            android:id="@+id/btn_right"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:foreground="?attr/selectableItemBackground"
+            android:scaleType="center"
+            android:src="@mipmap/ic_launcher" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/showingroup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.dl7.player.media.IjkPlayerView
+            android:id="@+id/player"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/white"
+            app:tabIndicatorHeight="1dp"
+            app:tabIndicatorColor="@color/com_blue"
+            app:tabSelectedTextColor="@color/com_blue"
+            app:tabTextColor="@color/com_text_dark" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <View style="@style/Line_H" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

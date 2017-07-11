@@ -23,7 +23,7 @@ import com.ins.common.view.BannerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecycleAdapterHomeBanner extends DelegateAdapter.Adapter<RecyclerView.ViewHolder> {
+public class RecycleAdapterHomeBanner extends DelegateAdapter.Adapter<RecycleAdapterHomeBanner.Holder> {
 
     private Context context;
     private LayoutHelper layoutHelper;
@@ -44,23 +44,19 @@ public class RecycleAdapterHomeBanner extends DelegateAdapter.Adapter<RecyclerVi
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new Holder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_banner, parent, false));
+    public int getItemViewType(int position) {
+        return R.layout.item_home_banner;
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
-        if (holder instanceof Holder) {
-            ((Holder)holder).banner.setDatas(results);
-            ((Holder)holder).banner.showTitle(false);
-            ((Holder)holder).banner.setOnLoadImgListener(new BannerView.OnLoadImgListener() {
-                @Override
-                public void onloadImg(ImageView imageView, String imgurl, int defaultSrc) {
-                    GlideUtil.loadImg(context, imageView, defaultSrc, imgurl);
-//            imageView.setImageResource(R.drawable.default_pic);
-                }
-            });
-        }
+    public RecycleAdapterHomeBanner.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new Holder(LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false));
+    }
+
+    @Override
+    public void onBindViewHolder(final RecycleAdapterHomeBanner.Holder holder, final int position) {
+        holder.banner.setDatas(results);
+
     }
 
     @Override
@@ -75,6 +71,13 @@ public class RecycleAdapterHomeBanner extends DelegateAdapter.Adapter<RecyclerVi
         public Holder(View itemView) {
             super(itemView);
             banner = (BannerView) itemView.findViewById(R.id.banner);
+            banner.showTitle(false);
+            banner.setOnLoadImgListener(new BannerView.OnLoadImgListener() {
+                @Override
+                public void onloadImg(ImageView imageView, String imgurl, int defaultSrc) {
+                    GlideUtil.loadImg(imageView, defaultSrc, imgurl);
+                }
+            });
         }
     }
 }

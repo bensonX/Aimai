@@ -115,10 +115,11 @@ public class BannerView extends FrameLayout implements Runnable {
             //mHandler.removeMessages(AUTO_SCROLL_WHAT);
         } else {
         }
+        int currentItem = mViewPager.getCurrentItem();
         DEFAULT_BANNER_SIZE = images.size();
         mBannerAdapter = new BannerAdapter(context);
-        mViewPager.setAdapter(mBannerAdapter);
         mViewPager.addOnPageChangeListener(mBannerAdapter);
+        mViewPager.setAdapter(mBannerAdapter);
         mViewPager.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -138,8 +139,12 @@ public class BannerView extends FrameLayout implements Runnable {
         dotView.setViewPager(mViewPager, DEFAULT_BANNER_SIZE);
 
         //TODO:在recyclerView中使用的时候第一次加载第一张图无法显示的情况，目前暂时将其设置在其他位置来规避，有待后期优化排查
-        if (images.size()>=1) {
-            mViewPager.setCurrentItem(1,false);
+        if (currentItem == 0) {
+            if (images.size() >= 1) {
+                mViewPager.setCurrentItem(1, false);
+            }
+        } else {
+            mViewPager.setCurrentItem((currentItem < DEFAULT_BANNER_SIZE - 1 ? currentItem : DEFAULT_BANNER_SIZE - 1), false);
         }
     }
 
@@ -199,12 +204,10 @@ public class BannerView extends FrameLayout implements Runnable {
             if ("default".equals(images.get(position).getImg())) {
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 imageView.setImageResource(R.drawable.default_bk_img);
-                L.e("load:" + "default");
             } else {
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 //绑定网络图片
                 if (onLoadImgListener != null) {
-                    L.e("load:" + images.get(position).getImg());
                     onLoadImgListener.onloadImg(imageView, images.get(position).getImg(), R.drawable.default_bk_img);
                 }
             }

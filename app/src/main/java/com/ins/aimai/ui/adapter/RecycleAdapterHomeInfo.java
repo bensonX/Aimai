@@ -18,7 +18,7 @@ import com.ins.common.interfaces.OnRecycleItemClickListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecycleAdapterHomeInfo extends DelegateAdapter.Adapter<RecyclerView.ViewHolder> {
+public class RecycleAdapterHomeInfo extends DelegateAdapter.Adapter<RecycleAdapterHomeInfo.Holder> {
 
     private Context context;
     private LayoutHelper layoutHelper;
@@ -39,25 +39,25 @@ public class RecycleAdapterHomeInfo extends DelegateAdapter.Adapter<RecyclerView
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new Holder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_info, parent, false));
+    public int getItemViewType(int position) {
+        return R.layout.item_home_info;
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
+    public RecycleAdapterHomeInfo.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new Holder(LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false));
+    }
+
+    @Override
+    public void onBindViewHolder(final RecycleAdapterHomeInfo.Holder holder, final int position) {
         final TestBean bean = results.get(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) listener.onItemClick(holder);
-                String log = position + ":" + holder.getLayoutPosition() + ":" + holder.getAdapterPosition() + ":" + bean.getName();
-                Log.e("liao", log);
-                Toast.makeText(context, position + ":" + bean.getName(), Toast.LENGTH_SHORT).show();
             }
         });
-        if (holder instanceof Holder) {
-            ((Holder) holder).text_name.setText(bean.getName());
-        }
+//        holder.text_name.setText(bean.getName());
     }
 
     @Override
@@ -67,11 +67,11 @@ public class RecycleAdapterHomeInfo extends DelegateAdapter.Adapter<RecyclerView
 
     public class Holder extends RecyclerView.ViewHolder {
 
-        private TextView text_name;
+//        private TextView text_name;
 
         public Holder(View itemView) {
             super(itemView);
-            text_name = (TextView) itemView.findViewById(R.id.text_name);
+//            text_name = (TextView) itemView.findViewById(R.id.text_name);
         }
     }
 

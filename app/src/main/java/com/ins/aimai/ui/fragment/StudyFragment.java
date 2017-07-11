@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.ins.aimai.R;
 import com.ins.aimai.ui.base.BaseFragment;
+import com.ins.common.utils.StatusBarTextUtil;
 
 /**
  * Created by liaoinstan
@@ -32,10 +33,16 @@ public class StudyFragment extends BaseFragment {
         this.position = getArguments().getInt("position");
     }
 
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        StatusBarTextUtil.StatusBarLightMode(getActivity());
+//    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_lesson, container, false);
+        rootView = inflater.inflate(R.layout.fragment_study, container, false);
         return rootView;
     }
 

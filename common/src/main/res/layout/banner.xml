@@ -18,7 +18,7 @@
 
         <com.ins.common.view.DotView
             android:id="@+id/dotView"
-            android:gravity="right"
+            android:gravity="center"
             android:layout_marginBottom="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

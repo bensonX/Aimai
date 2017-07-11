@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.ins.aimai.R;
 import com.ins.aimai.ui.base.BaseFragment;
+import com.ins.common.utils.StatusBarTextUtil;
 
 /**
  * Created by liaoinstan
@@ -32,6 +33,12 @@ public class MeFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         this.position = getArguments().getInt("position");
     }
+
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        StatusBarTextUtil.StatusBarDarkMode(getActivity());
+//    }
 
     @Nullable
     @Override
