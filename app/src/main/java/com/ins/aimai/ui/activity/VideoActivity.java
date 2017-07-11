@@ -55,6 +55,7 @@ public class VideoActivity extends BaseAppCompatActivity {
         initView();
         initCtrl();
         initData();
+
     }
 
     @Override
