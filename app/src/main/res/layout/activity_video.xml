@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/com_bk"
-    tools:context="com.ins.aimai.ui.activity.LessionActivity">>
+    tools:context="com.ins.aimai.ui.activity.LessonActivity">>
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"

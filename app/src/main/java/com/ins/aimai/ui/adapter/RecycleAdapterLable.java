@@ -16,7 +16,7 @@ import com.ins.common.utils.GlideUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecycleAdapterLesson extends RecyclerView.Adapter<RecycleAdapterLesson.Holder> {
+public class RecycleAdapterLable extends RecyclerView.Adapter<RecycleAdapterLable.Holder> {
 
     private Context context;
     private LayoutHelper layoutHelper;
@@ -26,25 +26,18 @@ public class RecycleAdapterLesson extends RecyclerView.Adapter<RecycleAdapterLes
         return results;
     }
 
-    public RecycleAdapterLesson(Context context) {
+    public RecycleAdapterLable(Context context) {
         this.context = context;
     }
 
     @Override
-    public RecycleAdapterLesson.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new Holder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_lession, parent, false));
+    public RecycleAdapterLable.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new Holder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_lable, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(final RecycleAdapterLesson.Holder holder, final int position) {
+    public void onBindViewHolder(final RecycleAdapterLable.Holder holder, final int position) {
         final TestBean bean = results.get(position);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) listener.onItemClick(holder);
-            }
-        });
-        GlideUtil.loadImgTest(holder.img_lession);
     }
 
     @Override
@@ -54,17 +47,11 @@ public class RecycleAdapterLesson extends RecyclerView.Adapter<RecycleAdapterLes
 
     public class Holder extends RecyclerView.ViewHolder {
 
-        private ImageView img_lession;
+//        private ImageView img_lession;
 
         public Holder(View itemView) {
             super(itemView);
-            img_lession = (ImageView) itemView.findViewById(R.id.img_lession);
+//            img_lession = (ImageView) itemView.findViewById(R.id.img_lession);
         }
-    }
-
-    private OnRecycleItemClickListener listener;
-
-    public void setOnItemClickListener(OnRecycleItemClickListener listener) {
-        this.listener = listener;
     }
 }

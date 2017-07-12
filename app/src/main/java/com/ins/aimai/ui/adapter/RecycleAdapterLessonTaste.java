@@ -44,7 +44,7 @@ public class RecycleAdapterLessonTaste extends RecyclerView.Adapter<RecycleAdapt
                 if (listener != null) listener.onItemClick(holder);
             }
         });
-        GlideUtil.LoadImgTest(holder.img_lession_taste);
+        GlideUtil.loadImgTest(holder.img_lession_taste);
     }
 
     @Override

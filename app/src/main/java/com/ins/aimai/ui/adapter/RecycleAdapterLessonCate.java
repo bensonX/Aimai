@@ -11,7 +11,7 @@ import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.TestBean;
-import com.ins.aimai.ui.activity.LessionActivity;
+import com.ins.aimai.ui.activity.LessonActivity;
 import com.ins.common.utils.GlideUtil;
 
 import java.util.ArrayList;
@@ -53,11 +53,11 @@ public class RecycleAdapterLessonCate extends DelegateAdapter.Adapter<RecycleAda
         holder.btn_more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LessionActivity.start(context);
+                LessonActivity.start(context);
             }
         });
-        GlideUtil.LoadImgTest(holder.img_lession_cate1);
-        GlideUtil.LoadImgTest(holder.img_lession_cate2);
+        GlideUtil.loadImgTest(holder.img_lession_cate1);
+        GlideUtil.loadImgTest(holder.img_lession_cate2);
     }
 
     @Override

@@ -4,7 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.ins.aimai.ui.fragment.BuildingFragment;
 import com.ins.aimai.ui.fragment.VideoCommentFragment;
 import com.ins.aimai.ui.fragment.VideoDirectotyFragment;
 import com.ins.aimai.ui.fragment.VideoIntroFragment;
@@ -14,11 +13,11 @@ import com.ins.aimai.ui.fragment.VideoNoteFragment;
  * Created by Administrator on 2017/7/7.
  */
 
-public class PagerAdapterVideo extends FragmentPagerAdapter {
+public class PagerAdapterLessonDetail extends FragmentPagerAdapter {
 
     private String[] titles;
 
-    public PagerAdapterVideo(FragmentManager fm, String[] titles) {
+    public PagerAdapterLessonDetail(FragmentManager fm, String[] titles) {
         super(fm);
         this.titles = titles;
     }
@@ -41,8 +40,6 @@ public class PagerAdapterVideo extends FragmentPagerAdapter {
             case 1:
                 return VideoDirectotyFragment.newInstance(position);
             case 2:
-                return VideoNoteFragment.newInstance(position);
-            case 3:
                 return VideoCommentFragment.newInstance(position);
             default:
                 return null;

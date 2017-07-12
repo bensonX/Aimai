@@ -3,4 +3,10 @@
     <color name="colorPrimary">@color/white</color>
     <color name="colorPrimaryDark">@color/white</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="am_bk">#f6f9fe</color>
+
+    <color name="am_blue">#2f76b8</color>
+    <color name="am_yellow">#f9bf37</color>
+    <color name="am_red">#f22828</color>
 </resources>

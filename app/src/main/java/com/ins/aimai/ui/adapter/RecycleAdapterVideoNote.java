@@ -14,7 +14,7 @@ import com.ins.common.utils.GlideUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecycleAdapterVideoCommet extends RecyclerView.Adapter<RecycleAdapterVideoCommet.Holder> {
+public class RecycleAdapterVideoNote extends RecyclerView.Adapter<RecycleAdapterVideoNote.Holder> {
 
     private Context context;
     private List<TestBean> results = new ArrayList<>();
@@ -23,19 +23,19 @@ public class RecycleAdapterVideoCommet extends RecyclerView.Adapter<RecycleAdapt
         return results;
     }
 
-    public RecycleAdapterVideoCommet(Context context) {
+    public RecycleAdapterVideoNote(Context context) {
         this.context = context;
     }
 
     @Override
-    public RecycleAdapterVideoCommet.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new Holder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_video_comment, parent, false));
+    public RecycleAdapterVideoNote.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new Holder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_video_note, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(final RecycleAdapterVideoCommet.Holder holder, final int position) {
+    public void onBindViewHolder(final RecycleAdapterVideoNote.Holder holder, final int position) {
         final TestBean bean = results.get(position);
-        GlideUtil.loadCircleImgTest(holder.img_comment_header);
+        GlideUtil.loadImgTest(holder.img_item_note);
     }
 
     @Override
@@ -45,11 +45,11 @@ public class RecycleAdapterVideoCommet extends RecyclerView.Adapter<RecycleAdapt
 
     public class Holder extends RecyclerView.ViewHolder {
 
-        private ImageView img_comment_header;
+        private ImageView img_item_note;
 
         public Holder(View itemView) {
             super(itemView);
-            img_comment_header = (ImageView) itemView.findViewById(R.id.img_comment_header);
+            img_item_note = (ImageView) itemView.findViewById(R.id.img_item_note);
         }
     }
 }

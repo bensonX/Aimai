@@ -9,15 +9,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.ins.aimai.R;
 import com.ins.aimai.bean.TestBean;
-import com.ins.aimai.ui.adapter.RecycleAdapterVideoCommet;
+import com.ins.aimai.ui.adapter.RecycleAdapterVideoDirectory;
+import com.ins.aimai.ui.adapter.RecycleAdapterVideoNote;
 import com.ins.aimai.ui.base.BaseFragment;
-import com.ins.common.common.ItemDecorationDivider;
 import com.ins.common.helper.LoadingViewHelper;
-import com.ins.common.utils.GlideUtil;
 import com.liaoinstan.springview.container.AliFooter;
 import com.liaoinstan.springview.container.AliHeader;
 import com.liaoinstan.springview.widget.SpringView;
@@ -25,7 +23,7 @@ import com.liaoinstan.springview.widget.SpringView;
 /**
  * Created by liaoinstan
  */
-public class VideoCommentFragment extends BaseFragment {
+public class VideoNoteFragment extends BaseFragment {
 
     private int position;
     private View rootView;
@@ -33,13 +31,12 @@ public class VideoCommentFragment extends BaseFragment {
     private View showin;
     private ViewGroup showingroup;
 
-    private ImageView img_comment_headerme;
     private SpringView springView;
     private RecyclerView recycler;
-    private RecycleAdapterVideoCommet adapter;
+    private RecycleAdapterVideoNote adapter;
 
     public static Fragment newInstance(int position) {
-        VideoCommentFragment fragment = new VideoCommentFragment();
+        VideoNoteFragment fragment = new VideoNoteFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("position", position);
         fragment.setArguments(bundle);
@@ -55,7 +52,7 @@ public class VideoCommentFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_videocomment, container, false);
+        rootView = inflater.inflate(R.layout.fragment_videonote, container, false);
         return rootView;
     }
 
@@ -75,13 +72,11 @@ public class VideoCommentFragment extends BaseFragment {
         showingroup = (ViewGroup) rootView.findViewById(R.id.showingroup);
         springView = (SpringView) rootView.findViewById(R.id.spring);
         recycler = (RecyclerView) rootView.findViewById(R.id.recycler);
-        img_comment_headerme = (ImageView) rootView.findViewById(R.id.img_comment_headerme);
     }
 
     private void initCtrl() {
-        adapter = new RecycleAdapterVideoCommet(getContext());
+        adapter = new RecycleAdapterVideoNote(getContext());
         recycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        recycler.addItemDecoration(new ItemDecorationDivider(getContext(), ItemDecorationDivider.VERTICAL_LIST));
         recycler.setAdapter(adapter);
         springView.setHeader(new AliHeader(getContext(), false));
         springView.setFooter(new AliFooter(getContext(), false));
@@ -109,7 +104,6 @@ public class VideoCommentFragment extends BaseFragment {
                 }, 800);
             }
         });
-        GlideUtil.loadCircleImgTest(img_comment_headerme);
     }
 
     private void initData() {
@@ -118,6 +112,13 @@ public class VideoCommentFragment extends BaseFragment {
             @Override
             public void run() {
                 adapter.getResults().clear();
+                adapter.getResults().add(new TestBean());
+                adapter.getResults().add(new TestBean());
+                adapter.getResults().add(new TestBean());
+                adapter.getResults().add(new TestBean());
+                adapter.getResults().add(new TestBean());
+                adapter.getResults().add(new TestBean());
+                adapter.getResults().add(new TestBean());
                 adapter.getResults().add(new TestBean());
                 adapter.getResults().add(new TestBean());
                 adapter.getResults().add(new TestBean());

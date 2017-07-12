@@ -1,50 +1,67 @@
-package com.ins.aimai.ui.activity;
+package com.ins.aimai.ui.fragment;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
-import com.alibaba.android.vlayout.DelegateAdapter;
-import com.alibaba.android.vlayout.VirtualLayoutManager;
-import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.TestBean;
-import com.ins.aimai.ui.adapter.RecycleAdapterLesson;
-import com.ins.aimai.ui.adapter.RecycleAdapterLessonCate;
-import com.ins.aimai.ui.adapter.RecycleAdapterLessonTasteBanner;
-import com.ins.aimai.ui.base.BaseAppCompatActivity;
+import com.ins.aimai.ui.adapter.RecycleAdapterVideoCommet;
+import com.ins.aimai.ui.adapter.RecycleAdapterVideoDirectory;
+import com.ins.aimai.ui.base.BaseFragment;
+import com.ins.common.common.ItemDecorationDivider;
 import com.ins.common.helper.LoadingViewHelper;
-import com.ins.common.utils.DensityUtil;
-import com.ins.common.utils.StatusBarTextUtil;
+import com.ins.common.utils.GlideUtil;
 import com.liaoinstan.springview.container.AliFooter;
 import com.liaoinstan.springview.container.AliHeader;
 import com.liaoinstan.springview.widget.SpringView;
 
-public class LessionActivity extends BaseAppCompatActivity {
+/**
+ * Created by liaoinstan
+ */
+public class VideoDirectotyFragment extends BaseFragment {
+
+    private int position;
+    private View rootView;
 
     private View showin;
     private ViewGroup showingroup;
+
     private SpringView springView;
     private RecyclerView recycler;
-    private RecycleAdapterLesson adapter;
+    private RecycleAdapterVideoDirectory adapter;
 
-    public static void start(Context context) {
-        Intent intent = new Intent(context, LessionActivity.class);
-        context.startActivity(intent);
+    public static Fragment newInstance(int position) {
+        VideoDirectotyFragment fragment = new VideoDirectotyFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("position", position);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lession);
-        setToolbar();
-//        StatusBarTextUtil.StatusBarLightMode(this);
+        this.position = getArguments().getInt("position");
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        rootView = inflater.inflate(R.layout.fragment_videodirectory, container, false);
+        return rootView;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         initBase();
         initView();
         initCtrl();
@@ -55,18 +72,17 @@ public class LessionActivity extends BaseAppCompatActivity {
     }
 
     private void initView() {
-        showingroup = (ViewGroup) findViewById(R.id.showingroup);
-        recycler = (RecyclerView) findViewById(R.id.recycler);
-        springView = (SpringView) findViewById(R.id.spring);
+        showingroup = (ViewGroup) rootView.findViewById(R.id.showingroup);
+        springView = (SpringView) rootView.findViewById(R.id.spring);
+        recycler = (RecyclerView) rootView.findViewById(R.id.recycler);
     }
 
     private void initCtrl() {
-        adapter = new RecycleAdapterLesson(this);
-        recycler.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false));
-        recycler.addItemDecoration(new GridSpacingItemDecoration(2, DensityUtil.dp2px(this, 10), true));
+        adapter = new RecycleAdapterVideoDirectory(getContext());
+        recycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recycler.setAdapter(adapter);
-        springView.setHeader(new AliHeader(this, false));
-        springView.setFooter(new AliFooter(this, false));
+        springView.setHeader(new AliHeader(getContext(), false));
+        springView.setFooter(new AliFooter(getContext(), false));
         springView.setListener(new SpringView.OnFreshListener() {
             @Override
             public void onRefresh() {
@@ -85,8 +101,7 @@ public class LessionActivity extends BaseAppCompatActivity {
                     public void run() {
                         adapter.getResults().add(new TestBean());
                         adapter.getResults().add(new TestBean());
-                        adapter.getResults().add(new TestBean());
-                        adapter.notifyItemRangeChanged(adapter.getItemCount() - 1 - 3, adapter.getItemCount() - 1);
+                        adapter.notifyDataSetChanged();
                         springView.onFinishFreshAndLoad();
                     }
                 }, 800);

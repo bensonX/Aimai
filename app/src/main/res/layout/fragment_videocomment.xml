@@ -4,7 +4,6 @@
     android:id="@+id/showingroup"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/com_bk"
     android:orientation="vertical">
 
     <com.liaoinstan.springview.widget.SpringView

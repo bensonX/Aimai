@@ -73,12 +73,12 @@ public class GlideUtil {
         add("http://img4.duitang.com/uploads/item/201402/01/20140201220806_JKXsh.thumb.600_0.jpeg");
     }};
 
-    public static void LoadCircleImgTest(ImageView imageView) {
+    public static void loadCircleImgTest(ImageView imageView) {
         if (imageView == null) return;
         loadCircleImg(imageView, R.drawable.default_bk_img, urls.get(new Random(imageView.hashCode()).nextInt(urls.size() - 1)));
     }
 
-    public static void LoadImgTest(ImageView imageView) {
+    public static void loadImgTest(ImageView imageView) {
         if (imageView == null) return;
         loadImg(imageView, R.drawable.default_bk_img, urls.get(new Random(imageView.hashCode()).nextInt(urls.size() - 1)));
     }
