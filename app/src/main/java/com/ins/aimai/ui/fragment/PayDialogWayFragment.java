@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.ins.aimai.R;
 import com.ins.aimai.ui.activity.PayDialogActivity;
 import com.ins.aimai.ui.base.BaseFragment;
+import com.ins.aimai.wxapi.WXPayEntryActivity;
 
 /**
  * Created by liaoinstan
@@ -55,6 +56,8 @@ public class PayDialogWayFragment extends BaseFragment implements View.OnClickLi
     }
 
     private void initView() {
+        rootView.findViewById(R.id.btn_wx).setOnClickListener(this);
+        rootView.findViewById(R.id.btn_zfb).setOnClickListener(this);
     }
 
     private void initCtrl() {
@@ -66,7 +69,11 @@ public class PayDialogWayFragment extends BaseFragment implements View.OnClickLi
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.btn_go:
+            case R.id.btn_wx:
+                WXPayEntryActivity.start(getContext());
+                break;
+            case R.id.btn_zfb:
+                WXPayEntryActivity.start(getContext());
                 break;
         }
     }

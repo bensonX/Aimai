@@ -29,6 +29,7 @@
             android:windowSoftInputMode="adjustResize|stateHidden"></activity>
         <activity android:name=".ui.activity.LessonActivity"></activity>
         <activity android:name=".ui.activity.LessonDetailActivity"></activity>
+        <activity android:name=".wxapi.WXPayEntryActivity"></activity>
         <activity android:name=".ui.activity.PayDialogActivity"
             android:theme="@style/MyAppDialogStyle"></activity>
 

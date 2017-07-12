@@ -34,11 +34,13 @@
             android:layout_weight="1">
 
             <TextView
+                android:id="@+id/btn_wx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:drawablePadding="5dp"
                 android:drawableTop="@mipmap/ic_launcher"
+                android:foreground="?attr/selectableItemBackground"
                 android:gravity="center"
                 android:paddingBottom="10dp"
                 android:paddingLeft="20dp"
@@ -56,11 +58,13 @@
             android:layout_weight="1">
 
             <TextView
+                android:id="@+id/btn_zfb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:drawablePadding="5dp"
                 android:drawableTop="@mipmap/ic_launcher"
+                android:foreground="?attr/selectableItemBackground"
                 android:gravity="center"
                 android:paddingBottom="10dp"
                 android:paddingLeft="20dp"
