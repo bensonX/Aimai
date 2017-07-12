@@ -25,11 +25,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="课程类别"
+                android:text="我的订单"
                 android:textColor="@color/com_blue"
                 android:textSize="@dimen/text_big" />
 
         </android.support.v7.widget.Toolbar>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/white"
+            app:tabIndicatorColor="@color/com_blue"
+            app:tabIndicatorHeight="1dp"
+            app:tabSelectedTextColor="@color/com_blue"
+            app:tabTextColor="@color/com_text_dark" />
 
         <View
             android:layout_width="match_parent"
@@ -45,20 +55,11 @@
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <com.liaoinstan.springview.widget.SpringView
-            android:id="@+id/spring"
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:type="follow">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:paddingBottom="10dp" />
-
-        </com.liaoinstan.springview.widget.SpringView>
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
     </LinearLayout>
 

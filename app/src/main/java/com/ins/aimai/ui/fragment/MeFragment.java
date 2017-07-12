@@ -6,19 +6,34 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ins.aimai.R;
+import com.ins.aimai.ui.activity.MeDetailActivity;
+import com.ins.aimai.ui.activity.MsgActivity;
+import com.ins.aimai.ui.activity.OrderActivity;
 import com.ins.aimai.ui.base.BaseFragment;
 import com.ins.common.utils.StatusBarTextUtil;
 
 /**
  * Created by liaoinstan
  */
-public class MeFragment extends BaseFragment {
+public class MeFragment extends BaseFragment implements View.OnClickListener {
 
     private int position;
     private View rootView;
+
+    private View btn_right;
+    private ImageView img_me_header;
+    private TextView img_me_name;
+    private TextView img_me_order;
+    private TextView img_me_msg;
+    private TextView img_me_favo;
+    private TextView img_me_grade;
+    private TextView img_me_safe;
+    private TextView img_me_suggest;
+    private TextView img_me_setting;
 
     public static Fragment newInstance(int position) {
         MeFragment fragment = new MeFragment();
@@ -34,12 +49,6 @@ public class MeFragment extends BaseFragment {
         this.position = getArguments().getInt("position");
     }
 
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        StatusBarTextUtil.StatusBarDarkMode(getActivity());
-//    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -50,6 +59,8 @@ public class MeFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        setToolbar();
+        toolbar.bringToFront();
         initBase();
         initView();
         initData();
@@ -60,11 +71,47 @@ public class MeFragment extends BaseFragment {
     }
 
     private void initView() {
+        img_me_header = (ImageView) rootView.findViewById(R.id.img_me_header);
+        img_me_name = (TextView) rootView.findViewById(R.id.img_me_name);
+
+        rootView.findViewById(R.id.btn_right).setOnClickListener(this);
+        rootView.findViewById(R.id.img_me_order).setOnClickListener(this);
+        rootView.findViewById(R.id.img_me_msg).setOnClickListener(this);
+        rootView.findViewById(R.id.img_me_favo).setOnClickListener(this);
+        rootView.findViewById(R.id.img_me_grade).setOnClickListener(this);
+        rootView.findViewById(R.id.img_me_safe).setOnClickListener(this);
+        rootView.findViewById(R.id.img_me_suggest).setOnClickListener(this);
+        rootView.findViewById(R.id.img_me_setting).setOnClickListener(this);
     }
 
     private void initData() {
     }
 
     private void initCtrl() {
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_right:
+                MeDetailActivity.start(getContext());
+                break;
+            case R.id.img_me_order:
+                OrderActivity.start(getContext());
+                break;
+            case R.id.img_me_msg:
+                MsgActivity.start(getContext());
+                break;
+            case R.id.img_me_favo:
+                break;
+            case R.id.img_me_grade:
+                break;
+            case R.id.img_me_safe:
+                break;
+            case R.id.img_me_suggest:
+                break;
+            case R.id.img_me_setting:
+                break;
+        }
     }
 }

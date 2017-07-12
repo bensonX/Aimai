@@ -25,32 +25,31 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:gravity="bottom"
-            android:orientation="horizontal"
-            android:paddingBottom="5dp">
+            android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/tab_1"
-                style="@style/MainRadioButton"
+                style="@style/RadioHomeTab"
                 android:checked="true"
-                android:drawableTop="@drawable/ic_edit"
+                android:drawableTop="@drawable/selector_tab_home"
                 android:text="首页" />
 
             <RadioButton
                 android:id="@+id/tab_2"
-                style="@style/MainRadioButton"
-                android:drawableTop="@drawable/ic_edit"
+                style="@style/RadioHomeTab"
+                android:drawableTop="@drawable/selector_tab_lesson"
                 android:text="课时" />
 
             <RadioButton
                 android:id="@+id/tab_3"
-                style="@style/MainRadioButton"
-                android:drawableTop="@drawable/ic_edit"
+                style="@style/RadioHomeTab"
+                android:drawableTop="@drawable/selector_tab_learn"
                 android:text="学习" />
 
             <RadioButton
                 android:id="@+id/tab_4"
-                style="@style/MainRadioButton"
-                android:drawableTop="@drawable/ic_edit"
+                style="@style/RadioHomeTab"
+                android:drawableTop="@drawable/selector_tab_me"
                 android:text="我的" />
 
         </RadioGroup>

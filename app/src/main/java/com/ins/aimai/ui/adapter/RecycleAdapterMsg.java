@@ -2,15 +2,11 @@ package com.ins.aimai.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.TestBean;
@@ -20,7 +16,7 @@ import com.ins.common.utils.GlideUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecycleAdapterHomeInfo extends DelegateAdapter.Adapter<RecycleAdapterHomeInfo.Holder> {
+public class RecycleAdapterMsg extends RecyclerView.Adapter<RecycleAdapterMsg.Holder> {
 
     private Context context;
     private LayoutHelper layoutHelper;
@@ -30,28 +26,17 @@ public class RecycleAdapterHomeInfo extends DelegateAdapter.Adapter<RecycleAdapt
         return results;
     }
 
-    public RecycleAdapterHomeInfo(Context context, LayoutHelper layoutHelper) {
+    public RecycleAdapterMsg(Context context) {
         this.context = context;
-        this.layoutHelper = layoutHelper;
     }
 
     @Override
-    public LayoutHelper onCreateLayoutHelper() {
-        return layoutHelper;
+    public RecycleAdapterMsg.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new Holder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_msg, parent, false));
     }
 
     @Override
-    public int getItemViewType(int position) {
-        return R.layout.item_home_info;
-    }
-
-    @Override
-    public RecycleAdapterHomeInfo.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new Holder(LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false));
-    }
-
-    @Override
-    public void onBindViewHolder(final RecycleAdapterHomeInfo.Holder holder, final int position) {
+    public void onBindViewHolder(final RecycleAdapterMsg.Holder holder, final int position) {
         final TestBean bean = results.get(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +44,6 @@ public class RecycleAdapterHomeInfo extends DelegateAdapter.Adapter<RecycleAdapt
                 if (listener != null) listener.onItemClick(holder);
             }
         });
-        GlideUtil.loadImgTest(holder.img_item_info);
     }
 
     @Override
@@ -69,11 +53,11 @@ public class RecycleAdapterHomeInfo extends DelegateAdapter.Adapter<RecycleAdapt
 
     public class Holder extends RecyclerView.ViewHolder {
 
-        private ImageView img_item_info;
+//        private ImageView img_lession;
 
         public Holder(View itemView) {
             super(itemView);
-            img_item_info = (ImageView) itemView.findViewById(R.id.img_item_info);
+//            img_lession = (ImageView) itemView.findViewById(R.id.img_lession);
         }
     }
 

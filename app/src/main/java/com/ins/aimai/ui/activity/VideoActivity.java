@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 
 import com.bumptech.glide.Glide;
 import com.dl7.player.media.IjkPlayerView;
@@ -78,13 +79,6 @@ public class VideoActivity extends BaseAppCompatActivity {
         player.onDestroy();
     }
 
-    //旋转屏幕后播放器要处理先后旋转的样式
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        player.configurationChanged(newConfig);
-    }
-
     private void initBase() {
     }
 
@@ -120,5 +114,31 @@ public class VideoActivity extends BaseAppCompatActivity {
     }
 
     private void initData() {
+    }
+
+
+    //旋转屏幕后播放器要处理先后旋转的样式
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        player.configurationChanged(newConfig);
+    }
+
+    //处理音量键，避免外部按音量键后导航栏和状态栏显示出来退不回去的状态（优先处理播放器音量键事件）
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (player.handleVolumeKey(keyCode)) {
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    //回退，全屏时退回竖屏 (优先处理播放器回退事件)
+    @Override
+    public void onBackPressed() {
+        if (player.onBackPressed()) {
+            return;
+        }
+        super.onBackPressed();
     }
 }

@@ -31,8 +31,20 @@ public class DialogPopupPhoto extends Dialog {
         text_photo = (TextView) mView.findViewById(R.id.text_pop_identy_photo);
         text_camera = (TextView) mView.findViewById(R.id.text_pop_identy_camera);
         text_cancel.setOnClickListener(listener);
-        text_photo.setOnClickListener(listener);
-        text_camera.setOnClickListener(listener);
+        text_photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onStartListener != null) onStartListener.onPhoneClick(v);
+                hide();
+            }
+        });
+        text_camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onStartListener != null) onStartListener.onCameraClick(v);
+                hide();
+            }
+        });
 
         this.setCanceledOnTouchOutside(true);    //点击外部关闭
 
@@ -52,19 +64,19 @@ public class DialogPopupPhoto extends Dialog {
         super.show();
     }
 
-    /**
-     * 相册键监听器
-     */
-    public void setOnPhotoListener(View.OnClickListener listener) {
-        text_photo.setOnClickListener(listener);
-    }
-
-    /**
-     * 相机键监听器
-     */
-    public void setOnCameraListener(View.OnClickListener listener) {
-        text_camera.setOnClickListener(listener);
-    }
+//    /**
+//     * 相册键监听器
+//     */
+//    public void setOnPhotoListener(View.OnClickListener listener) {
+//        text_photo.setOnClickListener(listener);
+//    }
+//
+//    /**
+//     * 相机键监听器
+//     */
+//    public void setOnCameraListener(View.OnClickListener listener) {
+//        text_camera.setOnClickListener(listener);
+//    }
 
     /**
      * 取消监听，不光取消按钮，点击外部，返回键等一切导致dialog消失的操作都会回调这个监听
@@ -87,4 +99,16 @@ public class DialogPopupPhoto extends Dialog {
             DialogPopupPhoto.this.dismiss();
         }
     };
+
+    private OnStartListener onStartListener;
+
+    public void setOnStartListener(OnStartListener onStartListener) {
+        this.onStartListener = onStartListener;
+    }
+
+    public interface OnStartListener {
+        void onPhoneClick(View v);
+
+        void onCameraClick(View v);
+    }
 }

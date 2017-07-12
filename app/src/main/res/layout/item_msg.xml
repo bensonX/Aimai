@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/shape_rect_cornerbig_white"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="消息标题"
+        android:textColor="@color/com_text_blank_deep_light"
+        android:textSize="@dimen/text_big_nomal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:text="2017-07-03 11:20"
+        android:textColor="@color/com_text_dark_light"
+        android:textSize="@dimen/text_small" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:ellipsize="end"
+        android:lineSpacingExtra="7dp"
+        android:maxLines="3"
+        android:text="@string/test_content"
+        android:textColor="@color/com_text_blank"
+        android:textSize="@dimen/text_nomal_small" />
+
+</LinearLayout>

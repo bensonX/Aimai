@@ -17,11 +17,157 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/text_building"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="@color/com_blue" />
+                android:layout_height="260dp"
+                android:background="@color/white">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/bk_me" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/img_me_header"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:background="@drawable/bk_me_header"
+                        android:padding="10dp"
+                        android:src="@drawable/default_header" />
+
+                    <TextView
+                        android:id="@+id/img_me_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="登录"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_big" />
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/img_me_order"
+                    style="@style/TextMeItem"
+                    android:drawableLeft="@drawable/ic_me_order"
+                    android:text="我的订单" />
+
+                <View
+                    style="@style/Line_H"
+                    android:layout_marginLeft="10dp" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/img_me_msg"
+                        style="@style/TextMeItem"
+                        android:drawableLeft="@drawable/ic_me_msg"
+                        android:text="我的消息" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/shape_oval_red" />
+                </FrameLayout>
+
+                <View
+                    style="@style/Line_H"
+                    android:layout_marginLeft="10dp" />
+
+                <TextView
+                    android:id="@+id/img_me_favo"
+                    style="@style/TextMeItem"
+                    android:drawableLeft="@drawable/ic_me_favo"
+                    android:text="我的收藏" />
+
+                <View
+                    style="@style/Line_H"
+                    android:layout_marginLeft="10dp" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/img_me_grade"
+                        style="@style/TextMeItem"
+                        android:drawableLeft="@drawable/ic_me_grade"
+                        android:drawableRight="@null"
+                        android:text="我的积分" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="15dp"
+                        android:gravity="center"
+                        android:text="300积分"
+                        android:textColor="@color/am_blue"
+                        android:textSize="@dimen/text_nomal_small" />
+                    <!--android:drawableRight="@drawable/ic_me_next"-->
+
+                </FrameLayout>
+
+                <View
+                    style="@style/Line_H"
+                    android:layout_marginLeft="10dp" />
+
+                <TextView
+                    android:id="@+id/img_me_safe"
+                    style="@style/TextMeItem"
+                    android:drawableLeft="@drawable/ic_me_safe"
+                    android:text="安全巡监" />
+
+                <View style="@style/Line_H" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <View style="@style/Line_H" />
+
+                <TextView
+                    android:id="@+id/img_me_suggest"
+                    style="@style/TextMeItem"
+                    android:drawableLeft="@drawable/ic_me_suggest"
+                    android:text="意见反馈" />
+
+                <View
+                    style="@style/Line_H"
+                    android:layout_marginLeft="10dp" />
+
+                <TextView
+                    android:id="@+id/img_me_setting"
+                    style="@style/TextMeItem"
+                    android:drawableLeft="@drawable/ic_me_setting"
+                    android:text="设置" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -34,14 +180,14 @@
         android:background="@color/none"
         app:popupTheme="@style/AppTheme.PopupOverlay">
 
-        <TextView
-            android:id="@+id/text_toolbar_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="AIMAI"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_big" />
+        <ImageView
+            android:id="@+id/btn_right"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:foreground="?attr/selectableItemBackground"
+            android:scaleType="center"
+            android:src="@mipmap/ic_launcher" />
 
     </android.support.v7.widget.Toolbar>
 

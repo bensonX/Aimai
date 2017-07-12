@@ -17,6 +17,7 @@ import com.ins.aimai.R;
 import com.ins.aimai.ui.adapter.PagerAdapterHome;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.common.utils.DensityUtil;
+import com.ins.common.utils.PermissionsUtil;
 import com.ins.common.utils.StatusBarTextUtil;
 
 public class HomeActivity extends BaseAppCompatActivity {
@@ -32,6 +33,9 @@ public class HomeActivity extends BaseAppCompatActivity {
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setNeedDoubleClickExit(true);
+
+//        PermissionsUtil.checkAndRequestPermissions(this);
 
         StatusBarTextUtil.transparencyBar(HomeActivity.this);
         StatusBarTextUtil.StatusBarLightMode(HomeActivity.this);

@@ -56,12 +56,6 @@ public class HomeFragment extends BaseFragment {
         this.position = getArguments().getInt("position");
     }
 
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        StatusBarTextUtil.StatusBarLightMode(getActivity());
-//    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

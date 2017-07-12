@@ -54,7 +54,7 @@ public class BaseAppCompatActivity extends CommonBaseAppCompatActivity {
         //设置toobar文字图标和返回事件
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
-//            toolbar.setNavigationIcon(R.drawable.icon_back);
+            toolbar.setNavigationIcon(R.drawable.ic_back);
             toolbar.setTitle("");
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(needback);

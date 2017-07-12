@@ -4,11 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
+    android:layout_marginTop="10dp"
     android:background="@color/white"
     android:gravity="center_vertical"
     android:orientation="vertical">
+
+    <View style="@style/Line_H" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:text="待付款"
+        android:textColor="@color/am_blue"
+        android:textSize="@dimen/text_big_nomal" />
+
+    <View
+        style="@style/Line_H"
+        android:layout_marginLeft="10dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,7 +37,7 @@
             app:cardElevation="0dp">
 
             <ImageView
-                android:id="@+id/img_item_info"
+                android:id="@+id/img_item_order_header"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
@@ -42,11 +56,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
                 android:ellipsize="end"
-                android:maxLines="3"
-                android:lineSpacingExtra="5dp"
-                android:text="安全生产管理培训课安全生产管理培训课安全生产管理培训课安全生产管理培训课"
+                android:maxLines="1"
+                android:text="安全生产管理培训课"
                 android:textColor="@color/com_text_blank"
-                android:textSize="@dimen/text_big_nomal" />
+                android:textSize="@dimen/text_nomal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="￥158"
+                android:textColor="@color/am_red"
+                android:textSize="@dimen/text_nomal_small" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -61,29 +82,36 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="15分钟前"
-                    android:textColor="@color/com_text_dark_light"
-                    android:textSize="@dimen/text_small" />
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:background="@drawable/shape_rect_corner_none_line_blue"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:paddingBottom="3dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="3dp"
+                    android:text="去付款"
+                    android:textColor="@color/am_blue"
+                    android:textSize="@dimen/text_nomal" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:drawableLeft="@drawable/ic_home_favo_item"
-                    android:drawablePadding="5dp"
-                    android:text="26"
-                    android:textColor="@color/com_text_dark_light"
-                    android:textSize="@dimen/text_small" />
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/shape_rect_corner_none_line_dark"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:paddingBottom="3dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="3dp"
+                    android:text="删除订单"
+                    android:textColor="@color/com_text_dark"
+                    android:textSize="@dimen/text_nomal" />
 
             </LinearLayout>
 
         </LinearLayout>
 
     </LinearLayout>
+
+    <View style="@style/Line_H" />
 
 </LinearLayout>
