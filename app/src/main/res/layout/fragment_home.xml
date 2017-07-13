@@ -32,7 +32,7 @@
                 android:layout_height="match_parent"
                 android:foreground="?attr/selectableItemBackground"
                 android:scaleType="center"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@drawable/ic_me_msg" />
 
             <ImageView
                 android:layout_width="wrap_content"

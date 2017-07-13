@@ -2,6 +2,7 @@ package com.ins.common.ui.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +49,12 @@ public class DialogPopupPhoto extends Dialog {
 
         this.setCanceledOnTouchOutside(true);    //点击外部关闭
 
+        super.setContentView(mView);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         Window win = this.getWindow();
         win.setGravity(Gravity.BOTTOM);    //从下方弹出
         win.getDecorView().setPadding(0, 0, 0, 0);
@@ -55,28 +62,7 @@ public class DialogPopupPhoto extends Dialog {
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         win.setAttributes(lp);
-
-        super.setContentView(mView);
     }
-
-    @Override
-    public void show() {
-        super.show();
-    }
-
-//    /**
-//     * 相册键监听器
-//     */
-//    public void setOnPhotoListener(View.OnClickListener listener) {
-//        text_photo.setOnClickListener(listener);
-//    }
-//
-//    /**
-//     * 相机键监听器
-//     */
-//    public void setOnCameraListener(View.OnClickListener listener) {
-//        text_camera.setOnClickListener(listener);
-//    }
 
     /**
      * 取消监听，不光取消按钮，点击外部，返回键等一切导致dialog消失的操作都会回调这个监听

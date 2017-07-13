@@ -55,7 +55,7 @@ public class CropHelper {
     private int aspectY = 1;                 //裁剪的时候选择框高
     private CropInterface cropInterface;
     private Object activityOrfragment;
-    private Context context;
+    protected Context context;
 
     public CropHelper(Object activityOrfragment, CropInterface cropInterface) {
         this.cropInterface = cropInterface;

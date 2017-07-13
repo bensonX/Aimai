@@ -26,14 +26,21 @@ public class ClearCacheUtil {
     /**
      * 获取APP缓存大小总和
      */
-    public static String getAppCacheSize(Context context) throws Exception {
+    public static String getAppCacheSize(Context context){
+        return getFormatSize(getAppCacheSizeValue(context));
+    }
+
+    /**
+     * 获取APP缓存大小总和(返回未格式化的原始大小：long)
+     */
+    public static long getAppCacheSizeValue(Context context){
         List<File> folders = new ArrayList<>();
         folders.add(new File(FileUtil.getAppStoragePath()));
 
         long cacheSize = 0;
         cacheSize += getTotalCacheSizeValue(context);
         cacheSize += getFoldersSize(folders.toArray(new File[]{}));
-        return getFormatSize(cacheSize);
+        return cacheSize;
     }
 
     /**
@@ -52,14 +59,14 @@ public class ClearCacheUtil {
     /**
      * 获取数据和缓存大小总和
      */
-    public static String getTotalCacheSize(Context context) throws Exception {
+    public static String getTotalCacheSize(Context context){
         return getFormatSize(getTotalCacheSizeValue(context));
     }
 
     /**
      * 获取数据和缓存大小总和(返回未格式化的原始大小：long)
      */
-    public static long getTotalCacheSizeValue(Context context) throws Exception {
+    public static long getTotalCacheSizeValue(Context context){
         long cacheSize = 0;
         cacheSize += getCacheSizeValue(context);
         cacheSize += getExternalCacheSizeValue(context);
@@ -79,14 +86,14 @@ public class ClearCacheUtil {
     /**
      * 获取缓存大小
      */
-    public static String getExternalCacheSize(Context context) throws Exception {
+    public static String getExternalCacheSize(Context context){
         return getFormatSize(getExternalCacheSizeValue(context));
     }
 
     /**
      * 获取缓存大小(返回未格式化的原始大小：long)
      */
-    public static long getExternalCacheSizeValue(Context context) throws Exception {
+    public static long getExternalCacheSizeValue(Context context){
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             return getFolderSize(context.getExternalCacheDir());
         } else {
@@ -97,14 +104,14 @@ public class ClearCacheUtil {
     /**
      * 获取数据大小
      */
-    public static String getCacheSize(Context context) throws Exception {
+    public static String getCacheSize(Context context){
         return getFormatSize(getCacheSizeValue(context));
     }
 
     /**
      * 获取数据大小(返回未格式化的原始大小：long)
      */
-    public static long getCacheSizeValue(Context context) throws Exception {
+    public static long getCacheSizeValue(Context context){
         return getFolderSize(context.getCacheDir());
     }
 
@@ -122,37 +129,6 @@ public class ClearCacheUtil {
      */
     public static void clearCache(Context context) {
         deleteDir(context.getCacheDir());
-    }
-
-    //////////////////////////
-    public static String getSobeyCacheSize(Context context) {
-        try {
-            List<File> folders = new ArrayList<>();
-            if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                folders.add(context.getExternalCacheDir());
-            }
-            folders.add(new File(FileUtil.getAppStoragePath()));
-
-            return getFormatSize(getFoldersSize(folders.toArray(new File[]{})));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "0K";
-        }
-    }
-
-
-    public static void clearSobeyCache(Context context) {
-        try {
-            List<File> folders = new ArrayList<>();
-            if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                folders.add(context.getExternalCacheDir());
-            }
-            folders.add(new File(FileUtil.getAppStoragePath()));
-
-            deleteFolders(folders.toArray(new File[]{}));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     ///////////////////////////////////////

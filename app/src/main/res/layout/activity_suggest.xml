@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/am_bk"
+    android:fitsSystemWindows="true"
+    tools:context=".ui.activity.SuggestActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <TextView
+                android:id="@+id/text_toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="意见反馈"
+                android:textColor="@color/am_blue"
+                android:textSize="@dimen/text_big" />
+
+            <TextView
+                android:id="@+id/btn_right"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:gravity="center"
+                android:text="提交"
+                android:textColor="@color/com_text_dark"
+                android:textSize="@dimen/text_big_nomal" />
+
+        </android.support.v7.widget.Toolbar>
+
+        <View style="@style/Line_H" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <View style="@style/Line_H"/>
+
+        <com.ins.common.view.EmojiEditText
+            android:id="@+id/edit_feedback_describe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape_rect_corner_none_line_dark"
+            android:gravity="left|top"
+            android:hint="输入您的宝贵建议"
+            android:inputType="textMultiLine"
+            android:maxLength="255"
+            android:minLines="10"
+            android:padding="8dp"
+            android:textColor="@color/com_text_blank"
+            android:textColorHint="@color/com_text_dark"
+            android:textSize="@dimen/text_nomal" />
+
+        <View style="@style/Line_H"/>
+
+    </LinearLayout>
+
+
+</android.support.design.widget.CoordinatorLayout>

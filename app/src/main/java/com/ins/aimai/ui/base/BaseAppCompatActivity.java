@@ -2,6 +2,7 @@ package com.ins.aimai.ui.base;
 
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,8 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.ins.aimai.R;
+import com.ins.aimai.ui.dialog.DialogLoading;
+import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.base.CommonBaseAppCompatActivity;
 import com.ins.common.common.ActivityCollector;
 import com.ins.common.utils.StatusBarTextUtil;
@@ -24,6 +27,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class BaseAppCompatActivity extends CommonBaseAppCompatActivity {
 
     protected Toolbar toolbar;
+    private DialogLoading dialogLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,12 @@ public class BaseAppCompatActivity extends CommonBaseAppCompatActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (dialogLoading != null) dialogLoading.dismiss();
+    }
+
+    @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
@@ -43,7 +53,7 @@ public class BaseAppCompatActivity extends CommonBaseAppCompatActivity {
         setToolbar(null, true);
     }
 
-    public void setToolbar(String title){
+    public void setToolbar(String title) {
         setToolbar(title, true);
     }
 
@@ -54,7 +64,9 @@ public class BaseAppCompatActivity extends CommonBaseAppCompatActivity {
         //设置toobar文字图标和返回事件
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
-            toolbar.setNavigationIcon(R.drawable.ic_back);
+            if (toolbar.getNavigationIcon() == null) {
+                toolbar.setNavigationIcon(R.drawable.ic_back);
+            }
             toolbar.setTitle("");
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(needback);
@@ -72,10 +84,19 @@ public class BaseAppCompatActivity extends CommonBaseAppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+                onBackPressed();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+
+    public final void showLoadingDialog() {
+        if (dialogLoading == null) dialogLoading = new DialogLoading(this);
+        dialogLoading.show();
+    }
+
+    public final void hideLoadingDialog() {
+        if (dialogLoading != null) dialogLoading.hide();
+    }
 }

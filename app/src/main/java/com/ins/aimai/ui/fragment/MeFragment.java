@@ -10,11 +10,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ins.aimai.R;
+import com.ins.aimai.ui.activity.FavoActivity;
+import com.ins.aimai.ui.activity.LoginActivity;
 import com.ins.aimai.ui.activity.MeDetailActivity;
 import com.ins.aimai.ui.activity.MsgActivity;
 import com.ins.aimai.ui.activity.OrderActivity;
+import com.ins.aimai.ui.activity.SettingActivity;
+import com.ins.aimai.ui.activity.SuggestActivity;
 import com.ins.aimai.ui.base.BaseFragment;
-import com.ins.common.utils.StatusBarTextUtil;
 
 /**
  * Created by liaoinstan
@@ -75,13 +78,14 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         img_me_name = (TextView) rootView.findViewById(R.id.img_me_name);
 
         rootView.findViewById(R.id.btn_right).setOnClickListener(this);
-        rootView.findViewById(R.id.img_me_order).setOnClickListener(this);
-        rootView.findViewById(R.id.img_me_msg).setOnClickListener(this);
-        rootView.findViewById(R.id.img_me_favo).setOnClickListener(this);
-        rootView.findViewById(R.id.img_me_grade).setOnClickListener(this);
-        rootView.findViewById(R.id.img_me_safe).setOnClickListener(this);
-        rootView.findViewById(R.id.img_me_suggest).setOnClickListener(this);
-        rootView.findViewById(R.id.img_me_setting).setOnClickListener(this);
+        rootView.findViewById(R.id.lay_me_header).setOnClickListener(this);
+        rootView.findViewById(R.id.text_me_order).setOnClickListener(this);
+        rootView.findViewById(R.id.text_me_msg).setOnClickListener(this);
+        rootView.findViewById(R.id.text_me_favo).setOnClickListener(this);
+        rootView.findViewById(R.id.text_me_grade).setOnClickListener(this);
+        rootView.findViewById(R.id.text_me_safe).setOnClickListener(this);
+        rootView.findViewById(R.id.text_me_suggest).setOnClickListener(this);
+        rootView.findViewById(R.id.text_me_setting).setOnClickListener(this);
     }
 
     private void initData() {
@@ -96,21 +100,27 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             case R.id.btn_right:
                 MeDetailActivity.start(getContext());
                 break;
-            case R.id.img_me_order:
+            case R.id.lay_me_header:
+                LoginActivity.start(getContext());
+                break;
+            case R.id.text_me_order:
                 OrderActivity.start(getContext());
                 break;
-            case R.id.img_me_msg:
+            case R.id.text_me_msg:
                 MsgActivity.start(getContext());
                 break;
-            case R.id.img_me_favo:
+            case R.id.text_me_favo:
+                FavoActivity.start(getContext());
                 break;
-            case R.id.img_me_grade:
+            case R.id.text_me_grade:
                 break;
-            case R.id.img_me_safe:
+            case R.id.text_me_safe:
                 break;
-            case R.id.img_me_suggest:
+            case R.id.text_me_suggest:
+                SuggestActivity.start(getContext());
                 break;
-            case R.id.img_me_setting:
+            case R.id.text_me_setting:
+                SettingActivity.start(getContext());
                 break;
         }
     }

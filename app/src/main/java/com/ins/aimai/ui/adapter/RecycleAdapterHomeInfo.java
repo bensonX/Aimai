@@ -7,19 +7,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.LayoutHelper;
+import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.TestBean;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
+import com.ins.common.utils.DensityUtil;
 import com.ins.common.utils.GlideUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 这个adapter在首页资讯和我的收藏都有使用，两者功能一致，UI上有细微差别这里决定复用这个adapter，根据不同使用状态调整UI
+ * 如果有layoutHelper 则是首页使用，否则是我的收藏
+ */
 public class RecycleAdapterHomeInfo extends DelegateAdapter.Adapter<RecycleAdapterHomeInfo.Holder> {
 
     private Context context;
@@ -33,6 +40,10 @@ public class RecycleAdapterHomeInfo extends DelegateAdapter.Adapter<RecycleAdapt
     public RecycleAdapterHomeInfo(Context context, LayoutHelper layoutHelper) {
         this.context = context;
         this.layoutHelper = layoutHelper;
+    }
+
+    public RecycleAdapterHomeInfo(Context context) {
+        this.context = context;
     }
 
     @Override
@@ -60,6 +71,16 @@ public class RecycleAdapterHomeInfo extends DelegateAdapter.Adapter<RecycleAdapt
             }
         });
         GlideUtil.loadImgTest(holder.img_item_info);
+        //首页和收藏的UI细节不同
+        if (layoutHelper != null) {
+            RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
+            layoutParams.leftMargin = DensityUtil.dp2px(context, 10);
+            layoutParams.rightMargin = DensityUtil.dp2px(context, 10);
+        } else {
+            RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
+            layoutParams.leftMargin = 0;
+            layoutParams.rightMargin = 0;
+        }
     }
 
     @Override
@@ -69,10 +90,12 @@ public class RecycleAdapterHomeInfo extends DelegateAdapter.Adapter<RecycleAdapt
 
     public class Holder extends RecyclerView.ViewHolder {
 
+        private LinearLayout root;
         private ImageView img_item_info;
 
         public Holder(View itemView) {
             super(itemView);
+            root = (LinearLayout) itemView.findViewById(R.id.root);
             img_item_info = (ImageView) itemView.findViewById(R.id.img_item_info);
         }
     }

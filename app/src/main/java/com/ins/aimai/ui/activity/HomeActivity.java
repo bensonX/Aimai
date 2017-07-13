@@ -44,7 +44,6 @@ public class HomeActivity extends BaseAppCompatActivity {
         initView();
         initCtrl();
         initData();
-
     }
 
     private void initBase() {
