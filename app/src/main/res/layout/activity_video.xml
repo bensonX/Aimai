@@ -22,7 +22,7 @@
             android:layout_gravity="right"
             android:foreground="?attr/selectableItemBackground"
             android:scaleType="center"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/ic_lesson_textsize" />
 
     </android.support.v7.widget.Toolbar>
 

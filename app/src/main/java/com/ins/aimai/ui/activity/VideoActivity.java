@@ -19,6 +19,7 @@ import com.ins.aimai.bean.TestBean;
 import com.ins.aimai.ui.adapter.PagerAdapterVideo;
 import com.ins.aimai.ui.adapter.RecycleAdapterLesson;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
+import com.ins.aimai.ui.dialog.DialogSureAimai;
 import com.ins.common.utils.App;
 import com.ins.common.utils.DensityUtil;
 import com.ins.common.utils.GlideUtil;
@@ -41,6 +42,8 @@ public class VideoActivity extends BaseAppCompatActivity {
     private ViewPager pager;
     private PagerAdapterVideo adapterPager;
 
+    private DialogSureAimai dialogSureAimai;
+
     private String[] titles = new String[]{"介绍", "目录", "讲义", "评论"};
 
     public static void start(Context context) {
@@ -59,6 +62,7 @@ public class VideoActivity extends BaseAppCompatActivity {
         initView();
         initCtrl();
         initData();
+        dialogSureAimai.show();
     }
 
     @Override
@@ -80,6 +84,7 @@ public class VideoActivity extends BaseAppCompatActivity {
     }
 
     private void initBase() {
+        dialogSureAimai = new DialogSureAimai(this, "本课时已看完", "您可以选择开始考核该课时，或者观看下个课时", "观看下个课时", "开始考核");
     }
 
     private void initView() {
@@ -94,7 +99,7 @@ public class VideoActivity extends BaseAppCompatActivity {
         tab.setupWithViewPager(pager);
 
         //播放器初始化
-        GlideUtil.loadBlurImg(this,player.mPlayerThumb, IMAGE_URL);
+        GlideUtil.loadBlurImg(this, player.mPlayerThumb, IMAGE_URL);
         player.mPlayerThumb.setImageResource(R.mipmap.ic_launcher);
         player.init()
                 .setTitle("这是个跑马灯TextView，标题要足够长才会跑。-(゜ -゜)つロ 乾杯~")

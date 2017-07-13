@@ -2,25 +2,34 @@ package com.ins.aimai.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.ins.aimai.R;
+import com.ins.aimai.ui.adapter.PagerAdapterFavo;
+import com.ins.aimai.ui.adapter.PagerAdapterLearn;
 import com.ins.aimai.ui.base.BaseFragment;
-import com.ins.common.utils.StatusBarTextUtil;
 
 /**
  * Created by liaoinstan
  */
-public class StudyFragment extends BaseFragment {
+public class LearnFragment extends BaseFragment {
 
     private int position;
     private View rootView;
 
+    private TabLayout tab;
+    private ViewPager pager;
+    private PagerAdapterLearn adapterPager;
+
+    private String[] titles = new String[]{"课程学习", "考题"};
+
     public static Fragment newInstance(int position) {
-        StudyFragment fragment = new StudyFragment();
+        LearnFragment fragment = new LearnFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("position", position);
         fragment.setArguments(bundle);
@@ -33,16 +42,10 @@ public class StudyFragment extends BaseFragment {
         this.position = getArguments().getInt("position");
     }
 
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        StatusBarTextUtil.StatusBarLightMode(getActivity());
-//    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_study, container, false);
+        rootView = inflater.inflate(R.layout.fragment_learn, container, false);
         return rootView;
     }
 
@@ -51,19 +54,24 @@ public class StudyFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
         initBase();
         initView();
-        initData();
         initCtrl();
+        initData();
     }
 
     private void initBase() {
     }
 
     private void initView() {
-    }
-
-    private void initData() {
+        tab = (TabLayout) rootView.findViewById(R.id.tab);
+        pager = (ViewPager) rootView.findViewById(R.id.pager);
     }
 
     private void initCtrl() {
+        adapterPager = new PagerAdapterLearn(getActivity().getSupportFragmentManager(), titles);
+        pager.setAdapter(adapterPager);
+        tab.setupWithViewPager(pager);
+    }
+
+    private void initData() {
     }
 }

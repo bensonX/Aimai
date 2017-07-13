@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@android:id/background">
+        <shape>
+            <solid android:color="@color/am_yellow_light" />
+            <corners android:radius="10dp" />
+            <size android:height="20dp" />
+            <!--20dp的高度明显大于实际需要的高度，这样是为了让满圆角效果更好适配-->
+        </shape>
+    </item>
+
+    <item android:id="@android:id/progress">
+        <scale
+            android:drawable="@drawable/progress_ct"
+            android:scaleWidth="100%" />
+    </item>
+</layer-list>

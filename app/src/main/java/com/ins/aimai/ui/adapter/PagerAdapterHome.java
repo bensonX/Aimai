@@ -4,11 +4,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.ins.aimai.ui.fragment.BuildingFragment;
 import com.ins.aimai.ui.fragment.LessonFragment;
 import com.ins.aimai.ui.fragment.HomeFragment;
 import com.ins.aimai.ui.fragment.MeFragment;
-import com.ins.aimai.ui.fragment.StudyFragment;
+import com.ins.aimai.ui.fragment.LearnFragment;
 
 /**
  * Created by Administrator on 2017/7/7.
@@ -33,7 +32,7 @@ public class PagerAdapterHome extends FragmentPagerAdapter {
             case 1:
                 return LessonFragment.newInstance(position);
             case 2:
-                return StudyFragment.newInstance(position);
+                return LearnFragment.newInstance(position);
             case 3:
                 return MeFragment.newInstance(position);
             default:
