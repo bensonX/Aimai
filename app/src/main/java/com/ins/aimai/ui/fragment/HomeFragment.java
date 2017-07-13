@@ -15,11 +15,13 @@ import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.TestBean;
 import com.ins.aimai.ui.activity.HomeActivity;
+import com.ins.aimai.ui.activity.WebActivity;
 import com.ins.aimai.ui.adapter.RecycleAdapterHomeBanner;
 import com.ins.aimai.ui.adapter.RecycleAdapterHomeInfo;
 import com.ins.aimai.ui.base.BaseFragment;
 import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.entity.Image;
+import com.ins.common.interfaces.OnRecycleItemClickListener;
 import com.ins.common.utils.StatusBarTextUtil;
 import com.liaoinstan.springview.container.AliFooter;
 import com.liaoinstan.springview.container.AliHeader;
@@ -31,7 +33,7 @@ import java.util.List;
 /**
  * Created by liaoinstan
  */
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements OnRecycleItemClickListener{
 
     private int position;
     private View rootView;
@@ -89,6 +91,7 @@ public class HomeFragment extends BaseFragment {
         recycler.setAdapter(delegateAdapter);
         delegateAdapter.addAdapter(adapterBanner = new RecycleAdapterHomeBanner(getContext(), new LinearLayoutHelper()));
         delegateAdapter.addAdapter(adapterInfo = new RecycleAdapterHomeInfo(getContext(), new LinearLayoutHelper()));
+        adapterInfo.setOnItemClickListener(this);
         springView.setHeader(new AliHeader(getContext(), false));
         springView.setFooter(new AliFooter(getContext(), false));
         springView.setListener(new SpringView.OnFreshListener() {
@@ -143,6 +146,11 @@ public class HomeFragment extends BaseFragment {
                 adapterInfo.notifyDataSetChanged();
             }
         },1000);
+    }
+
+    @Override
+    public void onItemClick(RecyclerView.ViewHolder viewHolder) {
+        WebActivity.start(getContext(),"http://http://cn.bing.com");
     }
 
     private List<TestBean> getInitResults(String name) {

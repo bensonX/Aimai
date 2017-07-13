@@ -14,6 +14,7 @@ import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.TestBean;
+import com.ins.aimai.ui.activity.InfoActivity;
 import com.ins.common.entity.Image;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
 import com.ins.common.utils.GlideUtil;
@@ -56,7 +57,12 @@ public class RecycleAdapterHomeBanner extends DelegateAdapter.Adapter<RecycleAda
     @Override
     public void onBindViewHolder(final RecycleAdapterHomeBanner.Holder holder, final int position) {
         holder.banner.setDatas(results);
-
+        holder.item_home_more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InfoActivity.start(context);
+            }
+        });
     }
 
     @Override
@@ -67,10 +73,12 @@ public class RecycleAdapterHomeBanner extends DelegateAdapter.Adapter<RecycleAda
     public class Holder extends RecyclerView.ViewHolder {
 
         private BannerView banner;
+        private View item_home_more;
 
         public Holder(View itemView) {
             super(itemView);
             banner = (BannerView) itemView.findViewById(R.id.banner);
+            item_home_more = itemView.findViewById(R.id.item_home_more);
             banner.showTitle(false);
             banner.setOnLoadImgListener(new BannerView.OnLoadImgListener() {
                 @Override

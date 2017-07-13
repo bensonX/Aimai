@@ -47,6 +47,8 @@
         <activity android:name=".ui.activity.WebActivity"/>
         <activity android:name=".ui.activity.LoginActivity"/>
         <activity android:name=".ui.activity.RegistActivity"/>
+        <activity android:name=".ui.activity.InfoActivity"/>
+        <activity android:name=".ui.activity.InfoSearchActivity"/>
 
     </application>
 
