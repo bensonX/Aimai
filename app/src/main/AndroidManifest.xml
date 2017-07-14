@@ -55,6 +55,7 @@
         <activity android:name=".ui.activity.AnswerBoardActivity"/>
         <activity android:name=".ui.activity.TestResultActivity"/>
         <activity android:name=".ui.activity.SortUserActivity"/>
+        <activity android:name=".ui.activity.LearnUserActivity"/>
 
     </application>
 </manifest>

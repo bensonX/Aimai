@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.dl7.player.media.IjkPlayerView;
 import com.ins.aimai.R;
@@ -33,6 +34,10 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
     private TabLayout tab;
     private ViewPager pager;
     private PagerAdapterLessonDetail adapterPager;
+
+    private TextView btn_lessondetail_watchcount;
+    private TextView btn_lessondetail_unwatchcount;
+    private TextView btn_lessondetail_testcount;
 
     private RecyclerView recycler;
     private RecycleAdapterLable adapter;
@@ -68,8 +73,14 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
         recycler = (RecyclerView) findViewById(R.id.recycler);
         tab = (TabLayout) findViewById(R.id.tab);
         pager = (ViewPager) findViewById(R.id.pager);
+        btn_lessondetail_watchcount = (TextView) findViewById(R.id.btn_lessondetail_watchcount);
+        btn_lessondetail_unwatchcount = (TextView) findViewById(R.id.btn_lessondetail_unwatchcount);
+        btn_lessondetail_testcount = (TextView) findViewById(R.id.btn_lessondetail_testcount);
         findViewById(R.id.btn_go).setOnClickListener(this);
         findViewById(R.id.btn_go_allot).setOnClickListener(this);
+        btn_lessondetail_watchcount.setOnClickListener(this);
+        btn_lessondetail_unwatchcount.setOnClickListener(this);
+        btn_lessondetail_testcount.setOnClickListener(this);
     }
 
     private void initCtrl() {
@@ -96,6 +107,15 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.btn_lessondetail_watchcount:
+                LearnUserActivity.start(this);
+                break;
+            case R.id.btn_lessondetail_unwatchcount:
+                LearnUserActivity.start(this);
+                break;
+            case R.id.btn_lessondetail_testcount:
+                LearnUserActivity.start(this);
+                break;
             case R.id.btn_go:
                 PayDialogActivity.start(this);
                 break;
