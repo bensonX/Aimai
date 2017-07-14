@@ -18,12 +18,13 @@
             android:id="@+id/tab"
             android:layout_width="match_parent"
             android:layout_height="76dp"
+            android:background="@color/none"
             android:paddingTop="20dp"
             app:tabGravity="center"
-            android:background="@color/none"
             app:tabIndicatorColor="@color/com_blue"
             app:tabIndicatorHeight="1dp"
             app:tabSelectedTextColor="@color/com_blue"
+            app:tabTextAppearance="@style/TabLayoutTextBig"
             app:tabTextColor="@color/com_text_dark" />
 
     </android.support.design.widget.AppBarLayout>

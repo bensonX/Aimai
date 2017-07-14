@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:text="700习题 36个视频课 5个讲义"
             android:textColor="@color/com_text_dark_light"
-            android:textSize="@dimen/text_nomal" />
+            android:textSize="@dimen/text_small" />
 
         <ProgressBar
             android:id="@+id/progress"
@@ -78,7 +78,7 @@
                 android:gravity="bottom"
                 android:text="已学习0小时"
                 android:textColor="@color/com_text_blank"
-                android:textSize="@dimen/text_nomal" />
+                android:textSize="@dimen/text_nomal_small" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -89,7 +89,7 @@
                 android:paddingLeft="3dp"
                 android:text="共0小时"
                 android:textColor="@color/com_text_blank"
-                android:textSize="@dimen/text_nomal" />
+                android:textSize="@dimen/text_nomal_small" />
 
         </LinearLayout>
 
