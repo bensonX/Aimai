@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".ui.activity.WebActivity">
+    android:background="@color/am_bk"
+    tools:context=".ui.activity.MsgActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -25,31 +25,44 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="资讯"
-                android:textColor="@color/am_blue"
+                android:text="正式考试"
+                android:textColor="@color/com_blue"
                 android:textSize="@dimen/text_big" />
+
         </android.support.v7.widget.Toolbar>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/com_line" />
 
     </android.support.design.widget.AppBarLayout>
 
-    <FrameLayout
+    <LinearLayout
+        android:id="@+id/showingroup"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <WebView
-            android:id="@+id/webview"
+        <com.liaoinstan.springview.widget.SpringView
+            android:id="@+id/spring"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/com_bk" />
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            app:type="follow">
 
-        <ProgressBar
-            android:id="@+id/progress"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:progressDrawable="@drawable/shape_progress_horizontal" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:paddingTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingBottom="10dp" />
 
-    </FrameLayout>
+        </com.liaoinstan.springview.widget.SpringView>
+
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

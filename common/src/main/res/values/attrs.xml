@@ -28,4 +28,8 @@
         <!-- 视频分辨率高度 -->
         <attr name="video_height" format="integer"/>
     </declare-styleable>
+
+    <declare-styleable name="RectBackTextView">
+        <attr name="bk_color" format="color" />
+    </declare-styleable>
 </resources>

@@ -12,10 +12,11 @@ import android.view.ViewGroup;
 
 import com.ins.aimai.R;
 import com.ins.aimai.bean.TestBean;
-import com.ins.aimai.ui.activity.LessonDetailActivity;
-import com.ins.aimai.ui.adapter.RecycleAdapterFavo;
-import com.ins.aimai.ui.adapter.RecycleAdapterLearnLesson;
+import com.ins.aimai.interfaces.PagerInter;
+import com.ins.aimai.ui.adapter.RecycleAdapterModel;
+import com.ins.aimai.ui.adapter.RecycleAdapterPracticeList;
 import com.ins.aimai.ui.base.BaseFragment;
+import com.ins.common.common.ItemDecorationDivider;
 import com.ins.common.helper.LoadingViewHelper;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
 import com.liaoinstan.springview.container.AliFooter;
@@ -25,7 +26,7 @@ import com.liaoinstan.springview.widget.SpringView;
 /**
  * Created by liaoinstan
  */
-public class LearnLessonFragment extends BaseFragment implements OnRecycleItemClickListener {
+public class PracticeListFragment extends BaseFragment implements OnRecycleItemClickListener {
 
     private int position;
     private View rootView;
@@ -35,10 +36,11 @@ public class LearnLessonFragment extends BaseFragment implements OnRecycleItemCl
 
     private SpringView springView;
     private RecyclerView recycler;
-    private RecycleAdapterLearnLesson adapter;
+    private RecycleAdapterPracticeList adapter;
+    private PagerInter pagerInter;
 
     public static Fragment newInstance(int position) {
-        LearnLessonFragment fragment = new LearnLessonFragment();
+        PracticeListFragment fragment = new PracticeListFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("position", position);
         fragment.setArguments(bundle);
@@ -54,7 +56,7 @@ public class LearnLessonFragment extends BaseFragment implements OnRecycleItemCl
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_learn_lesson, container, false);
+        rootView = inflater.inflate(R.layout.fragment_practice_list, container, false);
         return rootView;
     }
 
@@ -68,6 +70,7 @@ public class LearnLessonFragment extends BaseFragment implements OnRecycleItemCl
     }
 
     private void initBase() {
+        pagerInter = (PagerInter) getActivity();
     }
 
     private void initView() {
@@ -77,10 +80,11 @@ public class LearnLessonFragment extends BaseFragment implements OnRecycleItemCl
     }
 
     private void initCtrl() {
-        adapter = new RecycleAdapterLearnLesson(getContext());
-        recycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        recycler.setAdapter(adapter);
+        adapter = new RecycleAdapterPracticeList(getContext());
         adapter.setOnItemClickListener(this);
+        recycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        recycler.addItemDecoration(new ItemDecorationDivider(getContext()));
+        recycler.setAdapter(adapter);
         springView.setHeader(new AliHeader(getContext(), false));
         springView.setFooter(new AliFooter(getContext(), false));
         springView.setListener(new SpringView.OnFreshListener() {
@@ -137,6 +141,5 @@ public class LearnLessonFragment extends BaseFragment implements OnRecycleItemCl
 
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
-        LessonDetailActivity.start(getContext());
     }
 }

@@ -150,7 +150,8 @@ public class HomeFragment extends BaseFragment implements OnRecycleItemClickList
 
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
-        WebActivity.start(getContext(),"http://http://cn.bing.com");
+        WebActivity.start(getContext(),"http://cn.bing.com");
+//        WebActivity.start(getContext(),"http://192.168.1.206:8080/api/page/courseVideo");
     }
 
     private List<TestBean> getInitResults(String name) {

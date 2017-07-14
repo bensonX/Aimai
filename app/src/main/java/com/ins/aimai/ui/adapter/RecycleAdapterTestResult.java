@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.ins.aimai.R;
 import com.ins.aimai.bean.TestBean;
@@ -15,7 +16,7 @@ import com.ins.common.utils.GlideUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecycleAdapterLearnLesson extends RecyclerView.Adapter<RecycleAdapterLearnLesson.Holder> {
+public class RecycleAdapterTestResult extends RecyclerView.Adapter<RecycleAdapterTestResult.Holder> {
 
     private Context context;
     private List<TestBean> results = new ArrayList<>();
@@ -24,17 +25,17 @@ public class RecycleAdapterLearnLesson extends RecyclerView.Adapter<RecycleAdapt
         return results;
     }
 
-    public RecycleAdapterLearnLesson(Context context) {
+    public RecycleAdapterTestResult(Context context) {
         this.context = context;
     }
 
     @Override
-    public RecycleAdapterLearnLesson.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new Holder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_learn_lesson, parent, false));
+    public RecycleAdapterTestResult.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new Holder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_test_result, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(final RecycleAdapterLearnLesson.Holder holder, final int position) {
+    public void onBindViewHolder(final RecycleAdapterTestResult.Holder holder, final int position) {
         final TestBean bean = results.get(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,7 +43,7 @@ public class RecycleAdapterLearnLesson extends RecyclerView.Adapter<RecycleAdapt
                 if (listener != null) listener.onItemClick(holder);
             }
         });
-        GlideUtil.loadImgTest(holder.img_item_order_header);
+        holder.text_item_testresult_num.setText(position + 1 + "");
     }
 
     @Override
@@ -52,11 +53,11 @@ public class RecycleAdapterLearnLesson extends RecyclerView.Adapter<RecycleAdapt
 
     public class Holder extends RecyclerView.ViewHolder {
 
-        private ImageView img_item_order_header;
+        private TextView text_item_testresult_num;
 
         public Holder(View itemView) {
             super(itemView);
-            img_item_order_header = (ImageView) itemView.findViewById(R.id.img_item_order_header);
+            text_item_testresult_num = (TextView) itemView.findViewById(R.id.text_item_testresult_num);
         }
     }
 

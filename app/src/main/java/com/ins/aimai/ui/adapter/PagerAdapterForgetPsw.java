@@ -4,10 +4,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.ins.aimai.ui.fragment.FavoFragment;
 import com.ins.aimai.ui.fragment.ForgetPswFirstFragment;
 import com.ins.aimai.ui.fragment.ForgetPswSecondFragment;
-import com.ins.aimai.ui.fragment.InfoFragment;
+import com.ins.aimai.ui.fragment.PracticeCateFragment;
 
 /**
  * Created by Administrator on 2017/7/7.

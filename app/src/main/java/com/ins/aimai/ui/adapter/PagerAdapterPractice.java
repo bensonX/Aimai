@@ -4,20 +4,20 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.ins.aimai.ui.fragment.FavoFragment;
-import com.ins.aimai.ui.fragment.InfoFragment;
-import com.ins.aimai.ui.fragment.LearnLessonFragment;
-import com.ins.aimai.ui.fragment.LearnTestFragment;
+import com.ins.aimai.ui.fragment.ForgetPswFirstFragment;
+import com.ins.aimai.ui.fragment.ForgetPswSecondFragment;
+import com.ins.aimai.ui.fragment.PracticeCateFragment;
+import com.ins.aimai.ui.fragment.PracticeListFragment;
 
 /**
  * Created by Administrator on 2017/7/7.
  */
 
-public class PagerAdapterLearn extends FragmentPagerAdapter {
+public class PagerAdapterPractice extends FragmentPagerAdapter {
 
     private String[] titles;
 
-    public PagerAdapterLearn(FragmentManager fm, String[] titles) {
+    public PagerAdapterPractice(FragmentManager fm, String[] titles) {
         super(fm);
         this.titles = titles;
     }
@@ -36,9 +36,9 @@ public class PagerAdapterLearn extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return LearnLessonFragment.newInstance(position);
+                return PracticeCateFragment.newInstance(position);
             case 1:
-                return LearnTestFragment.newInstance(position);
+                return PracticeListFragment.newInstance(position);
             default:
                 return null;
         }

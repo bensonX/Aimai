@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:id="@+id/showingroup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape_rect_cornerbig_white"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/lay_learntest_practice"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_learn_practice"
+                    android:drawablePadding="5dp"
+                    android:gravity="center"
+                    android:text="练习题"
+                    android:textColor="@color/com_text_blank"
+                    android:textSize="@dimen/text_big_nomal" />
+
+                <Space style="@style/Space_H" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="5dp"
+                    android:drawableRight="@drawable/ic_learn_next"
+                    android:gravity="center"
+                    android:text="去练习"
+                    android:textColor="@color/com_text_dark"
+                    android:textSize="@dimen/text_nomal_small" />
+
+            </LinearLayout>
+
+            <View
+                style="@style/Line_H"
+                android:layout_marginLeft="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:orientation="horizontal"
+                android:paddingBottom="22dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="已练习"
+                    android:textColor="@color/com_text_dark"
+                    android:textSize="@dimen/text_nomal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/com_text_blank_deep_light"
+                    android:textSize="26sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:gravity="center"
+                    android:text="(题)"
+                    android:textColor="@color/com_text_blank_deep_light"
+                    android:textSize="@dimen/text_nomal_small" />
+
+                <Space style="@style/Space_H" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="正确率"
+                    android:textColor="@color/com_text_dark"
+                    android:textSize="@dimen/text_nomal" />
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:gravity="left"
+                    android:text="00.00%"
+                    android:textColor="@color/com_text_blank_deep_light"
+                    android:textSize="26sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape_rect_cornerbig_white"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/lay_learntest_error"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_learn_error"
+                    android:drawablePadding="5dp"
+                    android:gravity="center"
+                    android:text="错题库"
+                    android:textColor="@color/com_text_blank"
+                    android:textSize="@dimen/text_big_nomal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:gravity="center"
+                    android:text="(0)"
+                    android:textColor="@color/com_text_dark"
+                    android:textSize="@dimen/text_nomal" />
+
+                <Space style="@style/Space_H" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="5dp"
+                    android:drawableRight="@drawable/ic_learn_next"
+                    android:gravity="center"
+                    android:text="去练习"
+                    android:textColor="@color/com_text_dark"
+                    android:textSize="@dimen/text_nomal_small" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape_rect_cornerbig_white"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/lay_learntest_model"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_learn_model"
+                    android:drawablePadding="5dp"
+                    android:gravity="center"
+                    android:text="模拟题"
+                    android:textColor="@color/com_text_blank"
+                    android:textSize="@dimen/text_big_nomal" />
+
+                <Space style="@style/Space_H" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="5dp"
+                    android:drawableRight="@drawable/ic_learn_next"
+                    android:gravity="center"
+                    android:text="去练习"
+                    android:textColor="@color/com_text_dark"
+                    android:textSize="@dimen/text_nomal_small" />
+
+            </LinearLayout>
+
+            <View
+                style="@style/Line_H"
+                android:layout_marginLeft="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:orientation="horizontal"
+                android:paddingBottom="22dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="已练习"
+                    android:textColor="@color/com_text_dark"
+                    android:textSize="@dimen/text_nomal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/com_text_blank_deep_light"
+                    android:textSize="26sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:gravity="center"
+                    android:text="(题)"
+                    android:textColor="@color/com_text_blank_deep_light"
+                    android:textSize="@dimen/text_nomal_small" />
+
+                <Space style="@style/Space_H" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="正确率"
+                    android:textColor="@color/com_text_dark"
+                    android:textSize="@dimen/text_nomal" />
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:gravity="left"
+                    android:text="00.00%"
+                    android:textColor="@color/com_text_blank_deep_light"
+                    android:textSize="26sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape_rect_cornerbig_white"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/lay_learntest_official"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_learn_official"
+                    android:drawablePadding="5dp"
+                    android:gravity="center"
+                    android:text="正式考题"
+                    android:textColor="@color/com_text_blank"
+                    android:textSize="@dimen/text_big_nomal" />
+
+                <Space style="@style/Space_H" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="5dp"
+                    android:drawableRight="@drawable/ic_learn_next"
+                    android:gravity="center"
+                    android:text="去考试"
+                    android:textColor="@color/com_text_dark"
+                    android:textSize="@dimen/text_nomal_small" />
+
+            </LinearLayout>
+
+            <View
+                style="@style/Line_H"
+                android:layout_marginLeft="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:orientation="horizontal"
+                android:paddingBottom="22dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="已通过"
+                    android:textColor="@color/com_text_dark"
+                    android:textSize="@dimen/text_nomal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/com_text_blank_deep_light"
+                    android:textSize="26sp" />
+
+                <Space style="@style/Space_H" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="未通过"
+                    android:textColor="@color/com_text_dark"
+                    android:textSize="@dimen/text_nomal" />
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:gravity="left"
+                    android:text="0"
+                    android:textColor="@color/com_text_blank_deep_light"
+                    android:textSize="26sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</ScrollView>

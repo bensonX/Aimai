@@ -69,6 +69,7 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
         tab = (TabLayout) findViewById(R.id.tab);
         pager = (ViewPager) findViewById(R.id.pager);
         findViewById(R.id.btn_go).setOnClickListener(this);
+        findViewById(R.id.btn_go_allot).setOnClickListener(this);
     }
 
     private void initCtrl() {
@@ -87,7 +88,6 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
         adapter.getResults().add(new TestBean());
         adapter.getResults().add(new TestBean());
         adapter.getResults().add(new TestBean());
-        adapter.getResults().add(new TestBean());
         adapter.notifyDataSetChanged();
 
         GlideUtil.loadImgTest(img_lessondetail_cover);
@@ -98,6 +98,9 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
         switch (v.getId()) {
             case R.id.btn_go:
                 PayDialogActivity.start(this);
+                break;
+            case R.id.btn_go_allot:
+                SortUserActivity.start(this);
                 break;
         }
     }
