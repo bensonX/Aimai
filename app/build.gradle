@@ -12,6 +12,18 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         //使用矢量图兼容库
         vectorDrawables.useSupportLibrary = true
+        ///////////////////////jpush配置 start
+        ndk {
+            //选择要添加的对应cpu类型的.so库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
+        manifestPlaceholders = [
+                JPUSH_PKGNAME : applicationId,
+                JPUSH_APPKEY : "bd2aae98f3b3cdd64120a050", //JPush上注册的包名对应的appkey.7ca5583d3774a0dc97cf9049
+                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+        ]
+        ///////////////////////jpush配置 end
     }
     //##########################
     //配置keystore签名 start
@@ -69,4 +81,8 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     compile project(':playerview')
+    compile project(':lib_domain')
+    //极光推送
+    compile 'cn.jiguang.sdk:jpush:3.0.3'  // 此处以JPush 3.0.3 版本为例。
+    compile 'cn.jiguang.sdk:jcore:1.1.1'  // 此处以JCore 1.1.1 版本为例。
 }

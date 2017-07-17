@@ -1,4 +1,4 @@
-package com.ins.common.net;
+package com.ins.aimai.net;
 
 import android.util.Log;
 

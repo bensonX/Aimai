@@ -1,1 +1,1 @@
-include ':app', ':common', ':playerview'
+include ':app', ':common', ':playerview', ':lib_domain'
