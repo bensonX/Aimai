@@ -4,9 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.ins.aimai.ui.fragment.ForgetPswFirstFragment;
+import com.ins.aimai.ui.fragment.PhoneValiFragment;
 import com.ins.aimai.ui.fragment.ForgetPswSecondFragment;
-import com.ins.aimai.ui.fragment.PracticeCateFragment;
 
 /**
  * Created by Administrator on 2017/7/7.
@@ -35,7 +34,7 @@ public class PagerAdapterForgetPsw extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return ForgetPswFirstFragment.newInstance(position);
+                return PhoneValiFragment.newInstance(position);
             case 1:
                 return ForgetPswSecondFragment.newInstance(position);
             default:

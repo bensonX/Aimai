@@ -10,6 +10,8 @@ import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.CommonBean;
 import com.ins.aimai.bean.TestBean;
+import com.ins.aimai.bean.User;
+import com.ins.aimai.common.AppData;
 import com.ins.aimai.common.AppVali;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetParam;
@@ -58,17 +60,17 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
         dialogIdentify.setOnIdentifyListener(new DialogIdentify.OnIdentifyListener() {
             @Override
             public void onPersonClick(View v) {
-                RegistActivity.start(LoginActivity.this);
+                RegistActivity.start(LoginActivity.this, 0);
             }
 
             @Override
             public void onCompClick(View v) {
-                RegistActivity.start(LoginActivity.this);
+                RegistActivity.start(LoginActivity.this, 1);
             }
 
             @Override
             public void onGovClick(View v) {
-                RegistActivity.start(LoginActivity.this);
+                RegistActivity.start(LoginActivity.this, 2);
             }
         });
     }
@@ -109,38 +111,19 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
         }
     }
 
-    private void netTest() {
-//        Map<String, String> param = new HashMap<String, String>() {{
-//            //无参数
-//        }};
-        Map<String, Object> param = new NetParam()
-                .put("phone", "18002247238")
-                .build();
-        NetApi.NI().netTest(param).enqueue(new BaseCallback<TestBean>(TestBean.class) {
-            @Override
-            public void onSuccess(int status, TestBean images, String msg) {
-                ToastUtil.showToastShort(msg);
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-                ToastUtil.showToastShort(msg);
-            }
-        });
-    }
-
     private void netLogin(String phone, String password) {
         Map<String, Object> param = new NetParam()
                 .put("phone", phone)
                 .put("password", password)
                 .put("deviceType", 0)
-                .put("deviceToken", 0)
-                .put("isWechat", JPushInterface.getRegistrationID(this))
+                .put("deviceToken", JPushInterface.getRegistrationID(this))
+                .put("isWechat", 0)
                 .build();
-        NetApi.NI().login(param).enqueue(new BaseCallback<CommonBean>(CommonBean.class) {
+        NetApi.NI().login(param).enqueue(new BaseCallback<User>(User.class) {
             @Override
-            public void onSuccess(int status, CommonBean bean, String msg) {
-                ToastUtil.showToastShort(msg);
+            public void onSuccess(int status, User user, String msg) {
+                AppData.App.saveUser(user);
+                AppData.App.saveToken(user.getToken());
             }
 
             @Override

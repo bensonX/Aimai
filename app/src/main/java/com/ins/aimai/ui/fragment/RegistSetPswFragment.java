@@ -6,18 +6,36 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.ins.aimai.R;
+import com.ins.aimai.bean.User;
+import com.ins.aimai.common.AppEvent;
+import com.ins.aimai.common.AppVali;
+import com.ins.aimai.interfaces.PagerFragmentInter;
 import com.ins.aimai.ui.activity.ForgetPswActivity;
+import com.ins.aimai.ui.activity.RegistActivity;
 import com.ins.aimai.ui.base.BaseFragment;
+import com.ins.aimai.utils.ToastUtil;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Created by liaoinstan
  */
-public class RegistSetPswFragment extends BaseFragment implements View.OnClickListener{
+public class RegistSetPswFragment extends BaseFragment implements PagerFragmentInter {
 
     private int position;
     private View rootView;
+
+    private EditText edit_regist_newpsw;
+    private EditText edit_regist_newpsw_repeat;
+
+    private String phone;
+
+    private RegistActivity activity;
 
     public static Fragment newInstance(int position) {
         RegistSetPswFragment fragment = new RegistSetPswFragment();
@@ -30,7 +48,17 @@ public class RegistSetPswFragment extends BaseFragment implements View.OnClickLi
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        registEventBus();
         this.position = getArguments().getInt("position");
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, priority = 100)
+    public void onCommonEvent(String event) {
+        if (AppEvent.EVENT_PHONE_VALI.equals(AppEvent.getFlag(event))) {
+            phone = AppEvent.getStr(event);
+            ToastUtil.showToastShort(phone);
+        }
+        EventBus.getDefault().cancelEventDelivery(event);
     }
 
     @Nullable
@@ -50,10 +78,12 @@ public class RegistSetPswFragment extends BaseFragment implements View.OnClickLi
     }
 
     private void initBase() {
+        activity = (RegistActivity) getActivity();
     }
 
     private void initView() {
-//        rootView.findViewById(R.id.btn_go).setOnClickListener(this);
+        edit_regist_newpsw = (EditText) rootView.findViewById(R.id.edit_regist_newpsw);
+        edit_regist_newpsw_repeat = (EditText) rootView.findViewById(R.id.edit_regist_newpsw_repeat);
     }
 
     private void initCtrl() {
@@ -63,10 +93,18 @@ public class RegistSetPswFragment extends BaseFragment implements View.OnClickLi
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.btn_go:
-                break;
+    public boolean next() {
+        String psw = edit_regist_newpsw.getText().toString();
+        String psw_repeat = edit_regist_newpsw_repeat.getText().toString();
+        String msg = AppVali.regist_psw(psw, psw_repeat);
+        if (msg == null) {
+            User register = activity.getRegister();
+            register.setPhone(phone);
+            register.setPwd(psw);
+            return true;
+        } else {
+            ToastUtil.showToastShort(msg);
+            return false;
         }
     }
 }

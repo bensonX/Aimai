@@ -1,5 +1,7 @@
 package com.ins.aimai.ui.base;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
@@ -8,6 +10,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.ins.aimai.R;
+
+import org.greenrobot.eventbus.EventBus;
 
 
 /**
@@ -38,5 +42,18 @@ public class BaseFragment extends Fragment {
                 }
             }
         }
+    }
+
+    private boolean eventBusSurppot = false;
+
+    public void registEventBus() {
+        EventBus.getDefault().register(this);
+        eventBusSurppot = true;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (eventBusSurppot) EventBus.getDefault().unregister(this);
     }
 }

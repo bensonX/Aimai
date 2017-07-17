@@ -18,7 +18,7 @@ import retrofit2.http.Part;
 public interface NetInterface {
 
     /**
-     * 测试网络连接，无意义
+     * 测试网络连接，无实际意义
      */
     @FormUrlEncoded
     @POST("/api/user/sendMessage")
@@ -48,4 +48,20 @@ public interface NetInterface {
     @FormUrlEncoded
     @POST("/api/user/login")
     Call<ResponseBody> login(@FieldMap Map<String, Object> param);
+
+    /**
+     * 获取验证码
+     * String phone
+     */
+    @FormUrlEncoded
+    @POST("/api/user/sendMessage")
+    Call<ResponseBody> sendMessage(@FieldMap Map<String, Object> param);
+
+    /**
+     * 注册
+     * String phone
+     */
+    @FormUrlEncoded
+    @POST("/api/user/register")
+    Call<ResponseBody> register(@FieldMap Map<String, Object> param);
 }

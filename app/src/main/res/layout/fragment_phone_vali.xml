@@ -19,9 +19,10 @@
         <View style="@style/Line_H" />
 
         <com.ins.common.view.EmojiEditText
-            android:id="@+id/edit_modifypsw_oldpsw"
+            android:id="@+id/edit_vali_phone"
             style="@style/EditMeItem"
             android:hint="输入您的手机号"
+            android:maxLength="11"
             android:inputType="number" />
 
         <View
@@ -35,11 +36,12 @@
             android:orientation="horizontal">
 
             <com.ins.common.view.EmojiEditText
-                android:id="@+id/edit_modifypsw_newpsw"
+                android:id="@+id/edit_vali_code"
                 style="@style/EditMeItem"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:hint="输入验证码"
+                android:maxLength="4"
                 android:inputType="number" />
 
             <TextView

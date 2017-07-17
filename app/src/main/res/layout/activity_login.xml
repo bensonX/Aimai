@@ -79,7 +79,8 @@
                     android:layout_weight="1"
                     android:digits="0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM_-@."
                     android:hint="用户名 / 手机号"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:maxLength="11" />
 
             </LinearLayout>
 
@@ -108,7 +109,8 @@
                     android:layout_weight="1"
                     android:digits="0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
                     android:hint="输入密码"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:maxLength="32" />
 
             </LinearLayout>
 

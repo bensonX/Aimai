@@ -1,5 +1,6 @@
 package com.ins.aimai.bean;
 
+import com.google.gson.annotations.SerializedName;
 import com.ins.common.entity.BaseSelectBean;
 
 import java.io.Serializable;
@@ -13,11 +14,22 @@ public class CommonBean extends BaseSelectBean implements Serializable {
 
     private int id;
 
+    @SerializedName("valiCode")
+    private String valiCode;
+
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getValiCode() {
+        return valiCode;
+    }
+
+    public void setValiCode(String valiCode) {
+        this.valiCode = valiCode;
     }
 }

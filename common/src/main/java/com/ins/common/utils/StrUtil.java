@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
  * 字符串处理工具，验证null，转换数字，检查中文等
  */
 public class StrUtil {
+
     public static boolean isEmpty(String str) {
         if (str != null && !"".equals(str)) {
             return false;

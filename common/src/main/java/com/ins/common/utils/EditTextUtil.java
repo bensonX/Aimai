@@ -1,5 +1,6 @@
 package com.ins.common.utils;
 
+import android.text.TextUtils;
 import android.widget.EditText;
 
 /**
@@ -22,4 +23,5 @@ public class EditTextUtil {
     public static void enableEditText(EditText editText){
         editText.setFocusable(true);
     }
+
 }

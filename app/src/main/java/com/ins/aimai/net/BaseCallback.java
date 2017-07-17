@@ -52,8 +52,6 @@ public abstract class BaseCallback<T> implements Callback<ResponseBody> {
             if (root.has("data")) {
                 data = root.getString("data");
             }
-            //TODO:测试代码，直接通过
-            onSuccess(status, null, res);
             T t;
             if (data != null && !data.equals("")) {
 //                TypeAdapter<T> adapter = gson.getAdapter(type);
@@ -65,6 +63,7 @@ public abstract class BaseCallback<T> implements Callback<ResponseBody> {
             }
             switch (status) {
                 case 200:
+                    onSuccess(status, t, msg);
                     break;
                 case 1005:
                     break;

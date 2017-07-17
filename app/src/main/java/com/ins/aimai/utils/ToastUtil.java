@@ -19,7 +19,7 @@ import android.widget.Toast;
  */
 @SuppressWarnings("unused")
 public final class ToastUtil {
-
+    private static boolean debug;
     private static final int NONE = -1;
     @SuppressLint("StaticFieldLeak")
     private static Context context;
@@ -34,6 +34,10 @@ public final class ToastUtil {
         context = application.getApplicationContext();
     }
 
+    public static void setDebug(boolean debug) {
+        ToastUtil.debug = debug;
+    }
+
     public static void showToastLong(String msg) {
         showToast(context, msg, Toast.LENGTH_LONG);
     }
@@ -44,7 +48,9 @@ public final class ToastUtil {
     }
 
     public static void showToastShortDebug(String msg) {
-        showToast(context, msg, Toast.LENGTH_SHORT);
+        if (debug) {
+            showToast(context, msg, Toast.LENGTH_SHORT);
+        }
     }
 
     public static void showToastShort(int strRes) {
