@@ -32,4 +32,10 @@
     <declare-styleable name="RectBackTextView">
         <attr name="bk_color" format="color" />
     </declare-styleable>
+
+    <declare-styleable name="DotTextView">
+        <attr name="color_dot" format="color" />
+        <attr name="color_select" format="color" />
+        <attr name="color_unselect" format="color" />
+    </declare-styleable>
 </resources>

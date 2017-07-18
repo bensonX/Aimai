@@ -53,6 +53,10 @@ public class BaseAppCompatActivity extends CommonBaseAppCompatActivity {
         setToolbar(null, true);
     }
 
+    public void setToolbar(boolean needback) {
+        setToolbar(null, needback);
+    }
+
     public void setToolbar(String title) {
         setToolbar(title, true);
     }
@@ -77,6 +81,15 @@ public class BaseAppCompatActivity extends CommonBaseAppCompatActivity {
             if (!TextUtils.isEmpty(title)) {
                 text_title.setText(title);
             }
+        }
+    }
+
+    public String getToolbarText() {
+        TextView text_title = (TextView) findViewById(R.id.text_toolbar_title);
+        if (text_title != null) {
+            return text_title.getText().toString();
+        } else {
+            return "";
         }
     }
 

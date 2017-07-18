@@ -131,12 +131,12 @@ public class ItemDecorationSortStickTop extends RecyclerView.ItemDecoration {
 //            return;
 //        }
 //        final int bottom = parent.getPaddingTop() + dividerHeight;
-//        mPaint.setColor(Color.WHITE);
+//        mPaint.setDotColor(Color.WHITE);
 //        canvas.drawRect(parent.getLeft(), parent.getPaddingTop(), parent.getRight() - parent.getPaddingRight(), parent.getPaddingTop() + dividerHeight, mPaint);
 //        ColorUtil.setPaintColor(mPaint, tagsStr.indexOf(tags.get(position)));
 //        mPaint.setTextSize(40);
 //        canvas.drawCircle(DensityUtil.dp2px(mContext, 42.5f), bottom - dividerHeight / 2, 35, mPaint);
-//        mPaint.setColor(Color.WHITE);
+//        mPaint.setDotColor(Color.WHITE);
 //        canvas.drawText(tags.get(position), DensityUtil.dp2px(mContext, 42.5f), bottom - dividerHeight / 3, mPaint);
 //    }
 

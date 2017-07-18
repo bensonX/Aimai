@@ -1,12 +1,14 @@
 package com.ins.aimai.bean;
 
+import com.ins.common.entity.BaseSelectBean;
+
 import java.io.Serializable;
 
 /**
  * Created by Administrator on 2017/5/19.
  */
 
-public class TestBean implements Serializable{
+public class TestBean extends BaseSelectBean implements Serializable{
     private int id;
     private String name;
 

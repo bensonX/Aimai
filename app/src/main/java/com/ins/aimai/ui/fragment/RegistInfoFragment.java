@@ -14,7 +14,9 @@ import android.widget.TextView;
 import com.ins.aimai.R;
 import com.ins.aimai.common.AppVali;
 import com.ins.aimai.net.NetParam;
+import com.ins.aimai.ui.activity.AddressActivity;
 import com.ins.aimai.ui.activity.RegistActivity;
+import com.ins.aimai.ui.activity.TradeActivity;
 import com.ins.aimai.ui.base.BaseFragment;
 import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.helper.CropHelper;
@@ -187,6 +189,12 @@ public class RegistInfoFragment extends BaseFragment implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.lay_regist_business:
+                TradeActivity.start(getContext());
+                break;
+            case R.id.lay_regist_address:
+                AddressActivity.start(getContext());
+                break;
             case R.id.lay_regist_header:
                 cropHelperEx.showDefaultDialog();
                 typeImg = 0;

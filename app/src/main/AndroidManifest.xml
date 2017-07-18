@@ -43,8 +43,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".ui.activity.HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activity.VideoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -80,6 +81,8 @@
         <activity android:name=".ui.activity.TestResultActivity" />
         <activity android:name=".ui.activity.SortUserActivity" />
         <activity android:name=".ui.activity.LearnUserActivity" />
+        <activity android:name=".ui.activity.AddressActivity"/>
+        <activity android:name=".ui.activity.TradeActivity"/>
 
     </application>
 </manifest>
