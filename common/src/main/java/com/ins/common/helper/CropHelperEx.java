@@ -1,28 +1,14 @@
 package com.ins.common.helper;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.provider.MediaStore;
 import android.view.View;
 
 import com.ins.common.ui.dialog.DialogPopupPhoto;
-import com.ins.common.utils.BitmapUtil;
-import com.ins.common.utils.FileUtil;
-import com.ins.common.utils.StrUtil;
-import com.ins.common.utils.UriUtil;
-
-import java.io.File;
-import java.io.IOException;
 
 /**
  * Created by liaoinstan on 2016/1/19.
  * Update 2017/6/19
  * CropHelper的拓展类，增加了默认弹窗的功能，如果弹窗不需要定制可以使用这个
- * 详细请参见基类 {@link CropHelper(Object, CropInterface)}
+ * 详细请参见基类 {@link CropHelper}
  */
 public class CropHelperEx extends CropHelper {
 

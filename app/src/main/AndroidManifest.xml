@@ -37,11 +37,11 @@
         <activity
             android:name=".ui.activity.FirstActivity"
             android:theme="@style/AppTheme.NoTitleFullscreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity
             android:name=".ui.activity.HomeActivity"
@@ -81,8 +81,14 @@
         <activity android:name=".ui.activity.TestResultActivity" />
         <activity android:name=".ui.activity.SortUserActivity" />
         <activity android:name=".ui.activity.LearnUserActivity" />
-        <activity android:name=".ui.activity.AddressActivity"/>
-        <activity android:name=".ui.activity.TradeActivity"/>
+        <activity android:name=".ui.activity.AddressActivity" />
+        <activity android:name=".ui.activity.TradeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
     </application>
 </manifest>

@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ins.aimai.R;
-import com.ins.aimai.ui.adapter.PagerAdapterFavo;
 import com.ins.aimai.ui.adapter.PagerAdapterLearn;
 import com.ins.aimai.ui.base.BaseFragment;
 

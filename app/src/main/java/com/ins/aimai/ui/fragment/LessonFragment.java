@@ -19,7 +19,6 @@ import com.ins.aimai.ui.adapter.RecycleAdapterLessonCate;
 import com.ins.aimai.ui.adapter.RecycleAdapterLessonTasteBanner;
 import com.ins.aimai.ui.base.BaseFragment;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
-import com.ins.common.utils.StatusBarTextUtil;
 import com.liaoinstan.springview.container.AliFooter;
 import com.liaoinstan.springview.container.AliHeader;
 import com.liaoinstan.springview.widget.SpringView;

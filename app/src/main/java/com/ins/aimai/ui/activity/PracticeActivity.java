@@ -8,7 +8,6 @@ import android.view.View;
 
 import com.ins.aimai.R;
 import com.ins.aimai.interfaces.PagerInter;
-import com.ins.aimai.ui.adapter.PagerAdapterForgetPsw;
 import com.ins.aimai.ui.adapter.PagerAdapterPractice;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.common.utils.ViewPagerUtil;

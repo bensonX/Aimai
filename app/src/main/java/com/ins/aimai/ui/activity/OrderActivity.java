@@ -2,21 +2,13 @@ package com.ins.aimai.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 
-import com.dl7.player.media.IjkPlayerView;
 import com.ins.aimai.R;
 import com.ins.aimai.ui.adapter.PagerAdapterOrder;
-import com.ins.aimai.ui.adapter.PagerAdapterVideo;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
-import com.ins.common.utils.GlideUtil;
-import com.ins.common.utils.StatusBarTextUtil;
-
-import tv.danmaku.ijk.media.player.IMediaPlayer;
 
 public class OrderActivity extends BaseAppCompatActivity {
 

@@ -5,7 +5,6 @@ import android.text.TextUtils;
 import com.ins.aimai.common.AppData;
 import com.ins.common.utils.L;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 

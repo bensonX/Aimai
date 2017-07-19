@@ -4,31 +4,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
 
-import com.bumptech.glide.Glide;
 import com.dl7.player.media.IjkPlayerView;
 import com.ins.aimai.R;
-import com.ins.aimai.bean.TestBean;
 import com.ins.aimai.ui.adapter.PagerAdapterVideo;
-import com.ins.aimai.ui.adapter.RecycleAdapterLesson;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.aimai.ui.dialog.DialogSureAimai;
-import com.ins.common.utils.App;
-import com.ins.common.utils.DensityUtil;
 import com.ins.common.utils.GlideUtil;
 import com.ins.common.utils.StatusBarTextUtil;
-import com.liaoinstan.springview.container.AliFooter;
-import com.liaoinstan.springview.container.AliHeader;
-import com.liaoinstan.springview.widget.SpringView;
 
-import jp.wasabeef.glide.transformations.BlurTransformation;
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 
 public class VideoActivity extends BaseAppCompatActivity {

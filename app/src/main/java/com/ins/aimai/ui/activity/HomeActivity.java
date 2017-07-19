@@ -1,23 +1,14 @@
 package com.ins.aimai.ui.activity;
 
-import android.app.Activity;
-import android.content.res.TypedArray;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import com.ins.aimai.R;
 import com.ins.aimai.ui.adapter.PagerAdapterHome;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
-import com.ins.common.utils.DensityUtil;
-import com.ins.common.utils.PermissionsUtil;
 import com.ins.common.utils.StatusBarTextUtil;
 
 public class HomeActivity extends BaseAppCompatActivity {

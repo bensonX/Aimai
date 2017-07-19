@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.TestBean;
 import com.ins.aimai.ui.adapter.RecycleAdapterFavo;
-import com.ins.aimai.ui.adapter.RecycleAdapterOrder;
 import com.ins.aimai.ui.base.BaseFragment;
 import com.ins.common.helper.LoadingViewHelper;
 import com.liaoinstan.springview.container.AliFooter;

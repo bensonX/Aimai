@@ -2,33 +2,22 @@ package com.ins.aimai.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.dl7.player.media.IjkPlayerView;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.TestBean;
 import com.ins.aimai.ui.adapter.PagerAdapterLessonDetail;
-import com.ins.aimai.ui.adapter.PagerAdapterVideo;
 import com.ins.aimai.ui.adapter.RecycleAdapterLable;
-import com.ins.aimai.ui.adapter.RecycleAdapterLesson;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
-import com.ins.common.helper.LoadingViewHelper;
-import com.ins.common.utils.DensityUtil;
 import com.ins.common.utils.GlideUtil;
 import com.ins.common.utils.StatusBarTextUtil;
-
-import tv.danmaku.ijk.media.player.IMediaPlayer;
 
 public class LessonDetailActivity extends BaseAppCompatActivity implements View.OnClickListener {
     private TabLayout tab;

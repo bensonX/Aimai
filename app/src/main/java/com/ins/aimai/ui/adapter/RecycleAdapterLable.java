@@ -5,13 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.TestBean;
-import com.ins.common.interfaces.OnRecycleItemClickListener;
-import com.ins.common.utils.GlideUtil;
 
 import java.util.ArrayList;
 import java.util.List;

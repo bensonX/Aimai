@@ -4,8 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.ins.aimai.ui.fragment.FavoFragment;
-import com.ins.aimai.ui.fragment.InfoFragment;
 import com.ins.aimai.ui.fragment.LearnLessonFragment;
 import com.ins.aimai.ui.fragment.LearnTestFragment;
 

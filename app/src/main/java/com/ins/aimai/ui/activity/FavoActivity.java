@@ -8,7 +8,6 @@ import android.support.v4.view.ViewPager;
 
 import com.ins.aimai.R;
 import com.ins.aimai.ui.adapter.PagerAdapterFavo;
-import com.ins.aimai.ui.adapter.PagerAdapterOrder;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 
 public class FavoActivity extends BaseAppCompatActivity {

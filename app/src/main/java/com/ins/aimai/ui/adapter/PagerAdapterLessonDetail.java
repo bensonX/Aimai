@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.ins.aimai.ui.fragment.VideoCommentFragment;
 import com.ins.aimai.ui.fragment.VideoDirectotyFragment;
 import com.ins.aimai.ui.fragment.VideoIntroFragment;
-import com.ins.aimai.ui.fragment.VideoNoteFragment;
 
 /**
  * Created by Administrator on 2017/7/7.

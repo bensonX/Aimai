@@ -11,7 +11,6 @@ import android.view.View;
 import com.ins.aimai.R;
 import com.ins.aimai.ui.adapter.PagerAdapterAddress;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
-import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.utils.TabLayoutUtil;
 import com.ins.common.utils.ViewPagerUtil;
 

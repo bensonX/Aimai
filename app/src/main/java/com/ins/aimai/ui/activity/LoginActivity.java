@@ -6,31 +6,21 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
-import com.ins.aimai.bean.CommonBean;
-import com.ins.aimai.bean.TestBean;
 import com.ins.aimai.bean.User;
 import com.ins.aimai.common.AppData;
 import com.ins.aimai.common.AppVali;
 import com.ins.aimai.net.BaseCallback;
+import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.aimai.ui.dialog.DialogIdentify;
 import com.ins.aimai.utils.ToastUtil;
-import com.ins.common.entity.Image;
-import com.ins.aimai.net.NetApi;
 import com.ins.common.utils.StatusBarTextUtil;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import cn.jpush.android.api.JPushInterface;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 
 public class LoginActivity extends BaseAppCompatActivity implements View.OnClickListener {
 

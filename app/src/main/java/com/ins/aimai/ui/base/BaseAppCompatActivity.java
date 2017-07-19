@@ -2,10 +2,7 @@ package com.ins.aimai.ui.base;
 
 import android.content.Context;
 import android.content.pm.ActivityInfo;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -13,10 +10,7 @@ import android.widget.TextView;
 
 import com.ins.aimai.R;
 import com.ins.aimai.ui.dialog.DialogLoading;
-import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.base.CommonBaseAppCompatActivity;
-import com.ins.common.common.ActivityCollector;
-import com.ins.common.utils.StatusBarTextUtil;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 

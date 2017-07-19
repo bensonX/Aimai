@@ -15,7 +15,6 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.ins.aimai.R;
-import com.ins.aimai.ui.fragment.BuildingFragment;
 import com.ins.aimai.ui.fragment.PayDialogCountFragment;
 import com.ins.aimai.ui.fragment.PayDialogWayFragment;
 

@@ -2,23 +2,17 @@ package com.ins.aimai.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.ins.aimai.R;
-import com.ins.aimai.bean.TestBean;
 import com.ins.aimai.ui.activity.InfoActivity;
 import com.ins.common.entity.Image;
-import com.ins.common.interfaces.OnRecycleItemClickListener;
 import com.ins.common.utils.GlideUtil;
-import com.ins.common.utils.StrUtil;
 import com.ins.common.view.BannerView;
 
 import java.util.ArrayList;

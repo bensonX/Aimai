@@ -6,8 +6,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.view.ViewGroup;
 
 import com.ins.aimai.ui.fragment.AddressFragment;
-import com.ins.aimai.ui.fragment.FavoFragment;
-import com.ins.aimai.ui.fragment.InfoFragment;
 
 /**
  * Created by Administrator on 2017/7/7.

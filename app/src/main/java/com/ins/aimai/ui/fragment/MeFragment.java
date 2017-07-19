@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ins.aimai.R;
-import com.ins.aimai.ui.activity.AddressActivity;
 import com.ins.aimai.ui.activity.FavoActivity;
 import com.ins.aimai.ui.activity.LoginActivity;
 import com.ins.aimai.ui.activity.MeDetailActivity;

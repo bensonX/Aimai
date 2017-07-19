@@ -4,7 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.ins.aimai.ui.fragment.BuildingFragment;
 import com.ins.aimai.ui.fragment.VideoCommentFragment;
 import com.ins.aimai.ui.fragment.VideoDirectotyFragment;
 import com.ins.aimai.ui.fragment.VideoIntroFragment;

@@ -5,10 +5,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.ViewGroup;
 
-import com.ins.aimai.ui.fragment.LessonFragment;
 import com.ins.aimai.ui.fragment.HomeFragment;
-import com.ins.aimai.ui.fragment.MeFragment;
 import com.ins.aimai.ui.fragment.LearnFragment;
+import com.ins.aimai.ui.fragment.LessonFragment;
+import com.ins.aimai.ui.fragment.MeFragment;
 
 /**
  * Created by Administrator on 2017/7/7.

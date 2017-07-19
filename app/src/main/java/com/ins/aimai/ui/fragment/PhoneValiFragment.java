@@ -10,9 +10,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ins.aimai.R;
-import com.ins.aimai.bean.CommonBean;
-import com.ins.aimai.bean.User;
-import com.ins.aimai.common.AppData;
 import com.ins.aimai.common.AppEvent;
 import com.ins.aimai.common.AppVali;
 import com.ins.aimai.interfaces.PagerFragmentInter;
@@ -26,8 +23,6 @@ import com.ins.common.helper.ValiHelper;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.Map;
-
-import cn.jpush.android.api.JPushInterface;
 
 /**
  * Created by liaoinstan

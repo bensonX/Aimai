@@ -12,11 +12,8 @@ import android.view.ViewGroup;
 
 import com.ins.aimai.R;
 import com.ins.aimai.bean.TestBean;
-import com.ins.aimai.interfaces.PagerInter;
 import com.ins.aimai.ui.activity.AddressActivity;
 import com.ins.aimai.ui.adapter.RecycleAdapterAddress;
-import com.ins.aimai.ui.adapter.RecycleAdapterFavo;
-import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.aimai.ui.base.BaseFragment;
 import com.ins.common.helper.LoadingViewHelper;
 import com.ins.common.interfaces.OnRecycleItemClickListener;

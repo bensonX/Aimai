@@ -11,10 +11,8 @@ import android.view.ViewGroup;
 
 import com.ins.aimai.R;
 import com.ins.aimai.bean.TestBean;
-import com.ins.aimai.ui.adapter.RecycleAdapterAnswerBoard;
 import com.ins.aimai.ui.adapter.RecycleAdapterTestResult;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
-import com.ins.aimai.ui.dialog.DialogTimeEnd;
 import com.ins.common.helper.LoadingViewHelper;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
 

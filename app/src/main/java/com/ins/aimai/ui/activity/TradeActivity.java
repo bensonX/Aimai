@@ -7,23 +7,20 @@ import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.ins.aimai.R;
 import com.ins.aimai.bean.TestBean;
-import com.ins.aimai.ui.adapter.RecycleAdapterMsg;
 import com.ins.aimai.ui.adapter.RecycleAdapterTrade;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
-import com.ins.common.helper.LoadingViewHelper;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
+import com.ins.common.view.LoadingLayout;
 import com.liaoinstan.springview.container.AliFooter;
 import com.liaoinstan.springview.container.AliHeader;
 import com.liaoinstan.springview.widget.SpringView;
 
-public class TradeActivity extends BaseAppCompatActivity implements OnRecycleItemClickListener {
+public class TradeActivity extends BaseAppCompatActivity implements OnRecycleItemClickListener{
 
-    private View showin;
-    private ViewGroup showingroup;
+    private LoadingLayout loadingview;
     private SpringView springView;
     private RecyclerView recycler;
     private RecycleAdapterTrade adapter;
@@ -48,7 +45,7 @@ public class TradeActivity extends BaseAppCompatActivity implements OnRecycleIte
     }
 
     private void initView() {
-        showingroup = (ViewGroup) findViewById(R.id.showingroup);
+        loadingview = (LoadingLayout) findViewById(R.id.loadingview);
         recycler = (RecyclerView) findViewById(R.id.recycler);
         springView = (SpringView) findViewById(R.id.spring);
     }
@@ -85,10 +82,16 @@ public class TradeActivity extends BaseAppCompatActivity implements OnRecycleIte
                 }, 800);
             }
         });
+        loadingview.setOnRefreshListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initData();
+            }
+        });
     }
 
     private void initData() {
-        showin = LoadingViewHelper.showin(showingroup, R.layout.layout_loading, showin);
+        loadingview.showLoadingView();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -108,7 +111,7 @@ public class TradeActivity extends BaseAppCompatActivity implements OnRecycleIte
                 adapter.getResults().add(new TestBean());
                 adapter.getResults().add(new TestBean());
                 adapter.notifyDataSetChanged();
-                LoadingViewHelper.showout(showingroup, showin);
+                loadingview.showOut();
             }
         }, 1000);
     }

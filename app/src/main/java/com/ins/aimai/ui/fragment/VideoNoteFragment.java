@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 
 import com.ins.aimai.R;
 import com.ins.aimai.bean.TestBean;
-import com.ins.aimai.ui.adapter.RecycleAdapterVideoDirectory;
 import com.ins.aimai.ui.adapter.RecycleAdapterVideoNote;
 import com.ins.aimai.ui.base.BaseFragment;
 import com.ins.common.helper.LoadingViewHelper;

@@ -11,7 +11,6 @@ import com.ins.aimai.R;
 import com.ins.aimai.bean.User;
 import com.ins.aimai.interfaces.PagerFragmentInter;
 import com.ins.aimai.interfaces.RegisterInter;
-import com.ins.aimai.ui.adapter.PagerAdapterForgetPsw;
 import com.ins.aimai.ui.adapter.PagerAdapterRegist;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.common.utils.ViewPagerUtil;

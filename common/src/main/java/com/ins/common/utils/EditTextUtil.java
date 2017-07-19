@@ -1,6 +1,5 @@
 package com.ins.common.utils;
 
-import android.text.TextUtils;
 import android.widget.EditText;
 
 /**

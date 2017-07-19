@@ -13,7 +13,6 @@ import com.ins.aimai.bean.User;
 import com.ins.aimai.common.AppEvent;
 import com.ins.aimai.common.AppVali;
 import com.ins.aimai.interfaces.PagerFragmentInter;
-import com.ins.aimai.ui.activity.ForgetPswActivity;
 import com.ins.aimai.ui.activity.RegistActivity;
 import com.ins.aimai.ui.base.BaseFragment;
 import com.ins.aimai.utils.ToastUtil;

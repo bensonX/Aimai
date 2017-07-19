@@ -3,11 +3,8 @@ package com.ins.aimai.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 
 import com.ins.aimai.R;
-import com.ins.aimai.ui.adapter.PagerAdapterFavo;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 
 public class SuggestActivity extends BaseAppCompatActivity {
