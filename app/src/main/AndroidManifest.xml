@@ -82,7 +82,8 @@
         <activity android:name=".ui.activity.SortUserActivity" />
         <activity android:name=".ui.activity.LearnUserActivity" />
         <activity android:name=".ui.activity.AddressActivity" />
-        <activity android:name=".ui.activity.TradeActivity">
+        <activity android:name=".ui.activity.TradeActivity" />
+        <activity android:name=".ui.activity.CameraActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

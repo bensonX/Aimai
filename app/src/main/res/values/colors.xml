@@ -11,4 +11,6 @@
     <color name="am_red">#f22828</color>
     <color name="am_red_dark">#b50f03</color>
     <color name="am_yellow_light">#fbe59c</color>
+
+    <color name="am_shadow">#80000000</color>
 </resources>
