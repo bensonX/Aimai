@@ -4,17 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ins.aimai.R;
 import com.ins.aimai.common.AppVali;
 import com.ins.aimai.net.NetParam;
 import com.ins.aimai.ui.activity.AddressActivity;
+import com.ins.aimai.ui.activity.CameraActivity;
 import com.ins.aimai.ui.activity.RegistActivity;
 import com.ins.aimai.ui.activity.TradeActivity;
 import com.ins.aimai.ui.base.BaseFragment;
@@ -25,6 +28,8 @@ import com.ins.common.utils.GlideUtil;
 import com.ins.common.utils.MD5Util;
 
 import java.util.Map;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by liaoinstan
@@ -61,11 +66,13 @@ public class RegistInfoFragment extends BaseFragment implements View.OnClickList
     private View rootView;
     private RegistActivity activity;
 
-    //记录选择的图片资源类型：0:个人头像，1:营业执照，2:单位介绍信
-    private int typeImg = 0;
+    //记录选择的图片资源类型：1:营业执照，2:单位介绍信
+    private int typeImg;
     //图片资源路径
     private String path;
     private int type;
+
+    private static final int RESULT_CAMERA = 0xf101;
 
     public static Fragment newInstance(int position) {
         RegistInfoFragment fragment = new RegistInfoFragment();
@@ -196,8 +203,8 @@ public class RegistInfoFragment extends BaseFragment implements View.OnClickList
                 AddressActivity.start(getContext());
                 break;
             case R.id.lay_regist_header:
-                cropHelperEx.showDefaultDialog();
-                typeImg = 0;
+                Intent intent = new Intent(getActivity(), CameraActivity.class);
+                startActivityForResult(intent, RESULT_CAMERA);
                 break;
             case R.id.lay_regist_yyzz:
                 cropHelperEx.showDefaultDialog();
@@ -236,14 +243,29 @@ public class RegistInfoFragment extends BaseFragment implements View.OnClickList
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         cropHelperEx.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case RESULT_CAMERA:
+                if (resultCode == RESULT_OK) {
+                    String path = data.getStringExtra("path");
+                    if (!TextUtils.isEmpty(path)) {
+                        //保存当前照片路径
+                        this.path = path;
+                        //打印测试
+                        ToastUtil.showToastShortDebug(path);
+                        GlideUtil.loadCircleImg(img_regist_header, R.drawable.default_header_edit, path);
+                    } else {
+                        ToastUtil.showToastShort("图像采集异常");
+                    }
+                } else {
+                    // 失败
+                }
+                break;
+        }
     }
 
     @Override
     public void cropResult(String path) {
         switch (typeImg) {
-            case 0:
-                GlideUtil.loadCircleImg(img_regist_header, R.drawable.default_header_edit, path);
-                break;
             case 1:
                 GlideUtil.loadImg(img_regist_yyzz, R.drawable.default_bk_img, path);
                 break;

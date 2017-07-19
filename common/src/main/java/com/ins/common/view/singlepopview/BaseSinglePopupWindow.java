@@ -8,6 +8,7 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.PopupWindow;
 
 /**
@@ -25,23 +26,20 @@ public abstract class BaseSinglePopupWindow extends PopupWindow {
 
     public BaseSinglePopupWindow(final Context context) {
         this.context = context;
-
-        //加载布局
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        setContentView(inflater.inflate(getLayout(), null));
+        setContentView(LayoutInflater.from(context).inflate(getLayout(), null));
 
         //获取屏幕宽高
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();
-        wm.getDefaultDisplay().getMetrics(outMetrics);
+        windowManager.getDefaultDisplay().getMetrics(outMetrics);
         int w = outMetrics.widthPixels;
         int h = outMetrics.heightPixels;
 
         // 设置SelectPicPopupWindow的View
-        this.setContentView(getContentView());
+        //this.setContentView(getContentView());
         // 设置SelectPicPopupWindow弹出窗体的宽
 //        this.setWidth(w / 3);
-        this.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
+//        this.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
         // 设置SelectPicPopupWindow弹出窗体的高
         this.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
         // 设置SelectPicPopupWindow弹出窗体可点击
@@ -60,9 +58,9 @@ public abstract class BaseSinglePopupWindow extends PopupWindow {
         initBase();
     }
 
-    public abstract void initBase();
-
     public abstract int getLayout();
+
+    public abstract void initBase();
 
     /**
      * 显示popupWindow

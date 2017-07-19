@@ -14,7 +14,7 @@ import com.ins.common.interfaces.OnRecycleItemClickListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecycleAdapterTestResult extends RecyclerView.Adapter<RecycleAdapterTestResult.Holder> {
+public class RecycleAdapterExamResult extends RecyclerView.Adapter<RecycleAdapterExamResult.Holder> {
 
     private Context context;
     private List<TestBean> results = new ArrayList<>();
@@ -23,17 +23,17 @@ public class RecycleAdapterTestResult extends RecyclerView.Adapter<RecycleAdapte
         return results;
     }
 
-    public RecycleAdapterTestResult(Context context) {
+    public RecycleAdapterExamResult(Context context) {
         this.context = context;
     }
 
     @Override
-    public RecycleAdapterTestResult.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new Holder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_test_result, parent, false));
+    public RecycleAdapterExamResult.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new Holder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_exam_result, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(final RecycleAdapterTestResult.Holder holder, final int position) {
+    public void onBindViewHolder(final RecycleAdapterExamResult.Holder holder, final int position) {
         final TestBean bean = results.get(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,7 +41,7 @@ public class RecycleAdapterTestResult extends RecyclerView.Adapter<RecycleAdapte
                 if (listener != null) listener.onItemClick(holder);
             }
         });
-        holder.text_item_testresult_num.setText(position + 1 + "");
+        holder.text_item_examresult_num.setText(position + 1 + "");
     }
 
     @Override
@@ -51,11 +51,11 @@ public class RecycleAdapterTestResult extends RecyclerView.Adapter<RecycleAdapte
 
     public class Holder extends RecyclerView.ViewHolder {
 
-        private TextView text_item_testresult_num;
+        private TextView text_item_examresult_num;
 
         public Holder(View itemView) {
             super(itemView);
-            text_item_testresult_num = (TextView) itemView.findViewById(R.id.text_item_testresult_num);
+            text_item_examresult_num = (TextView) itemView.findViewById(R.id.text_item_examresult_num);
         }
     }
 

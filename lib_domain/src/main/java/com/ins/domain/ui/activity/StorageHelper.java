@@ -22,6 +22,7 @@ class StorageHelper {
     private Context context;
     private static final String SPACENAME = "debugConfig";
     private static final String NAME_DOMAIN = "domains";
+    private static final String NAME_EDITSTR = "editStr";
 
     private StorageHelper(Context context) {
         this.context = context;
@@ -37,6 +38,14 @@ class StorageHelper {
 
     public ArrayList<Domain> getDomains() {
         return (ArrayList<Domain>) get(NAME_DOMAIN);
+    }
+
+    public void putEditStr(String editStr) {
+        putString(NAME_EDITSTR, editStr);
+    }
+
+    public String getEditStr() {
+        return getString(NAME_EDITSTR);
     }
 
     public void putString(String key, String value) {

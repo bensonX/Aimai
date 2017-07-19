@@ -84,7 +84,7 @@ public class AnswerBoardActivity extends BaseAppCompatActivity implements OnRecy
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_go:
-                TestResultActivity.start(this);
+                ExamResultActivity.start(this);
                 break;
         }
     }

@@ -102,6 +102,7 @@ public class DomainActivity extends AppCompatActivity implements AdapterView.OnI
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
         listView.setOnItemLongClickListener(this);
+        edit_domain.setText(getEditStr());
     }
 
     @Override
@@ -122,7 +123,11 @@ public class DomainActivity extends AppCompatActivity implements AdapterView.OnI
         if (i == R.id.btn_go) {
             String domain = edit_domain.getText().toString();
             if (!TextUtils.isEmpty(domain)) {
+                //保存本次编辑框的内容
+                saveEditStr(domain);
+                //回调domain变更接口
                 DomainLauncher.getInstance().getSettingChangeCallback().onDomainChange(domain);
+                //启动APPLaunche页面
                 Intent intent = new Intent(this, DomainLauncher.getInstance().getLauncherActivity());
                 startActivity(intent);
                 finish();
@@ -136,12 +141,22 @@ public class DomainActivity extends AppCompatActivity implements AdapterView.OnI
         }
     }
 
+    //////////////// 存储 获取 方法 ////////////////
+
     private void saveDomains(ArrayList<Domain> domains) {
         StorageHelper.with(this).putDomains(domains);
     }
 
     private ArrayList<Domain> getDomains() {
         return StorageHelper.with(this).getDomains();
+    }
+
+    private void saveEditStr(String editStr) {
+        StorageHelper.with(this).putEditStr(editStr);
+    }
+
+    public String getEditStr() {
+        return StorageHelper.with(this).getEditStr();
     }
 }
 

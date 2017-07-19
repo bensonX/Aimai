@@ -38,9 +38,9 @@
             android:name=".ui.activity.FirstActivity"
             android:theme="@style/AppTheme.NoTitleFullscreen">
             <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
 
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
         <activity
@@ -78,12 +78,13 @@
         <activity android:name=".ui.activity.PracticeActivity" />
         <activity android:name=".ui.activity.OfficialActivity" />
         <activity android:name=".ui.activity.AnswerBoardActivity" />
-        <activity android:name=".ui.activity.TestResultActivity" />
+        <activity android:name=".ui.activity.ExamResultActivity" />
         <activity android:name=".ui.activity.SortUserActivity" />
         <activity android:name=".ui.activity.LearnUserActivity" />
         <activity android:name=".ui.activity.AddressActivity" />
         <activity android:name=".ui.activity.TradeActivity" />
-        <activity android:name=".ui.activity.CameraActivity">
+        <activity android:name=".ui.activity.CameraActivity" />
+        <activity android:name=".ui.activity.ExamActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

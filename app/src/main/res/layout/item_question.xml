@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/text_question_item"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:text="A、“刮骨疗毒，壮士割腕”——加强党风"
+        android:textColor="@color/select_question_item_text"
+        android:textSize="@dimen/text_nomal" />
+</FrameLayout>

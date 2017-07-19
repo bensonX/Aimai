@@ -20,7 +20,7 @@ public class ViewPagerUtil {
     }
 
     public static void goPosition(ViewPager viewPager, int position) {
-        int count = viewPager.getChildCount();
+        int count = viewPager.getAdapter().getCount();
         if (position >= 0 && position < count) {
             viewPager.setCurrentItem(position);
         }

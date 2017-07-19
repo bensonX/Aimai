@@ -11,27 +11,27 @@ import android.view.ViewGroup;
 
 import com.ins.aimai.R;
 import com.ins.aimai.bean.TestBean;
-import com.ins.aimai.ui.adapter.RecycleAdapterTestResult;
+import com.ins.aimai.ui.adapter.RecycleAdapterExamResult;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.common.helper.LoadingViewHelper;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
 
-public class TestResultActivity extends BaseAppCompatActivity implements OnRecycleItemClickListener,View.OnClickListener {
+public class ExamResultActivity extends BaseAppCompatActivity implements OnRecycleItemClickListener,View.OnClickListener {
 
     private View showin;
     private ViewGroup showingroup;
     private RecyclerView recycler;
-    private RecycleAdapterTestResult adapter;
+    private RecycleAdapterExamResult adapter;
 
     public static void start(Context context) {
-        Intent intent = new Intent(context, TestResultActivity.class);
+        Intent intent = new Intent(context, ExamResultActivity.class);
         context.startActivity(intent);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test_result);
+        setContentView(R.layout.activity_exam_result);
         setToolbar();
 //        StatusBarTextUtil.StatusBarLightMode(this);
         initBase();
@@ -51,7 +51,7 @@ public class TestResultActivity extends BaseAppCompatActivity implements OnRecyc
     }
 
     private void initCtrl() {
-        adapter = new RecycleAdapterTestResult(this);
+        adapter = new RecycleAdapterExamResult(this);
         adapter.setOnItemClickListener(this);
         recycler.setLayoutManager(new GridLayoutManager(this, 7, GridLayoutManager.VERTICAL, false));
         recycler.setAdapter(adapter);

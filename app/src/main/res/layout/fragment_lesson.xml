@@ -30,7 +30,7 @@
                     android:layout_height="35dp"
                     android:layout_weight="1"
                     android:background="@drawable/shape_rect_cornerfull_none_line_dark"
-                    android:drawableLeft="@drawable/ic_checked"
+                    android:drawableLeft="@drawable/ic_home_search_edit"
                     android:drawablePadding="10dp"
                     android:hint="点击搜索相关视频"
                     android:paddingLeft="15dp"
