@@ -72,11 +72,13 @@ dependencies {
     compile('com.alibaba.android:vlayout:1.0.9@aar') {
         transitive = true
     }
+    //SpringView
     compile 'com.liaoinstan.springview:library:1.2.7'
     //加载自定义字体
-    compile 'uk.co.chrisjenx:calligraphy:2.2.0'
-    // TinyPinyin核心包，约80KB
+    compile 'uk.co.chrisjenx:calligraphy:2.3.0'
+    //汉字拼音库TinyPinyin核心包，约80KB
     compile 'com.github.promeg:tinypinyin:2.0.3'
+    //textdrawable
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'

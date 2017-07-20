@@ -116,6 +116,6 @@ public class OfficialActivity extends BaseAppCompatActivity implements OnRecycle
 
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
-        AnswerBoardActivity.start(this);
+        ExamActivity.start(this);
     }
 }

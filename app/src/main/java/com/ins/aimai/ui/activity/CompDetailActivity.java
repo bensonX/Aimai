@@ -6,33 +6,29 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ImageView;
 
 import com.ins.aimai.R;
 import com.ins.aimai.bean.TestBean;
 import com.ins.aimai.ui.adapter.GridAdapterLesson;
+import com.ins.aimai.ui.adapter.GridAdapterLessonComp;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
-import com.ins.aimai.utils.ToastUtil;
-import com.ins.common.helper.CropHelper;
-import com.ins.common.helper.CropHelperEx;
 import com.ins.common.utils.FocusUtil;
-import com.ins.common.utils.GlideUtil;
 import com.ins.common.utils.StatusBarTextUtil;
 
-public class UserDetailActivity extends BaseAppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class CompDetailActivity extends BaseAppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     private GridView grid;
-    private GridAdapterLesson adapter;
+    private GridAdapterLessonComp adapter;
 
     public static void start(Context context) {
-        Intent intent = new Intent(context, UserDetailActivity.class);
+        Intent intent = new Intent(context, CompDetailActivity.class);
         context.startActivity(intent);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_userdetail);
+        setContentView(R.layout.activity_compdetail);
         StatusBarTextUtil.transparencyBar(this);
         StatusBarTextUtil.StatusBarLightMode(this);
         setToolbar();
@@ -48,10 +44,11 @@ public class UserDetailActivity extends BaseAppCompatActivity implements View.On
 
     private void initView() {
         grid = (GridView) findViewById(R.id.grid);
+        findViewById(R.id.lay_compdetail_header).setOnClickListener(this);
     }
 
     private void initCtrl() {
-        adapter = new GridAdapterLesson(this);
+        adapter = new GridAdapterLessonComp(this);
         grid.setAdapter(adapter);
         grid.setOnItemClickListener(this);
     }
@@ -78,13 +75,14 @@ public class UserDetailActivity extends BaseAppCompatActivity implements View.On
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_right:
+            case R.id.lay_compdetail_header:
+                CompInfoActivity.start(this);
                 break;
         }
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        VideoActivity.start(this);
+        LessonEmployActivity.start(this);
     }
 }

@@ -14,7 +14,6 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
 
@@ -88,6 +87,9 @@
         <activity android:name=".ui.activity.EmploySearchActivity" />
         <activity android:name=".ui.activity.EmployAddActivity" />
         <activity android:name=".ui.activity.UserDetailActivity" />
+        <activity android:name=".ui.activity.CompDetailActivity" />
+        <activity android:name=".ui.activity.CompInfoActivity" />
+        <activity android:name=".ui.activity.LessonEmployActivity"/>
 
     </application>
 </manifest>

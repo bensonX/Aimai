@@ -101,6 +101,7 @@ public class ExamActivity extends BaseAppCompatActivity implements View.OnClickL
                 ViewPagerUtil.next(pager);
                 break;
             case R.id.btn_right_answerboard:
+                AnswerBoardActivity.start(this);
                 break;
             case R.id.btn_right_textsize:
                 popTextSize.showPopupWindow(btn_right_textsize);
