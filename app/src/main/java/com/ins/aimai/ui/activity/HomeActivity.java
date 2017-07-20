@@ -9,6 +9,7 @@ import android.widget.RadioGroup;
 import com.ins.aimai.R;
 import com.ins.aimai.ui.adapter.PagerAdapterHome;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
+import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.utils.StatusBarTextUtil;
 
 public class HomeActivity extends BaseAppCompatActivity {

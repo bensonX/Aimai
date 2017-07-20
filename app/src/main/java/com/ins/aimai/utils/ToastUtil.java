@@ -38,34 +38,32 @@ public final class ToastUtil {
         ToastUtil.debug = debug;
     }
 
+    //////////////// show 方法 及其重载 //////////////////
+
     public static void showToastLong(String msg) {
-        showToast(context, msg, Toast.LENGTH_LONG);
+        showToast(context, msg, Toast.LENGTH_LONG, false);
     }
 
     @SuppressWarnings("WeakerAccess")
     public static void showToastShort(String msg) {
-        showToast(context, msg, Toast.LENGTH_SHORT);
+        showToast(context, msg, Toast.LENGTH_SHORT, false);
     }
 
     public static void showToastShortDebug(String msg) {
         if (debug) {
-            showToast(context, msg, Toast.LENGTH_SHORT);
+            showToast(context, msg, Toast.LENGTH_SHORT, false);
         }
     }
 
-    public static void showToastShort(int strRes) {
-        showToast(context, context.getString(strRes), Toast.LENGTH_SHORT);
-    }
-
-    public static void showToastLong(int strRes) {
-        showToast(context, context.getString(strRes), Toast.LENGTH_LONG);
+    public static void showToastShort(String msg, boolean needStyle) {
+        showToast(context, msg, Toast.LENGTH_SHORT, needStyle);
     }
 
     @SuppressWarnings("WeakerAccess")
-    public static void showToast(Context mContext, String text, int duration) {
+    public static void showToast(Context mContext, String text, int duration, boolean needStyle) {
 
         Toast mToast;
-        if (sLayoutRes != NONE && sTextViewId != NONE) {
+        if (needStyle && sLayoutRes != NONE && sTextViewId != NONE) {
             View inflate = LayoutInflater.from(mContext).inflate(sLayoutRes, null, false);
             TextView textView = (TextView) inflate.findViewById(sTextViewId);
             textView.setText(text);
@@ -90,9 +88,4 @@ public final class ToastUtil {
         ToastUtil.sLayoutRes = layoutRes;
         ToastUtil.sTextViewId = textViewId;
     }
-
-    public static void showToast(Context mContext, int resId, int duration) {
-        showToast(mContext, mContext.getResources().getString(resId), duration);
-    }
-
 }

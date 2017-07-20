@@ -28,9 +28,12 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="2dp"
         android:layout_marginTop="7dp"
+        android:ellipsize="end"
+        android:lineSpacingExtra="5dp"
+        android:maxLines="3"
         android:text="安全生产管理培训课"
         android:textColor="@color/com_text_blank"
-        android:textSize="@dimen/text_nomal" />
+        android:textSize="@dimen/text_nomal_small" />
 
 </LinearLayout>
 

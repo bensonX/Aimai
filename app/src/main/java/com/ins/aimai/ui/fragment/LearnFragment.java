@@ -25,7 +25,7 @@ public class LearnFragment extends BaseFragment {
     private ViewPager pager;
     private PagerAdapterLearn adapterPager;
 
-    private String[] titles = new String[]{"课程学习", "考题"};
+    private String[] titles = new String[]{"课程学习", "考题", "人员列表"};
 
     public static Fragment newInstance(int position) {
         LearnFragment fragment = new LearnFragment();

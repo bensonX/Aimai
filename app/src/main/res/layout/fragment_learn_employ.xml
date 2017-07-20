@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white">
+
+        <FrameLayout
+            android:id="@+id/lay_learnpeople_search"
+            android:layout_width="match_parent"
+            android:layout_height="33dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="22dp"
+            android:layout_marginRight="22dp"
+            android:background="@drawable/shape_rect_corner_none_line_dark"
+            android:foreground="?attr/selectableItemBackground">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawableLeft="@drawable/ic_home_search_edit"
+                android:drawablePadding="10dp"
+                android:text="搜索名字、身份证、电话"
+                android:textColor="@color/com_text_light"
+                android:textSize="@dimen/text_nomal_small" />
+
+        </FrameLayout>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="共150位员工"
+            android:textColor="@color/com_text_dark_light"
+            android:textSize="@dimen/text_nomal_small" />
+
+        <Space style="@style/Space_H" />
+
+        <TextView
+            android:id="@+id/btn_learnpeople_add"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:drawableLeft="@drawable/ic_learn_add_blue"
+            android:drawablePadding="5dp"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="添加员工"
+            android:textColor="@color/am_blue"
+            android:textSize="@dimen/text_nomal_small" />
+
+    </LinearLayout>
+
+    <View style="@style/Line_H" />
+
+    <com.ins.common.view.LoadingLayout
+        android:id="@+id/loadingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_fail="@layout/layout_fail"
+        app:layout_lack="@layout/layout_lack"
+        app:layout_loading="@layout/layout_loading">
+
+        <com.liaoinstan.springview.widget.SpringView
+            android:id="@+id/spring"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:type="follow">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:clipToPadding="false"
+                android:paddingBottom="10dp" />
+
+        </com.liaoinstan.springview.widget.SpringView>
+
+    </com.ins.common.view.LoadingLayout>
+
+</LinearLayout>

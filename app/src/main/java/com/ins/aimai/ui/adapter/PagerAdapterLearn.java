@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.ins.aimai.ui.fragment.LearnLessonFragment;
+import com.ins.aimai.ui.fragment.LearnEmployFragment;
 import com.ins.aimai.ui.fragment.LearnTestFragment;
 
 /**
@@ -37,6 +38,8 @@ public class PagerAdapterLearn extends FragmentPagerAdapter {
                 return LearnLessonFragment.newInstance(position);
             case 1:
                 return LearnTestFragment.newInstance(position);
+            case 2:
+                return LearnEmployFragment.newInstance(position);
             default:
                 return null;
         }

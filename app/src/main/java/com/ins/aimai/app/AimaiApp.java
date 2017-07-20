@@ -32,6 +32,7 @@ public class AimaiApp extends Application {
         L.setDEBUG(BuildConfig.DEBUG);
         ToastUtil.init(this);
         ToastUtil.setDebug(BuildConfig.DEBUG);
+        ToastUtil.setStyle(R.layout.lay_toast,R.id.toast_tv);
         GlideUtil.init(this);
     }
 

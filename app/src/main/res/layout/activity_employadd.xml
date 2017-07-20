@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/am_bk"
+    tools:context=".ui.activity.MeDetailActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <TextView
+                android:id="@+id/text_toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="添加同事"
+                android:textColor="@color/com_blue"
+                android:textSize="@dimen/text_big" />
+
+            <TextView
+                android:id="@+id/btn_right"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:text="完成"
+                android:textColor="@color/am_blue"
+                android:textSize="@dimen/text_nomal" />
+
+        </android.support.v7.widget.Toolbar>
+
+        <View style="@style/Line_H" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <View style="@style/Line_H" />
+
+            <LinearLayout
+                android:id="@+id/lay_employadd_header"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="头像"
+                    android:textColor="@color/com_text_blank"
+                    android:textSize="@dimen/text_nomal" />
+
+                <ImageView
+                    android:id="@+id/img_employadd_header"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/default_header_edit" />
+
+            </LinearLayout>
+
+            <View
+                style="@style/Line_H"
+                android:layout_marginLeft="10dp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="姓名"
+                    android:textColor="@color/com_text_blank"
+                    android:textSize="@dimen/text_nomal" />
+
+                <TextView
+                    android:id="@+id/text_medetail_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:ellipsize="end"
+                    android:hint="暂无"
+                    android:maxLines="1"
+                    android:textColor="@color/com_text_blank_deep_light"
+                    android:textColorHint="@color/com_text_dark"
+                    android:textSize="@dimen/text_nomal" />
+
+            </LinearLayout>
+
+            <View
+                style="@style/Line_H"
+                android:layout_marginLeft="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="部门"
+                    android:textColor="@color/com_text_blank"
+                    android:textSize="@dimen/text_nomal" />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@color/none"
+                    android:hint="请添加同事的部门"
+                    android:maxLines="1"
+                    android:paddingRight="10dp"
+                    android:textColor="@color/com_text_blank_deep_light"
+                    android:textColorHint="@color/com_text_dark"
+                    android:textSize="@dimen/text_nomal" />
+
+            </LinearLayout>
+
+            <View
+                style="@style/Line_H"
+                android:layout_marginLeft="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="职位"
+                    android:textColor="@color/com_text_blank"
+                    android:textSize="@dimen/text_nomal" />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@color/none"
+                    android:hint="请添加同事的职位"
+                    android:maxLines="1"
+                    android:paddingRight="10dp"
+                    android:textColor="@color/com_text_blank_deep_light"
+                    android:textColorHint="@color/com_text_dark"
+                    android:textSize="@dimen/text_nomal" />
+
+            </LinearLayout>
+
+
+            <View style="@style/Line_H" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

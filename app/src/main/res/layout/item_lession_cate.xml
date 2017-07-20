@@ -82,15 +82,18 @@
                 android:layout_marginLeft="2dp"
                 android:layout_marginTop="7dp"
                 android:text="安全生产管理培训课"
+                android:ellipsize="end"
+                android:lineSpacingExtra="5dp"
+                android:maxLines="2"
                 android:textColor="@color/com_text_blank"
-                android:textSize="@dimen/text_nomal" />
+                android:textSize="@dimen/text_nomal_small" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dp"
                 android:layout_marginTop="7dp"
-                android:drawableLeft="@drawable/ic_checked"
+                android:drawableLeft="@drawable/ic_lesson_tv"
                 android:drawablePadding="7dp"
                 android:gravity="center"
                 android:text="12个视频课程"
@@ -137,16 +140,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dp"
                 android:layout_marginTop="7dp"
+                android:ellipsize="end"
+                android:lineSpacingExtra="5dp"
+                android:maxLines="2"
                 android:text="安全生产管理培训课"
                 android:textColor="@color/com_text_blank"
-                android:textSize="@dimen/text_nomal" />
+                android:textSize="@dimen/text_nomal_small" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dp"
                 android:layout_marginTop="7dp"
-                android:drawableLeft="@drawable/ic_checked"
+                android:drawableLeft="@drawable/ic_lesson_tv"
                 android:drawablePadding="7dp"
                 android:gravity="center"
                 android:text="12个视频课程"
