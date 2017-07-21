@@ -4,23 +4,38 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
+import com.ins.aimai.bean.EventBean;
 import com.ins.aimai.bean.TestBean;
+import com.ins.aimai.bean.Trade;
+import com.ins.aimai.net.BaseCallback;
+import com.ins.aimai.net.NetApi;
+import com.ins.aimai.net.NetParam;
 import com.ins.aimai.ui.adapter.RecycleAdapterTrade;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
+import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
+import com.ins.common.utils.StrUtil;
 import com.ins.common.view.LoadingLayout;
 import com.liaoinstan.springview.container.AliFooter;
 import com.liaoinstan.springview.container.AliHeader;
 import com.liaoinstan.springview.widget.SpringView;
 
-public class TradeActivity extends BaseAppCompatActivity implements OnRecycleItemClickListener{
+import org.greenrobot.eventbus.EventBus;
 
-    private LoadingLayout loadingview;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class TradeActivity extends BaseAppCompatActivity implements OnRecycleItemClickListener {
+
+    private LoadingLayout loadingLayout;
     private SpringView springView;
     private RecyclerView recycler;
     private RecycleAdapterTrade adapter;
@@ -45,7 +60,7 @@ public class TradeActivity extends BaseAppCompatActivity implements OnRecycleIte
     }
 
     private void initView() {
-        loadingview = (LoadingLayout) findViewById(R.id.loadingview);
+        loadingLayout = (LoadingLayout) findViewById(R.id.loadingview);
         recycler = (RecyclerView) findViewById(R.id.recycler);
         springView = (SpringView) findViewById(R.id.spring);
     }
@@ -60,64 +75,99 @@ public class TradeActivity extends BaseAppCompatActivity implements OnRecycleIte
         springView.setListener(new SpringView.OnFreshListener() {
             @Override
             public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        springView.onFinishFreshAndLoad();
-                    }
-                }, 800);
+                netQueryTrade(1);
             }
 
             @Override
             public void onLoadmore() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        adapter.getResults().add(new TestBean());
-                        adapter.getResults().add(new TestBean());
-                        adapter.getResults().add(new TestBean());
-                        adapter.notifyItemRangeChanged(adapter.getItemCount() - 1 - 3, adapter.getItemCount() - 1);
-                        springView.onFinishFreshAndLoad();
-                    }
-                }, 800);
+                netQueryTrade(2);
             }
         });
-        loadingview.setOnRefreshListener(new View.OnClickListener() {
+        loadingLayout.setOnRefreshListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                initData();
+                netQueryTrade(0);
             }
         });
     }
 
+    private void freshCtrl() {
+        adapter.notifyDataSetChanged();
+    }
+
     private void initData() {
-        loadingview.showLoadingView();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                adapter.getResults().clear();
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.notifyDataSetChanged();
-                loadingview.showOut();
-            }
-        }, 1000);
+        netQueryTrade(0);
     }
 
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
-        LessonDetailActivity.start(this);
+        Trade trade = adapter.getResults().get(viewHolder.getLayoutPosition());
+        EventBean event = new EventBean(EventBean.EVENT_SELECT_TRADE);
+        event.put("trade", trade);
+        EventBus.getDefault().post(event);
+        finish();
+    }
+
+    ///////////////////////////////////
+    //////////////分页查询
+    ///////////////////////////////////
+
+    private int page;
+    private final int PAGE_COUNT = 10;
+
+    /**
+     * type:0 首次加载 1:下拉刷新 2:上拉加载
+     *
+     * @param type
+     */
+    private void netQueryTrade(final int type) {
+        Map<String, Object> param = new NetParam()
+                .put("pageNO", type == 0 || type == 1 ? "1" : page + 1 + "")
+                .put("pageSize", PAGE_COUNT + "")
+                .build();
+        if (type == 0) loadingLayout.showLoadingView();
+        NetApi.NI().queryTrade(param).enqueue(new BaseCallback<List<Trade>>(new TypeToken<List<Trade>>() {
+        }.getType()) {
+            @Override
+            public void onSuccess(int status, List<Trade> beans, String msg) {
+                if (!StrUtil.isEmpty(beans)) {
+                    //下拉加载和首次加载要清除原有数据并把页码置为1，上拉加载不断累加页码
+                    if (type == 0 || type == 1) {
+                        adapter.getResults().clear();
+                        page = 1;
+                    } else {
+                        page++;
+                    }
+                    adapter.getResults().addAll(beans);
+                    freshCtrl();
+
+                    //加载结束恢复列表
+                    if (type == 0) {
+                        loadingLayout.showOut();
+                    } else {
+                        springView.onFinishFreshAndLoad();
+                    }
+                } else {
+                    //没有数据设置空数据页面，下拉加载不用，仅提示
+                    if (type == 0 || type == 1) {
+                        loadingLayout.showLackView();
+                    } else {
+                        springView.onFinishFreshAndLoad();
+                        ToastUtil.showToastShort("没有更多的数据了");
+                    }
+                }
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+                ToastUtil.showToastShort(msg);
+                //首次加载发生异常设置error页面，其余仅提示
+                if (type == 0) {
+                    loadingLayout.showFailView();
+                } else {
+                    springView.onFinishFreshAndLoad();
+                }
+            }
+        });
     }
 }

@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ins.aimai.R;
+import com.ins.aimai.bean.EventBean;
 import com.ins.aimai.common.AppEvent;
 import com.ins.aimai.common.AppVali;
 import com.ins.aimai.interfaces.PagerFragmentInter;
@@ -107,7 +108,7 @@ public class PhoneValiFragment extends BaseFragment implements View.OnClickListe
 
         String msg = AppVali.regist_phone(phone, phone_old, code, code_old);
         if (msg == null) {
-            EventBus.getDefault().post(AppEvent.makeFlagStr(AppEvent.EVENT_PHONE_VALI, phone_old));
+            EventBus.getDefault().post(new EventBean(EventBean.EVENT_REGIST_PHONE).put("phone", phone_old));
             return true;
         } else {
             ToastUtil.showToastShort(msg);

@@ -28,18 +28,17 @@ public interface NetInterface {
      * 上传资源文件
      */
     @Multipart
-    @POST("images/res/upload")
-    Call<ResponseBody> upload(
-            @Part("picture\"; filename=\"picture.jpg") RequestBody file);
-
-    @Multipart
-    @POST("fileService")
+    @POST("/images/res/upload")
     Call<ResponseBody> uploadFile(@Part MultipartBody.Part file);
 
     //////////////////////////////////////////
     //////////////////////////////////////////
     //////////////////////////////////////////
 
+
+    //##################################################################
+    //#########               登录注册个人中心
+    //##################################################################
 
     /**
      * 登录
@@ -48,6 +47,20 @@ public interface NetInterface {
     @FormUrlEncoded
     @POST("/api/user/login")
     Call<ResponseBody> login(@FieldMap Map<String, Object> param);
+
+    /**
+     * 自动登录
+     */
+    @FormUrlEncoded
+    @POST("/api/user/getInfo")
+    Call<ResponseBody> getInfo(@FieldMap Map<String, Object> param);
+
+    /**
+     * java.lang.String showName, java.lang.String avatar, java.lang.Integer cityId, java.lang.Integer definition
+     */
+    @FormUrlEncoded
+    @POST("/api/user/updateUser")
+    Call<ResponseBody> updateUser(@FieldMap Map<String, Object> param);
 
     /**
      * 获取验证码
@@ -59,9 +72,36 @@ public interface NetInterface {
 
     /**
      * 注册
-     * String phone
      */
     @FormUrlEncoded
     @POST("/api/user/register")
     Call<ResponseBody> register(@FieldMap Map<String, Object> param);
+
+    /**
+     * 获取行业列表
+     */
+    @FormUrlEncoded
+    @POST("/api/trade/queryTrade")
+    Call<ResponseBody> queryTrade(@FieldMap Map<String, Object> param);
+
+    /**
+     * 省市区查询
+     * levelType
+     * cityId
+     */
+    @FormUrlEncoded
+    @POST("/api/city/queryCityByParentId")
+    Call<ResponseBody> queryCity(@FieldMap Map<String, Object> param);
+
+    //##################################################################
+    //#########               课时
+    //##################################################################
+
+    /**
+     * 课程首页列表获取
+     * pageNO    pageSize
+     */
+    @FormUrlEncoded
+    @POST("/api/curriculum/queryCurriculumByItems")
+    Call<ResponseBody> queryLessonHome(@FieldMap Map<String, Object> param);
 }

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.ins.aimai.R;
+import com.ins.aimai.bean.EventBean;
 import com.ins.aimai.bean.User;
 import com.ins.aimai.common.AppEvent;
 import com.ins.aimai.common.AppVali;
@@ -51,13 +52,13 @@ public class RegistSetPswFragment extends BaseFragment implements PagerFragmentI
         this.position = getArguments().getInt("position");
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN, priority = 100)
-    public void onCommonEvent(String event) {
-        if (AppEvent.EVENT_PHONE_VALI.equals(AppEvent.getFlag(event))) {
-            phone = AppEvent.getStr(event);
-            ToastUtil.showToastShort(phone);
+    @Override
+    public void onCommonEvent(EventBean event) {
+        if (event.getEvent() == EventBean.EVENT_REGIST_PHONE) {
+            phone = (String)event.get("phone");
+            ToastUtil.showToastShortDebug(phone);
+            EventBus.getDefault().cancelEventDelivery(event);
         }
-        EventBus.getDefault().cancelEventDelivery(event);
     }
 
     @Nullable

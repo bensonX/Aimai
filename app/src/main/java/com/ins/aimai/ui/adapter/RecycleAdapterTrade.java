@@ -5,9 +5,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.ins.aimai.R;
 import com.ins.aimai.bean.TestBean;
+import com.ins.aimai.bean.Trade;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
 
 import java.util.ArrayList;
@@ -16,9 +18,9 @@ import java.util.List;
 public class RecycleAdapterTrade extends RecyclerView.Adapter<RecycleAdapterTrade.Holder> {
 
     private Context context;
-    private List<TestBean> results = new ArrayList<>();
+    private List<Trade> results = new ArrayList<>();
 
-    public List<TestBean> getResults() {
+    public List<Trade> getResults() {
         return results;
     }
 
@@ -33,13 +35,15 @@ public class RecycleAdapterTrade extends RecyclerView.Adapter<RecycleAdapterTrad
 
     @Override
     public void onBindViewHolder(final RecycleAdapterTrade.Holder holder, final int position) {
-        final TestBean bean = results.get(position);
+        final Trade bean = results.get(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) listener.onItemClick(holder);
             }
         });
+
+        holder.text_item_trade.setText(bean.getTradeName());
     }
 
     @Override
@@ -49,11 +53,11 @@ public class RecycleAdapterTrade extends RecyclerView.Adapter<RecycleAdapterTrad
 
     public class Holder extends RecyclerView.ViewHolder {
 
-//        private ImageView img_lession;
+        private TextView text_item_trade;
 
         public Holder(View itemView) {
             super(itemView);
-//            img_lession = (ImageView) itemView.findViewById(R.id.img_lession);
+            text_item_trade = (TextView) itemView.findViewById(R.id.text_item_trade);
         }
     }
 

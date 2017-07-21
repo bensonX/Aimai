@@ -34,7 +34,7 @@ public abstract class BaseCallback<T> implements Callback<ResponseBody> {
         try {
             ResponseBody body = response.body();
             if (body == null) {
-                onError(0, "服務器异常");
+                onError(0, "服務器异常：" + response.code());
                 return;
             }
             String res = body.string();
@@ -66,6 +66,7 @@ public abstract class BaseCallback<T> implements Callback<ResponseBody> {
                     onSuccess(status, t, msg);
                     break;
                 case 1005:
+                    onError(status, msg);
                     break;
                 default:
                     onError(status, msg);

@@ -9,8 +9,13 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.ins.aimai.R;
+import com.ins.aimai.bean.EventBean;
 import com.ins.aimai.ui.dialog.DialogLoading;
 import com.ins.common.base.CommonBaseAppCompatActivity;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -36,6 +41,7 @@ public class BaseAppCompatActivity extends CommonBaseAppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         if (dialogLoading != null) dialogLoading.dismiss();
+        if (eventBusSurppot) EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -105,5 +111,18 @@ public class BaseAppCompatActivity extends CommonBaseAppCompatActivity {
 
     public final void hideLoadingDialog() {
         if (dialogLoading != null) dialogLoading.hide();
+    }
+
+    ///////// event
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onCommonEvent(EventBean event) {
+    }
+
+    private boolean eventBusSurppot = false;
+
+    public void registEventBus() {
+        EventBus.getDefault().register(this);
+        eventBusSurppot = true;
     }
 }

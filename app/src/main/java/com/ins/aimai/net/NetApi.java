@@ -2,6 +2,9 @@ package com.ins.aimai.net;
 
 import android.util.Log;
 
+import com.ins.common.utils.GlideUtil;
+import com.ins.common.utils.L;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -16,6 +19,7 @@ public class NetApi {
     private final static String LOG_TAG = "NetApi";
     private static NetInterface ni;
     private static String baseUrl;
+    private static boolean debug;
 
     private NetApi() {
         throw new UnsupportedOperationException();
@@ -29,9 +33,17 @@ public class NetApi {
     }
 
     private static void initApi() {
+        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+            @Override
+            public void log(String message) {
+                L.e(message);
+            }
+        });
+        httpLoggingInterceptor.setLevel(debug ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
+
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .addNetworkInterceptor(new HttpLoggingInterceptor())
-//                .addNetworkInterceptor(new StethoInterceptor())
+                .addNetworkInterceptor(httpLoggingInterceptor)
+                .addInterceptor(new NetInterceptor())
                 .readTimeout(60, TimeUnit.SECONDS)
                 .connectTimeout(60, TimeUnit.SECONDS)
                 .build();
@@ -50,7 +62,11 @@ public class NetApi {
 
     public static void setBaseUrl(String baseUrl) {
         NetApi.baseUrl = baseUrl;
-        Log.d(LOG_TAG, "Base url is setting:" + baseUrl);
+        GlideUtil.setImgBaseUrl(baseUrl + "/images/");
         initApi();
+    }
+
+    public static void setDebug(boolean debug) {
+        NetApi.debug = debug;
     }
 }

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.ins.aimai.R;
+import com.ins.aimai.bean.EventBean;
 import com.ins.aimai.bean.User;
 import com.ins.aimai.common.AppData;
 import com.ins.aimai.common.AppVali;
@@ -16,7 +17,10 @@ import com.ins.aimai.net.NetParam;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.aimai.ui.dialog.DialogIdentify;
 import com.ins.aimai.utils.ToastUtil;
+import com.ins.common.utils.MD5Util;
 import com.ins.common.utils.StatusBarTextUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.Map;
 
@@ -51,16 +55,19 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
             @Override
             public void onPersonClick(View v) {
                 RegistActivity.start(LoginActivity.this, 0);
+                finish();
             }
 
             @Override
             public void onCompClick(View v) {
                 RegistActivity.start(LoginActivity.this, 1);
+                finish();
             }
 
             @Override
             public void onGovClick(View v) {
                 RegistActivity.start(LoginActivity.this, 2);
+                finish();
             }
         });
     }
@@ -104,21 +111,26 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
     private void netLogin(String phone, String password) {
         Map<String, Object> param = new NetParam()
                 .put("phone", phone)
-                .put("password", password)
+                .put("password", MD5Util.md5(password))
                 .put("deviceType", 0)
                 .put("deviceToken", JPushInterface.getRegistrationID(this))
                 .put("isWechat", 0)
                 .build();
+        showLoadingDialog();
         NetApi.NI().login(param).enqueue(new BaseCallback<User>(User.class) {
             @Override
             public void onSuccess(int status, User user, String msg) {
                 AppData.App.saveUser(user);
                 AppData.App.saveToken(user.getToken());
+                EventBus.getDefault().post(new EventBean(EventBean.EVENT_LOGIN));
+                hideLoadingDialog();
+                finish();
             }
 
             @Override
             public void onError(int status, String msg) {
                 ToastUtil.showToastShort(msg);
+                hideLoadingDialog();
             }
         });
     }

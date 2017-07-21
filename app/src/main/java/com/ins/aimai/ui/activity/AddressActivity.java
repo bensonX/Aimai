@@ -9,12 +9,16 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.ins.aimai.R;
+import com.ins.aimai.bean.Address;
+import com.ins.aimai.bean.EventBean;
 import com.ins.aimai.ui.adapter.PagerAdapterAddress;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.common.utils.TabLayoutUtil;
 import com.ins.common.utils.ViewPagerUtil;
 
-public class AddressActivity extends BaseAppCompatActivity implements View.OnClickListener{
+import org.greenrobot.eventbus.EventBus;
+
+public class AddressActivity extends BaseAppCompatActivity implements View.OnClickListener {
 
     private TabLayout tab;
     private ViewPager pager;
@@ -80,7 +84,7 @@ public class AddressActivity extends BaseAppCompatActivity implements View.OnCli
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_right:
                 finish();
                 break;
@@ -95,7 +99,8 @@ public class AddressActivity extends BaseAppCompatActivity implements View.OnCli
         }
     }
 
-    public void next(String name) {
+    public void next(Address address) {
+        String name = address.getName();
         int currentItem = pager.getCurrentItem();
         if (currentItem == 0) {
             province = name;
@@ -116,6 +121,13 @@ public class AddressActivity extends BaseAppCompatActivity implements View.OnCli
             disrict = name;
             setToobarText();
             TabLayoutUtil.setTab(tab, 2, name, true);
+
+            //post选择地区消息
+            EventBean event = new EventBean(EventBean.EVENT_SELECT_ADDRESS);
+            address.setAddress(getToolbarText());
+            event.put("address", address);
+            EventBus.getDefault().post(event);
+            finish();
         } else {
             //不会存在这种情况
         }

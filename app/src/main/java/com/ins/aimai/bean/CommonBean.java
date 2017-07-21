@@ -17,6 +17,9 @@ public class CommonBean extends BaseSelectBean implements Serializable {
     @SerializedName("valiCode")
     private String valiCode;
 
+    @SerializedName("url")
+    private String url;
+
     public int getId() {
         return id;
     }
@@ -31,5 +34,13 @@ public class CommonBean extends BaseSelectBean implements Serializable {
 
     public void setValiCode(String valiCode) {
         this.valiCode = valiCode;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

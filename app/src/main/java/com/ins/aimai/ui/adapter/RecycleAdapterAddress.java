@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ins.aimai.R;
+import com.ins.aimai.bean.Address;
 import com.ins.aimai.bean.TestBean;
 import com.ins.common.helper.SelectHelper;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
@@ -18,9 +19,9 @@ import java.util.List;
 public class RecycleAdapterAddress extends RecyclerView.Adapter<RecycleAdapterAddress.Holder> {
 
     private Context context;
-    private List<TestBean> results = new ArrayList<>();
+    private List<Address> results = new ArrayList<>();
 
-    public List<TestBean> getResults() {
+    public List<Address> getResults() {
         return results;
     }
 
@@ -35,7 +36,7 @@ public class RecycleAdapterAddress extends RecyclerView.Adapter<RecycleAdapterAd
 
     @Override
     public void onBindViewHolder(final RecycleAdapterAddress.Holder holder, final int position) {
-        final TestBean bean = results.get(position);
+        final Address bean = results.get(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

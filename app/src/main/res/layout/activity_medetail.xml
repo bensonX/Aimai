@@ -211,7 +211,7 @@
                     android:textSize="@dimen/text_nomal" />
 
                 <TextView
-                    android:id="@+id/text_medetail_business"
+                    android:id="@+id/text_medetail_trade"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"

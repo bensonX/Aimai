@@ -11,19 +11,19 @@ import java.util.List;
 public class City implements Serializable {
 
     /** ID */
-    private Integer id;
+    private int id;
 
     /** 名称 */
     private String name;
 
     /** 父ID */
-    private Integer parentId;
+    private int parentId;
 
     /** 短名称 */
     private String shortName;
 
     /** 级别 */
-    private Integer levelType;
+    private int levelType;
 
     /** 城市区号 */
     private String cityCode;
@@ -38,10 +38,10 @@ public class City implements Serializable {
     private String pinYin;
 
     /** 市级ID */
-    private Integer townId;
+    private int townId;
 
     /** 省级ID */
-    private Integer provinceId;
+    private int provinceId;
 
 
     /** 城市下的城市列表 */
@@ -49,12 +49,12 @@ public class City implements Serializable {
 
 
     /** 获取 ID */
-    public Integer getId() {
+    public int getId() {
         return this.id;
     }
 
     /** 设置 ID */
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -69,12 +69,12 @@ public class City implements Serializable {
     }
 
     /** 获取 父ID */
-    public Integer getParentId() {
+    public int getParentId() {
         return this.parentId;
     }
 
     /** 设置 父ID */
-    public void setParentId(Integer parentId) {
+    public void setParentId(int parentId) {
         this.parentId = parentId;
     }
 
@@ -89,12 +89,12 @@ public class City implements Serializable {
     }
 
     /** 获取 级别 */
-    public Integer getLevelType() {
+    public int getLevelType() {
         return this.levelType;
     }
 
     /** 设置 级别 */
-    public void setLevelType(Integer levelType) {
+    public void setLevelType(int levelType) {
         this.levelType = levelType;
     }
 
@@ -139,22 +139,22 @@ public class City implements Serializable {
     }
 
     /** 获取 市级ID */
-    public Integer getTownId() {
+    public int getTownId() {
         return this.townId;
     }
 
     /** 设置 市级ID */
-    public void setTownId(Integer townId) {
+    public void setTownId(int townId) {
         this.townId = townId;
     }
 
     /** 获取 省级ID */
-    public Integer getProvinceId() {
+    public int getProvinceId() {
         return this.provinceId;
     }
 
     /** 设置 省级ID */
-    public void setProvinceId(Integer provinceId) {
+    public void setProvinceId(int provinceId) {
         this.provinceId = provinceId;
     }
 

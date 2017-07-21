@@ -3,6 +3,7 @@ package com.ins.common.utils;
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
+import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.bumptech.glide.DrawableRequestBuilder;
@@ -26,6 +27,8 @@ public class GlideUtil {
     @SuppressLint("StaticFieldLeak")
     private static Context context;
 
+    private static String imgBaseUrl;
+
     private GlideUtil() {
         throw new UnsupportedOperationException();
     }
@@ -34,13 +37,29 @@ public class GlideUtil {
         context = application.getApplicationContext();
     }
 
+    public static void setImgBaseUrl(String imgBaseUrl) {
+        GlideUtil.imgBaseUrl = imgBaseUrl;
+    }
+
+    public static String getRealImgPath(String path) {
+        if (!TextUtils.isEmpty(path) && !TextUtils.isEmpty(imgBaseUrl) && path.startsWith("upload")) {
+            return imgBaseUrl + path;
+        } else {
+            return path;
+        }
+    }
+
+    ///////////////// 加载方法 ///////////////
+
     //加载网络图，并设置占位图
     public static void loadCircleImg(ImageView imageView, int errorSrc, String url) {
+        url = getRealImgPath(url);
         DrawableRequestBuilder<Integer> error = Glide.with(context).load(errorSrc).bitmapTransform(new CropCircleTransformation(context));
         Glide.with(context).load(url).thumbnail(error).bitmapTransform(new CropCircleTransformation(context)).crossFade().into(imageView);
     }
 
     public static void loadImg(ImageView imageView, int errorSrc, String url) {
+        url = getRealImgPath(url);
         DrawableRequestBuilder<Integer> error = Glide.with(context).load(errorSrc);
         Glide.with(context).load(url).thumbnail(error).crossFade().into(imageView);
     }
@@ -55,6 +74,7 @@ public class GlideUtil {
 
     //加载一张图进行高斯模糊处理
     public static void loadBlurImg(Context context, ImageView imageView, String url) {
+        url = getRealImgPath(url);
         Glide.with(context).load(url).bitmapTransform(new BlurTransformation(context)).crossFade().into(imageView);
     }
 

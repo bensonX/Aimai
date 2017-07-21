@@ -43,12 +43,14 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.myConfig
+            buildConfigField "String", "BASE_URL", "\"http://192.168.1.166/\""
             minifyEnabled true
             zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
             signingConfig signingConfigs.myConfig
+            buildConfigField "String", "BASE_URL", "\"http://192.168.1.166/\""
         }
     }
     //配置keystore签名 end

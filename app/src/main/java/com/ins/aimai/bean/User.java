@@ -1,7 +1,8 @@
 package com.ins.aimai.bean;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 用户 entity
@@ -20,12 +21,12 @@ public class User implements Serializable {
     /**
      * 主键ID
      */
-    private Integer id;
+    private int id;
 
     /**
      * 角色ID
      */
-    private Integer roleId;
+    private int roleId;
 
     /**
      * 电话号码
@@ -55,12 +56,13 @@ public class User implements Serializable {
     /**
      * 所在地
      */
-    private Integer cityId;
+    private int cityId;
 
     /**
      * 城市对象
      */
-    private City city;
+    @SerializedName("city")
+    private Address city;
 
     /**
      * 头像
@@ -75,7 +77,7 @@ public class User implements Serializable {
     /**
      * 行业分类ID  企业用户
      */
-    private Integer tradeId;
+    private int tradeId;
 
     /**
      * 企业：营业执照 政府：介绍信
@@ -90,23 +92,23 @@ public class User implements Serializable {
     /**
      * 用户 - 积分
      */
-    private Integer accumulate;
+    private int accumulate;
 
     /**
      * 状态 企业、政府用户注册 后台审核状态
      * 0：未通过 1：审核通过  2：审核中
      */
-    private Integer status;
+    private int status;
 
     /**
      * 父级ID-用户字段 所属的企业用户ID
      */
-    private Integer parentId;
+    private int parentId;
 
     /**
      * 账户是否有效 0：无效 1：有效  缺省值：1
      */
-    private Integer isValid;
+    private int isValid;
 
     /**
      * 请求令牌
@@ -116,7 +118,7 @@ public class User implements Serializable {
     /**
      * 设备类型 0：android 1:ios
      */
-    private Integer deviceType;
+    private int deviceType;
 
     /**
      * 设备注册ID
@@ -126,22 +128,22 @@ public class User implements Serializable {
     /**
      * 创建时间
      */
-    private Date createTime;
+    private long createTime;
 
     /**
      * 最后登录时间
      */
-    private Date lastLoginTime;
+    private long lastLoginTime;
 
     /**
      * 更新时间
      */
-    private Date updateTime;
+    private long updateTime;
 
     /**
      * 清晰度 0：流畅  1：高清 缺省值 0
      */
-    private Integer definition;
+    private int definition;
 
     /**
      * 微信登录时候 的openId
@@ -149,31 +151,74 @@ public class User implements Serializable {
     private String openId;
 
 
+    //新增字段
+
+    //部门
+    private String departmentName;
+    //职位
+    private String jobTitle;
+    //公司
+    private String companyName;
+    //行业名称
+    private String tradeName;
+
+    public String getTradeName() {
+        return tradeName;
+    }
+
+    public void setTradeName(String tradeName) {
+        this.tradeName = tradeName;
+    }
+
     /**
      * 获取 主键ID
      */
-    public Integer getId() {
+    public int getId() {
         return this.id;
+    }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
+    }
+
+    public String getJobTitle() {
+        return jobTitle;
+    }
+
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
     /**
      * 设置 主键ID
      */
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
     /**
      * 获取 角色ID
      */
-    public Integer getRoleId() {
+    public int getRoleId() {
         return this.roleId;
     }
 
     /**
      * 设置 角色ID
      */
-    public void setRoleId(Integer roleId) {
+    public void setRoleId(int roleId) {
         this.roleId = roleId;
     }
 
@@ -250,28 +295,28 @@ public class User implements Serializable {
     /**
      * 获取 所在地
      */
-    public Integer getCityId() {
+    public int getCityId() {
         return this.cityId;
     }
 
     /**
      * 设置 所在地
      */
-    public void setCityId(Integer cityId) {
+    public void setCityId(int cityId) {
         this.cityId = cityId;
     }
 
     /**
      * 获取 城市对象
      */
-    public City getCity() {
+    public Address getCity() {
         return this.city;
     }
 
     /**
      * 设置 城市对象
      */
-    public void setCity(City city) {
+    public void setCity(Address city) {
         this.city = city;
     }
 
@@ -306,14 +351,14 @@ public class User implements Serializable {
     /**
      * 获取 行业分类ID  企业用户
      */
-    public Integer getTradeId() {
+    public int getTradeId() {
         return this.tradeId;
     }
 
     /**
      * 设置 行业分类ID  企业用户
      */
-    public void setTradeId(Integer tradeId) {
+    public void setTradeId(int tradeId) {
         this.tradeId = tradeId;
     }
 
@@ -348,14 +393,14 @@ public class User implements Serializable {
     /**
      * 获取 用户 - 积分
      */
-    public Integer getAccumulate() {
+    public int getAccumulate() {
         return this.accumulate;
     }
 
     /**
      * 设置 用户 - 积分
      */
-    public void setAccumulate(Integer accumulate) {
+    public void setAccumulate(int accumulate) {
         this.accumulate = accumulate;
     }
 
@@ -363,7 +408,7 @@ public class User implements Serializable {
      * 状态 企业、政府用户注册 后台审核状态
      * 0：未通过 1：审核通过  2：审核中
      */
-    public Integer getStatus() {
+    public int getStatus() {
         return this.status;
     }
 
@@ -371,35 +416,35 @@ public class User implements Serializable {
      * 状态 企业、政府用户注册 后台审核状态
      * 0：未通过 1：审核通过  2：审核中
      */
-    public void setStatus(Integer status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
     /**
      * 获取 父级ID-用户字段 所属的企业用户ID
      */
-    public Integer getParentId() {
+    public int getParentId() {
         return this.parentId;
     }
 
     /**
      * 设置 父级ID-用户字段 所属的企业用户ID
      */
-    public void setParentId(Integer parentId) {
+    public void setParentId(int parentId) {
         this.parentId = parentId;
     }
 
     /**
      * 获取 账户是否有效 0：无效 1：有效  缺省值：1
      */
-    public Integer getIsValid() {
+    public int getIsValid() {
         return this.isValid;
     }
 
     /**
      * 设置 账户是否有效 0：无效 1：有效  缺省值：1
      */
-    public void setIsValid(Integer isValid) {
+    public void setIsValid(int isValid) {
         this.isValid = isValid;
     }
 
@@ -420,14 +465,14 @@ public class User implements Serializable {
     /**
      * 获取 设备类型 0：android 1:ios
      */
-    public Integer getDeviceType() {
+    public int getDeviceType() {
         return this.deviceType;
     }
 
     /**
      * 设置 设备类型 0：android 1:ios
      */
-    public void setDeviceType(Integer deviceType) {
+    public void setDeviceType(int deviceType) {
         this.deviceType = deviceType;
     }
 
@@ -448,56 +493,56 @@ public class User implements Serializable {
     /**
      * 获取 创建时间
      */
-    public Date getCreateTime() {
+    public long getCreateTime() {
         return this.createTime;
     }
 
     /**
      * 设置 创建时间
      */
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(long createTime) {
         this.createTime = createTime;
     }
 
     /**
      * 获取 最后登录时间
      */
-    public Date getLastLoginTime() {
+    public long getLastLoginTime() {
         return this.lastLoginTime;
     }
 
     /**
      * 设置 最后登录时间
      */
-    public void setLastLoginTime(Date lastLoginTime) {
+    public void setLastLoginTime(long lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
     }
 
     /**
      * 获取 更新时间
      */
-    public Date getUpdateTime() {
+    public long getUpdateTime() {
         return this.updateTime;
     }
 
     /**
      * 设置 更新时间
      */
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(long updateTime) {
         this.updateTime = updateTime;
     }
 
     /**
      * 获取 清晰度 0：流畅  1：高清 缺省值 0
      */
-    public Integer getDefinition() {
+    public int getDefinition() {
         return this.definition;
     }
 
     /**
      * 设置 清晰度 0：流畅  1：高清 缺省值 0
      */
-    public void setDefinition(Integer definition) {
+    public void setDefinition(int definition) {
         this.definition = definition;
     }
 

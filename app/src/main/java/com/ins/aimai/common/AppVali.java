@@ -2,6 +2,7 @@ package com.ins.aimai.common;
 
 import android.text.TextUtils;
 
+import com.ins.aimai.bean.User;
 import com.ins.common.utils.ValidateUtil;
 
 /**
@@ -58,6 +59,16 @@ public class AppVali {
         }
     }
 
+    public static String updateUser(User user, String showName) {
+        if (TextUtils.isEmpty(showName)) {
+            return "请输入姓名";
+        } else if (showName.trim().equals(user.getShowName().trim())) {
+            return "没有任何修改";
+        } else {
+            return null;
+        }
+    }
+
     public static String regist_info(int type, String phone, String psw, String path, String u_name, String u_num, String c_name, String c_num, int c_tradeid, String g_name, String g_num, int cityid) {
         switch (type) {
             case 0:
@@ -73,6 +84,8 @@ public class AppVali {
                     return "请输入姓名";
                 } else if (TextUtils.isEmpty(u_num)) {
                     return "请输入身份证";
+                } else if (!ValidateUtil.IDcard(u_num)) {
+                    return "身份证号格式不正确";
                 } else {
                     return null;
                 }

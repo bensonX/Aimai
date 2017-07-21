@@ -27,6 +27,8 @@ public class AimaiApp extends Application {
     }
 
     private void initSetting() {
+        NetApi.setDebug(BuildConfig.DEBUG);
+        NetApi.setBaseUrl(BuildConfig.BASE_URL);
         SharedPrefUtilV2.init(this);
         App.saveApplication(this);
         L.setDEBUG(BuildConfig.DEBUG);

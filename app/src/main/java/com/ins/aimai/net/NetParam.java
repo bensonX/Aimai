@@ -5,8 +5,13 @@ import android.text.TextUtils;
 import com.ins.aimai.common.AppData;
 import com.ins.common.utils.L;
 
+import java.io.File;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 /**
  * Created by liaointan on 2017/7/17.
@@ -17,10 +22,7 @@ public class NetParam {
     private Map<String, Object> paramMap = new LinkedHashMap<>();
 
     public NetParam() {
-        String token = AppData.App.getToken();
-        if (!TextUtils.isEmpty(token)) {
-            paramMap.put("token", token);
-        }
+        paramMap.put("isWechat", 0);
     }
 
     public NetParam put(String key, Object value) {
@@ -29,8 +31,15 @@ public class NetParam {
     }
 
     public Map<String, Object> build() {
-        pritParam();
+        //pritParam();
         return paramMap;
+    }
+
+    public MultipartBody.Part buildFileBodyPart(String path) {
+        File file = new File(path);
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("files", file.getName(), requestFile);
+        return body;
     }
 
     private void pritParam() {

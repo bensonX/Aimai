@@ -17,7 +17,7 @@ public class AppData {
         private static final String KEY_USER = "user";
 
         public static void saveToken(String token) {
-            SharedPrefUtilV2.open(SHARENAME).put(KEY_TOKEN, token);
+            SharedPrefUtilV2.open(SHARENAME).putString(KEY_TOKEN, token);
         }
 
         public static String getToken() {

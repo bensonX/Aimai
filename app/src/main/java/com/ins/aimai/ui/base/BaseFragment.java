@@ -7,8 +7,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.ins.aimai.R;
+import com.ins.aimai.bean.EventBean;
+import com.ins.aimai.utils.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 
 /**
@@ -29,7 +33,9 @@ public class BaseFragment extends Fragment {
         }
         toolbar = (Toolbar) root.findViewById(R.id.toolbar);
         if (toolbar != null) {
-//            toolbar.setNavigationIcon(R.drawable.icon_back);
+            if (toolbar.getNavigationIcon() == null) {
+                toolbar.setNavigationIcon(R.drawable.ic_back);
+            }
             toolbar.setTitle("");
             //设置toobar居中文字
             TextView text_title = (TextView) root.findViewById(R.id.text_toolbar_title);
@@ -39,6 +45,10 @@ public class BaseFragment extends Fragment {
                 }
             }
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onCommonEvent(EventBean event) {
     }
 
     private boolean eventBusSurppot = false;
