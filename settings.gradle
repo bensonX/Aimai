@@ -1,1 +1,1 @@
-include ':app', ':common', ':playerview', ':lib_domain', ':lib_camera'
+include ':app', ':common', ':playerview', ':lib_domain', ':lib_camera', ':lib_sharesdk'

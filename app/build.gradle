@@ -59,7 +59,7 @@ android {
         variant.outputs.each { output ->
             output.outputFile = new File(
                     output.outputFile.parent,
-                    "newproject-" + defaultConfig.versionCode + "-" + defaultConfig.versionName + "-" + variant.buildType.name + ".apk");
+                    "aimai-" + defaultConfig.versionCode + "-" + defaultConfig.versionName + "-" + variant.buildType.name + ".apk");
         }
     }
 }
@@ -92,4 +92,5 @@ dependencies {
     compile 'cn.jiguang.sdk:jcore:1.1.1'
     // 此处以JCore 1.1.1 版本为例。
     compile project(':lib_camera')
+    compile project(':lib_sharesdk')
 }

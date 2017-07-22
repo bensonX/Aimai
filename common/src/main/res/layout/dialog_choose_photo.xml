@@ -16,10 +16,7 @@
         android:padding="10dp"
         android:text="拍照" />
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@color/com_line" />
+    <View style="@style/Line_H"/>
 
     <TextView
         android:id="@+id/text_pop_identy_photo"
@@ -34,10 +31,7 @@
 
     <!--@color/wj_orange-->
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@color/com_line" />
+    <View style="@style/Line_H"/>
 
     <TextView
         android:id="@+id/text_pop_identy_cancel"

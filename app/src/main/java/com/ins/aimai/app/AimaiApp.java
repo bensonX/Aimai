@@ -11,11 +11,13 @@ import com.ins.common.utils.GlideUtil;
 import com.ins.common.utils.L;
 import com.ins.common.utils.SharedPrefUtilV2;
 import com.ins.domain.launcher.DomainLauncher;
+import com.mob.MobApplication;
+import com.mob.MobSDK;
 
 import cn.jpush.android.api.JPushInterface;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
-public class AimaiApp extends Application {
+public class AimaiApp extends MobApplication {
 
     @Override
     public void onCreate() {

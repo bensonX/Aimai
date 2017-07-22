@@ -57,7 +57,6 @@ public class DialogPopupPhoto extends Dialog {
         super.onCreate(savedInstanceState);
         Window win = this.getWindow();
         win.setGravity(Gravity.BOTTOM);    //从下方弹出
-        win.getDecorView().setPadding(0, 0, 0, 0);
         WindowManager.LayoutParams lp = win.getAttributes();
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;

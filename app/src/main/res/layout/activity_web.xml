@@ -28,6 +28,25 @@
                 android:text="资讯"
                 android:textColor="@color/am_blue"
                 android:textSize="@dimen/text_big" />
+
+            <ImageView
+                android:id="@+id/btn_right_share"
+                android:layout_width="45dp"
+                android:layout_marginRight="10dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:foreground="?attr/selectableItemBackground"
+                android:scaleType="center"
+                android:src="@drawable/ic_home_share" />
+
+            <ImageView
+                android:id="@+id/btn_right_favo"
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:foreground="?attr/selectableItemBackground"
+                android:scaleType="center"
+                android:src="@drawable/ic_home_favo" />
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>

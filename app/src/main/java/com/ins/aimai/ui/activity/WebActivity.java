@@ -13,8 +13,17 @@ import android.widget.ProgressBar;
 
 import com.ins.aimai.R;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
+import com.ins.aimai.utils.ToastUtil;
 
-public class WebActivity extends BaseAppCompatActivity {
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.ShareSDK;
+import com.ins.sharesdk.dialog.ShareDialog;
+import com.ins.sharesdk.dialog.ShareHelper;
+
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.ShareSDK;
+
+public class WebActivity extends BaseAppCompatActivity implements View.OnClickListener {
 
     private WebView webView;
     private ProgressBar progressBar;
@@ -66,6 +75,8 @@ public class WebActivity extends BaseAppCompatActivity {
     private void initView() {
         webView = (WebView) findViewById(R.id.webview);
         progressBar = (ProgressBar) findViewById(R.id.progress);
+        findViewById(R.id.btn_right_share).setOnClickListener(this);
+        findViewById(R.id.btn_right_favo).setOnClickListener(this);
     }
 
     private void initCtrl() {
@@ -101,5 +112,17 @@ public class WebActivity extends BaseAppCompatActivity {
 
     private void initData() {
         webView.loadUrl(url);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_right_favo:
+                ToastUtil.showToastShort("已收藏");
+                break;
+            case R.id.btn_right_share:
+                new ShareDialog(this).show();
+                break;
+        }
     }
 }
