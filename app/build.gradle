@@ -84,7 +84,7 @@ dependencies {
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
-    compile project(':playerview')
+    compile project(':lib_playerview')
     compile project(':lib_domain')
     //极光推送
     compile 'cn.jiguang.sdk:jpush:3.0.3'
