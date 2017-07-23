@@ -15,6 +15,7 @@ import com.ins.aimai.ui.adapter.ListAdapterQuestionItem;
 import com.ins.common.entity.BaseSelectBean;
 import com.ins.common.helper.SelectHelper;
 import com.ins.common.utils.FontUtils;
+import com.ins.common.utils.StrUtil;
 import com.ins.common.view.ListViewLinearLayout;
 
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class QuestionView extends FrameLayout implements AdapterView.OnItemClick
     private ListViewLinearLayout list_qustion;
     private ListAdapterQuestionItem adapter;
 
-    private QuestionBean questionBean;
+    protected QuestionBean questionBean;
 
     public QuestionView(Context context) {
         this(context, null);
@@ -99,7 +100,7 @@ public class QuestionView extends FrameLayout implements AdapterView.OnItemClick
 
     public void notifyDataSetChanged() {
         if (questionBean != null) {
-            text_question_title.setText("\u3000\u3000" + questionBean.getTitle());
+            text_question_title.setText(StrUtil.getSpace() + questionBean.getTitle());
             adapter.getResults().clear();
             adapter.getResults().addAll(questionBean.getOptionBeans());
             adapter.notifyDataSetChanged();

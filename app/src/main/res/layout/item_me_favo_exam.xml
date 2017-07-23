@@ -6,8 +6,8 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <com.ins.aimai.ui.view.QuestionView
-        android:id="@+id/questionView"
+    <com.ins.aimai.ui.view.AnswerView
+        android:id="@+id/answerview"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
         android:layout_width="match_parent"

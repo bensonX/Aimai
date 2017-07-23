@@ -1,11 +1,17 @@
 package com.ins.common.utils;
 
 import android.content.Context;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.ImageSpan;
+import android.widget.TextView;
+
+import com.ins.common.common.RoundedBackgroundSpan;
 
 /**
  * Created by liaoinstan
@@ -65,7 +71,25 @@ public class SpannableStringUtil {
             strSpan.append(strs[i]);
             int end = strSpan.length();     //拼接后的长度
             strSpan.setSpan(new ForegroundColorSpan(colors[i]), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
         }
         return strSpan;
+    }
+
+    //给Edit设置Hint文字（带图片）
+    public static SpannableString makeImageStartStr(Context context, int src, Rect rect, String text) {
+        SpannableString spannableString = new SpannableString(text);
+        Drawable drawable = ContextCompat.getDrawable(context, src);
+        drawable.setBounds(rect);
+        ImageSpan imageSpan = new ImageSpan(drawable);
+        spannableString.setSpan(imageSpan, 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        return spannableString;
+    }
+
+    public static SpannableString makeConorBkStr(int color_bk, int color_text, String title, String content) {
+        SpannableString spannableString = new SpannableString(title + content);
+        RoundedBackgroundSpan roundedBackgroundSpan = new RoundedBackgroundSpan(color_bk, color_text);
+        spannableString.setSpan(roundedBackgroundSpan, 0, title.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        return spannableString;
     }
 }

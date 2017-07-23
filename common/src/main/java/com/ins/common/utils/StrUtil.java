@@ -72,6 +72,13 @@ public class StrUtil {
         }
     }
 
+    /**
+     * 获取首行缩进（直接使用空格间距不一致，使用下面的方法）
+     */
+    public static String getSpace() {
+        return "\u3000\u3000";
+    }
+
     /*-----------------------------------
 
     笨方法：String s = "你要去除的字符串";
@@ -131,15 +138,15 @@ public class StrUtil {
         if (isEmpty(c)) {
             return str;
         }
-        if (str.startsWith(c)){
+        if (str.startsWith(c)) {
             return str.substring(c.length());
-        }else {
+        } else {
             return str;
         }
     }
 
     public static boolean isChineseChar(String str) {
-        if (isEmpty(str)){
+        if (isEmpty(str)) {
             return false;
         }
         boolean temp = false;
@@ -179,11 +186,11 @@ public class StrUtil {
 
     //把字符串转为int型，失败返回0
     public static int str2int(String str) {
-        return str2int(str,0);
+        return str2int(str, 0);
     }
 
     //把字符串转为int型，失败返回def
-    public static int str2int(String str,int def) {
+    public static int str2int(String str, int def) {
         if (StrUtil.isEmpty(str)) {
             return def;
         }

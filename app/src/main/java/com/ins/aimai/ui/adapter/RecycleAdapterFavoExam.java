@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.common.QuestionBean;
 import com.ins.aimai.bean.common.TestBean;
+import com.ins.aimai.ui.view.AnswerView;
 import com.ins.aimai.ui.view.QuestionView;
 import com.ins.common.utils.GlideUtil;
 
@@ -51,7 +52,7 @@ public class RecycleAdapterFavoExam extends RecyclerView.Adapter<RecycleAdapterF
         }};
         QuestionBean questionBean = new QuestionBean(title, options);
 
-        holder.questionView.setData(questionBean);
+        holder.answerview.setData(questionBean);
     }
 
     @Override
@@ -61,11 +62,11 @@ public class RecycleAdapterFavoExam extends RecyclerView.Adapter<RecycleAdapterF
 
     public class Holder extends RecyclerView.ViewHolder {
 
-        private QuestionView questionView;
+        private AnswerView answerview;
 
         public Holder(View itemView) {
             super(itemView);
-            questionView = (QuestionView) itemView.findViewById(R.id.questionView);
+            answerview = (AnswerView) itemView.findViewById(R.id.answerview);
         }
     }
 }
