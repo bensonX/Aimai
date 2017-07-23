@@ -7,11 +7,11 @@ import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
-import android.widget.TextView;
 
-import com.ins.common.common.RoundedBackgroundSpan;
+import com.ins.common.common.ConerBkSpan;
 
 /**
  * Created by liaoinstan
@@ -86,9 +86,12 @@ public class SpannableStringUtil {
         return spannableString;
     }
 
-    public static SpannableString makeConorBkStr(int color_bk, int color_text, String title, String content) {
+    public static SpannableString makeConorBkStr(Context context, int colorBkSrc, int colorTextSrc, String title, String content) {
+        if (content == null) content = "";
+        int colorBk = ContextCompat.getColor(context, colorBkSrc);
+        int colorText = ContextCompat.getColor(context, colorTextSrc);
         SpannableString spannableString = new SpannableString(title + content);
-        RoundedBackgroundSpan roundedBackgroundSpan = new RoundedBackgroundSpan(color_bk, color_text);
+        ConerBkSpan roundedBackgroundSpan = new ConerBkSpan(colorBk, colorText);
         spannableString.setSpan(roundedBackgroundSpan, 0, title.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         return spannableString;
     }

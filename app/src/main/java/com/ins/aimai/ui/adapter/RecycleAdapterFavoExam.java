@@ -51,6 +51,9 @@ public class RecycleAdapterFavoExam extends RecyclerView.Adapter<RecycleAdapterF
             add(option4);
         }};
         QuestionBean questionBean = new QuestionBean(title, options);
+        questionBean.setAnswer("B");
+        questionBean.setPoint("常识判断、法律、其他法");
+        questionBean.setAnalysis("耶和华说，我不再怜恤这地的居民。必将这民交给各人的邻舍，和他们王的手中。他们必毁灭这地，我也不救这民脱离他们的手。于是，我牧养这将宰的群羊，就是群中最困苦的羊。我拿着两根杖。一根我称为荣美，一根我称为联索。这样，我牧养了群羊。");
 
         holder.answerview.setData(questionBean);
     }

@@ -20,6 +20,12 @@ public class ListAdapterQuestionItem extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
     private List<QuestionView.Option> results = new ArrayList<>();
+    //是否可以勾选
+    private boolean needCheck = true;
+
+    public void setNeedCheck(boolean needCheck) {
+        this.needCheck = needCheck;
+    }
 
     public List<QuestionView.Option> getResults() {
         return results;
@@ -60,6 +66,12 @@ public class ListAdapterQuestionItem extends BaseAdapter {
 
         holder.text_question_item.setText(NumUtil.intToABC(position) + "、" + bean.content);
         holder.text_question_item.setSelected(bean.isSelect());
+
+        if (needCheck) {
+            holder.text_question_item.setCompoundDrawablesWithIntrinsicBounds(R.drawable.selector_check_select_learn_small, 0, 0, 0);
+        } else {
+            holder.text_question_item.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        }
 
         return convertView;
     }

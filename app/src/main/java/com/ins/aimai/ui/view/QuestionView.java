@@ -35,6 +35,8 @@ public class QuestionView extends FrameLayout implements AdapterView.OnItemClick
     private ListAdapterQuestionItem adapter;
 
     protected QuestionBean questionBean;
+    //是否可以勾选
+    private boolean needCheck = true;
 
     public QuestionView(Context context) {
         this(context, null);
@@ -109,10 +111,12 @@ public class QuestionView extends FrameLayout implements AdapterView.OnItemClick
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Option bean = adapter.getResults().get(position);
-        SelectHelper.selectAllSelectBeans(adapter.getResults(), false);
-        bean.setSelect(true);
-        adapter.notifyDataSetChanged();
+        if (needCheck) {
+            Option bean = adapter.getResults().get(position);
+            SelectHelper.selectAllSelectBeans(adapter.getResults(), false);
+            bean.setSelect(true);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     public static class Option extends BaseSelectBean {
@@ -121,5 +125,17 @@ public class QuestionView extends FrameLayout implements AdapterView.OnItemClick
         public Option(String content) {
             this.content = content;
         }
+    }
+
+    //##################   get & set  ##############
+
+    public boolean isNeedCheck() {
+        return needCheck;
+    }
+
+    public void setNeedCheck(boolean needCheck) {
+        this.needCheck = needCheck;
+        adapter.setNeedCheck(needCheck);
+        adapter.notifyDataSetChanged();
     }
 }

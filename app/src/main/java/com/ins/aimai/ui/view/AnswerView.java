@@ -36,6 +36,8 @@ public class AnswerView extends FrameLayout {
 
     private QuestionView questionView;
     private TextView text_answerview_answer;
+    private TextView text_answerview_point;
+    private TextView text_answerview_analysis;
 
     public AnswerView(Context context) {
         this(context, null);
@@ -66,19 +68,23 @@ public class AnswerView extends FrameLayout {
     private void initView() {
         questionView = (QuestionView) findViewById(R.id.questionView);
         text_answerview_answer = (TextView) findViewById(R.id.text_answerview_answer);
+        text_answerview_point = (TextView) findViewById(R.id.text_answerview_point);
+        text_answerview_analysis = (TextView) findViewById(R.id.text_answerview_analysis);
     }
 
     private void initCtrl() {
+        questionView.setNeedCheck(false);
     }
 
     private void initData() {
         if (isInEditMode()) {
+            SpannableString spanStrAnswer = SpannableStringUtil.makeConorBkStr(context, R.color.am_blue, R.color.white, "答案", "A");
+            SpannableString spanStrPoint = SpannableStringUtil.makeConorBkStr(context, R.color.com_dark, R.color.white, "考点", "常识判断、法律、其他法");
+            SpannableString spanStrAnalysis = SpannableStringUtil.makeConorBkStr(context, R.color.com_dark, R.color.white, "解析", "耶和华说，我不再怜恤这地的居民。必将这民交给各人的邻舍，和他们王的手中。他们必毁灭这地，我也不救这民脱离他们的手。于是，我牧养这将宰的群羊，就是群中最困苦的羊。我拿着两根杖。一根我称为荣美，一根我称为联索。这样，我牧养了群羊。");
+            text_answerview_answer.setText(spanStrAnswer);
+            text_answerview_point.setText(spanStrPoint);
+            text_answerview_analysis.setText(spanStrAnalysis);
         }
-
-        int color_blue = ContextCompat.getColor(context, R.color.am_blue);
-        int color_white = ContextCompat.getColor(context, R.color.white);
-        SpannableString spannableString = SpannableStringUtil.makeConorBkStr(color_blue, color_white, "答案", "B");
-        text_answerview_answer.setText(spannableString);
     }
 
     //################### 对外方法 #####################
@@ -93,6 +99,12 @@ public class AnswerView extends FrameLayout {
 
     public void setData(QuestionBean questionBean) {
         questionView.setData(questionBean);
+        SpannableString spanStrAnswer = SpannableStringUtil.makeConorBkStr(context, R.color.am_blue, R.color.white, "答案", questionBean.getAnswer());
+        SpannableString spanStrPoint = SpannableStringUtil.makeConorBkStr(context, R.color.com_dark, R.color.white, "考点", questionBean.getPoint());
+        SpannableString spanStrAnalysis = SpannableStringUtil.makeConorBkStr(context, R.color.com_dark, R.color.white, "解析", questionBean.getAnalysis());
+        text_answerview_answer.setText(spanStrAnswer);
+        text_answerview_point.setText(spanStrPoint);
+        text_answerview_analysis.setText(spanStrAnalysis);
     }
 
     public void notifyDataSetChanged() {
