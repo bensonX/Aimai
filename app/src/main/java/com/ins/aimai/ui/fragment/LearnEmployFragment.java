@@ -11,10 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ins.aimai.R;
-import com.ins.aimai.bean.TestBean;
+import com.ins.aimai.bean.common.TestBean;
 import com.ins.aimai.ui.activity.EmployAddActivity;
 import com.ins.aimai.ui.activity.EmploySearchActivity;
-import com.ins.aimai.ui.activity.LessonDetailActivity;
 import com.ins.aimai.ui.activity.UserDetailActivity;
 import com.ins.aimai.ui.adapter.RecycleAdapterLearnEmploy;
 import com.ins.aimai.ui.base.BaseFragment;

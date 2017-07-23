@@ -4,7 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.ins.aimai.ui.fragment.FavoFragment;
+import com.ins.aimai.ui.fragment.FavoExamFragment;
+import com.ins.aimai.ui.fragment.FavoLessonFragment;
 import com.ins.aimai.ui.fragment.InfoFragment;
 
 /**
@@ -34,9 +35,9 @@ public class PagerAdapterFavo extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return FavoFragment.newInstance(position);
+                return FavoLessonFragment.newInstance(position);
             case 1:
-                return FavoFragment.newInstance(position);
+                return FavoExamFragment.newInstance(position);
             case 2:
                 return InfoFragment.newInstance(position);
             default:

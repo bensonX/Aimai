@@ -7,8 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.ins.aimai.R;
-import com.ins.aimai.bean.EventBean;
-import com.ins.aimai.utils.ToastUtil;
+import com.ins.aimai.bean.common.EventBean;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

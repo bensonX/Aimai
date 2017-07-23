@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.ins.aimai.R;
 import com.ins.aimai.bean.Address;
-import com.ins.aimai.bean.EventBean;
+import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.bean.Trade;
 import com.ins.aimai.bean.User;
 import com.ins.aimai.common.AppData;
@@ -25,8 +25,6 @@ import com.ins.aimai.net.NetParam;
 import com.ins.aimai.net.UploadHelper;
 import com.ins.aimai.ui.activity.AddressActivity;
 import com.ins.aimai.ui.activity.CameraActivity;
-import com.ins.aimai.ui.activity.HomeActivity;
-import com.ins.aimai.ui.activity.LoginActivity;
 import com.ins.aimai.ui.activity.RegistActivity;
 import com.ins.aimai.ui.activity.TradeActivity;
 import com.ins.aimai.ui.base.BaseFragment;
@@ -37,8 +35,6 @@ import com.ins.common.utils.GlideUtil;
 import com.ins.common.utils.MD5Util;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Map;
 

@@ -1,7 +1,7 @@
 package com.ins.aimai.utils;
 
 import com.github.promeg.pinyinhelper.Pinyin;
-import com.ins.aimai.bean.SortBean;
+import com.ins.aimai.bean.common.SortBean;
 import com.ins.common.common.CharacterParser;
 import com.ins.common.utils.StrUtil;
 

@@ -8,8 +8,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.ins.aimai.R;
-import com.ins.aimai.bean.TestBean;
-import com.ins.aimai.ui.adapter.GridAdapterLesson;
+import com.ins.aimai.bean.common.TestBean;
 import com.ins.aimai.ui.adapter.GridAdapterLessonComp;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.common.utils.FocusUtil;

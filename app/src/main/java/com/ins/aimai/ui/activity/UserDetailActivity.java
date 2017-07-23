@@ -6,17 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ImageView;
 
 import com.ins.aimai.R;
-import com.ins.aimai.bean.TestBean;
+import com.ins.aimai.bean.common.TestBean;
 import com.ins.aimai.ui.adapter.GridAdapterLesson;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
-import com.ins.aimai.utils.ToastUtil;
-import com.ins.common.helper.CropHelper;
-import com.ins.common.helper.CropHelperEx;
 import com.ins.common.utils.FocusUtil;
-import com.ins.common.utils.GlideUtil;
 import com.ins.common.utils.StatusBarTextUtil;
 
 public class UserDetailActivity extends BaseAppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {

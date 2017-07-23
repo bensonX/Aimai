@@ -10,8 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ins.aimai.R;
-import com.ins.aimai.bean.EventBean;
-import com.ins.aimai.common.AppEvent;
+import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.common.AppVali;
 import com.ins.aimai.interfaces.PagerFragmentInter;
 import com.ins.aimai.net.BaseCallback;

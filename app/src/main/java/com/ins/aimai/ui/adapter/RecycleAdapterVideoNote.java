@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.ins.aimai.R;
-import com.ins.aimai.bean.TestBean;
+import com.ins.aimai.bean.common.TestBean;
 import com.ins.common.utils.GlideUtil;
 
 import java.util.ArrayList;

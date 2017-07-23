@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ins.aimai.R;
-import com.ins.aimai.bean.TestBean;
 import com.ins.aimai.bean.Trade;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
 

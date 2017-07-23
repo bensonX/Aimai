@@ -20,6 +20,7 @@
             <!--android:textSize="18sp" />-->
 
         <com.ins.aimai.ui.view.QuestionView
+            android:id="@+id/questionView"
             android:background="@color/white"
             android:paddingTop="15dp"
             android:paddingBottom="15dp"

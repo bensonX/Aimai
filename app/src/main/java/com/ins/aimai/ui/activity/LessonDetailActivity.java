@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ins.aimai.R;
-import com.ins.aimai.bean.TestBean;
+import com.ins.aimai.bean.common.TestBean;
 import com.ins.aimai.ui.adapter.PagerAdapterLessonDetail;
 import com.ins.aimai.ui.adapter.RecycleAdapterLable;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;

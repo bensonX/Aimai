@@ -1,18 +1,10 @@
 package com.ins.aimai.ui.adapter;
 
-import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.ImageSpan;
 
-import com.ins.aimai.R;
-import com.ins.aimai.ui.fragment.FavoFragment;
-import com.ins.aimai.ui.fragment.InfoFragment;
 import com.ins.aimai.ui.fragment.LessonEmployFragment;
-import com.ins.common.utils.App;
 
 /**
  * Created by Administrator on 2017/7/7.

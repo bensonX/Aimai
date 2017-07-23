@@ -11,9 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ins.aimai.R;
-import com.ins.aimai.bean.TestBean;
+import com.ins.aimai.bean.common.TestBean;
 import com.ins.aimai.ui.adapter.RecycleAdapterEmploySearch;
-import com.ins.aimai.ui.adapter.RecycleAdapterHomeInfo;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.common.common.ItemDecorationDivider;
 import com.ins.common.helper.LoadingViewHelper;

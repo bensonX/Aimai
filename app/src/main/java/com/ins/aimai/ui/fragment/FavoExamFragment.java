@@ -11,9 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ins.aimai.R;
-import com.ins.aimai.bean.TestBean;
-import com.ins.aimai.ui.adapter.RecycleAdapterFavo;
+import com.ins.aimai.bean.common.TestBean;
+import com.ins.aimai.ui.adapter.RecycleAdapterFavoExam;
 import com.ins.aimai.ui.base.BaseFragment;
+import com.ins.common.common.ItemDecorationDivider;
 import com.ins.common.helper.LoadingViewHelper;
 import com.liaoinstan.springview.container.AliFooter;
 import com.liaoinstan.springview.container.AliHeader;
@@ -22,7 +23,7 @@ import com.liaoinstan.springview.widget.SpringView;
 /**
  * Created by liaoinstan
  */
-public class FavoFragment extends BaseFragment {
+public class FavoExamFragment extends BaseFragment {
 
     private int position;
     private View rootView;
@@ -32,10 +33,10 @@ public class FavoFragment extends BaseFragment {
 
     private SpringView springView;
     private RecyclerView recycler;
-    private RecycleAdapterFavo adapter;
+    private RecycleAdapterFavoExam adapter;
 
     public static Fragment newInstance(int position) {
-        FavoFragment fragment = new FavoFragment();
+        FavoExamFragment fragment = new FavoExamFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("position", position);
         fragment.setArguments(bundle);
@@ -51,7 +52,7 @@ public class FavoFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_favo, container, false);
+        rootView = inflater.inflate(R.layout.fragment_favo_exam, container, false);
         return rootView;
     }
 
@@ -74,9 +75,10 @@ public class FavoFragment extends BaseFragment {
     }
 
     private void initCtrl() {
-        adapter = new RecycleAdapterFavo(getContext());
+        adapter = new RecycleAdapterFavoExam(getContext());
         recycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recycler.setAdapter(adapter);
+        recycler.addItemDecoration(new ItemDecorationDivider(getContext()));
         springView.setHeader(new AliHeader(getContext(), false));
         springView.setFooter(new AliFooter(getContext(), false));
         springView.setListener(new SpringView.OnFreshListener() {

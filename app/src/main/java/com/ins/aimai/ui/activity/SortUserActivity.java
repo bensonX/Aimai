@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.ins.aimai.R;
-import com.ins.aimai.bean.SortBean;
+import com.ins.aimai.bean.common.SortBean;
 import com.ins.aimai.ui.adapter.RecycleAdapterSortUser;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.aimai.utils.ColorUtil;

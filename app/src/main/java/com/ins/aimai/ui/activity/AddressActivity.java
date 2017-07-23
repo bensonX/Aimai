@@ -10,7 +10,7 @@ import android.view.View;
 
 import com.ins.aimai.R;
 import com.ins.aimai.bean.Address;
-import com.ins.aimai.bean.EventBean;
+import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.ui.adapter.PagerAdapterAddress;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.common.utils.TabLayoutUtil;

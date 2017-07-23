@@ -8,7 +8,10 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.ins.aimai.R;
-import com.ins.aimai.bean.TestBean;
+import com.ins.aimai.bean.common.QuestionBean;
+import com.ins.aimai.bean.common.TestBean;
+import com.ins.aimai.ui.view.QuestionView;
+import com.ins.common.utils.NumUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +19,9 @@ import java.util.List;
 public class ListAdapterQuestionItem extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
-    private List<TestBean> results = new ArrayList<>();
+    private List<QuestionView.Option> results = new ArrayList<>();
 
-    public List<TestBean> getResults() {
+    public List<QuestionView.Option> getResults() {
         return results;
     }
 
@@ -53,8 +56,9 @@ public class ListAdapterQuestionItem extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        final TestBean bean = results.get(position);
+        final QuestionView.Option bean = results.get(position);
 
+        holder.text_question_item.setText(NumUtil.intToABC(position) + "、" + bean.content);
         holder.text_question_item.setSelected(bean.isSelect());
 
         return convertView;

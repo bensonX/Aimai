@@ -13,7 +13,7 @@ import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
 import com.ins.aimai.R;
-import com.ins.aimai.bean.TestBean;
+import com.ins.aimai.bean.common.TestBean;
 import com.ins.aimai.ui.activity.WebActivity;
 import com.ins.aimai.ui.adapter.RecycleAdapterHomeBanner;
 import com.ins.aimai.ui.adapter.RecycleAdapterHomeInfo;

@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.ins.aimai.R;
-import com.ins.aimai.bean.EventBean;
+import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.ui.dialog.DialogLoading;
 import com.ins.common.base.CommonBaseAppCompatActivity;
 

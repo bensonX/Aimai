@@ -8,13 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.ins.aimai.R;
-import com.ins.aimai.bean.TestBean;
+import com.ins.aimai.bean.common.TestBean;
 import com.ins.common.utils.GlideUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecycleAdapterFavo extends RecyclerView.Adapter<RecycleAdapterFavo.Holder> {
+public class RecycleAdapterFavoLesson extends RecyclerView.Adapter<RecycleAdapterFavoLesson.Holder> {
 
     private Context context;
     private List<TestBean> results = new ArrayList<>();
@@ -23,17 +23,17 @@ public class RecycleAdapterFavo extends RecyclerView.Adapter<RecycleAdapterFavo.
         return results;
     }
 
-    public RecycleAdapterFavo(Context context) {
+    public RecycleAdapterFavoLesson(Context context) {
         this.context = context;
     }
 
     @Override
-    public RecycleAdapterFavo.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new Holder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_me_favo, parent, false));
+    public RecycleAdapterFavoLesson.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new Holder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_me_favo_lesson, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(final RecycleAdapterFavo.Holder holder, final int position) {
+    public void onBindViewHolder(final RecycleAdapterFavoLesson.Holder holder, final int position) {
         final TestBean bean = results.get(position);
         GlideUtil.loadImgTest(holder.img_item_order_header);
     }

@@ -99,6 +99,14 @@ public class NumUtil {
         return ret;
     }
 
+    /**
+     * 数字转英文字母,从0开始(大写 0-A,1-B)
+     */
+    public static String intToABC(int i) {
+        char c = (char) (i + 65);
+        return String.valueOf(c);
+    }
+
     public static String NumberFormat(float f, int m) {
         return String.format("%." + m + "f", f);
     }

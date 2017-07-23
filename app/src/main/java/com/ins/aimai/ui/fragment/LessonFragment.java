@@ -12,11 +12,9 @@ import android.view.ViewGroup;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
-import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.LessonHomePojo;
-import com.ins.aimai.bean.TestBean;
-import com.ins.aimai.bean.Trade;
+import com.ins.aimai.bean.common.TestBean;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
@@ -26,13 +24,11 @@ import com.ins.aimai.ui.adapter.RecycleAdapterLessonTasteBanner;
 import com.ins.aimai.ui.base.BaseFragment;
 import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
-import com.ins.common.utils.StrUtil;
 import com.ins.common.view.LoadingLayout;
 import com.liaoinstan.springview.container.AliFooter;
 import com.liaoinstan.springview.container.AliHeader;
 import com.liaoinstan.springview.widget.SpringView;
 
-import java.util.List;
 import java.util.Map;
 
 /**

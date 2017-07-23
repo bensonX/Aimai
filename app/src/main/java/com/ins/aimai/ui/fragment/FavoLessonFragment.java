@@ -9,17 +9,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.ins.aimai.R;
 import com.ins.aimai.bean.common.TestBean;
-import com.ins.aimai.ui.activity.AddressActivity;
-import com.ins.aimai.ui.activity.CompDetailActivity;
-import com.ins.aimai.ui.activity.EmploySearchActivity;
-import com.ins.aimai.ui.adapter.RecycleAdapterLearnComp;
+import com.ins.aimai.ui.adapter.RecycleAdapterFavoLesson;
 import com.ins.aimai.ui.base.BaseFragment;
-import com.ins.common.interfaces.OnRecycleItemClickListener;
-import com.ins.common.view.LoadingLayout;
+import com.ins.common.helper.LoadingViewHelper;
 import com.liaoinstan.springview.container.AliFooter;
 import com.liaoinstan.springview.container.AliHeader;
 import com.liaoinstan.springview.widget.SpringView;
@@ -27,19 +22,20 @@ import com.liaoinstan.springview.widget.SpringView;
 /**
  * Created by liaoinstan
  */
-public class LearnCompFragment extends BaseFragment implements OnRecycleItemClickListener, View.OnClickListener {
+public class FavoLessonFragment extends BaseFragment {
 
     private int position;
     private View rootView;
 
-    private TextView text_toolbar_title;
-    private LoadingLayout loadingLayout;
+    private View showin;
+    private ViewGroup showingroup;
+
     private SpringView springView;
     private RecyclerView recycler;
-    private RecycleAdapterLearnComp adapter;
+    private RecycleAdapterFavoLesson adapter;
 
     public static Fragment newInstance(int position) {
-        LearnCompFragment fragment = new LearnCompFragment();
+        FavoLessonFragment fragment = new FavoLessonFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("position", position);
         fragment.setArguments(bundle);
@@ -55,7 +51,7 @@ public class LearnCompFragment extends BaseFragment implements OnRecycleItemClic
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_learn_comp, container, false);
+        rootView = inflater.inflate(R.layout.fragment_favo_lesson, container, false);
         return rootView;
     }
 
@@ -72,19 +68,15 @@ public class LearnCompFragment extends BaseFragment implements OnRecycleItemClic
     }
 
     private void initView() {
-        text_toolbar_title = (TextView) rootView.findViewById(R.id.text_toolbar_title);
-        loadingLayout = (LoadingLayout) rootView.findViewById(R.id.loadingLayout);
+        showingroup = (ViewGroup) rootView.findViewById(R.id.showingroup);
         springView = (SpringView) rootView.findViewById(R.id.spring);
         recycler = (RecyclerView) rootView.findViewById(R.id.recycler);
-        rootView.findViewById(R.id.lay_learnpeople_search).setOnClickListener(this);
-        text_toolbar_title.setOnClickListener(this);
     }
 
     private void initCtrl() {
-        adapter = new RecycleAdapterLearnComp(getContext());
+        adapter = new RecycleAdapterFavoLesson(getContext());
         recycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recycler.setAdapter(adapter);
-        adapter.setOnItemClickListener(this);
         springView.setHeader(new AliHeader(getContext(), false));
         springView.setFooter(new AliFooter(getContext(), false));
         springView.setListener(new SpringView.OnFreshListener() {
@@ -114,7 +106,7 @@ public class LearnCompFragment extends BaseFragment implements OnRecycleItemClic
     }
 
     private void initData() {
-        loadingLayout.showLoadingView();
+        showin = LoadingViewHelper.showin(showingroup, R.layout.layout_loading, showin);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -134,25 +126,8 @@ public class LearnCompFragment extends BaseFragment implements OnRecycleItemClic
                 adapter.getResults().add(new TestBean());
                 adapter.getResults().add(new TestBean());
                 adapter.notifyDataSetChanged();
-                loadingLayout.showOut();
+                LoadingViewHelper.showout(showingroup, showin);
             }
         }, 1000);
-    }
-
-    @Override
-    public void onItemClick(RecyclerView.ViewHolder viewHolder) {
-        CompDetailActivity.start(getContext());
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.text_toolbar_title:
-                AddressActivity.start(getContext());
-                break;
-            case R.id.lay_learnpeople_search:
-                EmploySearchActivity.start(getContext());
-                break;
-        }
     }
 }

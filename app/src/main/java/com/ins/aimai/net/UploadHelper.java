@@ -1,9 +1,7 @@
 package com.ins.aimai.net;
 
-import com.ins.aimai.R;
-import com.ins.aimai.bean.CommonBean;
+import com.ins.aimai.bean.common.CommonBean;
 import com.ins.aimai.utils.ToastUtil;
-import com.ins.common.utils.GlideUtil;
 
 import okhttp3.MultipartBody;
 

@@ -36,11 +36,11 @@
         <activity
             android:name=".ui.activity.FirstActivity"
             android:theme="@style/AppTheme.NoTitleFullscreen">
-            <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
 
-            <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity
             android:name=".ui.activity.HomeActivity"
@@ -60,7 +60,13 @@
         <activity android:name=".ui.activity.LessonDetailActivity" />
         <activity android:name=".ui.activity.MeDetailActivity" />
         <activity android:name=".ui.activity.OrderActivity" />
-        <activity android:name=".ui.activity.FavoActivity" />
+        <activity android:name=".ui.activity.FavoActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".ui.activity.MsgActivity" />
         <activity android:name=".ui.activity.SuggestActivity" />
         <activity android:name=".ui.activity.SettingActivity" />
@@ -80,14 +86,10 @@
         <activity android:name=".ui.activity.ExamResultActivity" />
         <activity android:name=".ui.activity.SortUserActivity" />
         <activity android:name=".ui.activity.LearnUserActivity" />
-        <activity android:name=".ui.activity.AddressActivity">
-
-        </activity>
-        <activity android:name=".ui.activity.TradeActivity">
-
-        </activity>
+        <activity android:name=".ui.activity.AddressActivity"></activity>
+        <activity android:name=".ui.activity.TradeActivity"></activity>
         <activity android:name=".ui.activity.CameraActivity" />
-        <activity android:name=".ui.activity.ExamActivity" />
+        <activity android:name=".ui.activity.ExamActivity"></activity>
         <activity android:name=".ui.activity.EmploySearchActivity" />
         <activity android:name=".ui.activity.EmployAddActivity" />
         <activity android:name=".ui.activity.UserDetailActivity" />

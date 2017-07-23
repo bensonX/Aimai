@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.text.TextUtils;
 
 import com.ins.aimai.R;
-import com.ins.aimai.bean.EventBean;
 import com.ins.aimai.bean.User;
 import com.ins.aimai.common.AppData;
 import com.ins.aimai.net.BaseCallback;
@@ -15,14 +14,8 @@ import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.aimai.utils.ToastUtil;
-import com.ins.common.utils.MD5Util;
-
-import org.greenrobot.eventbus.EventBus;
-import org.w3c.dom.Text;
 
 import java.util.Map;
-
-import cn.jpush.android.api.JPushInterface;
 
 public class LoadUpActivity extends BaseAppCompatActivity {
 

@@ -9,9 +9,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.ins.aimai.R;
-import com.ins.aimai.bean.EventBean;
+import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.bean.User;
-import com.ins.aimai.common.AppEvent;
 import com.ins.aimai.common.AppVali;
 import com.ins.aimai.interfaces.PagerFragmentInter;
 import com.ins.aimai.ui.activity.RegistActivity;
@@ -19,8 +18,6 @@ import com.ins.aimai.ui.base.BaseFragment;
 import com.ins.aimai.utils.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Created by liaoinstan

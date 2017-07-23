@@ -1,4 +1,4 @@
-package com.ins.aimai.bean;
+package com.ins.aimai.bean.common;
 
 import com.google.gson.annotations.SerializedName;
 import com.ins.common.entity.BaseSelectBean;

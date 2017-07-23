@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.ins.aimai.R;
-import com.ins.aimai.bean.SortBean;
+import com.ins.aimai.bean.common.SortBean;
 
 import java.util.ArrayList;
 import java.util.List;

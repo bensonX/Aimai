@@ -1,4 +1,4 @@
-package com.ins.aimai.bean;
+package com.ins.aimai.bean.common;
 
 import android.text.Html;
 import android.text.TextUtils;
