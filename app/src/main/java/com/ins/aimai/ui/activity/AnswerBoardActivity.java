@@ -77,7 +77,6 @@ public class AnswerBoardActivity extends BaseAppCompatActivity implements OnRecy
 
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
-        LessonDetailActivity.start(this);
     }
 
     @Override

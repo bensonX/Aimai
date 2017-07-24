@@ -1,6 +1,7 @@
 package com.ins.aimai.bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 课程 entity
@@ -74,6 +75,8 @@ public class Lesson implements Serializable {
     /** 排序ID 降序排列 */
     private int sortNum;
 
+    //课件列表
+    private List<CourseWare> courseWares;
 
     /** 课程下的 视频数量 */
     private int videoNum;
@@ -115,6 +118,14 @@ public class Lesson implements Serializable {
     /** 设置 课程介绍 */
     public void setCurriculumDescribe(String curriculumDescribe) {
         this.curriculumDescribe = curriculumDescribe;
+    }
+
+    public List<CourseWare> getCourseWares() {
+        return courseWares;
+    }
+
+    public void setCourseWares(List<CourseWare> courseWares) {
+        this.courseWares = courseWares;
     }
 
     /** 获取 年度 */

@@ -11,15 +11,31 @@ import android.view.KeyEvent;
 
 import com.dl7.player.media.IjkPlayerView;
 import com.ins.aimai.R;
+import com.ins.aimai.bean.CourseWare;
+import com.ins.aimai.bean.Lesson;
+import com.ins.aimai.bean.Video;
+import com.ins.aimai.bean.common.EventBean;
+import com.ins.aimai.bean.common.TestBean;
+import com.ins.aimai.net.BaseCallback;
+import com.ins.aimai.net.NetApi;
+import com.ins.aimai.net.NetParam;
 import com.ins.aimai.ui.adapter.PagerAdapterVideo;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
+import com.ins.aimai.ui.base.BaseVideoActivity;
 import com.ins.aimai.ui.dialog.DialogSureAimai;
+import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.utils.GlideUtil;
 import com.ins.common.utils.StatusBarTextUtil;
+import com.ins.common.utils.StrUtil;
+
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.List;
+import java.util.Map;
 
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 
-public class VideoActivity extends BaseAppCompatActivity {
+public class VideoActivity extends BaseVideoActivity {
 
     private static final String VIDEO_URL = "http://flv2.bn.netease.com/videolib3/1611/28/GbgsL3639/SD/movie_index.m3u8";
     private static final String VIDEO_HD_URL = "http://flv2.bn.netease.com/videolib3/1611/28/GbgsL3639/HD/movie_index.m3u8";
@@ -34,9 +50,22 @@ public class VideoActivity extends BaseAppCompatActivity {
 
     private String[] titles = new String[]{"介绍", "目录", "讲义", "评论"};
 
-    public static void start(Context context) {
+    private int lessonId;
+    private Lesson lesson;
+
+
+    public static void start(Context context, int lessonId) {
         Intent intent = new Intent(context, VideoActivity.class);
+        intent.putExtra("lessonId", lessonId);
         context.startActivity(intent);
+    }
+
+    @Override
+    public void onCommonEvent(EventBean event) {
+        if (event.getEvent() == EventBean.EVENT_VIDEO_SELECT_DIRECTORY) {
+            Video video = (Video) event.get("video");
+            setVideo(video);
+        }
     }
 
     @Override
@@ -44,34 +73,19 @@ public class VideoActivity extends BaseAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video);
         setToolbar();
+        registEventBus();
         toolbar.bringToFront();
         StatusBarTextUtil.transparencyBar(this);
         initBase();
         initView();
         initCtrl();
         initData();
-        dialogSureAimai.show();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        player.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        player.onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        player.onDestroy();
     }
 
     private void initBase() {
+        if (getIntent().hasExtra("lessonId")) {
+            lessonId = getIntent().getIntExtra("lessonId", 0);
+        }
         dialogSureAimai = new DialogSureAimai(this, "本课时已看完", "您可以选择开始考核该课时，或者观看下个课时", "观看下个课时", "开始考核");
     }
 
@@ -79,23 +93,15 @@ public class VideoActivity extends BaseAppCompatActivity {
         tab = (TabLayout) findViewById(R.id.tab);
         pager = (ViewPager) findViewById(R.id.pager);
         player = (IjkPlayerView) findViewById(R.id.player);
+        setIjkPlayerView(player);
     }
 
     private void initCtrl() {
         adapterPager = new PagerAdapterVideo(getSupportFragmentManager(), titles);
         pager.setAdapter(adapterPager);
+        pager.setOffscreenPageLimit(2);
         tab.setupWithViewPager(pager);
 
-        //播放器初始化
-        GlideUtil.loadBlurImg(this, player.mPlayerThumb, IMAGE_URL);
-        player.mPlayerThumb.setImageResource(R.mipmap.ic_launcher);
-        player.init()
-                .setTitle("这是个跑马灯TextView，标题要足够长才会跑。-(゜ -゜)つロ 乾杯~")
-                .setSkipTip(1000 * 60 * 1)
-                .enableDanmaku()
-                .setDanmakuSource(getResources().openRawResource(R.raw.bili))
-                .setVideoSource(null, VIDEO_URL, VIDEO_HD_URL, null, null)
-                .setMediaQuality(IjkPlayerView.MEDIA_QUALITY_HIGH);
         player.setOnInfoListener(new IMediaPlayer.OnInfoListener() {
             @Override
             public boolean onInfo(IMediaPlayer iMediaPlayer, int i, int i1) {
@@ -107,31 +113,61 @@ public class VideoActivity extends BaseAppCompatActivity {
     }
 
     private void initData() {
+        netQueryLessonDetail();
     }
 
-
-    //旋转屏幕后播放器要处理先后旋转的样式
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        player.configurationChanged(newConfig);
-    }
-
-    //处理音量键，避免外部按音量键后导航栏和状态栏显示出来退不回去的状态（优先处理播放器音量键事件）
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (player.handleVolumeKey(keyCode)) {
-            return true;
+    private void setData(Lesson lesson) {
+        if (lesson != null) {
         }
-        return super.onKeyDown(keyCode, event);
     }
 
-    //回退，全屏时退回竖屏 (优先处理播放器回退事件)
-    @Override
-    public void onBackPressed() {
-        if (player.onBackPressed()) {
-            return;
+    private void setVideo(Video video){
+        //加载封面图
+        GlideUtil.loadBlurImg(this, player.mPlayerThumb, video.getHighDefinition());
+        player.setTitle(video.getName());
+        player.setSkipTip(1000 * 60 * 1);
+        player.setNeedLimit(false);
+        player.enableDanmaku();
+        player.setDanmakuSource(getResources().openRawResource(R.raw.bili));
+        player.setVideoSource(null, VIDEO_URL, VIDEO_HD_URL, null, null);
+        player.setMediaQuality(IjkPlayerView.MEDIA_QUALITY_HIGH);
+    }
+
+
+    private void postIntro(String intro) {
+        EventBean eventBean = new EventBean(EventBean.EVENT_LESSONDETAIL_INTRO);
+        eventBean.put("intro", intro);
+        EventBus.getDefault().post(eventBean);
+    }
+
+    private void postDirectory(List<CourseWare> courseWares) {
+        if (!StrUtil.isEmpty(courseWares)) {
+            EventBean eventBean = new EventBean(EventBean.EVENT_LESSONDETAIL_DIRECTORY);
+            eventBean.put("courseWares", courseWares);
+            EventBus.getDefault().post(eventBean);
         }
-        super.onBackPressed();
+    }
+
+    private void netQueryLessonDetail() {
+        Map<String, Object> param = new NetParam()
+                .put("curriculumId", lessonId)
+                .build();
+        showLoadingDialog();
+        NetApi.NI().queryLessonDetail(param).enqueue(new BaseCallback<Lesson>(Lesson.class) {
+            @Override
+            public void onSuccess(int status, Lesson lesson, String msg) {
+                VideoActivity.this.lesson = lesson;
+                setData(lesson);
+                postIntro(lesson.getCurriculumDescribe());
+                postDirectory(lesson.getCourseWares());
+                hideLoadingDialog();
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+                ToastUtil.showToastShort(msg);
+                hideLoadingDialog();
+            }
+        });
     }
 }

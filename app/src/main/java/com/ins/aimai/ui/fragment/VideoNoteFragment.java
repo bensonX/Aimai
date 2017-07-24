@@ -6,11 +6,15 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.ins.aimai.R;
+import com.ins.aimai.bean.CourseWare;
+import com.ins.aimai.bean.Video;
+import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.bean.common.TestBean;
 import com.ins.aimai.ui.adapter.RecycleAdapterVideoNote;
 import com.ins.aimai.ui.base.BaseFragment;
@@ -18,6 +22,12 @@ import com.ins.common.helper.LoadingViewHelper;
 import com.liaoinstan.springview.container.AliFooter;
 import com.liaoinstan.springview.container.AliHeader;
 import com.liaoinstan.springview.widget.SpringView;
+
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by liaoinstan
@@ -27,10 +37,6 @@ public class VideoNoteFragment extends BaseFragment {
     private int position;
     private View rootView;
 
-    private View showin;
-    private ViewGroup showingroup;
-
-    private SpringView springView;
     private RecyclerView recycler;
     private RecycleAdapterVideoNote adapter;
 
@@ -43,8 +49,17 @@ public class VideoNoteFragment extends BaseFragment {
     }
 
     @Override
+    public void onCommonEvent(EventBean event) {
+        if (event.getEvent() == EventBean.EVENT_VIDEO_SELECT_DIRECTORY) {
+            Video video = (Video) event.get("video");
+            freshData(video);
+        }
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        registEventBus();
         this.position = getArguments().getInt("position");
     }
 
@@ -68,8 +83,6 @@ public class VideoNoteFragment extends BaseFragment {
     }
 
     private void initView() {
-        showingroup = (ViewGroup) rootView.findViewById(R.id.showingroup);
-        springView = (SpringView) rootView.findViewById(R.id.spring);
         recycler = (RecyclerView) rootView.findViewById(R.id.recycler);
     }
 
@@ -77,57 +90,19 @@ public class VideoNoteFragment extends BaseFragment {
         adapter = new RecycleAdapterVideoNote(getContext());
         recycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recycler.setAdapter(adapter);
-        springView.setHeader(new AliHeader(getContext(), false));
-        springView.setFooter(new AliFooter(getContext(), false));
-        springView.setListener(new SpringView.OnFreshListener() {
-            @Override
-            public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        springView.onFinishFreshAndLoad();
-                    }
-                }, 800);
-            }
-
-            @Override
-            public void onLoadmore() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        adapter.getResults().add(new TestBean());
-                        adapter.getResults().add(new TestBean());
-                        adapter.notifyDataSetChanged();
-                        springView.onFinishFreshAndLoad();
-                    }
-                }, 800);
-            }
-        });
     }
 
     private void initData() {
-        showin = LoadingViewHelper.showin(showingroup, R.layout.layout_loading, showin);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                adapter.getResults().clear();
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.notifyDataSetChanged();
-                LoadingViewHelper.showout(showingroup, showin);
-            }
-        }, 1000);
+    }
+
+    private void freshData(Video video) {
+        String pptstr = video.getPpt();
+        if (!TextUtils.isEmpty(pptstr)) {
+            String[] ppts = pptstr.split(",");
+            List<String> results = Arrays.asList(ppts);
+            adapter.getResults().clear();
+            adapter.getResults().addAll(results);
+            adapter.notifyDataSetChanged();
+        }
     }
 }

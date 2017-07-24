@@ -80,6 +80,5 @@ public class UserDetailActivity extends BaseAppCompatActivity implements View.On
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        VideoActivity.start(this);
     }
 }

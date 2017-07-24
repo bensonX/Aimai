@@ -472,14 +472,20 @@ public class IjkPlayerView extends FrameLayout implements View.OnClickListener {
             _exit();
             return true;
         } else if (mIsFullscreen) {
-            mAttachActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            if (mIsForbidTouch) {
-                // 锁住状态则解锁
-                mIsForbidTouch = false;
-                mIvPlayerLock.setSelected(false);
-                _setControlBarVisible(mIsShowBar);
+            if (System.currentTimeMillis() - mExitTime > 2000) {
+                Toast.makeText(mAttachActivity, "再按一次退出", Toast.LENGTH_SHORT).show();
+                mExitTime = System.currentTimeMillis();
+                return true;
+            } else {
+                mAttachActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                if (mIsForbidTouch) {
+                    // 锁住状态则解锁
+                    mIsForbidTouch = false;
+                    mIvPlayerLock.setSelected(false);
+                    _setControlBarVisible(mIsShowBar);
+                }
+                return true;
             }
-            return true;
         }
         return false;
     }

@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.ins.aimai.BuildConfig;
 import com.ins.aimai.R;
+import com.ins.aimai.common.AppData;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.utils.App;
@@ -36,7 +37,7 @@ public class AimaiApp extends MobApplication {
         L.setDEBUG(BuildConfig.DEBUG);
         ToastUtil.init(this);
         ToastUtil.setDebug(BuildConfig.DEBUG);
-        ToastUtil.setStyle(R.layout.lay_toast,R.id.toast_tv);
+        ToastUtil.setStyle(R.layout.lay_toast, R.id.toast_tv);
         GlideUtil.init(this);
     }
 
@@ -52,11 +53,17 @@ public class AimaiApp extends MobApplication {
             public void onDomainChange(String domain) {
                 NetApi.setBaseUrl("http://" + domain + "/");
             }
+
+            @Override
+            public void onDomainResChange(String domainRes) {
+                AppData.Url.domainRes = domainRes;
+                GlideUtil.setImgBaseUrl("http://" + domainRes + "/");
+            }
         });
         DomainLauncher.getInstance()
                 .addDomain("192.168.118.206:8080", "(Web开发服务器)")
                 .addDomain("192.168.1.166", "(开发服务器：谢启谋)")
-                .addDomain("192.168.118.110:8080", "(测试服务器)")
+                .addDomain("192.168.1.205:8080", "(开发服务器：李作焕)")
                 .addDomain("139.129.111.76:8102", "(远程测试服务器)")
                 .addDomain("tiger.magic-beans.cn", "(远程测试服务器)");
     }

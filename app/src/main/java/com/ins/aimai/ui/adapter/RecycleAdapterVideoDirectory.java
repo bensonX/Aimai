@@ -5,19 +5,25 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.ins.aimai.R;
+import com.ins.aimai.bean.Video;
 import com.ins.aimai.bean.common.TestBean;
+import com.ins.aimai.bean.common.VideoDirectiry;
+import com.ins.common.interfaces.OnRecycleItemClickListener;
+import com.ins.common.utils.TimeUtil;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class RecycleAdapterVideoDirectory extends RecyclerView.Adapter<RecycleAdapterVideoDirectory.Holder> {
 
     private Context context;
-    private List<TestBean> results = new ArrayList<>();
+    private List<Video> results = new ArrayList<>();
 
-    public List<TestBean> getResults() {
+    public List<Video> getResults() {
         return results;
     }
 
@@ -32,7 +38,16 @@ public class RecycleAdapterVideoDirectory extends RecyclerView.Adapter<RecycleAd
 
     @Override
     public void onBindViewHolder(final RecycleAdapterVideoDirectory.Holder holder, final int position) {
-        final TestBean bean = results.get(position);
+        final Video video = results.get(position);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) listener.onItemClick(holder);
+            }
+        });
+
+        holder.text_directory_title.setText(video.getCourseWareName() + ": " + video.getName());
+        holder.text_directory_time.setText(TimeUtil.getTimeFor("HH:mm", new Date(video.getHighDefinitionSeconds())));
     }
 
     @Override
@@ -42,11 +57,19 @@ public class RecycleAdapterVideoDirectory extends RecyclerView.Adapter<RecycleAd
 
     public class Holder extends RecyclerView.ViewHolder {
 
-//        private ImageView img_comment_header;
+        private TextView text_directory_title;
+        private TextView text_directory_time;
 
         public Holder(View itemView) {
             super(itemView);
-//            img_comment_header = (ImageView) itemView.findViewById(R.id.img_comment_header);
+            text_directory_title = (TextView) itemView.findViewById(R.id.text_directory_title);
+            text_directory_time = (TextView) itemView.findViewById(R.id.text_directory_time);
         }
+    }
+
+    private OnRecycleItemClickListener listener;
+
+    public void setOnItemClickListener(OnRecycleItemClickListener listener) {
+        this.listener = listener;
     }
 }

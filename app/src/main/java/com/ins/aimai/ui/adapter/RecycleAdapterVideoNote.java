@@ -17,9 +17,9 @@ import java.util.List;
 public class RecycleAdapterVideoNote extends RecyclerView.Adapter<RecycleAdapterVideoNote.Holder> {
 
     private Context context;
-    private List<TestBean> results = new ArrayList<>();
+    private List<String> results = new ArrayList<>();
 
-    public List<TestBean> getResults() {
+    public List<String> getResults() {
         return results;
     }
 
@@ -34,8 +34,8 @@ public class RecycleAdapterVideoNote extends RecyclerView.Adapter<RecycleAdapter
 
     @Override
     public void onBindViewHolder(final RecycleAdapterVideoNote.Holder holder, final int position) {
-        final TestBean bean = results.get(position);
-        GlideUtil.loadImgTest(holder.img_item_note);
+        final String url = results.get(position);
+        GlideUtil.loadImg(holder.img_item_note, R.drawable.default_bk_img, url);
     }
 
     @Override

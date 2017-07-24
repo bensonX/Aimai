@@ -114,6 +114,5 @@ public class LearnUserActivity extends BaseAppCompatActivity implements OnRecycl
 
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
-        LessonDetailActivity.start(this);
     }
 }

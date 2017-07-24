@@ -14,6 +14,7 @@ import com.ins.aimai.R;
 import com.ins.aimai.bean.Lesson;
 import com.ins.aimai.bean.LessonCate;
 import com.ins.aimai.common.AppHelper;
+import com.ins.aimai.interfaces.OnLessonClickListener;
 import com.ins.aimai.ui.activity.LessonActivity;
 import com.ins.aimai.ui.activity.LessonDetailActivity;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
@@ -145,9 +146,5 @@ public class RecycleAdapterLessonCate extends DelegateAdapter.Adapter<RecycleAda
 
     public void setOnLessonClickListener(OnLessonClickListener onLessonClickListener) {
         this.listener = onLessonClickListener;
-    }
-
-    public interface OnLessonClickListener {
-        void onLessonClick(Lesson lesson);
     }
 }

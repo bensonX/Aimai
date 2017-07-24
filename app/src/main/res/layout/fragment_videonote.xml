@@ -6,19 +6,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.liaoinstan.springview.widget.SpringView
-        android:id="@+id/spring"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        app:type="follow">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false" />
-
-    </com.liaoinstan.springview.widget.SpringView>
+        android:layout_height="match_parent"
+        android:clipToPadding="false" />
 
 </LinearLayout>

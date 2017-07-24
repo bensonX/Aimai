@@ -10,11 +10,22 @@ import java.util.Map;
 
 public class EventBean implements Serializable {
 
-    public static final int EVENT_LOGIN = 0xffa004;
-    public static final int EVENT_USER_UPDATE = 0xffa005;
-    public static final int EVENT_REGIST_PHONE = 0xffa001;
-    public static final int EVENT_SELECT_TRADE = 0xffa002;
-    public static final int EVENT_SELECT_ADDRESS = 0xffa003;
+    //登录
+    public static final int EVENT_LOGIN = 0xffa001;
+    //更新用户信息
+    public static final int EVENT_USER_UPDATE = 0xffa002;
+    //注册填写电话
+    public static final int EVENT_REGIST_PHONE = 0xffa003;
+    //选择行业
+    public static final int EVENT_SELECT_TRADE = 0xffa004;
+    //选择地址
+    public static final int EVENT_SELECT_ADDRESS = 0xffa005;
+    //课程详情加载介绍
+    public static final int EVENT_LESSONDETAIL_INTRO = 0xffa005;
+    //课程详情加载目录
+    public static final int EVENT_LESSONDETAIL_DIRECTORY = 0xffa007;
+    //课程详情选择目录
+    public static final int EVENT_VIDEO_SELECT_DIRECTORY = 0xffa008;
 
     private int event;
     private Map<String, Object> map = new HashMap<>();

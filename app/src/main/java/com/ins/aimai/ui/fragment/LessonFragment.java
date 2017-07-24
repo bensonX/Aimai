@@ -16,6 +16,7 @@ import com.ins.aimai.R;
 import com.ins.aimai.bean.Lesson;
 import com.ins.aimai.bean.LessonHomePojo;
 import com.ins.aimai.bean.common.TestBean;
+import com.ins.aimai.interfaces.OnLessonClickListener;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
@@ -36,7 +37,7 @@ import java.util.Map;
 /**
  * Created by liaoinstan
  */
-public class LessonFragment extends BaseFragment implements RecycleAdapterLessonCate.OnLessonClickListener {
+public class LessonFragment extends BaseFragment implements OnLessonClickListener {
 
     private int position;
     private View rootView;
@@ -123,7 +124,8 @@ public class LessonFragment extends BaseFragment implements RecycleAdapterLesson
         adapterTasteBanner.setOnItemClickListener(new OnRecycleItemClickListener() {
             @Override
             public void onItemClick(RecyclerView.ViewHolder viewHolder) {
-                VideoActivity.start(getContext());
+                Lesson lesson = adapterTasteBanner.getResults().get(viewHolder.getLayoutPosition());
+                VideoActivity.start(getContext(), lesson.getId());
             }
         });
     }
@@ -134,7 +136,7 @@ public class LessonFragment extends BaseFragment implements RecycleAdapterLesson
 
     @Override
     public void onLessonClick(Lesson lesson) {
-        LessonDetailActivity.start(getContext());
+        LessonDetailActivity.start(getContext(), lesson.getId());
     }
 
     ///////////////////////////////////

@@ -43,7 +43,7 @@ public class GlideUtil {
 
     public static String getRealImgPath(String path) {
         if (!TextUtils.isEmpty(path) && !TextUtils.isEmpty(imgBaseUrl) && path.startsWith("upload")) {
-            return imgBaseUrl + path;
+            return imgBaseUrl + "images/"+ path;
         } else {
             return path;
         }

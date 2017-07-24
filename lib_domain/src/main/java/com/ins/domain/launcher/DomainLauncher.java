@@ -64,5 +64,6 @@ public class DomainLauncher {
 
     public interface SettingChangeCallback {
         void onDomainChange(String domain);
+        void onDomainResChange(String domainRes);
     }
 }

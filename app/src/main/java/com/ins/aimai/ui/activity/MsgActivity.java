@@ -114,6 +114,5 @@ public class MsgActivity extends BaseAppCompatActivity implements OnRecycleItemC
 
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
-        LessonDetailActivity.start(this);
     }
 }

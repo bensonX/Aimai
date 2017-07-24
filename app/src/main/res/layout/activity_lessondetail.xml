@@ -54,6 +54,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/text_lessondetail_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
@@ -75,6 +76,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/text_lessondetail_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:drawableLeft="@drawable/ic_lesson_tv_hot"
@@ -85,6 +87,7 @@
                             android:textSize="@dimen/text_small" />
 
                         <TextView
+                            android:id="@+id/text_lessondetail_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="25dp"
@@ -149,6 +152,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/text_lessondetail_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="￥158"
@@ -156,6 +160,7 @@
                         android:textSize="22sp" />
 
                     <TextView
+                        android:id="@+id/text_lessondetail_salecount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"

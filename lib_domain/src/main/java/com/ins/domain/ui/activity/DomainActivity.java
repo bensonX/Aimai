@@ -31,6 +31,8 @@ public class DomainActivity extends AppCompatActivity implements AdapterView.OnI
 
     private DomainPopup popup;
 
+    private String domain_res;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,6 +108,18 @@ public class DomainActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case AdvanceActivity.RESULT_ADVANCE:
+                if (resultCode == RESULT_OK) {
+                    domain_res = data.getStringExtra("domain_res");
+                }
+                break;
+        }
+    }
+
+    @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Domain domain = results.get(position);
         edit_domain.setText(domain.getIp());
@@ -127,6 +141,8 @@ public class DomainActivity extends AppCompatActivity implements AdapterView.OnI
                 saveEditStr(domain);
                 //回调domain变更接口
                 DomainLauncher.getInstance().getSettingChangeCallback().onDomainChange(domain);
+                //回调资源服务器domainRes变更接口
+                DomainLauncher.getInstance().getSettingChangeCallback().onDomainResChange(!TextUtils.isEmpty(domain_res) ? domain_res : domain);
                 //启动APPLaunche页面
                 Intent intent = new Intent(this, DomainLauncher.getInstance().getLauncherActivity());
                 startActivity(intent);
@@ -137,7 +153,7 @@ public class DomainActivity extends AppCompatActivity implements AdapterView.OnI
         } else if (i == R.id.btn_add) {
             popup.showPopupWindow(v);
         } else if (i == R.id.btn_advance) {
-            AdvanceActivity.start(this);
+            AdvanceActivity.startForResult(this);
         }
     }
 

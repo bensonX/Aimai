@@ -55,6 +55,11 @@ public class AppData {
     public static class Url {
 
         /**
+         * 资源服务器地址
+         */
+        public static String domainRes;
+
+        /**
          * 接口请求地址
          */
         public static String version = "updateAPK/version_feast.json";                                    //客户端检查更新

@@ -62,7 +62,6 @@ public class NetApi {
 
     public static void setBaseUrl(String baseUrl) {
         NetApi.baseUrl = baseUrl;
-        GlideUtil.setImgBaseUrl(baseUrl + "/images/");
         initApi();
     }
 

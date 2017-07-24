@@ -11,6 +11,7 @@
     <ImageView
         android:id="@+id/img_item_note"
         android:layout_width="match_parent"
+        android:layout_marginTop="1dp"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"

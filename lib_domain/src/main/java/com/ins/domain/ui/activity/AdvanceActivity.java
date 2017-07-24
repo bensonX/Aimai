@@ -10,19 +10,31 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.EditText;
 
 import com.ins.domain.R;
 
 public class AdvanceActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public static void start(Activity context) {
-        Intent intent = new Intent(context, AdvanceActivity.class);
-        context.startActivity(intent);
-        context.overridePendingTransition(R.anim.domain_right_in, R.anim.domain_left_out);
+    public static final int RESULT_ADVANCE = 0xff01;
+
+    private EditText edit_domain_res;
+
+    public static void startForResult(Activity activity) {
+        Intent intent = new Intent(activity, AdvanceActivity.class);
+        activity.startActivityForResult(intent, RESULT_ADVANCE);
+        activity.overridePendingTransition(R.anim.domain_right_in, R.anim.domain_left_out);
     }
 
     @Override
     public void finish() {
+        String domain_res = edit_domain_res.getText().toString();
+        //保存选项
+        saveDomainRes(domain_res);
+        //返回路径给调用拍照页面
+        Intent intent = new Intent();
+        intent.putExtra("domain_res", domain_res);
+        setResult(RESULT_OK, intent);
         super.finish();
         overridePendingTransition(R.anim.domain_left_in, R.anim.domain_right_out);
     }
@@ -43,6 +55,7 @@ public class AdvanceActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void initView() {
+        edit_domain_res = (EditText) findViewById(R.id.edit_domain_res);
         findViewById(R.id.btn_advance_permission).setOnClickListener(this);
         findViewById(R.id.btn_advance_wifi).setOnClickListener(this);
         findViewById(R.id.btn_advance_deve).setOnClickListener(this);
@@ -52,6 +65,7 @@ public class AdvanceActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void initCtrl() {
+        edit_domain_res.setText(getDomainRes());
     }
 
     @Override
@@ -59,9 +73,9 @@ public class AdvanceActivity extends AppCompatActivity implements View.OnClickLi
         int i = v.getId();
         if (i == R.id.btn_advance_permission) {
             startAppSettingActivity(this);
-        }else if (i == R.id.btn_advance_wifi) {
+        } else if (i == R.id.btn_advance_wifi) {
             startActivity(new Intent(android.provider.Settings.ACTION_WIFI_SETTINGS));
-        }else if (i == R.id.btn_advance_deve) {
+        } else if (i == R.id.btn_advance_deve) {
             Intent intent = new Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS);
             startActivity(intent);
         }
@@ -81,6 +95,16 @@ public class AdvanceActivity extends AppCompatActivity implements View.OnClickLi
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    //////////////// 存储 获取 方法 ////////////////
+
+    private void saveDomainRes(String domainRes) {
+        StorageHelper.with(this).putDomainRes(domainRes);
+    }
+
+    public String getDomainRes() {
+        return StorageHelper.with(this).getDomainRes();
     }
 }
 

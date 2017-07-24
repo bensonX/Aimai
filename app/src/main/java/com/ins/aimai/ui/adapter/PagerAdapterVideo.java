@@ -3,6 +3,7 @@ package com.ins.aimai.ui.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.ViewGroup;
 
 import com.ins.aimai.ui.fragment.VideoCommentFragment;
 import com.ins.aimai.ui.fragment.VideoDirectotyFragment;
@@ -20,6 +21,10 @@ public class PagerAdapterVideo extends FragmentPagerAdapter {
     public PagerAdapterVideo(FragmentManager fm, String[] titles) {
         super(fm);
         this.titles = titles;
+    }
+
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
     }
 
     @Override

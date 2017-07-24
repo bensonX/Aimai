@@ -136,6 +136,6 @@ public class LearnLessonFragment extends BaseFragment implements OnRecycleItemCl
 
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
-        LessonDetailActivity.start(getContext());
+        LessonDetailActivity.start(getContext(),0);
     }
 }
