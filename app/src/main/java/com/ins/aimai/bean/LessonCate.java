@@ -16,6 +16,20 @@ public class LessonCate implements Serializable{
     @SerializedName("curriculumList")
     private List<Lesson> lessons;
 
+    public LessonCate() {
+    }
+
+    public LessonCate(int id, String curriculumTypeName) {
+        this.id = id;
+        this.curriculumTypeName = curriculumTypeName;
+    }
+
+    public LessonCate(int id, String curriculumTypeName, List<Lesson> lessons) {
+        this.id = id;
+        this.curriculumTypeName = curriculumTypeName;
+        this.lessons = lessons;
+    }
+
     public int getId() {
         return id;
     }

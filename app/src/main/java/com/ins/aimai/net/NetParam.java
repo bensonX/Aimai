@@ -21,20 +21,31 @@ import okhttp3.RequestBody;
 public class NetParam {
     private Map<String, Object> paramMap = new LinkedHashMap<>();
 
+    public static NetParam newInstance(){
+        return new NetParam();
+    }
+
     public NetParam() {
         paramMap.put("isWechat", 0);
     }
 
+    //添加参数
     public NetParam put(String key, Object value) {
         paramMap.put(key, value);
         return this;
     }
 
+    public NetParam put(Map<String,Object> map){
+        paramMap.putAll(map);
+        return this;
+    }
+
+    //构建参数集合
     public Map<String, Object> build() {
-        //pritParam();
         return paramMap;
     }
 
+    //构造一个上传文件的Bodypart
     public MultipartBody.Part buildFileBodyPart(String path) {
         File file = new File(path);
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
@@ -42,6 +53,7 @@ public class NetParam {
         return body;
     }
 
+    //测试方法，打印出参数
     private void pritParam() {
         for (Map.Entry<String, Object> entry : paramMap.entrySet()) {
             L.e(entry.getKey() + ":" + entry.getValue().toString());

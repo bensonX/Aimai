@@ -104,4 +104,22 @@ public interface NetInterface {
     @FormUrlEncoded
     @POST("/api/curriculum/queryCurriculumByItems")
     Call<ResponseBody> queryLessonHome(@FieldMap Map<String, Object> param);
+
+    /**
+     * 通过课程类别id查询课程
+     * pageNO    pageSize
+     * curriculumStageId
+     * isRecommend 如果查询推荐课程列表，固定传参:1,其他情况不传
+     */
+    @FormUrlEncoded
+    @POST("/api/curriculum/queryCurriculumByType")
+    Call<ResponseBody> queryLessonByCate(@FieldMap Map<String, Object> param);
+
+    /**
+     * 通过课程ID 查询课程详情
+     * curriculumId
+     */
+    @FormUrlEncoded
+    @POST("/api/curriculum/queryCurriculumById")
+    Call<ResponseBody> queryLessonDetail(@FieldMap Map<String, Object> param);
 }

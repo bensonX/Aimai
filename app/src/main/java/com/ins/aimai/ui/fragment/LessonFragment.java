@@ -13,11 +13,13 @@ import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
 import com.ins.aimai.R;
+import com.ins.aimai.bean.Lesson;
 import com.ins.aimai.bean.LessonHomePojo;
 import com.ins.aimai.bean.common.TestBean;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
+import com.ins.aimai.ui.activity.LessonDetailActivity;
 import com.ins.aimai.ui.activity.VideoActivity;
 import com.ins.aimai.ui.adapter.RecycleAdapterLessonCate;
 import com.ins.aimai.ui.adapter.RecycleAdapterLessonTasteBanner;
@@ -34,7 +36,7 @@ import java.util.Map;
 /**
  * Created by liaoinstan
  */
-public class LessonFragment extends BaseFragment {
+public class LessonFragment extends BaseFragment implements RecycleAdapterLessonCate.OnLessonClickListener {
 
     private int position;
     private View rootView;
@@ -92,6 +94,7 @@ public class LessonFragment extends BaseFragment {
         recycler.setAdapter(delegateAdapter);
         delegateAdapter.addAdapter(adapterTasteBanner = new RecycleAdapterLessonTasteBanner(getContext(), new LinearLayoutHelper()));
         delegateAdapter.addAdapter(adapterCate = new RecycleAdapterLessonCate(getContext(), new LinearLayoutHelper()));
+        adapterCate.setOnLessonClickListener(this);
         springView.setHeader(new AliHeader(getContext(), false));
         springView.setFooter(new AliFooter(getContext(), false));
         loadingLayout.setOnRefreshListener(new View.OnClickListener() {
@@ -103,12 +106,7 @@ public class LessonFragment extends BaseFragment {
         springView.setListener(new SpringView.OnFreshListener() {
             @Override
             public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        springView.onFinishFreshAndLoad();
-                    }
-                }, 800);
+                netQueryLessonHome(false);
             }
 
             @Override
@@ -116,9 +114,7 @@ public class LessonFragment extends BaseFragment {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        adapterCate.getResults().add(new TestBean());
-                        adapterCate.getResults().add(new TestBean());
-                        adapterCate.notifyDataSetChanged();
+                        ToastUtil.showToastShort("没有更多数据了");
                         springView.onFinishFreshAndLoad();
                     }
                 }, 800);
@@ -133,29 +129,12 @@ public class LessonFragment extends BaseFragment {
     }
 
     private void initData() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-//                adapterCate.getResults().clear();
-//                adapterCate.getResults().add(new TestBean());
-//                adapterCate.getResults().add(new TestBean());
-//                adapterCate.getResults().add(new TestBean());
-//                adapterCate.getResults().add(new TestBean());
-//                adapterCate.getResults().add(new TestBean());
-//                adapterCate.getResults().add(new TestBean());
-//                adapterCate.getResults().add(new TestBean());
-//                adapterCate.notifyDataSetChanged();
-                adapterTasteBanner.getResults().clear();
-                adapterTasteBanner.getResults().add(new TestBean());
-                adapterTasteBanner.getResults().add(new TestBean());
-                adapterTasteBanner.getResults().add(new TestBean());
-                adapterTasteBanner.getResults().add(new TestBean());
-                adapterTasteBanner.getResults().add(new TestBean());
-                adapterTasteBanner.getResults().add(new TestBean());
-                adapterTasteBanner.notifyDataSetChanged();
-            }
-        }, 1000);
         netQueryLessonHome();
+    }
+
+    @Override
+    public void onLessonClick(Lesson lesson) {
+        LessonDetailActivity.start(getContext());
     }
 
     ///////////////////////////////////
@@ -163,21 +142,35 @@ public class LessonFragment extends BaseFragment {
     ///////////////////////////////////
 
     private void netQueryLessonHome() {
+        netQueryLessonHome(true);
+    }
+
+    private void netQueryLessonHome(final boolean showLoading) {
         Map<String, Object> param = new NetParam()
                 .put("pageNO", 1)
                 .put("pageSize", 2)
                 .build();
-        loadingLayout.showLoadingView();
+        if (showLoading) loadingLayout.showLoadingView();
         NetApi.NI().queryLessonHome(param).enqueue(new BaseCallback<LessonHomePojo>(LessonHomePojo.class) {
             @Override
-            public void onSuccess(int status, LessonHomePojo bean, String msg) {
-                loadingLayout.showOut();
+            public void onSuccess(int status, LessonHomePojo pojo, String msg) {
+                //数据结构转换
+                pojo.convert();
+                adapterCate.getResults().clear();
+                adapterCate.getResults().addAll(pojo.getLessonCates());
+                adapterCate.notifyDataSetChanged();
+                adapterTasteBanner.getResults().clear();
+                adapterTasteBanner.getResults().addAll(pojo.getFreeLessons());
+                adapterTasteBanner.notifyDataSetChanged();
+                springView.onFinishFreshAndLoad();
+                if (showLoading) loadingLayout.showOut();
             }
 
             @Override
             public void onError(int status, String msg) {
                 ToastUtil.showToastShort(msg);
-                loadingLayout.showFailView();
+                springView.onFinishFreshAndLoad();
+                if (showLoading) loadingLayout.showFailView();
             }
         });
     }

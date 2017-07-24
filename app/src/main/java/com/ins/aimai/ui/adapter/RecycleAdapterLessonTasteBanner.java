@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.ins.aimai.R;
+import com.ins.aimai.bean.Lesson;
 import com.ins.aimai.bean.common.TestBean;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
 
@@ -22,7 +23,7 @@ public class RecycleAdapterLessonTasteBanner extends DelegateAdapter.Adapter<Rec
 
     private RecycleAdapterLessonTaste adapter;
 
-    public List<TestBean> getResults() {
+    public List<Lesson> getResults() {
         return adapter.getResults();
     }
 
@@ -50,7 +51,6 @@ public class RecycleAdapterLessonTasteBanner extends DelegateAdapter.Adapter<Rec
     @Override
     public void onBindViewHolder(final RecycleAdapterLessonTasteBanner.Holder holder, final int position) {
         adapter.notifyDataSetChanged();
-//        holder.text_name.setText(bean.getName());
     }
 
     @Override

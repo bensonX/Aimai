@@ -9,7 +9,7 @@ import java.util.List;
  * Created by Administrator on 2017/7/21.
  */
 
-public class LessonHomePojo implements Serializable{
+public class LessonHomePojo implements Serializable {
 
     @SerializedName("curriculumTypes")
     private List<LessonCate> lessonCates;
@@ -19,6 +19,15 @@ public class LessonHomePojo implements Serializable{
 
     @SerializedName("curriculumByAudition")
     private List<Lesson> freeLessons;
+
+    ////////////// 业务方法 //////////////
+
+    public void convert() {
+        LessonCate lessonCate = new LessonCate(-1, "推荐课程", recommendLessons);
+        lessonCates.add(0, lessonCate);
+    }
+
+    ////////////// get & set //////////////
 
     public List<LessonCate> getLessonCates() {
         return lessonCates;
