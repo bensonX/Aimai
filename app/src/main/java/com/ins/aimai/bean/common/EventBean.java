@@ -26,6 +26,8 @@ public class EventBean implements Serializable {
     public static final int EVENT_LESSONDETAIL_DIRECTORY = 0xffa007;
     //课程详情选择目录
     public static final int EVENT_VIDEO_SELECT_DIRECTORY = 0xffa008;
+    //支付结果请求关闭去支付页面
+    public static final int EVENT_CLOSE_PAYWAY = 0xffa009;
 
     private int event;
     private Map<String, Object> map = new HashMap<>();

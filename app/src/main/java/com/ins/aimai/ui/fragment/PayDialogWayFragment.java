@@ -7,19 +7,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
+
+import paytest.ins.com.helper.PayHelper;
+
+import com.ins.aimai.common.PayHelperEx;
+import com.ins.aimai.net.BaseCallback;
+import com.ins.aimai.net.NetApi;
+import com.ins.aimai.net.NetParam;
 import com.ins.aimai.ui.activity.PayDialogActivity;
 import com.ins.aimai.ui.base.BaseFragment;
-import com.ins.aimai.wxapi.WXPayEntryActivity;
+import com.ins.aimai.utils.ToastUtil;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Created by liaoinstan
  */
-public class PayDialogWayFragment extends BaseFragment implements View.OnClickListener{
+public class PayDialogWayFragment extends BaseFragment implements View.OnClickListener {
 
     private int position;
     private View rootView;
     private PayDialogActivity activity;
+    private PayHelperEx payHelperEx;
 
     public static Fragment newInstance(int position) {
         PayDialogWayFragment fragment = new PayDialogWayFragment();
@@ -53,6 +65,7 @@ public class PayDialogWayFragment extends BaseFragment implements View.OnClickLi
 
     private void initBase() {
         activity = (PayDialogActivity) getActivity();
+        payHelperEx = new PayHelperEx(getActivity());
     }
 
     private void initView() {
@@ -68,12 +81,12 @@ public class PayDialogWayFragment extends BaseFragment implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_wx:
-                WXPayEntryActivity.start(getContext());
+                payHelperEx.startPayWeixin(activity.getOrderId());
                 break;
             case R.id.btn_zfb:
-                WXPayEntryActivity.start(getContext());
+                payHelperEx.startPayZhifubao(activity.getOrderId());
                 break;
         }
     }

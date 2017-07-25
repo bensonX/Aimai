@@ -4,14 +4,32 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.ins.aimai.R;
+import com.ins.aimai.bean.common.EventBean;
+import com.ins.aimai.common.PayHelperEx;
 import com.ins.aimai.ui.activity.PayDialogActivity;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
+import com.ins.aimai.utils.ToastUtil;
+import com.ins.common.utils.L;
+import com.tencent.mm.opensdk.constants.ConstantsAPI;
+import com.tencent.mm.opensdk.modelbase.BaseReq;
+import com.tencent.mm.opensdk.modelbase.BaseResp;
+import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 
-public class WXPayEntryActivity extends BaseAppCompatActivity implements View.OnClickListener {
+import org.greenrobot.eventbus.EventBus;
+
+public class WXPayEntryActivity extends BaseAppCompatActivity implements IWXAPIEventHandler, View.OnClickListener {
+
+    private int type;
+    private TextView text_payresult_title;
+    private TextView text_payresult_content;
+    private TextView btn_payresult_left;
+    private TextView btn_payresult_right;
 
     public static void start(Context context) {
         Intent intent = new Intent(context, WXPayEntryActivity.class);
@@ -19,47 +37,110 @@ public class WXPayEntryActivity extends BaseAppCompatActivity implements View.On
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent.hasExtra("type")) {
+            type = intent.getIntExtra("type", -1);
+        }
+        setPayData();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payresult);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setToolbar();
         initBase();
         initView();
         initCtrl();
         initData();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
     private void initBase() {
+        if (getIntent().hasExtra("type")) {
+            type = getIntent().getIntExtra("type", -1);
+        }
     }
 
     private void initView() {
+        text_payresult_title = (TextView) findViewById(R.id.text_payresult_title);
+        text_payresult_content = (TextView) findViewById(R.id.text_payresult_content);
+        btn_payresult_left = (TextView) findViewById(R.id.btn_payresult_left);
+        btn_payresult_right = (TextView) findViewById(R.id.btn_payresult_right);
+        btn_payresult_left.setOnClickListener(this);
+        btn_payresult_right.setOnClickListener(this);
     }
 
     private void initCtrl() {
     }
 
     private void initData() {
+        setPayData();
+    }
+
+    private void setPayData() {
+        EventBus.getDefault().post(new EventBean(EventBean.EVENT_CLOSE_PAYWAY));
+        switch (type) {
+            case 0:
+                text_payresult_title.setText("支付成功");
+                text_payresult_title.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_pay_seccess, 0, 0);
+                text_payresult_content.setText("您可以在我的课程里面观看课程");
+                btn_payresult_right.setText("去我的课程");
+                break;
+            case -1:
+                text_payresult_title.setText("支付失败");
+                text_payresult_title.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_pay_fail, 0, 0);
+                text_payresult_content.setText("订单已提交，您可以在我的订单里面重新支付");
+                btn_payresult_right.setText("重新支付");
+                break;
+            case -2:
+                text_payresult_title.setText("支付已取消");
+                text_payresult_title.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_pay_fail, 0, 0);
+                text_payresult_content.setText("支付已取消，您可以在我的订单里面重新支付");
+                btn_payresult_right.setText("重新支付");
+                break;
+        }
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_go:
-                PayDialogActivity.start(this);
+            case R.id.btn_payresult_left:
                 break;
+            case R.id.btn_payresult_right:
+                if (type == 0) {
+                    finish();
+                } else {
+                    PayDialogActivity.startRepay(this, PayHelperEx.orderId);
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void onReq(BaseReq baseReq) {
+
+    }
+
+    @Override
+    public void onResp(BaseResp resp) {
+        L.d("onPayFinish, errCode = " + resp.errCode);
+        if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
+            type = resp.errCode;
+            switch (resp.errCode) {
+                case 0:
+                    //成功
+                    setPayData();
+                    break;
+                case -1:
+                    //失败
+                    setPayData();
+                    break;
+                case -2:
+                    //用户取消
+                    setPayData();
+                    break;
+            }
         }
     }
 }

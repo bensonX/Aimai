@@ -6,19 +6,34 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.ins.aimai.R;
+import com.ins.aimai.common.AppVali;
+import com.ins.aimai.net.BaseCallback;
+import com.ins.aimai.net.NetApi;
+import com.ins.aimai.net.NetParam;
 import com.ins.aimai.ui.activity.PayDialogActivity;
 import com.ins.aimai.ui.base.BaseFragment;
+import com.ins.aimai.utils.ToastUtil;
+import com.ins.common.utils.EditTextUtil;
+import com.ins.common.utils.NumUtil;
+import com.ins.common.utils.StrUtil;
+
+import java.util.Map;
 
 /**
  * Created by liaoinstan
  */
-public class PayDialogCountFragment extends BaseFragment implements View.OnClickListener{
+public class PayDialogCountFragment extends BaseFragment implements View.OnClickListener {
 
     private int position;
     private View rootView;
     private PayDialogActivity activity;
+
+    private View btn_paydialog_sub;
+    private View btn_paydialog_add;
+    private EditText edit_paydialog_count;
 
     public static Fragment newInstance(int position) {
         PayDialogCountFragment fragment = new PayDialogCountFragment();
@@ -55,7 +70,12 @@ public class PayDialogCountFragment extends BaseFragment implements View.OnClick
     }
 
     private void initView() {
+        edit_paydialog_count = (EditText) rootView.findViewById(R.id.edit_paydialog_count);
+        btn_paydialog_sub = rootView.findViewById(R.id.btn_paydialog_sub);
+        btn_paydialog_add = rootView.findViewById(R.id.btn_paydialog_add);
         rootView.findViewById(R.id.btn_go).setOnClickListener(this);
+        btn_paydialog_sub.setOnClickListener(this);
+        btn_paydialog_add.setOnClickListener(this);
     }
 
     private void initCtrl() {
@@ -66,10 +86,57 @@ public class PayDialogCountFragment extends BaseFragment implements View.OnClick
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
+            case R.id.btn_paydialog_sub: {
+                int edit = StrUtil.str2int(edit_paydialog_count.getText().toString());
+                if (edit == 0 || edit == 1) {
+                    edit_paydialog_count.setText("");
+                } else {
+                    edit_paydialog_count.setText(edit - 1 + "");
+                }
+                activity.setCount(StrUtil.str2int(edit_paydialog_count.getText().toString()));
+                break;
+            }
+            case R.id.btn_paydialog_add: {
+                int edit = StrUtil.str2int(edit_paydialog_count.getText().toString());
+                edit_paydialog_count.setText(edit + 1 + "");
+                activity.setCount(StrUtil.str2int(edit_paydialog_count.getText().toString()));
+                break;
+            }
             case R.id.btn_go:
-                activity.next();
+                if (activity.getOrderId() != 0) {
+                    //已经生成订单，直接跳转
+                    activity.next();
+                } else {
+                    //还未生成订单，则生成订单后跳转
+                    String msg = AppVali.addOrderCount(activity.getLessonId(), activity.getCount());
+                    if (msg != null) {
+                        ToastUtil.showToastShort(msg);
+                    } else {
+                        netAddOrder();
+                    }
+                }
                 break;
         }
+    }
+
+    private void netAddOrder() {
+        Map<String, Object> param = new NetParam()
+                .put("curriculumId", activity.getLessonId())
+                .put("number", activity.getCount())
+                .build();
+        NetApi.NI().addOrder(param).enqueue(new BaseCallback<Integer>(Integer.class) {
+            @Override
+            public void onSuccess(int status, Integer orderId, String msg) {
+                //保存orderId
+                activity.setOrderId(orderId);
+                activity.next();
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+                ToastUtil.showToastShort(msg);
+            }
+        });
     }
 }

@@ -35,11 +35,13 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/btn_paydialog_sub"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_lesson_sub" />
 
         <EditText
+            android:id="@+id/edit_paydialog_count"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
@@ -47,12 +49,14 @@
             android:layout_weight="1"
             android:background="@drawable/shape_rect_corner_none_line_dark"
             android:gravity="center"
+            android:inputType="numberSigned"
             android:hint="请您输入需要购买的数量"
             android:textColor="@color/com_text_blank"
             android:textColorHint="@color/com_text_light"
             android:textSize="@dimen/text_nomal" />
 
         <ImageView
+            android:id="@+id/btn_paydialog_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_lesson_add" />

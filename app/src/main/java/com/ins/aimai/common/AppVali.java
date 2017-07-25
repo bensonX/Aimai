@@ -69,6 +69,16 @@ public class AppVali {
         }
     }
 
+    public static String addOrderCount(int lessonId, int count) {
+        if (lessonId == 0) {
+            return "错误：无效的课程";
+        } else if (count <= 0) {
+            return "请输入购买课程数量";
+        } else {
+            return null;
+        }
+    }
+
     public static String regist_info(int type, String phone, String psw, String path, String u_name, String u_num, String c_name, String c_num, int c_tradeid, String g_name, String g_num, int cityid) {
         switch (type) {
             case 0:

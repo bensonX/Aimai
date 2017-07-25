@@ -48,17 +48,19 @@
 
 
         <TextView
+            android:id="@+id/text_payresult_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="80dp"
             android:drawablePadding="10dp"
-            android:drawableTop="@mipmap/ic_launcher"
+            android:drawableTop="@drawable/ic_pay_seccess"
             android:gravity="center"
             android:text="支付成功"
             android:textColor="@color/com_text_blank_deep_light"
             android:textSize="18sp" />
 
         <TextView
+            android:id="@+id/text_payresult_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -83,6 +85,7 @@
                 app:cardUseCompatPadding="true">
 
                 <TextView
+                    android:id="@+id/btn_payresult_left"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:foreground="?attr/selectableItemBackground"
@@ -102,6 +105,7 @@
                 app:cardUseCompatPadding="true">
 
                 <TextView
+                    android:id="@+id/btn_payresult_right"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:foreground="?attr/selectableItemBackground"

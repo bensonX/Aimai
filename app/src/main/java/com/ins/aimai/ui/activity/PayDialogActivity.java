@@ -15,13 +15,34 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.ins.aimai.R;
+import com.ins.aimai.bean.common.EventBean;
+import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.aimai.ui.fragment.PayDialogCountFragment;
 import com.ins.aimai.ui.fragment.PayDialogWayFragment;
+import com.ins.common.utils.ViewPagerUtil;
 
-public class PayDialogActivity extends AppCompatActivity {
+import org.greenrobot.eventbus.EventBus;
 
-    public static void start(Context context) {
+public class PayDialogActivity extends BaseAppCompatActivity {
+
+    //课程ID
+    private int lessonId;
+    //购买数量
+    private int count;
+    //订单id
+    private int orderId;
+    //是否重新支付
+    private boolean isRepay;
+
+    public static void startRepay(Context context, int orderId) {
         Intent intent = new Intent(context, PayDialogActivity.class);
+        intent.putExtra("orderId", orderId);
+        context.startActivity(intent);
+    }
+
+    public static void start(Context context, int lessonId) {
+        Intent intent = new Intent(context, PayDialogActivity.class);
+        intent.putExtra("lessonId", lessonId);
         context.startActivity(intent);
     }
 
@@ -30,25 +51,14 @@ public class PayDialogActivity extends AppCompatActivity {
     private String[] title = new String[]{"购买数量", "选择支付方式"};
 
     public void next() {
-        int position = viewPager.getCurrentItem();
-        int count = viewPager.getChildCount();
-        if (position < count - 1) {
-            setPage(position + 1);
-        }
+        ViewPagerUtil.next(viewPager);
     }
 
-    public void last() {
-        int position = viewPager.getCurrentItem();
-        if (position > 0) {
-            setPage(position - 1);
-        } else if (position == 0) {
+    @Override
+    public void onCommonEvent(EventBean event) {
+        if (event.getEvent() == EventBean.EVENT_CLOSE_PAYWAY) {
             finish();
-        }
-    }
-
-    public void goPosition(int position) {
-        if (position >= 0 && position < title.length) {
-            setPage(position);
+            EventBus.getDefault().cancelEventDelivery(event);
         }
     }
 
@@ -56,6 +66,7 @@ public class PayDialogActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_paydialog);
+        registEventBus();
 
         //设置从下方弹起，铺满宽度
         Window win = this.getWindow();
@@ -69,9 +80,21 @@ public class PayDialogActivity extends AppCompatActivity {
         initView();
         initData();
         initCtrl();
+
+        //重新支付，直接到支付页面
+        if (isRepay) {
+            viewPager.setCurrentItem(1, false);
+        }
     }
 
     private void initBase() {
+        if (getIntent().hasExtra("lessonId")) {
+            lessonId = getIntent().getIntExtra("lessonId", 0);
+        }
+        if (getIntent().hasExtra("orderId")) {
+            orderId = getIntent().getIntExtra("orderId", 0);
+            isRepay = true;
+        }
     }
 
     private void initView() {
@@ -119,31 +142,41 @@ public class PayDialogActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                last();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    public boolean back2first = false;
-
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
+    public void onBackPressed() {
+        if (!isRepay) {
             if (viewPager.getCurrentItem() != 0) {
-                if (back2first) {
-                    goPosition(0);
-                } else {
-                    last();
-                }
+                ViewPagerUtil.last(viewPager);
             } else {
                 finish();
             }
-            return true;
+        }else {
+            finish();
         }
-        return super.onKeyDown(keyCode, event);
     }
 
+    /////////////////// get & set /////////////////
+
+    public int getLessonId() {
+        return lessonId;
+    }
+
+    public void setLessonId(int lessonId) {
+        this.lessonId = lessonId;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
 }

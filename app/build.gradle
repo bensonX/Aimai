@@ -93,4 +93,5 @@ dependencies {
     // 此处以JCore 1.1.1 版本为例。
     compile project(':lib_camera')
     compile project(':lib_sharesdk')
+    compile project(':lib_pay')
 }

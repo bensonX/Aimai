@@ -122,4 +122,33 @@ public interface NetInterface {
     @FormUrlEncoded
     @POST("/api/curriculum/queryCurriculumById")
     Call<ResponseBody> queryLessonDetail(@FieldMap Map<String, Object> param);
+
+    /**
+     * 创建订单
+     * curriculumId
+     * number
+     */
+    @FormUrlEncoded
+    @POST("/api/order/addOrder")
+    Call<ResponseBody> addOrder(@FieldMap Map<String, Object> param);
+
+    //##################################################################
+    //#########               支付
+    //##################################################################
+
+    /**
+     * 获取支付宝签名
+     * orderId
+     */
+    @FormUrlEncoded
+    @POST("/api/aliPay/sign")
+    Call<ResponseBody> signZhifubao(@FieldMap Map<String, Object> param);
+
+    /**
+     * 获取微信支付签名
+     * orderId
+     */
+    @FormUrlEncoded
+    @POST("/api/jsPay/sign")
+    Call<ResponseBody> signWeixin(@FieldMap Map<String, Object> param);
 }

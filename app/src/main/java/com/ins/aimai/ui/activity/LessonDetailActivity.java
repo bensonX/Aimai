@@ -150,7 +150,7 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
                 LearnUserActivity.start(this);
                 break;
             case R.id.btn_go:
-                PayDialogActivity.start(this);
+                PayDialogActivity.start(this, lessonId);
                 break;
             case R.id.btn_go_allot:
                 SortUserActivity.start(this);
@@ -158,13 +158,13 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
         }
     }
 
-    private void postIntro(String intro){
+    private void postIntro(String intro) {
         EventBean eventBean = new EventBean(EventBean.EVENT_LESSONDETAIL_INTRO);
         eventBean.put("intro", intro);
         EventBus.getDefault().post(eventBean);
     }
 
-    private void postDirectory(List<CourseWare> courseWares){
+    private void postDirectory(List<CourseWare> courseWares) {
         if (!StrUtil.isEmpty(courseWares)) {
             EventBean eventBean = new EventBean(EventBean.EVENT_LESSONDETAIL_DIRECTORY);
             eventBean.put("courseWares", courseWares);
