@@ -15,6 +15,7 @@ public class AppData {
         private static final String SHARENAME = "app_config";
         private static final String KEY_TOKEN = "token";
         private static final String KEY_USER = "user";
+        private static final String KEY_VIDEO_TIME = "video_time";
 
         public static void saveToken(String token) {
             SharedPrefUtilV2.open(SHARENAME).putString(KEY_TOKEN, token);
@@ -38,6 +39,14 @@ public class AppData {
 
         public static void removeUser() {
             SharedPrefUtilV2.open(SHARENAME).remove(KEY_USER);
+        }
+
+        public static void saveVideoTime(int videoId, int seek) {
+            SharedPrefUtilV2.open(SHARENAME).putInt(KEY_VIDEO_TIME + videoId, seek);
+        }
+
+        public static int getVideoTime(int videoId) {
+            return SharedPrefUtilV2.open(SHARENAME).getInt(KEY_VIDEO_TIME + videoId);
         }
     }
 
@@ -63,5 +72,9 @@ public class AppData {
          * 接口请求地址
          */
         public static String version = "updateAPK/version_feast.json";                                    //客户端检查更新
+
+        public static String getVideoUrl(String url) {
+            return domainRes + "video/" + url;
+        }
     }
 }

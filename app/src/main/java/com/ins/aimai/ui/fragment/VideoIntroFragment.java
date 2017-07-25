@@ -40,7 +40,6 @@ public class VideoIntroFragment extends BaseFragment {
         if (event.getEvent() == EventBean.EVENT_LESSONDETAIL_INTRO) {
             String intro = (String) event.get("intro");
             setData(intro);
-            EventBus.getDefault().cancelEventDelivery(event);
         }
     }
 

@@ -1,5 +1,6 @@
 package com.ins.common.helper;
 
+import android.os.Handler;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
@@ -18,8 +19,10 @@ public class SwipeHelper {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    boolean b = !ViewCompat.canScrollVertically(recyclerView, 1);
-                    if (b) {
+
+                    boolean b = ViewCompat.canScrollVertically(recyclerView, 1);
+                    //recyclerview已不能向下滑动（已滑动到底部）
+                    if (!b && !swipe.isRefreshing()) {
                         if (listener != null) listener.onLoadmore();
                     }
                 }

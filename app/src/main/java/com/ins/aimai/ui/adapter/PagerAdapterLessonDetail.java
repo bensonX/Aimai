@@ -16,10 +16,12 @@ import com.ins.aimai.ui.fragment.VideoIntroFragment;
 
 public class PagerAdapterLessonDetail extends FragmentPagerAdapter {
 
+    private int lessonId;
     private String[] titles;
 
-    public PagerAdapterLessonDetail(FragmentManager fm, String[] titles) {
+    public PagerAdapterLessonDetail(FragmentManager fm, String[] titles, int lessonId) {
         super(fm);
+        this.lessonId = lessonId;
         this.titles = titles;
     }
 
@@ -45,7 +47,7 @@ public class PagerAdapterLessonDetail extends FragmentPagerAdapter {
             case 1:
                 return VideoDirectotyFragment.newInstance(position);
             case 2:
-                return VideoCommentFragment.newInstance(position);
+                return VideoCommentFragment.newInstance(position, lessonId);
             default:
                 return null;
         }

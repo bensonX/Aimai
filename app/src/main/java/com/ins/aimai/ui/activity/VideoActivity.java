@@ -10,14 +10,19 @@ import android.util.Log;
 import android.view.KeyEvent;
 
 import com.dl7.player.media.IjkPlayerView;
+import com.dl7.player.media.MediaPlayerParams;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.CourseWare;
 import com.ins.aimai.bean.Lesson;
 import com.ins.aimai.bean.Video;
+import com.ins.aimai.bean.VideoStatus;
 import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.bean.common.TestBean;
+import com.ins.aimai.common.AppData;
+import com.ins.aimai.common.AppHelper;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
+import com.ins.aimai.net.NetHelper;
 import com.ins.aimai.net.NetParam;
 import com.ins.aimai.ui.adapter.PagerAdapterVideo;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
@@ -25,6 +30,7 @@ import com.ins.aimai.ui.base.BaseVideoActivity;
 import com.ins.aimai.ui.dialog.DialogSureAimai;
 import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.utils.GlideUtil;
+import com.ins.common.utils.L;
 import com.ins.common.utils.StatusBarTextUtil;
 import com.ins.common.utils.StrUtil;
 
@@ -52,6 +58,7 @@ public class VideoActivity extends BaseVideoActivity {
 
     private int lessonId;
     private Lesson lesson;
+    private Video video;
 
 
     public static void start(Context context, int lessonId) {
@@ -97,16 +104,33 @@ public class VideoActivity extends BaseVideoActivity {
     }
 
     private void initCtrl() {
-        adapterPager = new PagerAdapterVideo(getSupportFragmentManager(), titles);
+        adapterPager = new PagerAdapterVideo(getSupportFragmentManager(), titles, lessonId);
         pager.setAdapter(adapterPager);
         pager.setOffscreenPageLimit(2);
         tab.setupWithViewPager(pager);
 
         player.setOnInfoListener(new IMediaPlayer.OnInfoListener() {
             @Override
-            public boolean onInfo(IMediaPlayer iMediaPlayer, int i, int i1) {
-                //TODO:这里进行进度本地化保存，在每个状态都会回调，包括杀死进程
-                Log.e("liao", i + " " + i1);
+            public boolean onInfo(IMediaPlayer iMediaPlayer, int status, int extra) {
+                //TODO:这里进行进度本地化保存
+                Log.e("liao", status + ":" + extra);
+                if (video.getVideoStatus() == null || video.getVideoStatus().getStatus() != 2) {
+                    switch (status) {
+                        case MediaPlayerParams.STATE_COMPLETED:
+                            //播放完成
+                            AppHelper.VideoPlay.setVideoStatusFinish(video);
+                            NetHelper.getInstance().netAddVideoStatus(video.getId(), player.getCurPosition() / 1000, true);
+                            break;
+                        case IMediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START:    //开始播放
+                        case IMediaPlayer.MEDIA_INFO_BUFFERING_START:    //缓冲开始（拖动进度条）
+                        case MediaPlayerParams.STATE_PAUSED:    //暂停
+                        case MediaPlayerParams.STATE_PLAYING:   //播放中（继续）
+                            NetHelper.getInstance().netAddVideoStatus(video.getId(), player.getCurPosition() / 1000, false);
+                            break;
+                        default:
+                            break;
+                    }
+                }
                 return false;
             }
         });
@@ -121,15 +145,17 @@ public class VideoActivity extends BaseVideoActivity {
         }
     }
 
-    private void setVideo(Video video){
+    private void setVideo(Video video) {
+        //保存正在播放的视频实体
+        this.video = video;
         //加载封面图
-        GlideUtil.loadBlurImg(this, player.mPlayerThumb, video.getHighDefinition());
+        GlideUtil.loadBlurImg(this, player.mPlayerThumb, video.getCover());
         player.setTitle(video.getName());
         player.setSkipTip(1000 * 60 * 1);
         player.setNeedLimit(false);
         player.enableDanmaku();
         player.setDanmakuSource(getResources().openRawResource(R.raw.bili));
-        player.setVideoSource(null, VIDEO_URL, VIDEO_HD_URL, null, null);
+        player.setVideoSource(null, AppData.Url.getVideoUrl(video.getLowDefinition()), AppData.Url.getVideoUrl(video.getHighDefinition()), null, null);
         player.setMediaQuality(IjkPlayerView.MEDIA_QUALITY_HIGH);
     }
 

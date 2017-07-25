@@ -116,6 +116,15 @@ public interface NetInterface {
     Call<ResponseBody> queryLessonByCate(@FieldMap Map<String, Object> param);
 
     /**
+     * 获取评论
+     * curriculumId
+     * pageNO    pageSize
+     */
+    @FormUrlEncoded
+    @POST("/api/evaluate/queryEvaluate")
+    Call<ResponseBody> queryComments(@FieldMap Map<String, Object> param);
+
+    /**
      * 通过课程ID 查询课程详情
      * curriculumId
      */
@@ -151,4 +160,21 @@ public interface NetInterface {
     @FormUrlEncoded
     @POST("/api/jsPay/sign")
     Call<ResponseBody> signWeixin(@FieldMap Map<String, Object> param);
+
+    //##################################################################
+    //#########               视频播放记录
+    //##################################################################
+
+    /**
+     * 新增 播放记录
+     * videoId
+     * status 1:未完成 2:播放完成
+     * seconds 秒
+     */
+    @FormUrlEncoded
+    @POST("/api/videoStatus/addVideoStatus")
+    Call<ResponseBody> addVideoStatus(@FieldMap Map<String, Object> param);
+
+
+
 }

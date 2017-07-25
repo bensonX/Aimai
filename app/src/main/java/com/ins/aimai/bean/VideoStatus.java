@@ -26,6 +26,12 @@ public class VideoStatus implements Serializable {
     /** 创建时间 */
     private long createTime;
 
+    public VideoStatus() {
+    }
+
+    public VideoStatus(int status) {
+        this.status = status;
+    }
 
     /** 获取 记录ID */
     public int getId() {

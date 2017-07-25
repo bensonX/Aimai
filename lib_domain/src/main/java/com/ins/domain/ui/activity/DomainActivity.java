@@ -97,6 +97,7 @@ public class DomainActivity extends AppCompatActivity implements AdapterView.OnI
             results.clear();
             results.addAll(DomainLauncher.getInstance().getDomains());
         }
+        domain_res = StorageHelper.with(this).getDomainRes();
     }
 
     private void initCtrl() {

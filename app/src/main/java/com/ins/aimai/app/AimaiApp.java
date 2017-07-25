@@ -56,7 +56,7 @@ public class AimaiApp extends MobApplication {
 
             @Override
             public void onDomainResChange(String domainRes) {
-                AppData.Url.domainRes = domainRes;
+                AppData.Url.domainRes = "http://" + domainRes + "/";
                 GlideUtil.setImgBaseUrl("http://" + domainRes + "/");
             }
         });

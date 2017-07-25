@@ -28,6 +28,7 @@ import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.utils.GlideUtil;
 import com.ins.common.utils.StatusBarTextUtil;
 import com.ins.common.utils.StrUtil;
+import com.ins.common.utils.TimeUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -105,7 +106,7 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
     }
 
     private void initCtrl() {
-        adapterPager = new PagerAdapterLessonDetail(getSupportFragmentManager(), titles);
+        adapterPager = new PagerAdapterLessonDetail(getSupportFragmentManager(), titles, lessonId);
         pager.setAdapter(adapterPager);
         tab.setupWithViewPager(pager);
 
@@ -124,7 +125,7 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
             GlideUtil.loadImg(img_lessondetail_cover, R.drawable.default_bk_img, lesson.getCover());
             text_lessondetail_title.setText(lesson.getCurriculumName());
             text_lessondetail_count.setText(lesson.getVideoNum() + "个视频课");
-            text_lessondetail_time.setText(lesson.getHdSeconds() + "分钟");
+            text_lessondetail_time.setText(TimeUtil.formatSecond(lesson.getHdSeconds()));
             btn_lessondetail_watchcount.setText(0 + "人已观看");
             btn_lessondetail_unwatchcount.setText(0 + "人未观看");
             btn_lessondetail_testcount.setText(0 + "人已考核");

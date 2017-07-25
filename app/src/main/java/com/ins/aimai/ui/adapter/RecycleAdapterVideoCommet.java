@@ -6,10 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.ins.aimai.R;
+import com.ins.aimai.bean.Comment;
 import com.ins.aimai.bean.common.TestBean;
 import com.ins.common.utils.GlideUtil;
+import com.ins.common.utils.TimeUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +20,9 @@ import java.util.List;
 public class RecycleAdapterVideoCommet extends RecyclerView.Adapter<RecycleAdapterVideoCommet.Holder> {
 
     private Context context;
-    private List<TestBean> results = new ArrayList<>();
+    private List<Comment> results = new ArrayList<>();
 
-    public List<TestBean> getResults() {
+    public List<Comment> getResults() {
         return results;
     }
 
@@ -34,8 +37,11 @@ public class RecycleAdapterVideoCommet extends RecyclerView.Adapter<RecycleAdapt
 
     @Override
     public void onBindViewHolder(final RecycleAdapterVideoCommet.Holder holder, final int position) {
-        final TestBean bean = results.get(position);
-        GlideUtil.loadCircleImgTest(holder.img_comment_header);
+        final Comment comment = results.get(position);
+        GlideUtil.loadCircleImg(holder.img_comment_header, R.drawable.default_header_edit, comment.getAvatar());
+        holder.text_comment_name.setText(comment.getUserName());
+        holder.text_comment_detail.setText(comment.getContent());
+        holder.text_comment_time.setText(TimeUtil.formatSecond(System.currentTimeMillis() - comment.getCreateTime()) + "前");
     }
 
     @Override
@@ -46,10 +52,16 @@ public class RecycleAdapterVideoCommet extends RecyclerView.Adapter<RecycleAdapt
     public class Holder extends RecyclerView.ViewHolder {
 
         private ImageView img_comment_header;
+        private TextView text_comment_name;
+        private TextView text_comment_time;
+        private TextView text_comment_detail;
 
         public Holder(View itemView) {
             super(itemView);
             img_comment_header = (ImageView) itemView.findViewById(R.id.img_comment_header);
+            text_comment_name = (TextView) itemView.findViewById(R.id.text_comment_name);
+            text_comment_time = (TextView) itemView.findViewById(R.id.text_comment_time);
+            text_comment_detail = (TextView) itemView.findViewById(R.id.text_comment_detail);
         }
     }
 }

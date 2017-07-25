@@ -136,7 +136,7 @@ public class TimeUtil {
         temp.setTime(end);
         temp.add(Calendar.DATE, 1);
 
-        int year = endCalendar.get(Calendar.YEAR)  - startCalendar.get(Calendar.YEAR);
+        int year = endCalendar.get(Calendar.YEAR) - startCalendar.get(Calendar.YEAR);
         int month = endCalendar.get(Calendar.MONTH) - startCalendar.get(Calendar.MONTH);
 
         if ((startCalendar.get(Calendar.DATE) == Calendar.SUNDAY) && (temp.get(Calendar.DATE) == Calendar.SUNDAY)) {
@@ -148,6 +148,37 @@ public class TimeUtil {
         } else {
             return (year * 12 + month - 1) < 0 ? 0 : (year * 12 + month);
         }
+    }
+
+    public static String formatSecond(long s) {
+        return formatSecond((int) (s / 1000));
+    }
+
+    public static String formatSecond(int s) {
+        String html = "0秒";
+        String format;
+        Object[] array;
+        int day = (s / (60 * 60 * 24));
+        int hours = (s / (60 * 60));
+        int minutes = (s / 60 - hours * 60);
+        int seconds = (s - minutes * 60 - hours * 60 * 60);
+        if (day > 0) {
+            format = "%1$,d天%2$,d时%3$,d分%4$,d秒";
+            array = new Object[]{day, hours, minutes, seconds};
+        } else if (hours > 0) {
+            format = "%1$,d时%2$,d分%3$,d秒";
+            array = new Object[]{hours, minutes, seconds};
+        } else if (minutes > 0) {
+            format = "%1$,d分%2$,d秒";
+            array = new Object[]{minutes, seconds};
+        } else {
+            format = "%1$,d秒";
+            array = new Object[]{seconds};
+        }
+        html = String.format(format, array);
+
+        return html;
+
     }
 
     public static int getHour(Date date) {

@@ -7,10 +7,20 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.ins.aimai.R;
+import com.ins.aimai.bean.common.CommonBean;
+import com.ins.aimai.bean.common.EventBean;
+import com.ins.aimai.common.AppData;
+import com.ins.aimai.net.BaseCallback;
+import com.ins.aimai.net.NetApi;
+import com.ins.aimai.net.NetParam;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.ui.dialog.DialogSure;
 import com.ins.common.utils.ClearCacheUtil;
+
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.Map;
 
 public class SettingActivity extends BaseAppCompatActivity implements View.OnClickListener {
 
@@ -80,9 +90,28 @@ public class SettingActivity extends BaseAppCompatActivity implements View.OnCli
                 DialogSure.showDialog(this, "确定要退出登录？", new DialogSure.CallBack() {
                     @Override
                     public void onSure() {
+                        netLogout();
                     }
                 });
                 break;
         }
+    }
+
+    private void netLogout() {
+        Map<String, Object> param = new NetParam().build();
+        NetApi.NI().queryTrade(param).enqueue(new BaseCallback<CommonBean>(CommonBean.class) {
+            @Override
+            public void onSuccess(int status, CommonBean com, String msg) {
+                AppData.App.removeToken();
+                AppData.App.removeUser();
+                EventBus.getDefault().post(new EventBean(EventBean.EVENT_LOGOUT));
+                finish();
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+                ToastUtil.showToastShort(msg);
+            }
+        });
     }
 }

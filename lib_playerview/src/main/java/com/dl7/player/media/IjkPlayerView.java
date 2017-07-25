@@ -178,7 +178,6 @@ public class IjkPlayerView extends FrameLayout implements View.OnClickListener {
                 final int pos = _setProgress();
                 //只有进度面板和快进面板有一个可见就需要循环消息更新进度
                 boolean fastVisible = mTvFastForward.getVisibility() == VISIBLE;
-                Log.e("fastVisible","fastVisible:"+fastVisible);
                 if ((mIsShowBar || fastVisible) && mVideoView.isPlaying()) {
                     // 这里会重复发送MSG，已达到实时更新 Seek 的效果
                     msg = obtainMessage(MSG_UPDATE_SEEK);
@@ -1623,7 +1622,6 @@ public class IjkPlayerView extends FrameLayout implements View.OnClickListener {
      * @param status
      */
     private void _switchStatus(int status) {
-        Log.i("IjkPlayerView", "status " + status);
         switch (status) {
             case IMediaPlayer.MEDIA_INFO_BUFFERING_START:
                 mIsBufferingStart = true;

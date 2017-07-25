@@ -27,6 +27,8 @@ import com.liaoinstan.springview.container.AliHeader;
 import com.liaoinstan.springview.widget.SpringView;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +53,7 @@ public class VideoDirectotyFragment extends BaseFragment implements OnRecycleIte
     }
 
     @Override
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onCommonEvent(EventBean event) {
         if (event.getEvent() == EventBean.EVENT_LESSONDETAIL_DIRECTORY) {
             List<CourseWare> courseWares = (List<CourseWare>) event.get("courseWares");

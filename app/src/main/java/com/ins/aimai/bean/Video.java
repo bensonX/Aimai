@@ -36,6 +36,7 @@ public class Video implements Serializable {
     /** 课件名称 */
     private String courseWareName;
     private String ppt;
+    private String cover;
 
 
     /** 获取 视频ID */
@@ -58,6 +59,14 @@ public class Video implements Serializable {
 
     public String getPpt() {
         return ppt;
+    }
+
+    public String getCover() {
+        return cover;
+    }
+
+    public void setCover(String cover) {
+        this.cover = cover;
     }
 
     public void setPpt(String ppt) {

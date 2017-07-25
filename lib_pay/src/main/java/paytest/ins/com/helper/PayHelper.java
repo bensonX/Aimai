@@ -73,6 +73,7 @@ public class PayHelper {
     public void callZhifubao(LinkedHashMap<String, String> map) {
         onPayStart();
         final String orderInfo = SignUtils.getOrderInfo(map);
+        Log.e("orderInfo", orderInfo);
         Runnable payRunnable = new Runnable() {
 
             @Override

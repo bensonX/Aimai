@@ -6,12 +6,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.liaoinstan.springview.widget.SpringView
-        android:id="@+id/spring"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swip"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        app:type="follow">
+        android:layout_weight="1">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler"
@@ -19,47 +18,56 @@
             android:layout_height="match_parent"
             android:clipToPadding="false" />
 
-    </com.liaoinstan.springview.widget.SpringView>
-
-    <View style="@style/Line_H" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <LinearLayout
+        android:id="@+id/lay_comment_send"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/img_comment_headerme"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginLeft="15dp"
-            android:scaleType="centerCrop" />
+        <View style="@style/Line_H" />
 
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="35dp"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/shape_rect_corner_white_line_dark"
-            android:hint="在这里评论····"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:textColor="@color/com_text_blank"
-            android:textColorHint="@color/com_text_dark_light"
-            android:textSize="@dimen/text_nomal_small" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/button"
-            android:layout_width="60dp"
-            android:layout_height="35dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/shape_rect_corner_dark"
-            android:gravity="center"
-            android:text="发送"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_nomal" />
+            <ImageView
+                android:id="@+id/img_comment_headerme"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="15dp"
+                android:scaleType="centerCrop" />
+
+            <EditText
+                android:id="@+id/edit_comment_detail"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/shape_rect_corner_white_line_dark"
+                android:hint="在这里评论····"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/com_text_blank"
+                android:textColorHint="@color/com_text_dark_light"
+                android:textSize="@dimen/text_nomal_small" />
+
+            <TextView
+                android:id="@+id/btn_comment_commit"
+                android:layout_width="60dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/shape_rect_corner_dark"
+                android:gravity="center"
+                android:text="发送"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_nomal" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
