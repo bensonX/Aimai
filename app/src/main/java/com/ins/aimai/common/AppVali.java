@@ -2,6 +2,7 @@ package com.ins.aimai.common;
 
 import android.text.TextUtils;
 
+import com.ins.aimai.bean.Address;
 import com.ins.aimai.bean.User;
 import com.ins.common.utils.ValidateUtil;
 
@@ -33,6 +34,14 @@ public class AppVali {
         }
     }
 
+    public static String content(String content) {
+        if (isEmpty(content)) {
+            return "请输入内容";
+        } else {
+            return null;
+        }
+    }
+
     public static String regist_phone(String phone, String phone_old, String cold, String code_old) {
         if (TextUtils.isEmpty(phone)) {
             return "请输入手机号";
@@ -59,10 +68,11 @@ public class AppVali {
         }
     }
 
-    public static String updateUser(User user, String showName) {
-        if (TextUtils.isEmpty(showName)) {
+    public static String updateUser(User user, String showName, String path, Address address) {
+        if (isEmpty(showName)) {
             return "请输入姓名";
-        } else if (showName.trim().equals(user.getShowName().trim())) {
+        } else if (showName.trim().equals(user.getShowName().trim()) && TextUtils.isEmpty(path) && address == null) {
+            //如果 没有修改名字，且没有选择照片，且没有选择所在地，则没有任何修改
             return "没有任何修改";
         } else {
             return null;
@@ -140,5 +150,9 @@ public class AppVali {
 
     private static boolean length(String str, int min, int max) {
         return str.length() >= min && str.length() <= max;
+    }
+
+    private static boolean isEmpty(String str) {
+        return str == null || str.trim().equals("");
     }
 }

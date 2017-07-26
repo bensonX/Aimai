@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.RadioGroup;
 
 import com.ins.aimai.R;
+import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.ui.adapter.PagerAdapterHome;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.aimai.utils.ToastUtil;
@@ -27,12 +29,21 @@ public class HomeActivity extends BaseAppCompatActivity {
     }
 
     @Override
+    public void onCommonEvent(EventBean event) {
+        if (event.getEvent() == EventBean.EVENT_HOME_TAB_LESSON) {
+            //切换到我的课程
+            group_tab.check(tabsId[2]);
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setNeedDoubleClickExit(true);
+        registEventBus();
 
 //        PermissionsUtil.checkAndRequestPermissions(this);
 

@@ -55,19 +55,16 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
             @Override
             public void onPersonClick(View v) {
                 RegistActivity.start(LoginActivity.this, 0);
-                finish();
             }
 
             @Override
             public void onCompClick(View v) {
                 RegistActivity.start(LoginActivity.this, 1);
-                finish();
             }
 
             @Override
             public void onGovClick(View v) {
                 RegistActivity.start(LoginActivity.this, 2);
-                finish();
             }
         });
     }
@@ -124,7 +121,8 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
                 AppData.App.saveToken(user.getToken());
                 EventBus.getDefault().post(new EventBean(EventBean.EVENT_LOGIN));
                 hideLoadingDialog();
-                finish();
+//                finish();
+                HomeActivity.start(LoginActivity.this);
             }
 
             @Override
@@ -134,20 +132,4 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
             }
         });
     }
-//    private void netUpload() {
-//        File file = new File("");
-//        RequestBody body = RequestBody.create(MediaType.parse("application/otcet-stream"), file);
-//        MultipartBody.Part part = MultipartBody.Part.createFormData("file", file.getName(), body);
-//        NetApi.NI().uploadFile(part).enqueue(new BaseCallback<TestBean>(TestBean.class) {
-//            @Override
-//            public void onSuccess(int status, TestBean images, String msg) {
-//                ToastUtil.showToastShort(msg);
-//            }
-//
-//            @Override
-//            public void onError(int status, String msg) {
-//                ToastUtil.showToastShort(msg);
-//            }
-//        });
-//    }
 }

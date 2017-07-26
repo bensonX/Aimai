@@ -28,8 +28,14 @@ public class EventBean implements Serializable {
     public static final int EVENT_LESSONDETAIL_DIRECTORY = 0xffa007;
     //课程详情选择目录
     public static final int EVENT_VIDEO_SELECT_DIRECTORY = 0xffa008;
-    //支付结果请求关闭去支付页面
-    public static final int EVENT_CLOSE_PAYWAY = 0xffa009;
+    //已支付（不论成功失败或者取消）
+    public static final int EVENT_PAYRESULT = 0xffa009;
+    //首页切换到我的课程
+    public static final int EVENT_HOME_TAB_LESSON = 0xffa010;
+    //视频播放完成
+    public static final int EVENT_VIDEO_FINISH = 0xffa011;
+    //人脸采集页面返回结果
+    public static final int EVENT_CAMERA_RESULT = 0xffa012;
 
     private int event;
     private Map<String, Object> map = new HashMap<>();

@@ -52,10 +52,12 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     public void onCommonEvent(EventBean event) {
-        if (event.getEvent() == EventBean.EVENT_LOGIN) {
-            setUserData();
-        } else if (event.getEvent() == EventBean.EVENT_USER_UPDATE) {
-            setUserData();
+        switch (event.getEvent()) {
+            case EventBean.EVENT_LOGOUT:
+            case EventBean.EVENT_LOGIN:
+            case EventBean.EVENT_USER_UPDATE:
+                setUserData();
+                break;
         }
     }
 
@@ -76,7 +78,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setToolbar();
+        setToolbar(false);
         toolbar.bringToFront();
         initBase();
         initView();

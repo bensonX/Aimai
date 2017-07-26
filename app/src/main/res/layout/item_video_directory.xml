@@ -16,7 +16,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:text="第一课时：安全生产法律法规及标准产法律法规及标准产法律法规及标准"
-        android:textColor="@color/com_text_blank"
+        android:textColor="@color/text_blank_dark_select"
         android:textSize="@dimen/text_nomal" />
 
     <TextView

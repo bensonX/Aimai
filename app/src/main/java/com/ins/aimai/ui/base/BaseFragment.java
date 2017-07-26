@@ -22,17 +22,21 @@ public class BaseFragment extends Fragment {
     protected Toolbar toolbar;
 
     public void setToolbar() {
-        setToolbar(null);
+        setToolbar(null, true);
     }
 
-    public void setToolbar(String title) {
+    public void setToolbar(boolean needback) {
+        setToolbar(null, needback);
+    }
+
+    public void setToolbar(String title, boolean needback) {
         View root = getView();
         if (root == null) {
             return;
         }
         toolbar = (Toolbar) root.findViewById(R.id.toolbar);
         if (toolbar != null) {
-            if (toolbar.getNavigationIcon() == null) {
+            if (toolbar.getNavigationIcon() == null && needback) {
                 toolbar.setNavigationIcon(R.drawable.ic_back);
             }
             toolbar.setTitle("");

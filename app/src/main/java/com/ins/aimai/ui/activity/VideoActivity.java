@@ -2,22 +2,20 @@ package com.ins.aimai.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.KeyEvent;
+import android.view.View;
 
+import com.dl7.player.interfaces.OnProgressChageListener;
 import com.dl7.player.media.IjkPlayerView;
 import com.dl7.player.media.MediaPlayerParams;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.CourseWare;
 import com.ins.aimai.bean.Lesson;
 import com.ins.aimai.bean.Video;
-import com.ins.aimai.bean.VideoStatus;
 import com.ins.aimai.bean.common.EventBean;
-import com.ins.aimai.bean.common.TestBean;
 import com.ins.aimai.common.AppData;
 import com.ins.aimai.common.AppHelper;
 import com.ins.aimai.net.BaseCallback;
@@ -25,7 +23,6 @@ import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetHelper;
 import com.ins.aimai.net.NetParam;
 import com.ins.aimai.ui.adapter.PagerAdapterVideo;
-import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.aimai.ui.base.BaseVideoActivity;
 import com.ins.aimai.ui.dialog.DialogSureAimai;
 import com.ins.aimai.utils.ToastUtil;
@@ -41,7 +38,7 @@ import java.util.Map;
 
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 
-public class VideoActivity extends BaseVideoActivity {
+public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnInfoListener, OnProgressChageListener {
 
     private static final String VIDEO_URL = "http://flv2.bn.netease.com/videolib3/1611/28/GbgsL3639/SD/movie_index.m3u8";
     private static final String VIDEO_HD_URL = "http://flv2.bn.netease.com/videolib3/1611/28/GbgsL3639/HD/movie_index.m3u8";
@@ -52,7 +49,8 @@ public class VideoActivity extends BaseVideoActivity {
     private ViewPager pager;
     private PagerAdapterVideo adapterPager;
 
-    private DialogSureAimai dialogSureAimai;
+    private DialogSureAimai dialogSureNext;
+    private DialogSureAimai dialogSureFace;
 
     private String[] titles = new String[]{"介绍", "目录", "讲义", "评论"};
 
@@ -72,6 +70,9 @@ public class VideoActivity extends BaseVideoActivity {
         if (event.getEvent() == EventBean.EVENT_VIDEO_SELECT_DIRECTORY) {
             Video video = (Video) event.get("video");
             setVideo(video);
+        } else if (event.getEvent() == EventBean.EVENT_CAMERA_RESULT) {
+            String path = (String) event.get("path");
+            NetHelper.getInstance().netEyeCheck(path);
         }
     }
 
@@ -93,7 +94,14 @@ public class VideoActivity extends BaseVideoActivity {
         if (getIntent().hasExtra("lessonId")) {
             lessonId = getIntent().getIntExtra("lessonId", 0);
         }
-        dialogSureAimai = new DialogSureAimai(this, "本课时已看完", "您可以选择开始考核该课时，或者观看下个课时", "观看下个课时", "开始考核");
+        dialogSureNext = new DialogSureAimai(this, "本课时已看完", "您可以选择开始考核该课时，或者观看下个课时", "观看下个课时", "开始考核");
+        dialogSureFace = new DialogSureAimai(this, "身份验证", "我们需要验证您是否本人观看，点击'开始验证'将对您进行人脸识别，如果您取消了本次验证你讲无法继续观看后面的课程", "取消", "开始验证");
+        dialogSureFace.setOnOkListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CameraActivity.start(VideoActivity.this);
+            }
+        });
     }
 
     private void initView() {
@@ -109,31 +117,8 @@ public class VideoActivity extends BaseVideoActivity {
         pager.setOffscreenPageLimit(2);
         tab.setupWithViewPager(pager);
 
-        player.setOnInfoListener(new IMediaPlayer.OnInfoListener() {
-            @Override
-            public boolean onInfo(IMediaPlayer iMediaPlayer, int status, int extra) {
-                //TODO:这里进行进度本地化保存
-                Log.e("liao", status + ":" + extra);
-                if (video.getVideoStatus() == null || video.getVideoStatus().getStatus() != 2) {
-                    switch (status) {
-                        case MediaPlayerParams.STATE_COMPLETED:
-                            //播放完成
-                            AppHelper.VideoPlay.setVideoStatusFinish(video);
-                            NetHelper.getInstance().netAddVideoStatus(video.getId(), player.getCurPosition() / 1000, true);
-                            break;
-                        case IMediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START:    //开始播放
-                        case IMediaPlayer.MEDIA_INFO_BUFFERING_START:    //缓冲开始（拖动进度条）
-                        case MediaPlayerParams.STATE_PAUSED:    //暂停
-                        case MediaPlayerParams.STATE_PLAYING:   //播放中（继续）
-                            NetHelper.getInstance().netAddVideoStatus(video.getId(), player.getCurPosition() / 1000, false);
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                return false;
-            }
-        });
+        player.setOnInfoListener(this);
+        player.setOnProgressChageListener(this);
     }
 
     private void initData() {
@@ -159,6 +144,43 @@ public class VideoActivity extends BaseVideoActivity {
         player.setMediaQuality(IjkPlayerView.MEDIA_QUALITY_HIGH);
     }
 
+    @Override
+    public boolean onInfo(IMediaPlayer iMediaPlayer, int status, int extra) {
+        //TODO:这里进行进度本地化保存
+        Log.e("liao", status + ":" + extra);
+        if (!AppHelper.VideoPlay.isVideoStatusFinish(video)) {
+            switch (status) {
+                case MediaPlayerParams.STATE_COMPLETED:
+                    //播放完成
+                    AppHelper.VideoPlay.setVideoStatusFinish(video);
+                    NetHelper.getInstance().netAddVideoStatus(video.getId(), player.getCurPosition() / 1000, true);
+                    EventBus.getDefault().post(new EventBean(EventBean.EVENT_VIDEO_FINISH));
+                    break;
+                case IMediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START:    //开始播放
+                    //case IMediaPlayer.MEDIA_INFO_BUFFERING_START:    //缓冲开始（拖动进度条）
+                case MediaPlayerParams.STATE_PAUSED:    //暂停
+                case MediaPlayerParams.STATE_PLAYING:   //播放中（继续）
+                    NetHelper.getInstance().netAddVideoStatus(video.getId(), player.getCurPosition() / 1000, false);
+                    break;
+                default:
+                    break;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void onProgress(int progress, int duration) {
+        L.e("progress", progress + "/" + duration);
+        float lv = (float) progress / (float) duration;
+        if (lv >= 0.33f) {
+            //1/3处人脸识别验证
+            player.pause();
+            dialogSureFace.show();
+        }
+    }
+
+    ///////////////////////////////
 
     private void postIntro(String intro) {
         EventBean eventBean = new EventBean(EventBean.EVENT_LESSONDETAIL_INTRO);

@@ -43,14 +43,16 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.myConfig
-            buildConfigField "String", "BASE_URL", "\"http://192.168.1.166/\""
+            buildConfigField "String", "BASE_URL", '"http://192.168.1.166/"'
+            buildConfigField "String", "BASE_URL_RES", '"http://192.168.1.205:8080/"'
             minifyEnabled true
             zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
             signingConfig signingConfigs.myConfig
-            buildConfigField "String", "BASE_URL", "\"http://192.168.1.166/\""
+            buildConfigField "String", "BASE_URL", '"http://192.168.1.166/"'
+            buildConfigField "String", "BASE_URL_RES", '"http://192.168.1.205:8080/"'
         }
     }
     //配置keystore签名 end

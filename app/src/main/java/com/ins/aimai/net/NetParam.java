@@ -21,7 +21,7 @@ import okhttp3.RequestBody;
 public class NetParam {
     private Map<String, Object> paramMap = new LinkedHashMap<>();
 
-    public static NetParam newInstance(){
+    public static NetParam newInstance() {
         return new NetParam();
     }
 
@@ -35,7 +35,7 @@ public class NetParam {
         return this;
     }
 
-    public NetParam put(Map<String,Object> map){
+    public NetParam put(Map<String, Object> map) {
         paramMap.putAll(map);
         return this;
     }
@@ -46,11 +46,16 @@ public class NetParam {
     }
 
     //构造一个上传文件的Bodypart
-    public MultipartBody.Part buildFileBodyPart(String path) {
+    public static MultipartBody.Part buildFileBodyPart(String partName,String path) {
         File file = new File(path);
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        MultipartBody.Part body = MultipartBody.Part.createFormData("files", file.getName(), requestFile);
+        MultipartBody.Part body = MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
         return body;
+    }
+
+    //构造一个RequestBody
+    public static RequestBody buildRequestBody(String value) {
+        return RequestBody.create(MediaType.parse("multipart/form-data"), value);
     }
 
     //测试方法，打印出参数

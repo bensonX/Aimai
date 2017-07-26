@@ -18,6 +18,7 @@ package com.ins.aimai.ui.activity;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -42,9 +43,12 @@ import android.widget.Toast;
 
 import com.google.android.cameraview.CameraView;
 import com.ins.aimai.R;
+import com.ins.aimai.bean.common.EventBean;
 import com.ins.common.utils.BitmapUtil;
 import com.ins.common.utils.FileUtil;
 import com.ins.common.utils.StatusBarTextUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 
 /**
@@ -83,6 +87,11 @@ public class CameraActivity extends AppCompatActivity implements ActivityCompat.
             }
         }
     };
+
+    public static void start(Context context) {
+        Intent intent = new Intent(context, CameraActivity.class);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -258,10 +267,16 @@ public class CameraActivity extends AppCompatActivity implements ActivityCompat.
             String path = BitmapUtil.saveBitmap(bitmap, FileUtil.getPhotoFullPath());
 
             //返回路径给调用拍照页面
+            //EventBus方式
+            EventBean eventBean = new EventBean(EventBean.EVENT_CAMERA_RESULT);
+            eventBean.put("path",path);
+            EventBus.getDefault().post(eventBean);
+            //传统result方式
             Intent intent = new Intent();
             intent.putExtra("path", path);
             setResult(RESULT_OK, intent);
             finish();
+
         } catch (Exception e) {
             e.printStackTrace();
         }

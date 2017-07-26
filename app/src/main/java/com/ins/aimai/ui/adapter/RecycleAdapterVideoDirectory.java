@@ -11,6 +11,7 @@ import com.ins.aimai.R;
 import com.ins.aimai.bean.Video;
 import com.ins.aimai.bean.common.TestBean;
 import com.ins.aimai.bean.common.VideoDirectiry;
+import com.ins.aimai.common.AppHelper;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
 import com.ins.common.utils.TimeUtil;
 
@@ -48,6 +49,8 @@ public class RecycleAdapterVideoDirectory extends RecyclerView.Adapter<RecycleAd
 
         holder.text_directory_title.setText(video.getCourseWareName() + ": " + video.getName());
         holder.text_directory_time.setText(TimeUtil.formatSecond(video.getHighDefinitionSeconds()));
+
+        holder.text_directory_title.setSelected(AppHelper.VideoPlay.isVideoStatusFinish(video));
     }
 
     @Override

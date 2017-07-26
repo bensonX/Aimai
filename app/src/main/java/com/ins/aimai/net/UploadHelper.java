@@ -1,6 +1,7 @@
 package com.ins.aimai.net;
 
 import com.ins.aimai.bean.common.CommonBean;
+import com.ins.aimai.common.AppData;
 import com.ins.aimai.utils.ToastUtil;
 
 import okhttp3.MultipartBody;
@@ -11,13 +12,13 @@ import okhttp3.MultipartBody;
 
 public class UploadHelper {
 
-    public static UploadHelper newInstance(){
+    public static UploadHelper newInstance() {
         return new UploadHelper();
     }
 
     public void netUpload(String path, final UploadCallback callback) {
-        MultipartBody.Part part = new NetParam().buildFileBodyPart(path);
-        NetApi.NI().uploadFile(part).enqueue(new BaseCallback<CommonBean>(CommonBean.class) {
+        MultipartBody.Part part = new NetParam().buildFileBodyPart("files",path);
+        NetApi.NI().uploadFile(AppData.Url.domainRes + AppData.Url.upload, part).enqueue(new BaseCallback<CommonBean>(CommonBean.class) {
             @Override
             public void onSuccess(int status, CommonBean commonBean, String msg) {
                 String url = commonBean.getUrl();

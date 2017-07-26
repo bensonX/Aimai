@@ -58,7 +58,9 @@ public class VideoDirectotyFragment extends BaseFragment implements OnRecycleIte
         if (event.getEvent() == EventBean.EVENT_LESSONDETAIL_DIRECTORY) {
             List<CourseWare> courseWares = (List<CourseWare>) event.get("courseWares");
             freshData(convert(courseWares));
-            EventBus.getDefault().cancelEventDelivery(event);
+        } else if (event.getEvent() == EventBean.EVENT_VIDEO_FINISH) {
+            //TODO:视频播放完成，这里要刷新播放列表
+            adapter.notifyDataSetChanged();
         }
     }
 

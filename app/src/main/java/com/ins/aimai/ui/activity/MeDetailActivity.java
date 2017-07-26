@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ins.aimai.R;
+import com.ins.aimai.bean.Address;
+import com.ins.aimai.bean.Trade;
 import com.ins.aimai.bean.common.CommonBean;
 import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.bean.User;
@@ -45,7 +47,8 @@ public class MeDetailActivity extends BaseAppCompatActivity implements View.OnCl
 
     private DialogPopupPhoto popupPhoto;
 
-    private String headerUrl;
+    private Address address;
+    private String path;
 
     public static void start(Context context) {
         Intent intent = new Intent(context, MeDetailActivity.class);
@@ -53,10 +56,19 @@ public class MeDetailActivity extends BaseAppCompatActivity implements View.OnCl
     }
 
     @Override
+    public void onCommonEvent(EventBean event) {
+        if (event.getEvent() == EventBean.EVENT_SELECT_ADDRESS) {
+            Address address = (Address) event.get("address");
+            setAddressData(address);
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medetail);
         setToolbar();
+        registEventBus();
         initBase();
         initView();
         initCtrl();
@@ -108,7 +120,7 @@ public class MeDetailActivity extends BaseAppCompatActivity implements View.OnCl
             GlideUtil.loadCircleImg(img_medetail_header, R.drawable.default_header, user.getAvatar());
             edit_medetail_name.setText(user.getShowName());
             text_medetail_phone.setText(user.getPhone());
-            text_medetail_address.setText(user.getCity().getMergerName());
+            text_medetail_address.setText(user.getCity() != null ? user.getCity().getMergerName() : "");
             text_medetail_trade.setText(user.getTradeName());
             text_medetail_comp.setText(user.getCompanyName());
             text_medetail_department.setText(user.getDepartmentName());
@@ -118,22 +130,32 @@ public class MeDetailActivity extends BaseAppCompatActivity implements View.OnCl
         }
     }
 
+    private void setAddressData(Address address) {
+        text_medetail_address.setText(address.getAddress());
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_right:
-                String name = edit_medetail_name.getText().toString();
-                String msg = AppVali.updateUser(AppData.App.getUser(), name);
+                final String name = edit_medetail_name.getText().toString();
+                String msg = AppVali.updateUser(AppData.App.getUser(), name, path, address);
                 if (msg != null) {
                     ToastUtil.showToastShort(msg);
                 } else {
-                    netCommit(name, headerUrl);
+                    UploadHelper.newInstance().netUpload(path, new UploadHelper.UploadCallback() {
+                        @Override
+                        public void uploadfinish(String url) {
+                            netCommit(name, url, address);
+                        }
+                    });
                 }
                 break;
             case R.id.lay_medetail_header:
                 popupPhoto.show();
                 break;
             case R.id.lay_medetail_address:
+                AddressActivity.start(this);
                 break;
         }
     }
@@ -146,13 +168,8 @@ public class MeDetailActivity extends BaseAppCompatActivity implements View.OnCl
 
     @Override
     public void cropResult(String path) {
-        UploadHelper.newInstance().netUpload(path, new UploadHelper.UploadCallback() {
-            @Override
-            public void uploadfinish(String url) {
-                headerUrl = url;
-                GlideUtil.loadCircleImg(img_medetail_header, R.drawable.default_header_edit, url);
-            }
-        });
+        this.path = path;
+        GlideUtil.loadCircleImg(img_medetail_header, R.drawable.default_header_edit, path);
     }
 
     @Override
@@ -160,10 +177,11 @@ public class MeDetailActivity extends BaseAppCompatActivity implements View.OnCl
         //取消相机或相册
     }
 
-    private void netCommit(final String showName, final String avatar) {
+    private void netCommit(final String showName, final String avatar, final Address address) {
         NetParam netParam = new NetParam();
         if (!TextUtils.isEmpty(showName)) netParam.put("showName", showName);
         if (!TextUtils.isEmpty(avatar)) netParam.put("avatar", avatar);
+        if (address != null) netParam.put("cityId", address.getId());
         Map<String, Object> param = netParam.build();
         showLoadingDialog();
         NetApi.NI().updateUser(param).enqueue(new BaseCallback<CommonBean>(CommonBean.class) {
@@ -173,6 +191,10 @@ public class MeDetailActivity extends BaseAppCompatActivity implements View.OnCl
                 User user = AppData.App.getUser();
                 if (!TextUtils.isEmpty(avatar)) user.setAvatar(avatar);
                 if (!TextUtils.isEmpty(showName)) user.setShowName(showName);
+                if (address != null) {
+                    user.setCity(address);
+                    user.setCityId(address.getId());
+                }
                 AppData.App.saveUser(user);
                 EventBus.getDefault().post(new EventBean(EventBean.EVENT_USER_UPDATE));
                 finish();

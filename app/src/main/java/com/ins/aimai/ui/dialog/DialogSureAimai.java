@@ -78,7 +78,7 @@ public class DialogSureAimai extends Dialog {
         lp.width = (int) (screenWidth * 0.9); // 宽度
 //        lp.height =  WindowManager.LayoutParams.WRAP_CONTENT;
 //        lp.height = (int) (lp.width*0.65); // 高度
-        this.setCanceledOnTouchOutside(true);
+        this.setCanceledOnTouchOutside(false);
     }
 
     private void setLoadingDialog() {

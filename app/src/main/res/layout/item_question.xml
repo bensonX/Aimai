@@ -15,6 +15,5 @@
         android:lineSpacingExtra="5dp"
         android:text="A、“刮骨疗毒，壮士割腕”——加强党风"
         android:drawableLeft="@drawable/selector_check_select_learn_small"
-        android:textColor="@color/select_question_item_text"
         android:textSize="@dimen/text_nomal" />
 </FrameLayout>

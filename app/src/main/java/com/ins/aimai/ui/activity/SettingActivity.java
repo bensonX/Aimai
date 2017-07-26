@@ -99,7 +99,7 @@ public class SettingActivity extends BaseAppCompatActivity implements View.OnCli
 
     private void netLogout() {
         Map<String, Object> param = new NetParam().build();
-        NetApi.NI().queryTrade(param).enqueue(new BaseCallback<CommonBean>(CommonBean.class) {
+        NetApi.NI().loginout(param).enqueue(new BaseCallback<CommonBean>(CommonBean.class) {
             @Override
             public void onSuccess(int status, CommonBean com, String msg) {
                 AppData.App.removeToken();

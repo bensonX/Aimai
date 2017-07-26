@@ -67,11 +67,17 @@ public class AppData {
          * 资源服务器地址
          */
         public static String domainRes;
+        public static String domainEye = "http://api.eyekey.com/";
 
         /**
          * 接口请求地址
          */
         public static String version = "updateAPK/version_feast.json";                                    //客户端检查更新
+        public static String upload = "images/res/upload";                                                //上传文件
+
+
+        //eyekey人脸识别接口
+        public static String eyeCheck = domainEye + "face/Check/checking";                                                //人像解析
 
         public static String getVideoUrl(String url) {
             return domainRes + "video/" + url;

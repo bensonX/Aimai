@@ -32,6 +32,8 @@ public class AimaiApp extends MobApplication {
     private void initSetting() {
         NetApi.setDebug(BuildConfig.DEBUG);
         NetApi.setBaseUrl(BuildConfig.BASE_URL);
+        AppData.Url.domainRes = BuildConfig.BASE_URL_RES;
+        GlideUtil.setImgBaseUrl(AppData.Url.domainRes);
         SharedPrefUtilV2.init(this);
         App.saveApplication(this);
         L.setDEBUG(BuildConfig.DEBUG);
@@ -57,7 +59,7 @@ public class AimaiApp extends MobApplication {
             @Override
             public void onDomainResChange(String domainRes) {
                 AppData.Url.domainRes = "http://" + domainRes + "/";
-                GlideUtil.setImgBaseUrl("http://" + domainRes + "/");
+                GlideUtil.setImgBaseUrl(AppData.Url.domainRes);
             }
         });
         DomainLauncher.getInstance()

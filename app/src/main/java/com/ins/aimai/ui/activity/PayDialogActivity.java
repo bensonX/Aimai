@@ -7,10 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
-import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -56,9 +53,8 @@ public class PayDialogActivity extends BaseAppCompatActivity {
 
     @Override
     public void onCommonEvent(EventBean event) {
-        if (event.getEvent() == EventBean.EVENT_CLOSE_PAYWAY) {
+        if (event.getEvent() == EventBean.EVENT_PAYRESULT) {
             finish();
-            EventBus.getDefault().cancelEventDelivery(event);
         }
     }
 

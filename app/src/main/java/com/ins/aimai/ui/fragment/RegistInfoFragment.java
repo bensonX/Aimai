@@ -25,6 +25,7 @@ import com.ins.aimai.net.NetParam;
 import com.ins.aimai.net.UploadHelper;
 import com.ins.aimai.ui.activity.AddressActivity;
 import com.ins.aimai.ui.activity.CameraActivity;
+import com.ins.aimai.ui.activity.HomeActivity;
 import com.ins.aimai.ui.activity.RegistActivity;
 import com.ins.aimai.ui.activity.TradeActivity;
 import com.ins.aimai.ui.base.BaseFragment;
@@ -104,12 +105,10 @@ public class RegistInfoFragment extends BaseFragment implements View.OnClickList
             trade = (Trade) event.get("trade");
             setTradeData(trade);
             ToastUtil.showToastShortDebug(trade.getTradeName());
-            EventBus.getDefault().cancelEventDelivery(event);
         } else if (event.getEvent() == EventBean.EVENT_SELECT_ADDRESS) {
             address = (Address) event.get("address");
             setAddressData(address);
             ToastUtil.showToastShortDebug(address.getAddress());
-            EventBus.getDefault().cancelEventDelivery(event);
         }
     }
 
@@ -356,9 +355,10 @@ public class RegistInfoFragment extends BaseFragment implements View.OnClickList
                 ToastUtil.showToastShort(msg);
                 AppData.App.saveUser(user);
                 //注册不保存状态
-                //AppData.App.saveToken(user.getToken());
+                AppData.App.saveToken(user.getToken());
                 EventBus.getDefault().post(new EventBean(EventBean.EVENT_LOGIN));
-                getActivity().finish();
+//                getActivity().finish();
+                HomeActivity.start(getActivity());
             }
 
             @Override

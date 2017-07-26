@@ -37,7 +37,7 @@
                 android:layout_gravity="right"
                 android:gravity="center"
                 android:text="提交"
-                android:textColor="@color/com_text_dark"
+                android:textColor="@color/text_blue_dark_enable"
                 android:textSize="@dimen/text_big_nomal" />
 
         </android.support.v7.widget.Toolbar>
@@ -57,7 +57,7 @@
         <View style="@style/Line_H"/>
 
         <com.ins.common.view.EmojiEditText
-            android:id="@+id/edit_feedback_describe"
+            android:id="@+id/edit_suggest"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"

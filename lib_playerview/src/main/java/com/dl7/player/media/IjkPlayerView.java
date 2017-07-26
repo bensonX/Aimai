@@ -52,6 +52,7 @@ import com.dl7.player.R;
 import com.dl7.player.danmaku.BaseDanmakuConverter;
 import com.dl7.player.danmaku.BiliDanmukuParser;
 import com.dl7.player.danmaku.OnDanmakuListener;
+import com.dl7.player.interfaces.OnProgressChageListener;
 import com.dl7.player.utils.AnimHelper;
 import com.dl7.player.utils.MotionEventUtils;
 import com.dl7.player.utils.NavUtils;
@@ -233,6 +234,8 @@ public class IjkPlayerView extends FrameLayout implements View.OnClickListener {
     // 外部监听器
     private OnInfoListener mOutsideInfoListener;
     private IMediaPlayer.OnCompletionListener mCompletionListener;
+    //进度监听
+    private OnProgressChageListener onProgressChageListener;
     // 禁止翻转，默认为禁止
     private boolean mIsForbidOrientation = true;
     // 是否固定全屏状态
@@ -1207,7 +1210,7 @@ public class IjkPlayerView extends FrameLayout implements View.OnClickListener {
             isDownTouch = true;
             isRecoverFromDanmaku = recoverFromEditVideo();
             //每次按下都post一条刷新进度条的消息
-            mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_UPDATE_SEEK),100);
+            mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_UPDATE_SEEK), 100);
             return super.onDown(e);
         }
 
@@ -1386,6 +1389,8 @@ public class IjkPlayerView extends FrameLayout implements View.OnClickListener {
         int duration = mVideoView.getDuration();
         //TODO:保存临界时间
         setSaveLimitTime(position);
+        //回调进度监听
+        if (onProgressChageListener != null) onProgressChageListener.onProgress(position, duration);
         if (duration > 0) {
             // 转换为 Seek 显示的进度值
             long pos = (long) MAX_VIDEO_SEEK * position / duration;
@@ -2728,5 +2733,9 @@ public class IjkPlayerView extends FrameLayout implements View.OnClickListener {
         // 转换为 Seek 显示的进度值
         int pos = MAX_VIDEO_SEEK * saveLimitTime / duration;
         return pos;
+    }
+
+    public void setOnProgressChageListener(OnProgressChageListener onProgressChageListener) {
+        this.onProgressChageListener = onProgressChageListener;
     }
 }

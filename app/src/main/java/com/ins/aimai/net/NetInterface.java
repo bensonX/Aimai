@@ -11,6 +11,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Url;
 
 /**
  * API接口
@@ -28,8 +29,8 @@ public interface NetInterface {
      * 上传资源文件
      */
     @Multipart
-    @POST("/images/res/upload")
-    Call<ResponseBody> uploadFile(@Part MultipartBody.Part file);
+    @POST
+    Call<ResponseBody> uploadFile(@Url String url, @Part MultipartBody.Part file);
 
     //////////////////////////////////////////
     //////////////////////////////////////////
@@ -47,6 +48,13 @@ public interface NetInterface {
     @FormUrlEncoded
     @POST("/api/user/login")
     Call<ResponseBody> login(@FieldMap Map<String, Object> param);
+
+    /**
+     * 注销
+     */
+    @FormUrlEncoded
+    @POST("/api/user/logout")
+    Call<ResponseBody> loginout(@FieldMap Map<String, Object> param);
 
     /**
      * 自动登录
@@ -132,15 +140,6 @@ public interface NetInterface {
     @POST("/api/curriculum/queryCurriculumById")
     Call<ResponseBody> queryLessonDetail(@FieldMap Map<String, Object> param);
 
-    /**
-     * 创建订单
-     * curriculumId
-     * number
-     */
-    @FormUrlEncoded
-    @POST("/api/order/addOrder")
-    Call<ResponseBody> addOrder(@FieldMap Map<String, Object> param);
-
     //##################################################################
     //#########               支付
     //##################################################################
@@ -175,6 +174,84 @@ public interface NetInterface {
     @POST("/api/videoStatus/addVideoStatus")
     Call<ResponseBody> addVideoStatus(@FieldMap Map<String, Object> param);
 
+    //##################################################################
+    //#########               订单
+    //##################################################################
 
+    /**
+     * 获取订单列表
+     * payStatus 支付状态,如果不传则查询全部 参数类型:int
+     * pageNO
+     * pageSize
+     */
+    @FormUrlEncoded
+    @POST("/api/order/queryOrder")
+    Call<ResponseBody> queryOrder(@FieldMap Map<String, Object> param);
+
+    /**
+     * 创建订单
+     * curriculumId
+     * number
+     */
+    @FormUrlEncoded
+    @POST("/api/order/addOrder")
+    Call<ResponseBody> addOrder(@FieldMap Map<String, Object> param);
+
+
+    /**
+     * 删除订单
+     * orderId
+     */
+    @FormUrlEncoded
+    @POST("/api/order/delOrder")
+    Call<ResponseBody> delOrder(@FieldMap Map<String, Object> param);
+
+    //##################################################################
+    //#########               消息
+    //##################################################################
+
+    /**
+     * 获取消息列表
+     * pageNO
+     * pageSize
+     */
+    @FormUrlEncoded
+    @POST("/api/systemInfo/geySystemInfo")
+    Call<ResponseBody> queryMsg(@FieldMap Map<String, Object> param);
+
+    /**
+     * 查看消息
+     * systemInfoId
+     */
+    @FormUrlEncoded
+    @POST("/api/systemInfo/checkSystemInfo")
+    Call<ResponseBody> checkMsg(@FieldMap Map<String, Object> param);
+
+
+    /**
+     * 意见反馈
+     * content
+     */
+    @FormUrlEncoded
+    @POST("/api/suggest/submitSuggest")
+    Call<ResponseBody> suggest(@FieldMap Map<String, Object> param);
+
+
+    //##################################################################
+    //#########               人脸识别
+    //##################################################################
+
+    /**
+     * 解析人像
+     * app_id
+     * app_key
+     * url、img或者File
+     */
+    @Multipart
+//    @FormUrlEncoded
+    @POST
+    Call<ResponseBody> eyeCheck(@Url String url, @Part("app_id") RequestBody request_api_id,
+                                @Part("app_key") RequestBody request_api_key,
+                                @Part MultipartBody.Part request_img_part);
 
 }

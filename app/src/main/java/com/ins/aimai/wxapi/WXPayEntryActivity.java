@@ -3,18 +3,15 @@ package com.ins.aimai.wxapi;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.ins.aimai.R;
 import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.common.PayHelperEx;
+import com.ins.aimai.ui.activity.HomeActivity;
 import com.ins.aimai.ui.activity.PayDialogActivity;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
-import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.utils.L;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
@@ -79,7 +76,7 @@ public class WXPayEntryActivity extends BaseAppCompatActivity implements IWXAPIE
     }
 
     private void setPayData() {
-        EventBus.getDefault().post(new EventBean(EventBean.EVENT_CLOSE_PAYWAY));
+        EventBus.getDefault().post(new EventBean(EventBean.EVENT_PAYRESULT));
         switch (type) {
             case 0:
                 text_payresult_title.setText("支付成功");
@@ -106,11 +103,16 @@ public class WXPayEntryActivity extends BaseAppCompatActivity implements IWXAPIE
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_payresult_left:
+                //返回首页
+                HomeActivity.start(this);
                 break;
             case R.id.btn_payresult_right:
                 if (type == 0) {
-                    finish();
+                    //去我的课程
+                    EventBus.getDefault().post(new EventBean(EventBean.EVENT_HOME_TAB_LESSON));
+                    HomeActivity.start(this);
                 } else {
+                    //重新支付
                     PayDialogActivity.startRepay(this, PayHelperEx.orderId);
                 }
                 break;
