@@ -50,7 +50,7 @@ public class RecycleAdapterLearnLesson extends RecyclerView.Adapter<RecycleAdapt
         holder.text_item_study_title.setText(study.getCurriculumName());
         holder.text_item_study_learntime.setText("已学习" + TimeUtil.formatSecond(study.getFinishSeconds()));
         holder.text_item_study_totaltime.setText("共" + TimeUtil.formatSecond(study.getVideoSeconds()));
-        holder.progress.setProgress((int) ((float) study.getFinishSeconds() / (float) study.getVideoSeconds()));
+        holder.progress.setProgress((int) ((float) study.getFinishSeconds() / (float) study.getVideoSeconds() * 100));
         String note = study.getExaminationNum() + "习题 " + study.getVideoNum() + "个视频课 " + study.getPptNum() + "个讲义";
         holder.text_item_study_note.setText(note);
     }

@@ -53,7 +53,6 @@ public class RegistSetPswFragment extends BaseFragment implements PagerFragmentI
     public void onCommonEvent(EventBean event) {
         if (event.getEvent() == EventBean.EVENT_REGIST_PHONE) {
             phone = (String)event.get("phone");
-            ToastUtil.showToastShortDebug(phone);
             EventBus.getDefault().cancelEventDelivery(event);
         }
     }
