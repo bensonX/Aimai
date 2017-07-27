@@ -1406,6 +1406,7 @@ public class IjkPlayerView extends FrameLayout implements View.OnClickListener {
         int duration = mVideoView.getDuration();
         //TODO:保存临界时间
         setSaveLimitTime(position);
+        mPlayerSeek.setLimitProgress(getSaveLimitProgress());
         //回调进度监听
         if (onProgressChageListener != null) onProgressChageListener.onProgress(position, duration);
         if (duration > 0) {

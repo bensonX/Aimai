@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.bean.Lesson;
+import com.ins.aimai.bean.User;
+import com.ins.aimai.bean.VideoStatus;
 import com.ins.aimai.bean.common.CommonBean;
 import com.ins.aimai.bean.common.FaceRecord;
 import com.ins.aimai.common.AppData;
@@ -42,11 +44,14 @@ public class NetHelper {
     }
 
     //上传视频进度，并进行本地存储
-    public void netAddVideoStatus(final int orderId, final int videoId, final int seconds, final boolean isFinish) {
+    public void netAddVideoStatus(VideoStatus videoStatus, final int orderId, final int videoId, final int seconds, final boolean isFinish) {
+        User user = AppData.App.getUser();
         //只有播放进度比本地数据大时才上传
-        if (seconds > AppData.App.getVideoTime(videoId)) {
+        if (seconds > AppData.App.getVideoTime(videoId, user.getId())) {
             //本地存储
-            AppData.App.saveVideoTime(videoId, seconds);
+            AppData.App.saveVideoTime(videoId, user.getId(), seconds);
+            //更新记录
+            videoStatus.setSeconds(seconds);
             Map map = new HashMap<String, Object>() {{
                 put("orderId", orderId);
                 put("videoId", videoId);

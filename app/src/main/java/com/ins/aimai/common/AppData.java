@@ -45,12 +45,12 @@ public class AppData {
             SharedPrefUtilV2.open(SHARENAME).remove(KEY_USER);
         }
 
-        public static void saveVideoTime(int videoId, int seek) {
-            SharedPrefUtilV2.open(SHARENAME).putInt(KEY_VIDEO_TIME + videoId, seek);
+        public static void saveVideoTime(int videoId, int userId, int seek) {
+            SharedPrefUtilV2.open(SHARENAME).putInt(KEY_VIDEO_TIME + videoId + ":" + userId, seek);
         }
 
-        public static int getVideoTime(int videoId) {
-            return SharedPrefUtilV2.open(SHARENAME).getInt(KEY_VIDEO_TIME + videoId);
+        public static int getVideoTime(int videoId, int userId) {
+            return SharedPrefUtilV2.open(SHARENAME).getInt(KEY_VIDEO_TIME + videoId + ":" + userId);
         }
 
         public static List<CheckPoint> getVideoCheckPoint() {
