@@ -179,7 +179,8 @@ public class IjkPlayerView extends FrameLayout implements View.OnClickListener {
                 final int pos = _setProgress();
                 //只有进度面板和快进面板有一个可见就需要循环消息更新进度
                 boolean fastVisible = mTvFastForward.getVisibility() == VISIBLE;
-                if ((mIsShowBar || fastVisible) && mVideoView.isPlaying()) {
+                //由于要实时监听播放进度，所以即便在进度条不可见的状态下也要发送更新消息，所以注释了下面一行代码的验证mIsShowBar || fastVisible
+                if (/*(mIsShowBar || fastVisible) &&*/ mVideoView.isPlaying()) {
                     // 这里会重复发送MSG，已达到实时更新 Seek 的效果
                     msg = obtainMessage(MSG_UPDATE_SEEK);
                     sendMessageDelayed(msg, 1000 - (pos % 1000));
@@ -1009,6 +1010,22 @@ public class IjkPlayerView extends FrameLayout implements View.OnClickListener {
             mAttachActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         } else {
             mAttachActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }
+    }
+
+    public boolean isFullScreen() {
+        if (WindowUtils.getScreenOrientation(mAttachActivity) == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void setFullScreen(boolean isFullScreen) {
+        if (isFullScreen) {
+            mAttachActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        } else {
+            mAttachActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
     }
 

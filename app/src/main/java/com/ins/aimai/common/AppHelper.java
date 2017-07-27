@@ -59,6 +59,15 @@ public class AppHelper {
             }
         }
 
+        //检查一个Video是否是自由控制
+        public static boolean isVideoFreeCtrl(Video video, int type) {
+            if (type == 1) {
+                return isVideoStatusFinish(video);
+            } else {
+                return true;
+            }
+        }
+
         //根据播放检查记录判断当前位置是否需要进行视频检查
         public static boolean needCheckFace(List<FaceRecord> faceRecords, float lv) {
             for (CheckPoint checkPoint : AppData.App.getVideoCheckPoint()) {

@@ -3,12 +3,16 @@ package com.ins.aimai.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.ins.aimai.R;
+import com.ins.aimai.bean.User;
+import com.ins.aimai.common.AppData;
 import com.ins.aimai.common.AppVali;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
@@ -79,6 +83,25 @@ public class PayDialogCountFragment extends BaseFragment implements View.OnClick
     }
 
     private void initCtrl() {
+        edit_paydialog_count.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                activity.setCount(StrUtil.str2int(s.toString()));
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+        User user = AppData.App.getUser();
+        if (user.getRoleId() == User.USER) {
+            edit_paydialog_count.setText("1");
+            EditTextUtil.disableEditText(edit_paydialog_count);
+        }
     }
 
     private void initData() {
@@ -86,8 +109,13 @@ public class PayDialogCountFragment extends BaseFragment implements View.OnClick
 
     @Override
     public void onClick(View v) {
+        User user = AppData.App.getUser();
         switch (v.getId()) {
             case R.id.btn_paydialog_sub: {
+                if (user.getRoleId() == User.USER) {
+                    ToastUtil.showToastShort("个人用户同一商品只能购买一件");
+                    return;
+                }
                 int edit = StrUtil.str2int(edit_paydialog_count.getText().toString());
                 if (edit == 0 || edit == 1) {
                     edit_paydialog_count.setText("");
@@ -98,6 +126,10 @@ public class PayDialogCountFragment extends BaseFragment implements View.OnClick
                 break;
             }
             case R.id.btn_paydialog_add: {
+                if (user.getRoleId() == User.USER) {
+                    ToastUtil.showToastShort("个人用户只能购买一件商品");
+                    return;
+                }
                 int edit = StrUtil.str2int(edit_paydialog_count.getText().toString());
                 edit_paydialog_count.setText(edit + 1 + "");
                 activity.setCount(StrUtil.str2int(edit_paydialog_count.getText().toString()));

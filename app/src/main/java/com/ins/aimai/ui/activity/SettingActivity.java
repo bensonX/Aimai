@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.ins.aimai.R;
+import com.ins.aimai.bean.User;
 import com.ins.aimai.bean.common.CommonBean;
 import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.common.AppData;

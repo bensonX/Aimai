@@ -18,14 +18,15 @@ import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.bean.Trade;
 import com.ins.aimai.bean.User;
 import com.ins.aimai.common.AppData;
+import com.ins.aimai.common.AppHelper;
 import com.ins.aimai.common.AppVali;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
+import com.ins.aimai.net.NetFaceHelper;
 import com.ins.aimai.net.NetParam;
 import com.ins.aimai.net.NetUploadHelper;
 import com.ins.aimai.ui.activity.AddressActivity;
 import com.ins.aimai.ui.activity.CameraActivity;
-import com.ins.aimai.ui.activity.HomeActivity;
 import com.ins.aimai.ui.activity.RegistActivity;
 import com.ins.aimai.ui.activity.TradeActivity;
 import com.ins.aimai.ui.base.BaseFragment;
@@ -84,6 +85,8 @@ public class RegistInfoFragment extends BaseFragment implements View.OnClickList
     private int typeImg;
     //图片资源路径
     private String path;
+    //人像采集ID
+    private String faceId;
     //选择行业
     private Trade trade;
     //选择地址
@@ -256,31 +259,53 @@ public class RegistInfoFragment extends BaseFragment implements View.OnClickList
                 typeImg = 2;
                 break;
             case R.id.btn_go:
-                final String phone = activity.getRegister().getPhone();
-                final String pwd = activity.getRegister().getPwd();
-
-                final String u_name = edit_regist_name.getText().toString();
-                final String u_num = edit_regist_cardnum.getText().toString();
-                final String c_name = edit_regist_compname.getText().toString();
-                final String c_num = edit_regist_compnum.getText().toString();
-                final int c_tradeid = trade != null ? trade.getId() : 0;
-                final String g_name = edit_regist_govname.getText().toString();
-                final String g_num = edit_regist_govnum.getText().toString();
-                final int cityid = address != null ? address.getId() : 0;
-
-                String msg = AppVali.regist_info(type, phone, pwd, path, u_name, u_num, c_name, c_num, c_tradeid, g_name, g_num, cityid);
-                if (msg == null) {
-                    NetUploadHelper.newInstance().netUpload(path, new NetUploadHelper.UploadCallback() {
-                        @Override
-                        public void uploadfinish(String url) {
-                            netResist(type, phone, pwd, url, u_name, u_num, c_name, c_num, c_tradeid, g_name, g_num, cityid);
-                        }
-                    });
-                } else {
-                    ToastUtil.showToastShort(msg);
-                }
+                valiAndRegiest();
                 break;
         }
+    }
+
+    private void valiAndRegiest() {
+        final String phone = activity.getRegister().getPhone();
+        final String pwd = activity.getRegister().getPwd();
+
+        final String u_name = edit_regist_name.getText().toString();
+        final String u_num = edit_regist_cardnum.getText().toString();
+        final String c_name = edit_regist_compname.getText().toString();
+        final String c_num = edit_regist_compnum.getText().toString();
+        final int c_tradeid = trade != null ? trade.getId() : 0;
+        final String g_name = edit_regist_govname.getText().toString();
+        final String g_num = edit_regist_govnum.getText().toString();
+        final int cityid = address != null ? address.getId() : 0;
+
+        String msg = AppVali.regist_info(type, phone, pwd, path, faceId, u_name, u_num, c_name, c_num, c_tradeid, g_name, g_num, cityid);
+        if (msg == null) {
+            NetUploadHelper.newInstance().netUpload(path, new NetUploadHelper.UploadCallback() {
+                @Override
+                public void uploadfinish(String url) {
+                    netResist(type, phone, pwd, url, faceId, u_name, u_num, c_name, c_num, c_tradeid, g_name, g_num, cityid);
+                }
+            });
+        } else {
+            ToastUtil.showToastShort(msg);
+        }
+    }
+
+    private void checkFace(final String path) {
+        AppHelper.showLoadingDialog(getActivity());
+        NetFaceHelper.getInstance().initCheck(path).netEyeCheck(new NetFaceHelper.OnFaceCheckCallback() {
+            @Override
+            public void onFaceCheckSuccess(String faceId) {
+                ToastUtil.showToastShort("人像采集成功");
+                RegistInfoFragment.this.faceId = faceId;
+                AppHelper.hideLoadingDialog(getActivity());
+            }
+
+            @Override
+            public void onFaceCheckFailed(String msg) {
+                RegistInfoFragment.this.faceId = "";
+                AppHelper.hideLoadingDialog(getActivity());
+            }
+        });
     }
 
     @Override
@@ -290,13 +315,12 @@ public class RegistInfoFragment extends BaseFragment implements View.OnClickList
         switch (requestCode) {
             case RESULT_CAMERA:
                 if (resultCode == RESULT_OK) {
-                    String path = data.getStringExtra("path");
+                    final String path = data.getStringExtra("path");
                     if (!TextUtils.isEmpty(path)) {
-                        //保存当前照片路径
-                        this.path = path;
-                        //打印测试
-                        ToastUtil.showToastShortDebug(path);
                         GlideUtil.loadCircleImg(img_regist_header, R.drawable.default_header_edit, path);
+                        this.path = path;
+                        //进行人脸检测
+                        checkFace(path);
                     } else {
                         ToastUtil.showToastShort("图像采集异常");
                     }
@@ -324,7 +348,7 @@ public class RegistInfoFragment extends BaseFragment implements View.OnClickList
     public void cancel() {
     }
 
-    private void netResist(int type, String phone, String psw, String url, String u_name, String u_num, String c_name, String c_num, int c_tradeid, String g_name, String g_num, int cityid) {
+    private void netResist(int type, String phone, String psw, String url, String faceId, String u_name, String u_num, String c_name, String c_num, int c_tradeid, String g_name, String g_num, int cityid) {
         NetParam netParam = new NetParam();
         netParam.put("phone", phone);
         netParam.put("pwd", MD5Util.md5(psw));
@@ -332,6 +356,7 @@ public class RegistInfoFragment extends BaseFragment implements View.OnClickList
         netParam.put("deviceToken", JPushInterface.getRegistrationID(getContext()));
         if (type == 0) {
             netParam.put("veriFaceImages", url);
+            netParam.put("faceId", faceId);
             netParam.put("showName", u_name);
             netParam.put("pid", u_num);
             netParam.put("roleId", User.USER);
@@ -355,10 +380,9 @@ public class RegistInfoFragment extends BaseFragment implements View.OnClickList
                 ToastUtil.showToastShort(msg);
                 AppData.App.saveUser(user);
                 //注册不保存状态
-                AppData.App.saveToken(user.getToken());
+                //AppData.App.saveToken(user.getToken());
                 EventBus.getDefault().post(new EventBean(EventBean.EVENT_LOGIN));
-//                getActivity().finish();
-                HomeActivity.start(getActivity());
+                getActivity().finish();
             }
 
             @Override

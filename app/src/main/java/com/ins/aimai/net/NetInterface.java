@@ -84,6 +84,14 @@ public interface NetInterface {
     Call<ResponseBody> sendMessage(@FieldMap Map<String, Object> param);
 
     /**
+     * 获取验证码并验证手机号是否重复（注册时使用）
+     * String phone
+     */
+    @FormUrlEncoded
+    @POST("/api/user/sendMessageRegister")
+    Call<ResponseBody> sendMessageRegist(@FieldMap Map<String, Object> param);
+
+    /**
      * 注册
      */
     @FormUrlEncoded
@@ -135,6 +143,14 @@ public interface NetInterface {
     @FormUrlEncoded
     @POST("/api/curriculum/queryCurriculumById")
     Call<ResponseBody> queryLessonDetail(@FieldMap Map<String, Object> param);
+
+    /**
+     * 通过orderID 查询课程详情
+     * orderId
+     */
+    @FormUrlEncoded
+    @POST("/api/curriculum/queryCurriculumByOrder")
+    Call<ResponseBody> queryLessonDetailByOrder(@FieldMap Map<String, Object> param);
 
     //##################################################################
     //#########               支付
@@ -299,4 +315,20 @@ public interface NetInterface {
     @FormUrlEncoded
     @POST("/api/faceRecord/queryFaceRecord")
     Call<ResponseBody> queryFaceRecord(@FieldMap Map<String, Object> param);
+
+
+    //##################################################################
+    //#########               学习
+    //##################################################################
+
+    /**
+     * 学习模块，课程列表
+     * pageNO
+     * pageSize
+     */
+    @FormUrlEncoded
+    @POST("/api/curriculum/queryCurriculumStudy")
+    Call<ResponseBody> queryStudy(@FieldMap Map<String, Object> param);
+
+
 }

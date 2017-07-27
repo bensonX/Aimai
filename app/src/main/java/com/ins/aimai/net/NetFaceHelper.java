@@ -8,6 +8,7 @@ import com.ins.aimai.bean.common.FaceRecord;
 import com.ins.aimai.bean.eyekey.FaceAttrs;
 import com.ins.aimai.bean.eyekey.MatchCompare;
 import com.ins.aimai.common.AppData;
+import com.ins.aimai.common.AppHelper;
 import com.ins.aimai.ui.activity.VideoActivity;
 import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.utils.StrUtil;
@@ -38,12 +39,14 @@ public class NetFaceHelper {
     private String path;
     //视频id
     private int videoId;
+    //订单id
+    private int orderId;
     //视频播放时间
     private int videoSecond;
 
     private VideoActivity activity;
 
-    private OnFaceCheckCallback callback;
+    private OnBaseFaceChekCallback callback;
 
     private static NetFaceHelper instance = null;
 
@@ -57,15 +60,21 @@ public class NetFaceHelper {
         return instance;
     }
 
-    public NetFaceHelper init(VideoActivity activity, String path, int videoId, int videoSecond) {
+    public NetFaceHelper initCompare(VideoActivity activity, String path, int orderId, int videoId, int videoSecond) {
         this.activity = activity;
         this.path = path;
+        this.orderId = orderId;
         this.videoId = videoId;
         this.videoSecond = videoSecond;
         return this;
     }
 
-    public void netEyeCheck(OnFaceCheckCallback callback) {
+    public NetFaceHelper initCheck(String path) {
+        this.path = path;
+        return this;
+    }
+
+    public void netEyeCheck(final OnBaseFaceChekCallback callback) {
         this.callback = callback;
         RequestBody bodyAppId = NetParam.buildRequestBody(app_id);
         RequestBody bodyAppKey = NetParam.buildRequestBody(app_key);
@@ -75,22 +84,29 @@ public class NetFaceHelper {
             public void onResponse(Call<FaceAttrs> call, Response<FaceAttrs> response) {
                 FaceAttrs faceAttrs = response.body();
                 if (faceAttrs != null && "0000".equals(faceAttrs.getRes_code())) {
-                    if (!StrUtil.isEmpty(faceAttrs.getFace())) {
+                    if (callback != null && callback instanceof OnFaceCheckCallback) {
+                        ((OnFaceCheckCallback) callback).onFaceCheckSuccess(faceAttrs.getFace().get(0).getFace_id());
+                    } else {
                         netEyeCompare(faceAttrs.getFace().get(0).getFace_id());
                     }
                 } else {
                     ToastUtil.showToastShort("人脸检测失败");
+                    if (callback != null && callback instanceof OnFaceCheckCallback) {
+                        ((OnFaceCheckCallback) callback).onFaceCheckFailed("人脸检测失败");
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<FaceAttrs> call, Throwable t) {
                 ToastUtil.showToastShort("网络出错");
+                if (callback != null && callback instanceof OnFaceCheckCallback) {
+                    ((OnFaceCheckCallback) callback).onFaceCheckFailed("网络出错");
+                }
             }
         });
     }
 
-    //上传视频进度，并进行本地存储
     private void netEyeCompare(final String faceId2) {
         User user = AppData.App.getUser();
         if (user == null) return;
@@ -112,7 +128,10 @@ public class NetFaceHelper {
                     if (compare.getSimilarity() >= similarityValue) {
                         //对比成功，是本人
                         activity.getFaceRecords().add(new FaceRecord());
-                        if (callback != null) callback.onFaceCheckSuccess();
+                        if (callback != null && callback instanceof OnFaceCompareCallback) {
+                            ((OnFaceCompareCallback) callback).onFaceCompareSuccess();
+                        }
+                        //上传本人图片并生成验证记录
                         NetUploadHelper.newInstance().netUpload(path, new NetUploadHelper.UploadCallback() {
                             @Override
                             public void uploadfinish(String url) {
@@ -121,7 +140,9 @@ public class NetFaceHelper {
                         });
                     } else {
                         //对比失败，不是本人
-                        if (callback != null) callback.onFaceCheckFailed();
+                        if (callback != null && callback instanceof OnFaceCompareCallback) {
+                            ((OnFaceCompareCallback) callback).onFaceCompareFailed();
+                        }
                     }
                 } else {
                     ToastUtil.showToastShort("人脸检测失败");
@@ -135,8 +156,11 @@ public class NetFaceHelper {
         });
     }
 
+
+    //新增视频验证记录
     private void netAddFaceRecord(String faceImage) {
         Map<String, Object> param = new NetParam()
+                .put("orderId", orderId)
                 .put("videoId", videoId)
                 .put("status", 1)
                 .put("videoSecond", videoSecond)
@@ -145,7 +169,7 @@ public class NetFaceHelper {
         NetApi.NI().addFaceRecord(param).enqueue(new BaseCallback<CommonBean>(CommonBean.class) {
             @Override
             public void onSuccess(int status, CommonBean com, String msg) {
-                NetHelper.getInstance().netQueryFaceRecord(activity, videoId, null);
+                NetHelper.getInstance().netQueryFaceRecord(activity, orderId, videoId, null);
             }
 
             @Override
@@ -155,9 +179,18 @@ public class NetFaceHelper {
         });
     }
 
-    public interface OnFaceCheckCallback {
-        void onFaceCheckSuccess();
+    public interface OnFaceCompareCallback extends OnBaseFaceChekCallback {
+        void onFaceCompareSuccess();
 
-        void onFaceCheckFailed();
+        void onFaceCompareFailed();
+    }
+
+    public interface OnFaceCheckCallback extends OnBaseFaceChekCallback {
+        void onFaceCheckSuccess(String faceId);
+
+        void onFaceCheckFailed(String msg);
+    }
+
+    public interface OnBaseFaceChekCallback {
     }
 }

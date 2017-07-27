@@ -89,15 +89,15 @@ public class AppVali {
         }
     }
 
-    public static String regist_info(int type, String phone, String psw, String path, String u_name, String u_num, String c_name, String c_num, int c_tradeid, String g_name, String g_num, int cityid) {
+    public static String regist_info(int type, String phone, String psw, String path, String faceId, String u_name, String u_num, String c_name, String c_num, int c_tradeid, String g_name, String g_num, int cityid) {
         switch (type) {
             case 0:
                 if (TextUtils.isEmpty(phone)) {
                     return "请输入手机号";
                 } else if (TextUtils.isEmpty(psw)) {
                     return "请输入密码";
-                } else if (TextUtils.isEmpty(path)) {
-                    return "请上传头像";
+                } else if (TextUtils.isEmpty(faceId)) {
+                    return "请先进行人脸采集";
                 } else if (cityid == 0) {
                     return "请输入所在地";
                 } else if (TextUtils.isEmpty(u_name)) {

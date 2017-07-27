@@ -175,7 +175,9 @@ public class LessonFragment extends BaseFragment implements OnLessonClickListene
                 adapterCate.notifyDataSetChanged();
                 adapterTasteBanner.getResults().clear();
                 adapterTasteBanner.getResults().addAll(pojo.getFreeLessons());
-                adapterTasteBanner.notifyDataSetChanged();
+                adapterTasteBanner.notifyItemChanged(0);
+                //FIXME:上面调用了notifyItemChanged，数据已经生成，但是UI并没生效，滚一写recyclerView才展示出刷新后的数据，有待排查优化
+                recycler.scrollBy(0, 1);
                 springView.onFinishFreshAndLoad();
                 if (showLoading) loadingLayout.showOut();
             }

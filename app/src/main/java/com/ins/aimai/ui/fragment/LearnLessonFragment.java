@@ -10,16 +10,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
+import com.ins.aimai.bean.Study;
 import com.ins.aimai.bean.common.TestBean;
+import com.ins.aimai.net.BaseCallback;
+import com.ins.aimai.net.NetApi;
+import com.ins.aimai.net.NetParam;
 import com.ins.aimai.ui.activity.LessonDetailActivity;
+import com.ins.aimai.ui.activity.VideoActivity;
 import com.ins.aimai.ui.adapter.RecycleAdapterLearnLesson;
 import com.ins.aimai.ui.base.BaseFragment;
+import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.helper.LoadingViewHelper;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
+import com.ins.common.utils.StrUtil;
+import com.ins.common.view.LoadingLayout;
 import com.liaoinstan.springview.container.AliFooter;
 import com.liaoinstan.springview.container.AliHeader;
 import com.liaoinstan.springview.widget.SpringView;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by liaoinstan
@@ -29,8 +41,7 @@ public class LearnLessonFragment extends BaseFragment implements OnRecycleItemCl
     private int position;
     private View rootView;
 
-    private View showin;
-    private ViewGroup showingroup;
+    private LoadingLayout loadingLayout;
 
     private SpringView springView;
     private RecyclerView recycler;
@@ -70,7 +81,7 @@ public class LearnLessonFragment extends BaseFragment implements OnRecycleItemCl
     }
 
     private void initView() {
-        showingroup = (ViewGroup) rootView.findViewById(R.id.showingroup);
+        loadingLayout = (LoadingLayout) rootView.findViewById(R.id.loadingLayout);
         springView = (SpringView) rootView.findViewById(R.id.spring);
         recycler = (RecyclerView) rootView.findViewById(R.id.recycler);
     }
@@ -80,62 +91,97 @@ public class LearnLessonFragment extends BaseFragment implements OnRecycleItemCl
         recycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recycler.setAdapter(adapter);
         adapter.setOnItemClickListener(this);
+        loadingLayout.setOnRefreshListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                netQueryStudy(0);
+            }
+        });
         springView.setHeader(new AliHeader(getContext(), false));
         springView.setFooter(new AliFooter(getContext(), false));
         springView.setListener(new SpringView.OnFreshListener() {
             @Override
             public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        springView.onFinishFreshAndLoad();
-                    }
-                }, 800);
+                netQueryStudy(1);
             }
 
             @Override
             public void onLoadmore() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        adapter.getResults().add(new TestBean());
-                        adapter.getResults().add(new TestBean());
-                        adapter.notifyDataSetChanged();
-                        springView.onFinishFreshAndLoad();
-                    }
-                }, 800);
+                netQueryStudy(2);
             }
         });
     }
 
     private void initData() {
-        showin = LoadingViewHelper.showin(showingroup, R.layout.layout_loading, showin);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                adapter.getResults().clear();
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.notifyDataSetChanged();
-                LoadingViewHelper.showout(showingroup, showin);
-            }
-        }, 1000);
+        netQueryStudy(0);
     }
 
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
-        LessonDetailActivity.start(getContext(),0);
+        Study study = adapter.getResults().get(viewHolder.getLayoutPosition());
+        VideoActivity.startByOrder(getContext(), study.getOrderId());
+    }
+
+    ///////////////////////////////////
+    //////////////分页查询
+    ///////////////////////////////////
+
+    private int page;
+    private final int PAGE_COUNT = 10;
+
+    /**
+     * type:0 首次加载 1:下拉刷新 2:上拉加载
+     *
+     * @param type
+     */
+    private void netQueryStudy(final int type) {
+        Map<String, Object> param = new NetParam()
+                .put("pageNO", type == 0 || type == 1 ? "1" : page + 1 + "")
+                .put("pageSize", PAGE_COUNT + "")
+                .build();
+        if (type == 0) loadingLayout.showLoadingView();
+        NetApi.NI().queryStudy(param).enqueue(new BaseCallback<List<Study>>(new TypeToken<List<Study>>() {
+        }.getType()) {
+            @Override
+            public void onSuccess(int status, List<Study> beans, String msg) {
+                if (!StrUtil.isEmpty(beans)) {
+                    //下拉加载和首次加载要清除原有数据并把页码置为1，上拉加载不断累加页码
+                    if (type == 0 || type == 1) {
+                        adapter.getResults().clear();
+                        page = 1;
+                    } else {
+                        page++;
+                    }
+                    adapter.getResults().addAll(beans);
+                    adapter.notifyDataSetChanged();
+
+                    //加载结束恢复列表
+                    if (type == 0) {
+                        loadingLayout.showOut();
+                    } else {
+                        springView.onFinishFreshAndLoad();
+                    }
+                } else {
+                    //没有数据设置空数据页面，下拉加载不用，仅提示
+                    if (type == 0 || type == 1) {
+                        loadingLayout.showLackView();
+                    } else {
+                        springView.onFinishFreshAndLoad();
+                        ToastUtil.showToastShort("没有更多的数据了");
+                    }
+                }
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+                ToastUtil.showToastShort(msg);
+                //首次加载发生异常设置error页面，其余仅提示
+                if (type == 0) {
+                    loadingLayout.showFailView();
+                } else {
+                    springView.onFinishFreshAndLoad();
+                }
+            }
+        });
     }
 }

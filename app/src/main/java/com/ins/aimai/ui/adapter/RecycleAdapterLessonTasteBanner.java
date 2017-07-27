@@ -27,10 +27,15 @@ public class RecycleAdapterLessonTasteBanner extends DelegateAdapter.Adapter<Rec
         return adapter.getResults();
     }
 
+    public RecycleAdapterLessonTaste getAdapter() {
+        return adapter;
+    }
+
     public RecycleAdapterLessonTasteBanner(Context context, LayoutHelper layoutHelper) {
         this.context = context;
         this.layoutHelper = layoutHelper;
         adapter = new RecycleAdapterLessonTaste(context);
+        notifyDataSetChanged();
     }
 
     @Override

@@ -119,7 +119,7 @@ public class PhoneValiFragment extends BaseFragment implements View.OnClickListe
         Map<String, Object> param = new NetParam()
                 .put("phone", phone)
                 .build();
-        NetApi.NI().sendMessage(param).enqueue(new BaseCallback<String>(String.class) {
+        NetApi.NI().sendMessageRegist(param).enqueue(new BaseCallback<String>(String.class) {
             @Override
             public void onSuccess(int status, String bean, String msg) {
                 valiHelper.phone = phone;

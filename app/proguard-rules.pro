@@ -39,13 +39,13 @@
 #-keep public class * extends android.view.View{
 #    *** get*();
 #    void set*(***);
-#    public <init>(android.content.Context);
-#    public <init>(android.content.Context, android.util.AttributeSet);
-#    public <init>(android.content.Context, android.util.AttributeSet, int);
+#    public <initCompare>(android.content.Context);
+#    public <initCompare>(android.content.Context, android.util.AttributeSet);
+#    public <initCompare>(android.content.Context, android.util.AttributeSet, int);
 #}
 #-keepclasseswithmembers class * {
-#    public <init>(android.content.Context, android.util.AttributeSet);
-#    public <init>(android.content.Context, android.util.AttributeSet, int);
+#    public <initCompare>(android.content.Context, android.util.AttributeSet);
+#    public <initCompare>(android.content.Context, android.util.AttributeSet, int);
 #}
 #-keep class * implements android.os.Parcelable {
 #  public static final android.os.Parcelable$Creator *;
