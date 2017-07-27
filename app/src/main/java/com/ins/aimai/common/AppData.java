@@ -1,7 +1,11 @@
 package com.ins.aimai.common;
 
 import com.ins.aimai.bean.User;
+import com.ins.aimai.bean.common.CheckPoint;
 import com.ins.common.utils.SharedPrefUtilV2;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/7/17.
@@ -48,6 +52,13 @@ public class AppData {
         public static int getVideoTime(int videoId) {
             return SharedPrefUtilV2.open(SHARENAME).getInt(KEY_VIDEO_TIME + videoId);
         }
+
+        public static List<CheckPoint> getVideoCheckPoint() {
+            return new ArrayList<CheckPoint>() {{
+                add(new CheckPoint(0, 1f / 3f));
+                add(new CheckPoint(1, 2f / 3f));
+            }};
+        }
     }
 
     /**
@@ -78,6 +89,7 @@ public class AppData {
 
         //eyekey人脸识别接口
         public static String eyeCheck = domainEye + "face/Check/checking";                                                //人像解析
+        public static String eyeCompare = domainEye + "face/Match/match_compare";                                        //人像对比
 
         public static String getVideoUrl(String url) {
             return domainRes + "video/" + url;

@@ -1,5 +1,8 @@
 package com.ins.aimai.net;
 
+import com.ins.aimai.bean.eyekey.FaceAttrs;
+import com.ins.aimai.bean.eyekey.MatchCompare;
+
 import java.util.Map;
 
 import okhttp3.MultipartBody;
@@ -8,9 +11,11 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.QueryMap;
 import retrofit2.http.Url;
 
 /**
@@ -124,15 +129,6 @@ public interface NetInterface {
     Call<ResponseBody> queryLessonByCate(@FieldMap Map<String, Object> param);
 
     /**
-     * 获取评论
-     * curriculumId
-     * pageNO    pageSize
-     */
-    @FormUrlEncoded
-    @POST("/api/evaluate/queryEvaluate")
-    Call<ResponseBody> queryComments(@FieldMap Map<String, Object> param);
-
-    /**
      * 通过课程ID 查询课程详情
      * curriculumId
      */
@@ -173,6 +169,28 @@ public interface NetInterface {
     @FormUrlEncoded
     @POST("/api/videoStatus/addVideoStatus")
     Call<ResponseBody> addVideoStatus(@FieldMap Map<String, Object> param);
+
+    //##################################################################
+    //#########               评论
+    //##################################################################
+
+    /**
+     * 获取评论
+     * curriculumId
+     * pageNO    pageSize
+     */
+    @FormUrlEncoded
+    @POST("/api/evaluate/queryEvaluate")
+    Call<ResponseBody> queryComments(@FieldMap Map<String, Object> param);
+
+    /**
+     * 发布评论
+     * curriculumId
+     * content
+     */
+    @FormUrlEncoded
+    @POST("/api/evaluate/addEvaluate")
+    Call<ResponseBody> addComment(@FieldMap Map<String, Object> param);
 
     //##################################################################
     //#########               订单
@@ -248,10 +266,37 @@ public interface NetInterface {
      * url、img或者File
      */
     @Multipart
-//    @FormUrlEncoded
     @POST
-    Call<ResponseBody> eyeCheck(@Url String url, @Part("app_id") RequestBody request_api_id,
-                                @Part("app_key") RequestBody request_api_key,
-                                @Part MultipartBody.Part request_img_part);
+    Call<FaceAttrs> eyeCheck(@Url String url, @Part("app_id") RequestBody request_api_id,
+                             @Part("app_key") RequestBody request_api_key,
+                             @Part MultipartBody.Part request_img_part);
 
+    /**
+     * 计算两个Face的相似度，分值百分制
+     * app_id
+     * app_key
+     * face_id1
+     * face_id2
+     */
+    @GET
+    Call<MatchCompare> eyeCompare(@Url String url, @QueryMap Map<String, Object> param);
+
+    /**
+     * 新增人脸验证记录
+     * videoId
+     * status 状态，固定传值 1
+     * videoSecond
+     * faceImage
+     */
+    @FormUrlEncoded
+    @POST("/api/faceRecord/addRecord")
+    Call<ResponseBody> addFaceRecord(@FieldMap Map<String, Object> param);
+
+    /**
+     * 通过视频ID获取人脸验证记录
+     * videoId
+     */
+    @FormUrlEncoded
+    @POST("/api/faceRecord/queryFaceRecord")
+    Call<ResponseBody> queryFaceRecord(@FieldMap Map<String, Object> param);
 }

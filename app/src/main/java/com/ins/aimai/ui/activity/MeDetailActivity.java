@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.ins.aimai.R;
 import com.ins.aimai.bean.Address;
-import com.ins.aimai.bean.Trade;
 import com.ins.aimai.bean.common.CommonBean;
 import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.bean.User;
@@ -20,7 +19,7 @@ import com.ins.aimai.common.AppVali;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
-import com.ins.aimai.net.UploadHelper;
+import com.ins.aimai.net.NetUploadHelper;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.helper.CropHelper;
@@ -143,7 +142,7 @@ public class MeDetailActivity extends BaseAppCompatActivity implements View.OnCl
                 if (msg != null) {
                     ToastUtil.showToastShort(msg);
                 } else {
-                    UploadHelper.newInstance().netUpload(path, new UploadHelper.UploadCallback() {
+                    NetUploadHelper.newInstance().netUpload(path, new NetUploadHelper.UploadCallback() {
                         @Override
                         public void uploadfinish(String url) {
                             netCommit(name, url, address);

@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * 网络请求的Retrofit2创建类，以及通过该类去调用接口
@@ -51,7 +52,7 @@ public class NetApi {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(getBaseUrl())
                 .client(okHttpClient)
-//                .addConverterFactory(GsonConverterFactory.create(new Gson()))
+                .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ni = retrofit.create(NetInterface.class);
     }

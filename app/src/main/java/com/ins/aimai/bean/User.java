@@ -161,6 +161,8 @@ public class User implements Serializable {
     private String companyName;
     //行业名称
     private String tradeName;
+    //人脸id
+    private String faceId;
 
     public String getTradeName() {
         return tradeName;
@@ -168,6 +170,14 @@ public class User implements Serializable {
 
     public void setTradeName(String tradeName) {
         this.tradeName = tradeName;
+    }
+
+    public String getFaceId() {
+        return faceId;
+    }
+
+    public void setFaceId(String faceId) {
+        this.faceId = faceId;
     }
 
     /**

@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +18,10 @@ import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.Comment;
 import com.ins.aimai.bean.User;
+import com.ins.aimai.bean.common.CommonBean;
 import com.ins.aimai.common.AppData;
+import com.ins.aimai.common.AppHelper;
+import com.ins.aimai.common.AppVali;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
@@ -47,6 +52,7 @@ public class VideoCommentFragment extends BaseFragment implements View.OnClickLi
     private ImageView img_comment_headerme;
     private View lay_comment_send;
     private EditText edit_comment_detail;
+    private View btn_comment_commit;
 
     private SwipeRefreshLayout swip;
     private RecyclerView recycler;
@@ -94,13 +100,15 @@ public class VideoCommentFragment extends BaseFragment implements View.OnClickLi
         swip = (SwipeRefreshLayout) rootView.findViewById(R.id.swip);
         recycler = (RecyclerView) rootView.findViewById(R.id.recycler);
         img_comment_headerme = (ImageView) rootView.findViewById(R.id.img_comment_headerme);
-        rootView.findViewById(R.id.btn_comment_commit).setOnClickListener(this);
+        btn_comment_commit = rootView.findViewById(R.id.btn_comment_commit);
+        btn_comment_commit.setOnClickListener(this);
 
         if (getActivity() instanceof VideoActivity) {
             lay_comment_send.setVisibility(View.VISIBLE);
         } else {
             lay_comment_send.setVisibility(View.GONE);
         }
+        btn_comment_commit.setEnabled(false);
     }
 
     private void initCtrl() {
@@ -124,6 +132,24 @@ public class VideoCommentFragment extends BaseFragment implements View.OnClickLi
         if (user != null) {
             GlideUtil.loadCircleImg(img_comment_headerme, R.drawable.default_header_edit, user.getAvatar());
         }
+        edit_comment_detail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (AppVali.content(s.toString()) != null) {
+                    btn_comment_commit.setEnabled(false);
+                } else {
+                    btn_comment_commit.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
     }
 
     private void initData() {
@@ -134,6 +160,8 @@ public class VideoCommentFragment extends BaseFragment implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_comment_commit:
+                String content = edit_comment_detail.getText().toString();
+                netCommitComnet(content);
                 break;
         }
     }
@@ -173,7 +201,7 @@ public class VideoCommentFragment extends BaseFragment implements View.OnClickLi
 
                     swip.setRefreshing(false);
                 } else {
-                    ToastUtil.showToastShort("没有更多的数据了");
+                    ToastUtil.showToastShort("没有更多的评论了");
                     swip.setRefreshing(false);
                 }
             }
@@ -182,6 +210,28 @@ public class VideoCommentFragment extends BaseFragment implements View.OnClickLi
             public void onError(int status, String msg) {
                 ToastUtil.showToastShort(msg);
                 swip.setRefreshing(false);
+            }
+        });
+    }
+
+    private void netCommitComnet(String content) {
+        Map<String, Object> param = new NetParam()
+                .put("curriculumId", lessonId)
+                .put("content", content)
+                .build();
+        AppHelper.showLoadingDialog(getActivity());
+        NetApi.NI().addComment(param).enqueue(new BaseCallback<CommonBean>(CommonBean.class) {
+            @Override
+            public void onSuccess(int status, CommonBean com, String msg) {
+                ToastUtil.showToastShort(msg);
+                AppHelper.hideLoadingDialog(getActivity());
+                initData();
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+                ToastUtil.showToastShort(msg);
+                AppHelper.hideLoadingDialog(getActivity());
             }
         });
     }

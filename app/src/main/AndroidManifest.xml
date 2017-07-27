@@ -55,7 +55,7 @@
         <activity
             android:name=".ui.activity.VideoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.PayDialogActivity"
             android:theme="@style/MyAppDialogStyle" />

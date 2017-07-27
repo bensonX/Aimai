@@ -16,6 +16,7 @@ import com.ins.aimai.bean.Video;
 import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.bean.common.TestBean;
 import com.ins.aimai.bean.common.VideoDirectiry;
+import com.ins.aimai.common.AppHelper;
 import com.ins.aimai.ui.adapter.RecycleAdapterVideoDirectory;
 import com.ins.aimai.ui.base.BaseFragment;
 import com.ins.aimai.ui.base.BaseVideoActivity;
@@ -57,7 +58,7 @@ public class VideoDirectotyFragment extends BaseFragment implements OnRecycleIte
     public void onCommonEvent(EventBean event) {
         if (event.getEvent() == EventBean.EVENT_LESSONDETAIL_DIRECTORY) {
             List<CourseWare> courseWares = (List<CourseWare>) event.get("courseWares");
-            freshData(convert(courseWares));
+            freshData(AppHelper.VideoPlay.convertVideosByCourseWares(courseWares));
         } else if (event.getEvent() == EventBean.EVENT_VIDEO_FINISH) {
             //TODO:视频播放完成，这里要刷新播放列表
             adapter.notifyDataSetChanged();
@@ -119,19 +120,4 @@ public class VideoDirectotyFragment extends BaseFragment implements OnRecycleIte
             EventBus.getDefault().post(eventBean);
         }
     }
-
-    private List<Video> convert(List<CourseWare> courseWares) {
-        ArrayList<Video> videos = new ArrayList<>();
-        for (CourseWare courseWare : courseWares) {
-            if (!StrUtil.isEmpty(courseWare.getVideos())) {
-                for (Video video : courseWare.getVideos()) {
-                    video.setCourseWareName(courseWare.getCourseWareName());
-                    video.setPpt(courseWare.getPpt());
-                    videos.add(video);
-                }
-            }
-        }
-        return videos;
-    }
-
 }

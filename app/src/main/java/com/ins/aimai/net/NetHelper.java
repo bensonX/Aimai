@@ -1,11 +1,16 @@
 package com.ins.aimai.net;
 
+import com.google.gson.reflect.TypeToken;
+import com.ins.aimai.bean.Lesson;
 import com.ins.aimai.bean.common.CommonBean;
+import com.ins.aimai.bean.common.FaceRecord;
 import com.ins.aimai.common.AppData;
+import com.ins.aimai.ui.activity.VideoActivity;
 import com.ins.aimai.utils.ToastUtil;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.MediaType;
@@ -57,35 +62,27 @@ public class NetHelper {
         }
     }
 
-
-    public void netEyeCheck(String path) {
-
-        String app_id = "746ca1d1a4cf44378b2aefda6e69f31b";
-        String app_key = "f9f483ec7aed4b1ca03328814b82127e";
-
-//        RequestBody papp_id = RequestBody.create(MediaType.parse("multipart/form-data"), app_id);
-//        RequestBody papp_key = RequestBody.create(MediaType.parse("multipart/form-data"), app_key);
-//
-//        File file = new File(path);
-//        RequestBody requestImgFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-//        // 创建MultipartBody.Part，用于封装文件数据
-//        MultipartBody.Part requestImgPart = MultipartBody.Part.createFormData("File", file.getName(), requestImgFile);
-
-        RequestBody bodyAppId = NetParam.buildRequestBody(app_id);
-        RequestBody bodyAppKey = NetParam.buildRequestBody(app_key);
-        MultipartBody.Part partFile = NetParam.buildFileBodyPart("File", path);
-
-
-        NetApi.NI().eyeCheck(AppData.Url.eyeCheck, bodyAppId, bodyAppKey, partFile).enqueue(new Callback<ResponseBody>() {
+    //获取视频播放验证记录
+    public void netQueryFaceRecord(final VideoActivity activity, final int videoId, final OnFaceRecordCallback callback) {
+        Map<String, Object> param = new NetParam()
+                .put("videoId", videoId)
+                .build();
+        NetApi.NI().queryFaceRecord(param).enqueue(new BaseCallback<List<FaceRecord>>(new TypeToken<List<FaceRecord>>() {
+        }.getType()) {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                ToastUtil.showToastShort("onResponse");
+            public void onSuccess(int status, List<FaceRecord> faceRecords, String msg) {
+                activity.setFaceRecords(faceRecords);
+                if (callback != null) callback.onSuccess(faceRecords);
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                ToastUtil.showToastShort("onFailure");
+            public void onError(int status, String msg) {
+                ToastUtil.showToastShort(msg);
             }
         });
+    }
+
+    public interface OnFaceRecordCallback {
+        void onSuccess(List<FaceRecord> faceRecords);
     }
 }

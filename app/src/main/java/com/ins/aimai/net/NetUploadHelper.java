@@ -10,10 +10,10 @@ import okhttp3.MultipartBody;
  * Created by Administrator on 2017/7/21.
  */
 
-public class UploadHelper {
+public class NetUploadHelper {
 
-    public static UploadHelper newInstance() {
-        return new UploadHelper();
+    public static NetUploadHelper newInstance() {
+        return new NetUploadHelper();
     }
 
     public void netUpload(String path, final UploadCallback callback) {

@@ -22,7 +22,7 @@ import com.ins.aimai.common.AppVali;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
-import com.ins.aimai.net.UploadHelper;
+import com.ins.aimai.net.NetUploadHelper;
 import com.ins.aimai.ui.activity.AddressActivity;
 import com.ins.aimai.ui.activity.CameraActivity;
 import com.ins.aimai.ui.activity.HomeActivity;
@@ -270,7 +270,7 @@ public class RegistInfoFragment extends BaseFragment implements View.OnClickList
 
                 String msg = AppVali.regist_info(type, phone, pwd, path, u_name, u_num, c_name, c_num, c_tradeid, g_name, g_num, cityid);
                 if (msg == null) {
-                    UploadHelper.newInstance().netUpload(path, new UploadHelper.UploadCallback() {
+                    NetUploadHelper.newInstance().netUpload(path, new NetUploadHelper.UploadCallback() {
                         @Override
                         public void uploadfinish(String url) {
                             netResist(type, phone, pwd, url, u_name, u_num, c_name, c_num, c_tradeid, g_name, g_num, cityid);

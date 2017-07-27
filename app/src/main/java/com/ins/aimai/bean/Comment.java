@@ -34,6 +34,9 @@ public class Comment implements Serializable {
     /** 课程Id */
     private int curriculumId;
 
+    //新增字段
+    /** 当前服务器时间 */
+    private long timeStamp;
 
     /** 获取 评论ID */
     public int getId() {
@@ -53,6 +56,14 @@ public class Comment implements Serializable {
     /** 设置 用户ID */
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public long getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(long timeStamp) {
+        this.timeStamp = timeStamp;
     }
 
     /** 获取 用户名 */

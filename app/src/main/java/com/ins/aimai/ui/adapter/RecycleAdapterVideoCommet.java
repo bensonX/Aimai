@@ -41,7 +41,7 @@ public class RecycleAdapterVideoCommet extends RecyclerView.Adapter<RecycleAdapt
         GlideUtil.loadCircleImg(holder.img_comment_header, R.drawable.default_header_edit, comment.getAvatar());
         holder.text_comment_name.setText(comment.getUserName());
         holder.text_comment_detail.setText(comment.getContent());
-        holder.text_comment_time.setText(TimeUtil.formatSecond(System.currentTimeMillis() - comment.getCreateTime()) + "前");
+        holder.text_comment_time.setText(TimeUtil.formatSecond(comment.getTimeStamp() - comment.getCreateTime()) + "前");
     }
 
     @Override
