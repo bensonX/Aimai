@@ -125,7 +125,7 @@ public class PhoneValiFragment extends BaseFragment implements View.OnClickListe
                 valiHelper.phone = phone;
                 valiHelper.valicode = bean;
                 valiHelper.start();
-                ToastUtil.showToastShortDebug(bean);
+                ToastUtil.showToastShort(bean);
             }
 
             @Override

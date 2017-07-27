@@ -51,7 +51,7 @@ public class NetHelper {
             //本地存储
             AppData.App.saveVideoTime(videoId, user.getId(), seconds);
             //更新记录
-            videoStatus.setSeconds(seconds);
+            if (videoStatus != null) videoStatus.setSeconds(seconds);
             Map map = new HashMap<String, Object>() {{
                 put("orderId", orderId);
                 put("videoId", videoId);

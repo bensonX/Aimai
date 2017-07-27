@@ -32,7 +32,7 @@ public class NetFaceHelper {
     private static final String app_id = "746ca1d1a4cf44378b2aefda6e69f31b";
     private static final String app_key = "f9f483ec7aed4b1ca03328814b82127e";
     //相识度大于多少才算对比成功
-    private static final float similarityValue = 0.7f;
+    private static final float similarityValue = 70;
 
     //请求参数
     //图片路径

@@ -7,8 +7,8 @@ android {
         applicationId "com.ins.aimai"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 7
-        versionName "1.7"
+        versionCode 9
+        versionName "1.0.0.9"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         //使用矢量图兼容库
         vectorDrawables.useSupportLibrary = true
@@ -43,9 +43,9 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.myConfig
-            buildConfigField "String", "BASE_URL", '"http://192.168.1.166/"'
-            buildConfigField "String", "BASE_URL_RES", '"http://192.168.1.205:8080/"'
-            minifyEnabled true
+            buildConfigField "String", "BASE_URL", '"http://139.129.111.76:8110/"'
+            buildConfigField "String", "BASE_URL_RES", '"http://139.129.111.76:8110/"'
+            minifyEnabled false
             zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -62,6 +62,11 @@ android {
             output.outputFile = new File(
                     output.outputFile.parent,
                     "aimai-" + defaultConfig.versionCode + "-" + defaultConfig.versionName + "-" + variant.buildType.name + ".apk");
+        }
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
         }
     }
 }

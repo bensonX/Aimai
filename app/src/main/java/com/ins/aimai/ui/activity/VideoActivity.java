@@ -176,15 +176,16 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
         //加载封面图
         GlideUtil.loadBlurImg(VideoActivity.this, player.mPlayerThumb, video.getCover());
         player.setTitle(video.getName());
-        player.setSkipTip(1000 * 60 * 1);
-        player.enableDanmaku();
-        player.setDanmakuSource(getResources().openRawResource(R.raw.bili));
+        //player.setSkipTip(1000 * 60 * 1);
+        //player.enableDanmaku();
+        //player.setDanmakuSource(getResources().openRawResource(R.raw.bili));
         player.setVideoSource(null, AppData.Url.getVideoUrl(video.getLowDefinition()), AppData.Url.getVideoUrl(video.getHighDefinition()), null, null);
         player.setMediaQuality(IjkPlayerView.MEDIA_QUALITY_HIGH);
-        if (video.getVideoStatus() != null) {
+        if (!AppHelper.VideoPlay.isVideoFreeCtrl(video, type)) {
             VideoStatus videoStatus = video.getVideoStatus();
             player.setNeedLimit(true);
-            player.setSaveLimitTime(videoStatus.getSeconds() * 1000);
+            if (videoStatus != null)
+                player.setSaveLimitTime(videoStatus.getSeconds() * 1000);
         } else {
             player.setNeedLimit(false);
         }
@@ -202,13 +203,13 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
             case MediaPlayerParams.STATE_COMPLETED:
                 //播放完成
                 AppHelper.VideoPlay.setVideoStatusFinish(video);
-                NetHelper.getInstance().netAddVideoStatus(video.getVideoStatus(),orderId, video.getId(), player.getCurPosition() / 1000, true);
+                NetHelper.getInstance().netAddVideoStatus(video.getVideoStatus(), orderId, video.getId(), player.getCurPosition() / 1000, true);
                 EventBus.getDefault().post(new EventBean(EventBean.EVENT_VIDEO_FINISH));
                 break;
             case IMediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START:    //开始播放
             case MediaPlayerParams.STATE_PAUSED:    //暂停
             case MediaPlayerParams.STATE_PLAYING:   //播放中（继续）
-                NetHelper.getInstance().netAddVideoStatus(video.getVideoStatus(),orderId, video.getId(), player.getCurPosition() / 1000, false);
+                NetHelper.getInstance().netAddVideoStatus(video.getVideoStatus(), orderId, video.getId(), player.getCurPosition() / 1000, false);
                 break;
             default:
                 break;

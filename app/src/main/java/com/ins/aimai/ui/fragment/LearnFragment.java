@@ -1,6 +1,7 @@
 package com.ins.aimai.ui.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ins.aimai.R;
+import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.ui.adapter.PagerAdapterLearn;
 import com.ins.aimai.ui.base.BaseFragment;
 
@@ -25,7 +27,7 @@ public class LearnFragment extends BaseFragment {
     private ViewPager pager;
     private PagerAdapterLearn adapterPager;
 
-    private String[] titles = new String[]{"课程学习", "考题", "人员列表","政府"};
+    private String[] titles = new String[]{"课程学习", "考题", "人员列表", "政府"};
 
     public static Fragment newInstance(int position) {
         LearnFragment fragment = new LearnFragment();
@@ -36,8 +38,19 @@ public class LearnFragment extends BaseFragment {
     }
 
     @Override
+    public void onCommonEvent(EventBean event) {
+        switch (event.getEvent()) {
+            case EventBean.EVENT_LOGOUT:
+            case EventBean.EVENT_LOGIN:
+                adapterPager.notifyDataSetChanged();
+                break;
+        }
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        registEventBus();
         this.position = getArguments().getInt("position");
     }
 
