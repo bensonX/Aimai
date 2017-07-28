@@ -7,15 +7,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.ins.aimai.R;
+import com.ins.aimai.bean.Info;
 import com.ins.aimai.bean.common.TestBean;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
 import com.ins.common.utils.DensityUtil;
 import com.ins.common.utils.GlideUtil;
+import com.ins.common.utils.TimeUtil;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,9 +31,9 @@ public class RecycleAdapterHomeInfo extends DelegateAdapter.Adapter<RecycleAdapt
 
     private Context context;
     private LayoutHelper layoutHelper;
-    private List<TestBean> results = new ArrayList<>();
+    private List<Info> results = new ArrayList<>();
 
-    public List<TestBean> getResults() {
+    public List<Info> getResults() {
         return results;
     }
 
@@ -59,14 +63,14 @@ public class RecycleAdapterHomeInfo extends DelegateAdapter.Adapter<RecycleAdapt
 
     @Override
     public void onBindViewHolder(final RecycleAdapterHomeInfo.Holder holder, final int position) {
-        final TestBean bean = results.get(position);
+        final Info info = results.get(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) listener.onItemClick(holder);
             }
         });
-        GlideUtil.loadImgTest(holder.img_item_info);
+
         //首页和收藏的UI细节不同
         if (layoutHelper != null) {
             RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
@@ -77,6 +81,11 @@ public class RecycleAdapterHomeInfo extends DelegateAdapter.Adapter<RecycleAdapt
             layoutParams.leftMargin = 0;
             layoutParams.rightMargin = 0;
         }
+
+        GlideUtil.loadImg(holder.img_item_info, R.drawable.default_bk_img, info.getImage());
+        holder.text_item_info_title.setText(info.getTitle());
+        holder.text_item_info_time.setText(TimeUtil.formatSecond(System.currentTimeMillis() - info.getCreateTime()) + "前");
+        holder.text_item_info_favo.setText(info.getCollectNum() + "");
     }
 
     @Override
@@ -88,11 +97,17 @@ public class RecycleAdapterHomeInfo extends DelegateAdapter.Adapter<RecycleAdapt
 
         private LinearLayout root;
         private ImageView img_item_info;
+        private TextView text_item_info_title;
+        private TextView text_item_info_time;
+        private TextView text_item_info_favo;
 
         public Holder(View itemView) {
             super(itemView);
             root = (LinearLayout) itemView.findViewById(R.id.root);
             img_item_info = (ImageView) itemView.findViewById(R.id.img_item_info);
+            text_item_info_title = (TextView) itemView.findViewById(R.id.text_item_info_title);
+            text_item_info_time = (TextView) itemView.findViewById(R.id.text_item_info_time);
+            text_item_info_favo = (TextView) itemView.findViewById(R.id.text_item_info_favo);
         }
     }
 

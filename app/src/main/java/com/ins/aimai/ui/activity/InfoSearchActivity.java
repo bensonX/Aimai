@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ins.aimai.R;
+import com.ins.aimai.bean.Info;
 import com.ins.aimai.bean.common.TestBean;
 import com.ins.aimai.ui.adapter.RecycleAdapterHomeInfo;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
@@ -86,9 +87,9 @@ public class InfoSearchActivity extends BaseAppCompatActivity implements OnRecyc
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        adapter.getResults().add(new TestBean());
-                        adapter.getResults().add(new TestBean());
-                        adapter.getResults().add(new TestBean());
+//                        adapter.getResults().add(new Info());
+//                        adapter.getResults().add(new Info());
+//                        adapter.getResults().add(new Info());
                         adapter.notifyItemRangeChanged(adapter.getItemCount() - 1 - 3, adapter.getItemCount() - 1);
                         springView.onFinishFreshAndLoad();
                     }
@@ -103,8 +104,8 @@ public class InfoSearchActivity extends BaseAppCompatActivity implements OnRecyc
             @Override
             public void run() {
                 adapter.getResults().clear();
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
+//                adapter.getResults().add(new Info());
+//                adapter.getResults().add(new Info());
                 adapter.notifyDataSetChanged();
                 LoadingViewHelper.showout(showingroup, showin);
             }

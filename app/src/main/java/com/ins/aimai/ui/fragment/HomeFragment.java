@@ -1,7 +1,6 @@
 package com.ins.aimai.ui.fragment;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -12,34 +11,47 @@ import android.view.ViewGroup;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
+import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
+import com.ins.aimai.bean.Info;
 import com.ins.aimai.bean.common.TestBean;
+import com.ins.aimai.net.BaseCallback;
+import com.ins.aimai.net.NetApi;
+import com.ins.aimai.net.NetParam;
+import com.ins.aimai.net.helper.NetListHelper;
 import com.ins.aimai.ui.activity.WebActivity;
 import com.ins.aimai.ui.adapter.RecycleAdapterHomeBanner;
 import com.ins.aimai.ui.adapter.RecycleAdapterHomeInfo;
 import com.ins.aimai.ui.base.BaseFragment;
+import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.entity.Image;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
+import com.ins.common.view.BannerView;
+import com.ins.common.view.LoadingLayout;
 import com.liaoinstan.springview.container.AliFooter;
 import com.liaoinstan.springview.container.AliHeader;
 import com.liaoinstan.springview.widget.SpringView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by liaoinstan
  */
-public class HomeFragment extends BaseFragment implements OnRecycleItemClickListener{
+public class HomeFragment extends BaseFragment implements OnRecycleItemClickListener {
 
     private int position;
     private View rootView;
 
+    private LoadingLayout loadingLayout;
     private SpringView springView;
     private RecyclerView recycler;
     private DelegateAdapter delegateAdapter;
     private RecycleAdapterHomeBanner adapterBanner;
     private RecycleAdapterHomeInfo adapterInfo;
+
+    private NetListHelper netListHelper;
 
     public static Fragment newInstance(int position) {
         HomeFragment fragment = new HomeFragment();
@@ -77,8 +89,10 @@ public class HomeFragment extends BaseFragment implements OnRecycleItemClickList
     }
 
     private void initView() {
+        loadingLayout = (LoadingLayout) rootView.findViewById(R.id.loadingLayout);
         recycler = (RecyclerView) rootView.findViewById(R.id.recycler);
         springView = (SpringView) rootView.findViewById(R.id.spring);
+
     }
 
     private void initCtrl() {
@@ -89,65 +103,57 @@ public class HomeFragment extends BaseFragment implements OnRecycleItemClickList
         delegateAdapter.addAdapter(adapterBanner = new RecycleAdapterHomeBanner(getContext(), new LinearLayoutHelper()));
         delegateAdapter.addAdapter(adapterInfo = new RecycleAdapterHomeInfo(getContext(), new LinearLayoutHelper()));
         adapterInfo.setOnItemClickListener(this);
+        loadingLayout.setOnRefreshListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                netListHelper.netQueryInfo(0);
+            }
+        });
         springView.setHeader(new AliHeader(getContext(), false));
         springView.setFooter(new AliFooter(getContext(), false));
         springView.setListener(new SpringView.OnFreshListener() {
             @Override
             public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        springView.onFinishFreshAndLoad();
-                    }
-                },800);
+                netListHelper.netQueryInfo(1);
+                netQueryBanner();
             }
 
             @Override
             public void onLoadmore() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        adapterInfo.getResults().add(new TestBean());
-                        adapterInfo.getResults().add(new TestBean());
-                        adapterInfo.notifyDataSetChanged();
-                        springView.onFinishFreshAndLoad();
-                    }
-                },800);
+                netListHelper.netQueryInfo(2);
+            }
+        });
+        netListHelper = new NetListHelper<Info>().init(loadingLayout, springView, new TypeToken<List<Info>>() {
+        }.getType(), new NetListHelper.OnListLoadCallback<Info>() {
+            @Override
+            public void onFreshSuccess(int status, List<Info> beans, String msg) {
+                adapterInfo.getResults().clear();
+                adapterInfo.getResults().addAll(beans);
+                adapterInfo.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onLoadSuccess(int status, List<Info> beans, String msg) {
+                adapterInfo.getResults().addAll(beans);
+                adapterInfo.notifyDataSetChanged();
+            }
+        });
+        adapterBanner.setOnBannerClickListener(new BannerView.OnBannerClickListener() {
+            @Override
+            public void onBannerClick(int position) {
+                ToastUtil.showToastShort(position + "");
             }
         });
     }
 
     private void initData() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                final List<Image> images = new ArrayList<>();
-                images.add(new Image("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=314457078,4213404302&fm=23&gp=0.jpg"));
-                images.add(new Image("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1493788965881&di=8790d2ab2e215cba5f2249ffa1500ad6&imgtype=0&src=http%3A%2F%2Fe.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2Fb8389b504fc2d56269897df7e51190ef76c66c23.jpg"));
-                images.add(new Image("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1493788299631&di=d2044f56d47c1b8430ddd6cef72db044&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01b24e5812e721a84a0d304f57795c.jpg%40900w_1l_2o_100sh.jpg"));
-                images.add(new Image("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1493788511720&di=4b0540ca79d584cb23da71399b47c164&imgtype=0&src=http%3A%2F%2Fi0.hdslb.com%2Fgroup1%2FM00%2FB7%2F55%2FoYYBAFdH-ZaATQgNAAES3V-1dF8546.jpg"));
-                images.add(new Image("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1493788525855&di=99884ff0c24800f13cbcd7153620c25a&imgtype=0&src=http%3A%2F%2Fs0.hao123img.com%2Fres%2Fimg%2Fmoe%2F5_ydbanner4.jpg"));
-                images.add(new Image("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1493788538381&di=ded035ef63ed58c8502db8e051ff1ed8&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01933f5812e721a84a0e282b370613.jpg%40900w_1l_2o_100sh.jpg"));
-                images.add(new Image("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1493788558151&di=9414a2dc93bfa1bb0e5cb83dfc12dacf&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01ff275812e720a84a0d304f86d193.jpg%40900w_1l_2o_100sh.jpg"));
-                images.add(new Image("https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1282847967,3415056230&fm=23&gp=0.jpg"));
-                images.add(new Image("https://ss0.bdstatic.com/xxxx.jpg"));
-                images.add(new Image("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1494383324&di=3c6442f78b6842fa5aa8cf4853bdefd6&imgtype=jpg&er=1&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F010be257d9163b0000012e7e273943.jpg%40900w_1l_2o_100sh.jpg"));
-                images.add(new Image("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1493788616559&di=32a058f75708345d289e9ca95c3dccc4&imgtype=0&src=http%3A%2F%2Fi2.hdslb.com%2Fpromote%2F99e5c45594ab4ce16757ca42566c3276.jpg"));
-                images.add(new Image("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1493788634301&di=d2db6ff0239325e7ac3aafbed6ece216&imgtype=0&src=http%3A%2F%2Fi0.hdslb.com%2Fgroup1%2FM00%2FB7%2F2D%2FoYYBAFchw5-AHBQTAAEaPlUX-kg177.jpg"));
-                adapterBanner.getResults().clear();
-                adapterBanner.getResults().addAll(images);
-                adapterBanner.notifyDataSetChanged();
-
-                adapterInfo.getResults().clear();
-                adapterInfo.getResults().addAll(getInitResults("info"));
-                adapterInfo.notifyDataSetChanged();
-            }
-        },1000);
+        netListHelper.netQueryInfo(0);
+        netQueryBanner();
     }
 
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
-        WebActivity.start(getContext(),"http://cn.bing.com");
+        WebActivity.start(getContext(), "http://cn.bing.com");
 //        WebActivity.start(getContext(),"http://192.168.1.206:8080/api/page/courseVideo");
     }
 
@@ -157,5 +163,86 @@ public class HomeFragment extends BaseFragment implements OnRecycleItemClickList
             results.add(new TestBean(name + i));
         }
         return results;
+    }
+
+    ///////////////////////////////////
+    //////////////分页查询
+    ///////////////////////////////////
+
+    //    private int page;
+//    private final int PAGE_COUNT = 10;
+//
+//    /**
+//     * type:0 首次加载 1:下拉刷新 2:上拉加载
+//     *
+//     * @param type
+//     */
+//    private void netQueryInfo(final int type) {
+//        Map<String, Object> param = new NetParam()
+//                .put("pageNO", type == 0 || type == 1 ? "1" : page + 1 + "")
+//                .put("pageSize", PAGE_COUNT + "")
+//                .build();
+//        if (type == 0) loadingLayout.showLoadingView();
+//        NetApi.NI().queryInfo(param).enqueue(new BaseCallback<List<Info>>(new TypeToken<List<Info>>() {
+//        }.getType()) {
+//            @Override
+//            public void onSuccess(int status, List<Info> beans, String msg) {
+//                if (!StrUtil.isEmpty(beans)) {
+//                    //下拉加载和首次加载要清除原有数据并把页码置为1，上拉加载不断累加页码
+//                    if (type == 0 || type == 1) {
+//                        adapterInfo.getResults().clear();
+//                        page = 1;
+//                    } else {
+//                        page++;
+//                    }
+//                    adapterInfo.getResults().addAll(beans);
+//                    adapterInfo.notifyDataSetChanged();
+//
+//                    //加载结束恢复列表
+//                    if (type == 0) {
+//                        loadingLayout.showOut();
+//                    } else {
+//                        springView.onFinishFreshAndLoad();
+//                    }
+//                } else {
+//                    //没有数据设置空数据页面，下拉加载不用，仅提示
+//                    if (type == 0 || type == 1) {
+//                        loadingLayout.showLackView();
+//                    } else {
+//                        springView.onFinishFreshAndLoad();
+//                        ToastUtil.showToastShort("没有更多的数据了");
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onError(int status, String msg) {
+//                ToastUtil.showToastShort(msg);
+//                //首次加载发生异常设置error页面，其余仅提示
+//                if (type == 0) {
+//                    loadingLayout.showFailView();
+//                } else {
+//                    springView.onFinishFreshAndLoad();
+//                }
+//            }
+//        });
+//    }
+
+    private void netQueryBanner() {
+        Map<String, Object> param = new NetParam().build();
+        NetApi.NI().queryBanner(param).enqueue(new BaseCallback<List<Image>>(new TypeToken<List<Image>>() {
+        }.getType()) {
+            @Override
+            public void onSuccess(int status, List<Image> images, String msg) {
+                adapterBanner.getResults().clear();
+                adapterBanner.getResults().addAll(images);
+                adapterBanner.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+                ToastUtil.showToastShort(msg);
+            }
+        });
     }
 }

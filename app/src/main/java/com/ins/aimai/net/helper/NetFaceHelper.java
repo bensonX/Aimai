@@ -1,6 +1,4 @@
-package com.ins.aimai.net;
-
-import android.widget.Toast;
+package com.ins.aimai.net.helper;
 
 import com.ins.aimai.bean.User;
 import com.ins.aimai.bean.common.CommonBean;
@@ -8,17 +6,17 @@ import com.ins.aimai.bean.common.FaceRecord;
 import com.ins.aimai.bean.eyekey.FaceAttrs;
 import com.ins.aimai.bean.eyekey.MatchCompare;
 import com.ins.aimai.common.AppData;
-import com.ins.aimai.common.AppHelper;
+import com.ins.aimai.net.BaseCallback;
+import com.ins.aimai.net.NetApi;
+import com.ins.aimai.net.NetParam;
 import com.ins.aimai.ui.activity.VideoActivity;
 import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.utils.StrUtil;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

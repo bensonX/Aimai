@@ -1,7 +1,10 @@
-package com.ins.aimai.net;
+package com.ins.aimai.net.helper;
 
 import com.ins.aimai.bean.common.CommonBean;
 import com.ins.aimai.common.AppData;
+import com.ins.aimai.net.BaseCallback;
+import com.ins.aimai.net.NetApi;
+import com.ins.aimai.net.NetParam;
 import com.ins.aimai.utils.ToastUtil;
 
 import okhttp3.MultipartBody;

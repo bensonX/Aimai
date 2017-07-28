@@ -16,9 +16,11 @@ import com.ins.aimai.bean.CourseWare;
 import com.ins.aimai.bean.Video;
 import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.bean.common.TestBean;
+import com.ins.aimai.ui.activity.PhotoActivity;
 import com.ins.aimai.ui.adapter.RecycleAdapterVideoNote;
 import com.ins.aimai.ui.base.BaseFragment;
 import com.ins.common.helper.LoadingViewHelper;
+import com.ins.common.interfaces.OnRecycleItemClickListener;
 import com.liaoinstan.springview.container.AliFooter;
 import com.liaoinstan.springview.container.AliHeader;
 import com.liaoinstan.springview.widget.SpringView;
@@ -32,7 +34,7 @@ import java.util.List;
 /**
  * Created by liaoinstan
  */
-public class VideoNoteFragment extends BaseFragment {
+public class VideoNoteFragment extends BaseFragment implements OnRecycleItemClickListener {
 
     private int position;
     private View rootView;
@@ -88,6 +90,7 @@ public class VideoNoteFragment extends BaseFragment {
 
     private void initCtrl() {
         adapter = new RecycleAdapterVideoNote(getContext());
+        adapter.setOnItemClickListener(this);
         recycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recycler.setAdapter(adapter);
     }
@@ -104,5 +107,12 @@ public class VideoNoteFragment extends BaseFragment {
             adapter.getResults().addAll(results);
             adapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void onItemClick(RecyclerView.ViewHolder viewHolder) {
+        int position = viewHolder.getLayoutPosition();
+        List<String> urls = adapter.getResults();
+        PhotoActivity.start(getActivity(), urls, position);
     }
 }

@@ -138,7 +138,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_right:
-                MeDetailActivity.start(getContext());
+            case R.id.lay_me_header:
                 MeDetailActivity.start(getContext());
                 break;
             case R.id.text_me_order:

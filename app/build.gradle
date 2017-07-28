@@ -7,8 +7,8 @@ android {
         applicationId "com.ins.aimai"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 9
-        versionName "1.0.0.9"
+        versionCode 11
+        versionName "1.0.0.11"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         //使用矢量图兼容库
         vectorDrawables.useSupportLibrary = true
@@ -101,4 +101,6 @@ dependencies {
     compile project(':lib_camera')
     compile project(':lib_sharesdk')
     compile project(':lib_pay')
+    //photoView
+    compile 'com.github.chrisbanes:PhotoView:2.0.0'
 }

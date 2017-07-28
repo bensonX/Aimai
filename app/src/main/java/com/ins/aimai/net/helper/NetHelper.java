@@ -1,6 +1,4 @@
-package com.ins.aimai.net;
-
-import android.content.Context;
+package com.ins.aimai.net.helper;
 
 import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.bean.Lesson;
@@ -9,22 +7,15 @@ import com.ins.aimai.bean.VideoStatus;
 import com.ins.aimai.bean.common.CommonBean;
 import com.ins.aimai.bean.common.FaceRecord;
 import com.ins.aimai.common.AppData;
-import com.ins.aimai.common.AppHelper;
+import com.ins.aimai.net.BaseCallback;
+import com.ins.aimai.net.NetApi;
+import com.ins.aimai.net.NetParam;
 import com.ins.aimai.ui.activity.VideoActivity;
 import com.ins.aimai.utils.ToastUtil;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by Administrator on 2017/7/21.

@@ -100,6 +100,7 @@
         <activity android:name=".ui.activity.CompDetailActivity" />
         <activity android:name=".ui.activity.CompInfoActivity" />
         <activity android:name=".ui.activity.LessonEmployActivity" />
+        <activity android:name=".ui.activity.PhotoActivity" />
 
     </application>
 </manifest>

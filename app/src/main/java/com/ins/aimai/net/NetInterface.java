@@ -43,6 +43,28 @@ public interface NetInterface {
 
 
     //##################################################################
+    //#########               资讯
+    //##################################################################
+
+    /**
+     * 资讯列表
+     * pageNO
+     * pageSize
+     */
+    @FormUrlEncoded
+    @POST("/api/news/queryNewsList")
+    Call<ResponseBody> queryInfo(@FieldMap Map<String, Object> param);
+
+    /**
+     * 获取banner数据
+     */
+    @FormUrlEncoded
+    @POST("/api/banner/queryBannerList")
+    Call<ResponseBody> queryBanner(@FieldMap Map<String, Object> param);
+
+
+
+    //##################################################################
     //#########               登录注册个人中心
     //##################################################################
 

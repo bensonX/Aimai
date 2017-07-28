@@ -20,11 +20,8 @@ import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.bean.common.FaceRecord;
 import com.ins.aimai.common.AppData;
 import com.ins.aimai.common.AppHelper;
-import com.ins.aimai.net.BaseCallback;
-import com.ins.aimai.net.NetApi;
-import com.ins.aimai.net.NetFaceHelper;
-import com.ins.aimai.net.NetHelper;
-import com.ins.aimai.net.NetParam;
+import com.ins.aimai.net.helper.NetFaceHelper;
+import com.ins.aimai.net.helper.NetHelper;
 import com.ins.aimai.ui.adapter.PagerAdapterVideo;
 import com.ins.aimai.ui.base.BaseVideoActivity;
 import com.ins.aimai.ui.dialog.DialogSureAimai;
@@ -36,9 +33,7 @@ import com.ins.common.utils.StrUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 

@@ -38,20 +38,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:src="@drawable/shape_oval_red"/>
+                android:layout_marginTop="10dp"
+                android:src="@drawable/shape_oval_red" />
 
         </FrameLayout>
 
     </android.support.v7.widget.Toolbar>
 
-    <LinearLayout
-        android:id="@+id/showingroup"
+    <com.ins.common.view.LoadingLayout
+        android:id="@+id/loadingLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_fail="@layout/layout_fail"
+        app:layout_lack="@layout/layout_lack"
+        app:layout_loading="@layout/layout_loading">
 
         <com.liaoinstan.springview.widget.SpringView
             android:id="@+id/spring"
@@ -65,7 +67,6 @@
                 android:layout_height="match_parent" />
 
         </com.liaoinstan.springview.widget.SpringView>
-
-    </LinearLayout>
+    </com.ins.common.view.LoadingLayout>
 
 </FrameLayout>

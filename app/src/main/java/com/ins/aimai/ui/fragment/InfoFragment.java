@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ins.aimai.R;
+import com.ins.aimai.bean.Info;
 import com.ins.aimai.bean.common.TestBean;
 import com.ins.aimai.ui.adapter.RecycleAdapterHomeInfo;
 import com.ins.aimai.ui.base.BaseFragment;
@@ -97,8 +98,8 @@ public class InfoFragment extends BaseFragment {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        adapter.getResults().add(new TestBean());
-                        adapter.getResults().add(new TestBean());
+                        adapter.getResults().add(new Info());
+                        adapter.getResults().add(new Info());
                         adapter.notifyDataSetChanged();
                         springView.onFinishFreshAndLoad();
                     }
@@ -113,20 +114,19 @@ public class InfoFragment extends BaseFragment {
             @Override
             public void run() {
                 adapter.getResults().clear();
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
+//                adapter.getResults().add(new Info());
+//                adapter.getResults().add(new Info());
+//                adapter.getResults().add(new Info());
+//                adapter.getResults().add(new Info());
+//                adapter.getResults().add(new Info());
+//                adapter.getResults().add(new Info());
+//                adapter.getResults().add(new Info());
+//                adapter.getResults().add(new Info());
+//                adapter.getResults().add(new Info());
+//                adapter.getResults().add(new Info());
+//                adapter.getResults().add(new Info());
+//                adapter.getResults().add(new Info());
+//                adapter.getResults().add(new Info());
                 adapter.notifyDataSetChanged();
                 LoadingViewHelper.showout(showingroup, showin);
             }

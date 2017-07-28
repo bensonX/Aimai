@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.ins.aimai.R;
 import com.ins.aimai.bean.common.TestBean;
+import com.ins.common.interfaces.OnRecycleItemClickListener;
 import com.ins.common.utils.GlideUtil;
 
 import java.util.ArrayList;
@@ -35,6 +36,12 @@ public class RecycleAdapterVideoNote extends RecyclerView.Adapter<RecycleAdapter
     @Override
     public void onBindViewHolder(final RecycleAdapterVideoNote.Holder holder, final int position) {
         final String url = results.get(position);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) listener.onItemClick(holder);
+            }
+        });
         GlideUtil.loadImg(holder.img_item_note, R.drawable.default_bk_img, url);
     }
 
@@ -51,5 +58,11 @@ public class RecycleAdapterVideoNote extends RecyclerView.Adapter<RecycleAdapter
             super(itemView);
             img_item_note = (ImageView) itemView.findViewById(R.id.img_item_note);
         }
+    }
+
+    private OnRecycleItemClickListener listener;
+
+    public void setOnItemClickListener(OnRecycleItemClickListener listener) {
+        this.listener = listener;
     }
 }

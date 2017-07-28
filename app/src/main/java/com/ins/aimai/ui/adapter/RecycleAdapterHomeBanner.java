@@ -12,6 +12,7 @@ import com.alibaba.android.vlayout.LayoutHelper;
 import com.bumptech.glide.Glide;
 import com.ins.aimai.R;
 import com.ins.aimai.ui.activity.InfoActivity;
+import com.ins.aimai.ui.activity.WebActivity;
 import com.ins.common.entity.Image;
 import com.ins.common.utils.GlideUtil;
 import com.ins.common.view.BannerView;
@@ -58,6 +59,7 @@ public class RecycleAdapterHomeBanner extends DelegateAdapter.Adapter<RecycleAda
                 InfoActivity.start(context);
             }
         });
+        holder.banner.setOnBannerClickListener(onBannerClickListener);
     }
 
     @Override
@@ -78,11 +80,15 @@ public class RecycleAdapterHomeBanner extends DelegateAdapter.Adapter<RecycleAda
             banner.setOnLoadImgListener(new BannerView.OnLoadImgListener() {
                 @Override
                 public void onloadImg(ImageView imageView, String imgurl, int defaultSrc) {
-//                    GlideUtil.loadImg(imageView, defaultSrc, imgurl);
-//                    Glide.with(context).load(imgurl).into(imageView);
-                    imageView.setImageResource(R.drawable.default_header);
+                    GlideUtil.loadImg(imageView, defaultSrc, imgurl);
                 }
             });
         }
+    }
+
+    private BannerView.OnBannerClickListener onBannerClickListener;
+
+    public void setOnBannerClickListener(BannerView.OnBannerClickListener onBannerClickListener) {
+        this.onBannerClickListener = onBannerClickListener;
     }
 }

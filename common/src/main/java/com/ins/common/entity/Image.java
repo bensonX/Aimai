@@ -1,5 +1,7 @@
 package com.ins.common.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
@@ -10,8 +12,12 @@ public class Image implements Serializable {
 
     private int id;
     private String title;
+    @SerializedName("apiImage")
     private String img;
+    @SerializedName("linkUrl")
     private String url;
+    /** 是否是外链  0:否   1:是 */
+    private int isLink;
 
     public Image() {
     }
@@ -27,6 +33,14 @@ public class Image implements Serializable {
         this.id = id;
         this.title = title;
         this.img = img;
+    }
+
+    public int getIsLink() {
+        return isLink;
+    }
+
+    public void setIsLink(int isLink) {
+        this.isLink = isLink;
     }
 
     public String getUrl() {
