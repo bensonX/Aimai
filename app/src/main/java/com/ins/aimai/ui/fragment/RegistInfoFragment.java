@@ -35,6 +35,7 @@ import com.ins.common.helper.CropHelper;
 import com.ins.common.helper.CropHelperEx;
 import com.ins.common.utils.GlideUtil;
 import com.ins.common.utils.MD5Util;
+import com.ins.common.utils.PermissionsUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -74,6 +75,7 @@ public class RegistInfoFragment extends BaseFragment implements View.OnClickList
     private EditText edit_regist_govname;
     private EditText edit_regist_govnum;
     private TextView text_regist_address;
+    private TextView btn_go;
 
     private int position;
     private View rootView;
@@ -171,17 +173,23 @@ public class RegistInfoFragment extends BaseFragment implements View.OnClickList
         img_regist_header = (ImageView) rootView.findViewById(R.id.img_regist_header);
         img_regist_yyzz = (ImageView) rootView.findViewById(R.id.img_regist_yyzz);
         img_regist_jsx = (ImageView) rootView.findViewById(R.id.img_regist_jsx);
+        btn_go = (TextView) rootView.findViewById(R.id.btn_go);
         lay_regist_address.setOnClickListener(this);
         lay_regist_business.setOnClickListener(this);
         lay_regist_header.setOnClickListener(this);
         lay_regist_yyzz.setOnClickListener(this);
         lay_regist_jsx.setOnClickListener(this);
-        rootView.findViewById(R.id.btn_go).setOnClickListener(this);
+        btn_go.setOnClickListener(this);
 
         setType();
     }
 
     private void initCtrl() {
+        if (type == 0) {
+            btn_go.setText("提交个人资料");
+        } else {
+            btn_go.setText("提交资料");
+        }
     }
 
     private void initData() {
@@ -230,7 +238,7 @@ public class RegistInfoFragment extends BaseFragment implements View.OnClickList
     }
 
     private void setAddressData(Address address) {
-        text_regist_address.setText(address.getAddress());
+        text_regist_address.setText(address.getMergerName());
     }
 
     private void setTradeData(Trade trade) {
@@ -247,16 +255,22 @@ public class RegistInfoFragment extends BaseFragment implements View.OnClickList
                 AddressActivity.start(getContext());
                 break;
             case R.id.lay_regist_header:
-                Intent intent = new Intent(getActivity(), CameraActivity.class);
-                startActivityForResult(intent, RESULT_CAMERA);
+                if (PermissionsUtil.checkCamera(activity)) {
+                    Intent intent = new Intent(getActivity(), CameraActivity.class);
+                    startActivityForResult(intent, RESULT_CAMERA);
+                }
                 break;
             case R.id.lay_regist_yyzz:
-                cropHelperEx.showDefaultDialog();
-                typeImg = 1;
+                if (PermissionsUtil.checkCamera(activity)) {
+                    cropHelperEx.showDefaultDialog();
+                    typeImg = 1;
+                }
                 break;
             case R.id.lay_regist_jsx:
-                cropHelperEx.showDefaultDialog();
-                typeImg = 2;
+                if (PermissionsUtil.checkCamera(activity)) {
+                    cropHelperEx.showDefaultDialog();
+                    typeImg = 2;
+                }
                 break;
             case R.id.btn_go:
                 valiAndRegiest();

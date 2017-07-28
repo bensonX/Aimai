@@ -14,6 +14,7 @@ import com.ins.aimai.R;
 import com.ins.aimai.bean.Msg;
 import com.ins.aimai.bean.Order;
 import com.ins.aimai.bean.common.TestBean;
+import com.ins.aimai.common.AppData;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
@@ -40,8 +41,12 @@ public class MsgActivity extends BaseAppCompatActivity implements OnRecycleItemC
     private RecycleAdapterMsg adapter;
 
     public static void start(Context context) {
-        Intent intent = new Intent(context, MsgActivity.class);
-        context.startActivity(intent);
+        if (AppData.App.getUser() != null) {
+            Intent intent = new Intent(context, MsgActivity.class);
+            context.startActivity(intent);
+        } else {
+            LoginActivity.start(context);
+        }
     }
 
     @Override

@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
 import com.ins.aimai.R;
+import com.ins.aimai.common.AppData;
 import com.ins.aimai.ui.adapter.PagerAdapterOrder;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 
@@ -19,8 +20,12 @@ public class OrderActivity extends BaseAppCompatActivity {
     private String[] titles = new String[]{"全部订单", "待付款", "已完成"};
 
     public static void start(Context context) {
-        Intent intent = new Intent(context, OrderActivity.class);
-        context.startActivity(intent);
+        if (AppData.App.getUser() != null) {
+            Intent intent = new Intent(context, OrderActivity.class);
+            context.startActivity(intent);
+        } else {
+            LoginActivity.start(context);
+        }
     }
 
     @Override

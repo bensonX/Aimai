@@ -1,5 +1,6 @@
 package com.ins.common.utils;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -189,5 +190,13 @@ public class PermissionsUtil {
             e.printStackTrace();
             return null;
         }
+    }
+
+    //################## 通用方法 #######################
+
+    public static boolean checkCamera(Activity activity){
+        String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+        return checkAndRequestPermissions(activity,permissions);
+
     }
 }

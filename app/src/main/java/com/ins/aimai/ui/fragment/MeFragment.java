@@ -41,6 +41,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     private TextView text_me_safe;
     private TextView text_me_suggest;
     private TextView text_me_setting;
+    private View lay_me_safe;
 
     public static Fragment newInstance(int position) {
         MeFragment fragment = new MeFragment();
@@ -93,6 +94,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         img_me_header = (ImageView) rootView.findViewById(R.id.img_me_header);
         text_me_name = (TextView) rootView.findViewById(R.id.text_me_name);
         text_me_grade = (TextView) rootView.findViewById(R.id.text_me_grade);
+        lay_me_safe = rootView.findViewById(R.id.lay_me_safe);
 
         rootView.findViewById(R.id.btn_right).setOnClickListener(this);
         rootView.findViewById(R.id.lay_me_header).setOnClickListener(this);
@@ -119,6 +121,12 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             text_me_name.setText(user.getShowName());
             text_me_grade.setText(user.getAccumulate() + "积分");
             text_me_grade.setVisibility(View.VISIBLE);
+            //只有政府或公司才有安检入口
+            if (user.isCompUser() || user.isGovUser()) {
+                lay_me_safe.setVisibility(View.VISIBLE);
+            } else {
+                lay_me_safe.setVisibility(View.GONE);
+            }
         } else {
             img_me_header.setImageResource(R.drawable.default_header);
             text_me_name.setText("登录");
@@ -130,18 +138,8 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_right:
-                if (AppData.App.getUser() != null) {
-                    MeDetailActivity.start(getContext());
-                } else {
-                    LoginActivity.start(getContext());
-                }
-                break;
-            case R.id.lay_me_header:
-                if (AppData.App.getUser() != null) {
-                    MeDetailActivity.start(getContext());
-                } else {
-                    LoginActivity.start(getContext());
-                }
+                MeDetailActivity.start(getContext());
+                MeDetailActivity.start(getContext());
                 break;
             case R.id.text_me_order:
                 OrderActivity.start(getContext());

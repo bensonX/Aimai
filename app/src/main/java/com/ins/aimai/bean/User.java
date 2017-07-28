@@ -164,6 +164,21 @@ public class User implements Serializable {
     //人脸id
     private String faceId;
 
+    //####################### 逻辑方法 ##########################
+
+    public boolean isUser() {
+        return roleId == USER;
+    }
+
+    public boolean isCompUser() {
+        return roleId == COMPANY_USER;
+    }
+
+    public boolean isGovUser() {
+        return roleId == GOVERNMENT_USER;
+    }
+
+
     public String getTradeName() {
         return tradeName;
     }

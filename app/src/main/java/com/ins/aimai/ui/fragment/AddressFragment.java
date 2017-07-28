@@ -42,8 +42,6 @@ public class AddressFragment extends BaseFragment implements OnRecycleItemClickL
     private int position;
     private View rootView;
 
-    private LoadingLayout loadingLayout;
-
     private SpringView springView;
     private RecyclerView recycler;
     private RecycleAdapterAddress adapter;
@@ -110,7 +108,6 @@ public class AddressFragment extends BaseFragment implements OnRecycleItemClickL
     }
 
     private void initView() {
-        loadingLayout = (LoadingLayout) rootView.findViewById(R.id.loadingLayout);
         springView = (SpringView) rootView.findViewById(R.id.spring);
         recycler = (RecyclerView) rootView.findViewById(R.id.recycler);
     }
@@ -122,12 +119,6 @@ public class AddressFragment extends BaseFragment implements OnRecycleItemClickL
         adapter.setOnItemClickListener(this);
         springView.setHeader(new AliHeader(getContext(), false));
         springView.setFooter(new AliFooter(getContext(), false));
-        loadingLayout.setOnRefreshListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                initData();
-            }
-        });
         springView.setListener(new SpringView.OnFreshListener() {
             @Override
             public void onRefresh() {
@@ -167,25 +158,23 @@ public class AddressFragment extends BaseFragment implements OnRecycleItemClickL
         netParam.put("levelType", levelType);
         if (id != 0) netParam.put("cityId", id);
         Map<String, Object> param = netParam.build();
-        loadingLayout.showLoadingView();
         NetApi.NI().queryCity(param).enqueue(new BaseCallback<List<Address>>(new TypeToken<List<Address>>() {
         }.getType()) {
             @Override
             public void onSuccess(int status, List<Address> beans, String msg) {
                 if (StrUtil.isEmpty(beans)) {
-                    loadingLayout.showLackView();
                 } else {
                     adapter.getResults().clear();
                     adapter.getResults().addAll(beans);
                     adapter.notifyDataSetChanged();
-                    loadingLayout.showOut();
+                    springView.onFinishFreshAndLoad();
                 }
             }
 
             @Override
             public void onError(int status, String msg) {
                 ToastUtil.showToastShort(msg);
-                loadingLayout.showFailView();
+                springView.onFinishFreshAndLoad();
             }
         });
     }

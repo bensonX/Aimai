@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.widget.TextView;
 
 import com.ins.aimai.R;
+import com.ins.aimai.common.AppData;
 import com.ins.aimai.ui.adapter.PagerAdapterFavo;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 
@@ -20,8 +21,12 @@ public class FavoActivity extends BaseAppCompatActivity {
     private String[] titles = new String[]{"课程", "考题", "资讯"};
 
     public static void start(Context context) {
-        Intent intent = new Intent(context, FavoActivity.class);
-        context.startActivity(intent);
+        if (AppData.App.getUser() != null) {
+            Intent intent = new Intent(context, FavoActivity.class);
+            context.startActivity(intent);
+        } else {
+            LoginActivity.start(context);
+        }
     }
 
     @Override

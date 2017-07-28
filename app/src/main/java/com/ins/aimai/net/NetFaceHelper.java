@@ -94,6 +94,10 @@ public class NetFaceHelper {
                     if (callback != null && callback instanceof OnFaceCheckCallback) {
                         ((OnFaceCheckCallback) callback).onFaceCheckFailed("人脸检测失败");
                     }
+                    //对比失败，不是本人
+                    if (callback != null && callback instanceof OnFaceCompareCallback) {
+                        ((OnFaceCompareCallback) callback).onFaceCompareFailed();
+                    }
                 }
             }
 
@@ -102,6 +106,10 @@ public class NetFaceHelper {
                 ToastUtil.showToastShort("网络出错");
                 if (callback != null && callback instanceof OnFaceCheckCallback) {
                     ((OnFaceCheckCallback) callback).onFaceCheckFailed("网络出错");
+                }
+                //对比失败，不是本人
+                if (callback != null && callback instanceof OnFaceCompareCallback) {
+                    ((OnFaceCompareCallback) callback).onFaceCompareFailed();
                 }
             }
         });
@@ -145,7 +153,7 @@ public class NetFaceHelper {
                         }
                     }
                 } else {
-                    ToastUtil.showToastShort("人脸检测失败");
+                    ToastUtil.showToastShort("人脸对比失败");
                 }
             }
 

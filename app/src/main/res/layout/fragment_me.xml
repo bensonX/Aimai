@@ -129,15 +129,22 @@
 
                 </FrameLayout>
 
-                <View
-                    style="@style/Line_H"
-                    android:layout_marginLeft="10dp" />
+                <LinearLayout
+                    android:id="@+id/lay_me_safe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/text_me_safe"
-                    style="@style/TextMeItem"
-                    android:drawableLeft="@drawable/ic_me_safe"
-                    android:text="安全巡监" />
+                    <View
+                        style="@style/Line_H"
+                        android:layout_marginLeft="10dp" />
+
+                    <TextView
+                        android:id="@+id/text_me_safe"
+                        style="@style/TextMeItem"
+                        android:drawableLeft="@drawable/ic_me_safe"
+                        android:text="安全巡监" />
+                </LinearLayout>
 
                 <View style="@style/Line_H" />
 

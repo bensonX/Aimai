@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.LayoutHelper;
+import com.bumptech.glide.Glide;
 import com.ins.aimai.R;
 import com.ins.aimai.ui.activity.InfoActivity;
 import com.ins.common.entity.Image;
@@ -77,7 +78,9 @@ public class RecycleAdapterHomeBanner extends DelegateAdapter.Adapter<RecycleAda
             banner.setOnLoadImgListener(new BannerView.OnLoadImgListener() {
                 @Override
                 public void onloadImg(ImageView imageView, String imgurl, int defaultSrc) {
-                    GlideUtil.loadImg(imageView, defaultSrc, imgurl);
+//                    GlideUtil.loadImg(imageView, defaultSrc, imgurl);
+//                    Glide.with(context).load(imgurl).into(imageView);
+                    imageView.setImageResource(R.drawable.default_header);
                 }
             });
         }

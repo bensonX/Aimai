@@ -14,11 +14,13 @@ public class AppVali {
 
     public static String login(String userName, String psw) {
         if (TextUtils.isEmpty(userName)) {
-            return "请输入用户名";
+            return "请输入手机号";
+        } else if (!ValidateUtil.Mobile(userName)) {
+            return "请输入正确的手机号";
         } else if (TextUtils.isEmpty(psw)) {
             return "请输入密码";
         } else if (!length(psw, 6, 32)) {
-            return "密码长度必须为6-32位";
+            return "密码格式不正确";
         } else {
             return null;
         }
@@ -46,7 +48,7 @@ public class AppVali {
         if (TextUtils.isEmpty(phone)) {
             return "请输入手机号";
         } else if (!phone.equals(phone_old)) {
-            return "你输入的号码没有验证过";
+            return "您的手机号与验证码不匹配";
         } else if (!ValidateUtil.Mobile(phone_old)) {
             return "请输入正确的手机号";
         } else if (!cold.equals(code_old)) {
@@ -60,7 +62,7 @@ public class AppVali {
         if (TextUtils.isEmpty(psw)) {
             return "请输入密码";
         } else if (!length(psw, 6, 32)) {
-            return "密码长度必须为6-32位";
+            return "密码格式不正确";
         } else if (!psw.equals(psw_repeat)) {
             return "两次输入号码不同";
         } else {

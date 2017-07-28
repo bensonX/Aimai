@@ -205,24 +205,53 @@
                 android:layout_height="50dp"
                 android:orientation="horizontal">
 
-                <!--<android.support.v7.widget.CardView-->
-                <!--android:layout_width="100dp"-->
-                <!--android:layout_height="match_parent"-->
-                <!--app:cardBackgroundColor="@color/am_yellow"-->
-                <!--app:cardCornerRadius="5dp"-->
-                <!--app:cardUseCompatPadding="true">-->
+                <LinearLayout
+                    android:id="@+id/lay_lessondetail_btn_comp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-                <!--<TextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:gravity="center"-->
-                <!--android:text="0/50"-->
-                <!--android:textColor="@color/white"-->
-                <!--android:textSize="@dimen/text_big" />-->
+                    <android.support.v7.widget.CardView
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        app:cardBackgroundColor="@color/am_yellow"
+                        app:cardCornerRadius="5dp"
+                        app:cardUseCompatPadding="true">
 
-                <!--</android.support.v7.widget.CardView>-->
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="0/50"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_big" />
+
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="@color/am_blue"
+                        app:cardCornerRadius="5dp"
+                        app:cardUseCompatPadding="true">
+
+                        <TextView
+                            android:id="@+id/btn_go_allot"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="分配课程"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_big" />
+
+                    </android.support.v7.widget.CardView>
+
+                </LinearLayout>
 
                 <android.support.v7.widget.CardView
+                    android:id="@+id/lay_lessondetail_btn_user"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -236,26 +265,6 @@
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:text="立即购买"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/text_big" />
-
-                </android.support.v7.widget.CardView>
-                <android.support.v7.widget.CardView
-                    android:visibility="gone"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    app:cardBackgroundColor="@color/am_blue"
-                    app:cardCornerRadius="5dp"
-                    app:cardUseCompatPadding="true">
-
-                    <TextView
-                        android:id="@+id/btn_go_allot"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="分配课程"
                         android:textColor="@color/white"
                         android:textSize="@dimen/text_big" />
 

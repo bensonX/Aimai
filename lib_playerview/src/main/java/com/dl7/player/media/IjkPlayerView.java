@@ -2749,6 +2749,7 @@ public class IjkPlayerView extends FrameLayout implements View.OnClickListener {
         int duration = mVideoView.getDuration();
         int saveLimitTime = getSaveLimitTime();
         // 转换为 Seek 显示的进度值
+        if (duration == 0) return 0;
         int pos = MAX_VIDEO_SEEK * saveLimitTime / duration;
         return pos;
     }

@@ -45,7 +45,7 @@ public class RecycleAdapterAddress extends RecyclerView.Adapter<RecycleAdapterAd
                 notifyDataSetChanged();
             }
         });
-        holder.text_item_address.setText(bean.getName());
+        holder.text_item_address.setText(bean.getShortName());
         holder.text_item_address.setSelected(bean.isSelect());
     }
 

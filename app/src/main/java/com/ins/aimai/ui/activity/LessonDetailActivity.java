@@ -16,8 +16,11 @@ import com.ins.aimai.R;
 import com.ins.aimai.bean.CourseWare;
 import com.ins.aimai.bean.Lesson;
 import com.ins.aimai.bean.Trade;
+import com.ins.aimai.bean.User;
 import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.bean.common.TestBean;
+import com.ins.aimai.common.AppData;
+import com.ins.aimai.common.AppHelper;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
@@ -51,6 +54,9 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
     private TextView btn_lessondetail_watchcount;
     private TextView btn_lessondetail_unwatchcount;
     private TextView btn_lessondetail_testcount;
+
+    private View lay_lessondetail_btn_comp;
+    private View lay_lessondetail_btn_user;
 
     private View btn_go;
 
@@ -98,6 +104,8 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
         btn_lessondetail_watchcount = (TextView) findViewById(R.id.btn_lessondetail_watchcount);
         btn_lessondetail_unwatchcount = (TextView) findViewById(R.id.btn_lessondetail_unwatchcount);
         btn_lessondetail_testcount = (TextView) findViewById(R.id.btn_lessondetail_testcount);
+        lay_lessondetail_btn_comp = findViewById(R.id.lay_lessondetail_btn_comp);
+        lay_lessondetail_btn_user = findViewById(R.id.lay_lessondetail_btn_user);
         findViewById(R.id.btn_go).setOnClickListener(this);
         findViewById(R.id.btn_go_allot).setOnClickListener(this);
         btn_lessondetail_watchcount.setOnClickListener(this);
@@ -114,6 +122,18 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
         adapter = new RecycleAdapterLable(this);
         recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recycler.setAdapter(adapter);
+
+        User user = AppData.App.getUser();
+        if (user != null && user.getRoleId() == User.USER) {
+            lay_lessondetail_btn_comp.setVisibility(View.GONE);
+            lay_lessondetail_btn_user.setVisibility(View.VISIBLE);
+        } else if (user != null && user.getRoleId() == User.COMPANY_USER) {
+            lay_lessondetail_btn_comp.setVisibility(View.VISIBLE);
+            lay_lessondetail_btn_user.setVisibility(View.GONE);
+        } else {
+            lay_lessondetail_btn_comp.setVisibility(View.GONE);
+            lay_lessondetail_btn_user.setVisibility(View.GONE);
+        }
     }
 
     private void initData() {
@@ -126,6 +146,8 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
             text_lessondetail_title.setText(lesson.getCurriculumName());
             text_lessondetail_count.setText(lesson.getVideoNum() + "个视频课");
             text_lessondetail_time.setText(TimeUtil.formatSecond(lesson.getHdSeconds()));
+            text_lessondetail_price.setText("￥"+ AppHelper.formatPrice(lesson.getPrice()));
+//            text_lessondetail_salecount.setText(lesson.get);TODO：现在还没发做
             btn_lessondetail_watchcount.setText(0 + "人已观看");
             btn_lessondetail_unwatchcount.setText(0 + "人未观看");
             btn_lessondetail_testcount.setText(0 + "人已考核");

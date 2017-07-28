@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.ins.aimai.R;
-import com.ins.aimai.bean.User;
 import com.ins.aimai.bean.common.CommonBean;
 import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.common.AppData;
@@ -26,6 +25,7 @@ import java.util.Map;
 public class SettingActivity extends BaseAppCompatActivity implements View.OnClickListener {
 
     private TextView text_setting_catchsize;
+    private View lay_setting_logout;
 
     public static void start(Context context) {
         Intent intent = new Intent(context, SettingActivity.class);
@@ -48,15 +48,21 @@ public class SettingActivity extends BaseAppCompatActivity implements View.OnCli
 
     private void initView() {
         text_setting_catchsize = (TextView) findViewById(R.id.text_setting_catchsize);
-        findViewById(R.id.lay_setting_definition).setOnClickListener(this);
-        findViewById(R.id.lay_setting_modifypsw).setOnClickListener(this);
-        findViewById(R.id.lay_setting_clear).setOnClickListener(this);
-        findViewById(R.id.lay_setting_about).setOnClickListener(this);
-        findViewById(R.id.lay_setting_logout).setOnClickListener(this);
+        lay_setting_logout = findViewById(R.id.lay_setting_logout);
+        findViewById(R.id.text_setting_definition).setOnClickListener(this);
+        findViewById(R.id.text_setting_modifypsw).setOnClickListener(this);
+        findViewById(R.id.text_setting_clear).setOnClickListener(this);
+        findViewById(R.id.text_setting_about).setOnClickListener(this);
+        findViewById(R.id.text_setting_logout).setOnClickListener(this);
     }
 
     private void initCtrl() {
         text_setting_catchsize.setText(ClearCacheUtil.getAppCacheSize(this));
+        if (AppData.App.getUser() == null) {
+            lay_setting_logout.setVisibility(View.GONE);
+        } else {
+            lay_setting_logout.setVisibility(View.VISIBLE);
+        }
     }
 
     private void initData() {
@@ -65,13 +71,13 @@ public class SettingActivity extends BaseAppCompatActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.lay_setting_definition:
+            case R.id.text_setting_definition:
                 DefinitionActivity.start(this);
                 break;
-            case R.id.lay_setting_modifypsw:
+            case R.id.text_setting_modifypsw:
                 ModifySelectActivity.start(this);
                 break;
-            case R.id.lay_setting_clear:
+            case R.id.text_setting_clear:
                 if (ClearCacheUtil.getAppCacheSizeValue(this) == 0) {
                     ToastUtil.showToastShort("没有需要清除的缓存");
                     return;
@@ -84,10 +90,10 @@ public class SettingActivity extends BaseAppCompatActivity implements View.OnCli
                     }
                 });
                 break;
-            case R.id.lay_setting_about:
+            case R.id.text_setting_about:
                 WebActivity.start(this, "关于我们", "http://www.baidu.com");
                 break;
-            case R.id.lay_setting_logout:
+            case R.id.text_setting_logout:
                 DialogSure.showDialog(this, "确定要退出登录？", new DialogSure.CallBack() {
                     @Override
                     public void onSure() {

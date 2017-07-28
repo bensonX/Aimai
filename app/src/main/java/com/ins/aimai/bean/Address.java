@@ -12,6 +12,7 @@ public class Address extends BaseSelectBean implements Serializable {
 
     private int id;
     private String name;
+    private String shortName;
     private String mergerName;
     private String address;
     private int levelType;
@@ -25,6 +26,14 @@ public class Address extends BaseSelectBean implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getShortName() {
+        return shortName;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
     }
 
     public String getMergerName() {

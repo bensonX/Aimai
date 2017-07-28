@@ -14,6 +14,7 @@ import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.ui.adapter.PagerAdapterHome;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.aimai.utils.ToastUtil;
+import com.ins.common.utils.PermissionsUtil;
 import com.ins.common.utils.StatusBarTextUtil;
 
 public class HomeActivity extends BaseAppCompatActivity {
@@ -45,7 +46,7 @@ public class HomeActivity extends BaseAppCompatActivity {
         setNeedDoubleClickExit(true);
         registEventBus();
 
-//        PermissionsUtil.checkAndRequestPermissions(this);
+        PermissionsUtil.checkAndRequestPermissions(this);
 
         StatusBarTextUtil.transparencyBar(HomeActivity.this);
         StatusBarTextUtil.StatusBarLightMode(HomeActivity.this);

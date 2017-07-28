@@ -25,6 +25,7 @@ import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.helper.CropHelper;
 import com.ins.common.ui.dialog.DialogPopupPhoto;
 import com.ins.common.utils.GlideUtil;
+import com.ins.common.utils.PermissionsUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -50,14 +51,18 @@ public class MeDetailActivity extends BaseAppCompatActivity implements View.OnCl
     private String path;
 
     public static void start(Context context) {
-        Intent intent = new Intent(context, MeDetailActivity.class);
-        context.startActivity(intent);
+        if (AppData.App.getUser() != null) {
+            Intent intent = new Intent(context, MeDetailActivity.class);
+            context.startActivity(intent);
+        } else {
+            LoginActivity.start(context);
+        }
     }
 
     @Override
     public void onCommonEvent(EventBean event) {
         if (event.getEvent() == EventBean.EVENT_SELECT_ADDRESS) {
-            Address address = (Address) event.get("address");
+            address = (Address) event.get("address");
             setAddressData(address);
         }
     }
@@ -130,7 +135,7 @@ public class MeDetailActivity extends BaseAppCompatActivity implements View.OnCl
     }
 
     private void setAddressData(Address address) {
-        text_medetail_address.setText(address.getAddress());
+        text_medetail_address.setText(address.getMergerName());
     }
 
     @Override
@@ -142,16 +147,13 @@ public class MeDetailActivity extends BaseAppCompatActivity implements View.OnCl
                 if (msg != null) {
                     ToastUtil.showToastShort(msg);
                 } else {
-                    NetUploadHelper.newInstance().netUpload(path, new NetUploadHelper.UploadCallback() {
-                        @Override
-                        public void uploadfinish(String url) {
-                            netCommit(name, url, address);
-                        }
-                    });
+                    uploadAndCommit(name);
                 }
                 break;
             case R.id.lay_medetail_header:
-                popupPhoto.show();
+                if (PermissionsUtil.checkCamera(this)) {
+                    popupPhoto.show();
+                }
                 break;
             case R.id.lay_medetail_address:
                 AddressActivity.start(this);
@@ -176,7 +178,20 @@ public class MeDetailActivity extends BaseAppCompatActivity implements View.OnCl
         //取消相机或相册
     }
 
-    private void netCommit(final String showName, final String avatar, final Address address) {
+    private void uploadAndCommit(final String showName) {
+        if (!TextUtils.isEmpty(path)) {
+            NetUploadHelper.newInstance().netUpload(path, new NetUploadHelper.UploadCallback() {
+                @Override
+                public void uploadfinish(String url) {
+                    netCommit(showName, url);
+                }
+            });
+        } else {
+            netCommit(showName, null);
+        }
+    }
+
+    private void netCommit(final String showName, final String avatar) {
         NetParam netParam = new NetParam();
         if (!TextUtils.isEmpty(showName)) netParam.put("showName", showName);
         if (!TextUtils.isEmpty(avatar)) netParam.put("avatar", avatar);

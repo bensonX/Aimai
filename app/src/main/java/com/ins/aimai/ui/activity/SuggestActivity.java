@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.ins.aimai.R;
 import com.ins.aimai.bean.common.CommonBean;
+import com.ins.aimai.common.AppData;
 import com.ins.aimai.common.AppVali;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
@@ -27,8 +28,12 @@ public class SuggestActivity extends BaseAppCompatActivity implements View.OnCli
 
 
     public static void start(Context context) {
-        Intent intent = new Intent(context, SuggestActivity.class);
-        context.startActivity(intent);
+        if (AppData.App.getUser() != null) {
+            Intent intent = new Intent(context, SuggestActivity.class);
+            context.startActivity(intent);
+        } else {
+            LoginActivity.start(context);
+        }
     }
 
     @Override
