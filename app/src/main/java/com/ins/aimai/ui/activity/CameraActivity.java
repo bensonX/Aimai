@@ -17,6 +17,7 @@
 package com.ins.aimai.ui.activity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -43,9 +44,12 @@ import android.widget.Toast;
 
 import com.google.android.cameraview.CameraView;
 import com.ins.aimai.R;
+import com.ins.aimai.bean.Trade;
 import com.ins.aimai.bean.common.EventBean;
+import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.utils.BitmapUtil;
 import com.ins.common.utils.FileUtil;
+import com.ins.common.utils.PermissionsUtil;
 import com.ins.common.utils.StatusBarTextUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -55,7 +59,7 @@ import org.greenrobot.eventbus.EventBus;
  * This demo app saves the taken picture to a constant file.
  * $ adb pull /sdcard/Android/data/com.google.android.cameraview.demo/files/Pictures/picture.jpg
  */
-public class CameraActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback{
+public class CameraActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
     private static final String TAG = "MainActivity";
 
@@ -88,9 +92,11 @@ public class CameraActivity extends AppCompatActivity implements ActivityCompat.
         }
     };
 
-    public static void start(Context context) {
-        Intent intent = new Intent(context, CameraActivity.class);
-        context.startActivity(intent);
+    public static void start(Activity context) {
+        if (PermissionsUtil.checkCamera(context)) {
+            Intent intent = new Intent(context, CameraActivity.class);
+            context.startActivity(intent);
+        }
     }
 
     @Override
@@ -106,7 +112,7 @@ public class CameraActivity extends AppCompatActivity implements ActivityCompat.
             mCameraView.setFlash(CameraView.FLASH_OFF);     //关闭闪光灯
             mCameraView.setFacing(CameraView.FACING_FRONT); //启用前置相机
         }
-        View fab =  findViewById(R.id.take_picture);
+        View fab = findViewById(R.id.take_picture);
         if (fab != null) {
             fab.setOnClickListener(mOnClickListener);
         }
@@ -133,26 +139,33 @@ public class CameraActivity extends AppCompatActivity implements ActivityCompat.
     @Override
     protected void onResume() {
         super.onResume();
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-                == PackageManager.PERMISSION_GRANTED) {
-            mCameraView.start();
-        } else if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                Manifest.permission.CAMERA)) {
-            ConfirmationDialogFragment
-                    .newInstance(R.string.camera_permission_confirmation,
-                            new String[]{Manifest.permission.CAMERA},
-                            REQUEST_CAMERA_PERMISSION,
-                            R.string.camera_permission_not_granted)
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            try {
+                mCameraView.start();
+            } catch (Exception e) {
+                e.printStackTrace();
+                finish();
+            }
+        } else if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
+            ConfirmationDialogFragment.newInstance(R.string.camera_permission_confirmation,
+                    new String[]{Manifest.permission.CAMERA},
+                    REQUEST_CAMERA_PERMISSION,
+                    R.string.camera_permission_not_granted)
                     .show(getSupportFragmentManager(), FRAGMENT_DIALOG);
         } else {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},
-                    REQUEST_CAMERA_PERMISSION);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
         }
     }
 
     @Override
     protected void onPause() {
-        mCameraView.stop();
+        try {
+            mCameraView.stop();
+        } catch (Exception e) {
+            e.printStackTrace();
+            ToastUtil.showToastShort("请到设置中打开摄像头权限");
+            finish();
+        }
         super.onPause();
     }
 
@@ -171,7 +184,7 @@ public class CameraActivity extends AppCompatActivity implements ActivityCompat.
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-            @NonNull int[] grantResults) {
+                                           @NonNull int[] grantResults) {
         switch (requestCode) {
             case REQUEST_CAMERA_PERMISSION:
                 if (permissions.length != 1 || grantResults.length != 1) {
@@ -269,7 +282,7 @@ public class CameraActivity extends AppCompatActivity implements ActivityCompat.
             //返回路径给调用拍照页面
             //EventBus方式
             EventBean eventBean = new EventBean(EventBean.EVENT_CAMERA_RESULT);
-            eventBean.put("path",path);
+            eventBean.put("path", path);
             EventBus.getDefault().post(eventBean);
             //传统result方式
             Intent intent = new Intent();
@@ -290,7 +303,7 @@ public class CameraActivity extends AppCompatActivity implements ActivityCompat.
         private static final String ARG_NOT_GRANTED_MESSAGE = "not_granted_message";
 
         public static ConfirmationDialogFragment newInstance(@StringRes int message,
-                String[] permissions, int requestCode, @StringRes int notGrantedMessage) {
+                                                             String[] permissions, int requestCode, @StringRes int notGrantedMessage) {
             ConfirmationDialogFragment fragment = new ConfirmationDialogFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_MESSAGE, message);

@@ -28,6 +28,7 @@ import com.ins.aimai.ui.dialog.DialogSureAimai;
 import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.utils.GlideUtil;
 import com.ins.common.utils.L;
+import com.ins.common.utils.PermissionsUtil;
 import com.ins.common.utils.StatusBarTextUtil;
 import com.ins.common.utils.StrUtil;
 
@@ -111,7 +112,9 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
         dialogSureFace.setOnOkListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CameraActivity.start(VideoActivity.this);
+                if (PermissionsUtil.checkCamera(VideoActivity.this)) {
+                    CameraActivity.start(VideoActivity.this);
+                }
             }
         });
     }
