@@ -15,6 +15,7 @@ import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.Info;
 import com.ins.aimai.bean.common.TestBean;
+import com.ins.aimai.common.AppData;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
@@ -39,7 +40,7 @@ import java.util.Map;
 /**
  * Created by liaoinstan
  */
-public class HomeFragment extends BaseFragment implements OnRecycleItemClickListener {
+public class HomeFragment extends BaseFragment implements OnRecycleItemClickListener, BannerView.OnBannerClickListener {
 
     private int position;
     private View rootView;
@@ -77,7 +78,7 @@ public class HomeFragment extends BaseFragment implements OnRecycleItemClickList
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setToolbar();
+        setToolbar(false);
         toolbar.bringToFront();
         initBase();
         initView();
@@ -138,12 +139,7 @@ public class HomeFragment extends BaseFragment implements OnRecycleItemClickList
                 adapterInfo.notifyDataSetChanged();
             }
         });
-        adapterBanner.setOnBannerClickListener(new BannerView.OnBannerClickListener() {
-            @Override
-            public void onBannerClick(int position) {
-                ToastUtil.showToastShort(position + "");
-            }
-        });
+        adapterBanner.setOnBannerClickListener(this);
     }
 
     private void initData() {
@@ -153,80 +149,17 @@ public class HomeFragment extends BaseFragment implements OnRecycleItemClickList
 
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
-        WebActivity.start(getContext(), "http://cn.bing.com");
-//        WebActivity.start(getContext(),"http://192.168.1.206:8080/api/page/courseVideo");
+        Info info = adapterInfo.getResults().get(viewHolder.getLayoutPosition() - 1);
+        String url = NetApi.getBaseUrl() + AppData.Url.newsInfo + "?newsId=" + info.getId();
+        WebActivity.start(getContext(), info.getTitle(), url);
     }
 
-    private List<TestBean> getInitResults(String name) {
-        ArrayList<TestBean> results = new ArrayList<>();
-        for (int i = 0; i < 40; i++) {
-            results.add(new TestBean(name + i));
-        }
-        return results;
+    @Override
+    public void onBannerClick(int position) {
+        Image img = adapterBanner.getResults().get(position);
+        String url = NetApi.getBaseUrl() + AppData.Url.bannerInfo + "?bannerId=" + img.getId();
+        WebActivity.start(getContext(), img.getTitle(), url);
     }
-
-    ///////////////////////////////////
-    //////////////分页查询
-    ///////////////////////////////////
-
-    //    private int page;
-//    private final int PAGE_COUNT = 10;
-//
-//    /**
-//     * type:0 首次加载 1:下拉刷新 2:上拉加载
-//     *
-//     * @param type
-//     */
-//    private void netQueryInfo(final int type) {
-//        Map<String, Object> param = new NetParam()
-//                .put("pageNO", type == 0 || type == 1 ? "1" : page + 1 + "")
-//                .put("pageSize", PAGE_COUNT + "")
-//                .build();
-//        if (type == 0) loadingLayout.showLoadingView();
-//        NetApi.NI().queryInfo(param).enqueue(new BaseCallback<List<Info>>(new TypeToken<List<Info>>() {
-//        }.getType()) {
-//            @Override
-//            public void onSuccess(int status, List<Info> beans, String msg) {
-//                if (!StrUtil.isEmpty(beans)) {
-//                    //下拉加载和首次加载要清除原有数据并把页码置为1，上拉加载不断累加页码
-//                    if (type == 0 || type == 1) {
-//                        adapterInfo.getResults().clear();
-//                        page = 1;
-//                    } else {
-//                        page++;
-//                    }
-//                    adapterInfo.getResults().addAll(beans);
-//                    adapterInfo.notifyDataSetChanged();
-//
-//                    //加载结束恢复列表
-//                    if (type == 0) {
-//                        loadingLayout.showOut();
-//                    } else {
-//                        springView.onFinishFreshAndLoad();
-//                    }
-//                } else {
-//                    //没有数据设置空数据页面，下拉加载不用，仅提示
-//                    if (type == 0 || type == 1) {
-//                        loadingLayout.showLackView();
-//                    } else {
-//                        springView.onFinishFreshAndLoad();
-//                        ToastUtil.showToastShort("没有更多的数据了");
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onError(int status, String msg) {
-//                ToastUtil.showToastShort(msg);
-//                //首次加载发生异常设置error页面，其余仅提示
-//                if (type == 0) {
-//                    loadingLayout.showFailView();
-//                } else {
-//                    springView.onFinishFreshAndLoad();
-//                }
-//            }
-//        });
-//    }
 
     private void netQueryBanner() {
         Map<String, Object> param = new NetParam().build();

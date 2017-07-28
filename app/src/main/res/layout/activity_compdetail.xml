@@ -69,7 +69,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="四川爱麦安培科技有限公司"
+                            android:text="四川**科技有限公司"
                             android:textColor="@color/white"
                             android:textSize="@dimen/text_big" />
 

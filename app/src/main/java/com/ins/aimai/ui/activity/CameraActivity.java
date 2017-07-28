@@ -48,6 +48,7 @@ import com.ins.aimai.bean.Trade;
 import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.utils.BitmapUtil;
+import com.ins.common.utils.ClickUtil;
 import com.ins.common.utils.FileUtil;
 import com.ins.common.utils.PermissionsUtil;
 import com.ins.common.utils.StatusBarTextUtil;
@@ -85,7 +86,9 @@ public class CameraActivity extends AppCompatActivity implements ActivityCompat.
             switch (v.getId()) {
                 case R.id.take_picture:
                     if (mCameraView != null) {
-                        mCameraView.takePicture();
+                        if (!ClickUtil.isFastDoubleClick(2000)) {
+                            mCameraView.takePicture();
+                        }
                     }
                     break;
             }

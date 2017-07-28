@@ -36,13 +36,10 @@ public class NetHelper {
 
     //上传视频进度，并进行本地存储
     public void netAddVideoStatus(VideoStatus videoStatus, final int orderId, final int videoId, final int seconds, final boolean isFinish) {
-        User user = AppData.App.getUser();
         //只有播放进度比本地数据大时才上传
-        if (seconds > AppData.App.getVideoTime(videoId, user.getId())) {
-            //本地存储
-            AppData.App.saveVideoTime(videoId, user.getId(), seconds);
+        if (seconds > videoStatus.getStatus()) {
             //更新记录
-            if (videoStatus != null) videoStatus.setSeconds(seconds);
+            videoStatus.setSeconds(seconds);
             Map map = new HashMap<String, Object>() {{
                 put("orderId", orderId);
                 put("videoId", videoId);

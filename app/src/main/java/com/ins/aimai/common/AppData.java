@@ -83,9 +83,15 @@ public class AppData {
         /**
          * 接口请求地址
          */
-        public static String version = "updateAPK/version_feast.json";                                    //客户端检查更新
-        public static String upload = "images/res/upload";                                                //上传文件
+        public static String version = "updateAPK/version_feast.json";                                   //客户端检查更新
+        public static String upload = "images/res/upload";                                                 //上传文件
 
+        public static String bannerInfo = "api/page/app/bannerInfo";                                            //banner详情?bannerId=1
+        public static String newsInfo = "api/page/app/newsInfo";                                                //资讯详情?newsId=2
+
+        public static String quelity = "http://aq415.com/zixun-show.aspx?zixun_id=42";                //资质
+        public static String about = "http://aq415.com/zixun-show.aspx?zixun_id=33";                  //关于我们
+        public static String netpoint = "http://aq415.com/zixun-show.aspx?zixun_id=35";               //网点
 
         //eyekey人脸识别接口
         public static String eyeCheck = domainEye + "face/Check/checking";                                                //人像解析

@@ -78,8 +78,8 @@ public class ShareDialog extends Dialog implements View.OnClickListener {
     }
 
 
-    private String title = "我是标题";                      //微信、qq
-    private String content = "我是分享文本";                     //all
+    private String title = "测试标题";                      //微信、qq
+    private String content = "爱麦安培，我是分享文本，我是分享文本，我是分享文本";                     //all
     private String url = "http://sharesdk.cn";
     private String img = "http://pic.jj20.com/up/allimg/811/0Q314221532/140Q3221532-9.jpg";
 //    private String img = "https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3956038193,2397454070&fm=58&s=0614EE22C7E05D030C5498D40000C0B3";

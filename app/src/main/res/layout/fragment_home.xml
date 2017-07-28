@@ -12,14 +12,11 @@
         android:background="@color/none"
         app:popupTheme="@style/AppTheme.PopupOverlay">
 
-        <TextView
-            android:id="@+id/text_toolbar_title"
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="AIMAI"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_big" />
+            android:src="@drawable/logo_home_415"/>
 
         <FrameLayout
             android:layout_width="wrap_content"
@@ -32,7 +29,7 @@
                 android:layout_height="match_parent"
                 android:foreground="?attr/selectableItemBackground"
                 android:scaleType="center"
-                android:src="@drawable/ic_me_msg" />
+                android:src="@drawable/ic_home_msg" />
 
             <ImageView
                 android:layout_width="wrap_content"

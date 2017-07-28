@@ -17,6 +17,7 @@ import com.ins.aimai.bean.common.TestBean;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
 import com.ins.common.utils.DensityUtil;
 import com.ins.common.utils.GlideUtil;
+import com.ins.common.utils.L;
 import com.ins.common.utils.TimeUtil;
 
 import java.sql.Time;

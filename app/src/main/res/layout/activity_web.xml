@@ -25,6 +25,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:maxEms="10"
                 android:text="资讯"
                 android:textColor="@color/am_blue"
                 android:textSize="@dimen/text_big" />

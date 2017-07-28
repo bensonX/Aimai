@@ -81,6 +81,7 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
             //人脸识别相机回调
             String path = (String) event.get("path");
             showLoadingDialog();
+            dialogSureFace.hide();
             NetFaceHelper.getInstance().initCompare(this, path, orderId, video.getId(), player.getCurPosition() / 1000).netEyeCheck(this);
         }
     }
@@ -114,6 +115,7 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
             public void onClick(View v) {
                 if (PermissionsUtil.checkCamera(VideoActivity.this)) {
                     CameraActivity.start(VideoActivity.this);
+                    dialogSureFace.hide();
                 }
             }
         });
@@ -240,6 +242,7 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
     @Override
     public void onFaceCompareFailed() {
         hideLoadingDialog();
+        dialogSureFace.show();
         ToastUtil.showToastShort("身份验证不通过，您无法继续观看");
     }
     ///////////////////////////////
@@ -259,26 +262,6 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
     }
 
     private void netQueryLessonDetail() {
-//        Map<String, Object> param = new NetParam()
-//                .put("curriculumId", lessonId)
-//                .build();
-//        showLoadingDialog();
-//        NetApi.NI().queryLessonDetail(param).enqueue(new BaseCallback<Lesson>(Lesson.class) {
-//            @Override
-//            public void onSuccess(int status, Lesson lesson, String msg) {
-//                VideoActivity.this.lesson = lesson;
-//                setData(lesson);
-//                postIntro(lesson.getCurriculumDescribe());
-//                postDirectory(lesson.getCourseWares());
-//                hideLoadingDialog();
-//            }
-//
-//            @Override
-//            public void onError(int status, String msg) {
-//                ToastUtil.showToastShort(msg);
-//                hideLoadingDialog();
-//            }
-//        });
         NetHelper.getInstance().netQueryLessonDetail(type, lessonId, orderId, new NetHelper.OnLessonCallback() {
             @Override
             public void onStart() {
@@ -288,6 +271,7 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
             @Override
             public void onSuccess(int status, Lesson lesson, String msg) {
                 VideoActivity.this.lesson = lesson;
+                convert(lesson);
                 setData(lesson);
                 postIntro(lesson.getCurriculumDescribe());
                 postDirectory(lesson.getCourseWares());
@@ -300,6 +284,20 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
                 hideLoadingDialog();
             }
         });
+    }
+
+    //把每个Video的videoStatus设置为不为空
+    private void convert(Lesson lesson) {
+        if (lesson == null || StrUtil.isEmpty(lesson.getCourseWares())) return;
+        for (CourseWare courseWare : lesson.getCourseWares()) {
+            if (!StrUtil.isEmpty(courseWare.getVideos())) {
+                for (Video video : courseWare.getVideos()) {
+                    if (video.getVideoStatus() == null) {
+                        video.setVideoStatus(new VideoStatus());
+                    }
+                }
+            }
+        }
     }
 
     //###################  get & set ###############

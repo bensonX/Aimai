@@ -22,4 +22,14 @@ public class ClickUtil {
         lastClickTime = time;
         return false;
     }
+
+    public static boolean isFastDoubleClick(int clipTime) {
+        long time = System.currentTimeMillis();
+        long timeD = time - lastClickTime;
+        if (0 < timeD && timeD < clipTime) {
+            return true;
+        }
+        lastClickTime = time;
+        return false;
+    }
 }

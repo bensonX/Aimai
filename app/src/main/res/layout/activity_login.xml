@@ -45,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="欢迎使用爱麦安培APP"
+            android:text="欢迎使用安监415APP"
             android:textColor="@color/com_text_dark"
             android:textSize="@dimen/text_nomal_small" />
 

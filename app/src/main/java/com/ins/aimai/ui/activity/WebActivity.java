@@ -3,6 +3,7 @@ package com.ins.aimai.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -17,6 +18,8 @@ import com.ins.aimai.utils.ToastUtil;
 
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
+
+import com.ins.common.utils.L;
 import com.ins.sharesdk.dialog.ShareDialog;
 import com.ins.sharesdk.dialog.ShareHelper;
 
@@ -46,6 +49,7 @@ public class WebActivity extends BaseAppCompatActivity implements View.OnClickLi
         Intent intent = new Intent(context, WebActivity.class);
         intent.putExtra("title", title);
         intent.putExtra("url", url);
+        L.e("web", url);
         context.startActivity(intent);
     }
 
@@ -82,6 +86,24 @@ public class WebActivity extends BaseAppCompatActivity implements View.OnClickLi
     private void initCtrl() {
         WebSettings setting = webView.getSettings();
         setting.setJavaScriptEnabled(true);
+
+        ///
+        setting.setAllowFileAccess(true);
+        setting.setAllowFileAccessFromFileURLs(true);
+        setting.setAllowUniversalAccessFromFileURLs(true);
+        setting.setAppCacheEnabled(true);
+        setting.setDatabaseEnabled(true);
+        setting.setDomStorageEnabled(true);
+        setting.setCacheMode(WebSettings.LOAD_DEFAULT);
+        setting.setAppCachePath(webView.getContext().getCacheDir().getAbsolutePath());
+        setting.setUseWideViewPort(true);
+        setting.setLoadWithOverviewMode(true);
+        setting.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            setting.setAllowFileAccessFromFileURLs(true);
+        }
+        ///
+
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {

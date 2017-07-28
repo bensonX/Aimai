@@ -21,6 +21,7 @@
         android:orientation="horizontal">
 
         <FrameLayout
+            android:id="@+id/lay_home_about"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -47,6 +48,7 @@
             android:foreground="?attr/selectableItemBackground">
 
             <TextView
+                android:id="@+id/lay_home_quali"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -54,12 +56,13 @@
                 android:drawableLeft="@drawable/ic_home_quali"
                 android:drawablePadding="5dp"
                 android:gravity="center"
-                android:text="资讯"
+                android:text="资质"
                 android:textColor="@color/com_text_dark_blank"
                 android:textSize="@dimen/text_nomal" />
         </FrameLayout>
 
         <FrameLayout
+            android:id="@+id/lay_home_station"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

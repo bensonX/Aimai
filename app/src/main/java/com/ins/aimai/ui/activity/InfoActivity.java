@@ -13,6 +13,8 @@ import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.Info;
 import com.ins.aimai.bean.common.TestBean;
+import com.ins.aimai.common.AppData;
+import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.helper.NetListHelper;
 import com.ins.aimai.ui.adapter.RecycleAdapterHomeInfo;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
@@ -111,7 +113,9 @@ public class InfoActivity extends BaseAppCompatActivity implements OnRecycleItem
 
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
-        WebActivity.start(this, "http://http://cn.bing.com");
+        Info info = adapter.getResults().get(viewHolder.getLayoutPosition());
+        String url = NetApi.getBaseUrl() + AppData.Url.newsInfo + "?newsId=" + info.getId();
+        WebActivity.start(this, info.getTitle(), url);
     }
 
     @Override

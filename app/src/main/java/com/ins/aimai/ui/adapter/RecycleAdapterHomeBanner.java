@@ -11,6 +11,7 @@ import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.bumptech.glide.Glide;
 import com.ins.aimai.R;
+import com.ins.aimai.common.AppData;
 import com.ins.aimai.ui.activity.InfoActivity;
 import com.ins.aimai.ui.activity.WebActivity;
 import com.ins.common.entity.Image;
@@ -60,6 +61,25 @@ public class RecycleAdapterHomeBanner extends DelegateAdapter.Adapter<RecycleAda
             }
         });
         holder.banner.setOnBannerClickListener(onBannerClickListener);
+
+        holder.lay_home_about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WebActivity.start(context, "关于我们", AppData.Url.about);
+            }
+        });
+        holder.lay_home_quali.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WebActivity.start(context, "资质", AppData.Url.quelity);
+            }
+        });
+        holder.lay_home_station.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WebActivity.start(context, "网点", AppData.Url.netpoint);
+            }
+        });
     }
 
     @Override
@@ -71,9 +91,15 @@ public class RecycleAdapterHomeBanner extends DelegateAdapter.Adapter<RecycleAda
 
         private BannerView banner;
         private View item_home_more;
+        private View lay_home_about;
+        private View lay_home_quali;
+        private View lay_home_station;
 
         public Holder(View itemView) {
             super(itemView);
+            lay_home_about = itemView.findViewById(R.id.lay_home_about);
+            lay_home_quali = itemView.findViewById(R.id.lay_home_quali);
+            lay_home_station = itemView.findViewById(R.id.lay_home_station);
             banner = (BannerView) itemView.findViewById(R.id.banner);
             item_home_more = itemView.findViewById(R.id.item_home_more);
             banner.showTitle(false);
