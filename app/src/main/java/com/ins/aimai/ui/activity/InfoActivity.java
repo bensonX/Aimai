@@ -114,8 +114,9 @@ public class InfoActivity extends BaseAppCompatActivity implements OnRecycleItem
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
         Info info = adapter.getResults().get(viewHolder.getLayoutPosition());
-        String url = NetApi.getBaseUrl() + AppData.Url.newsInfo + "?newsId=" + info.getId();
-        WebActivity.start(this, info.getTitle(), url);
+        WebInfoActivity.start(this,info);
+//        String url = NetApi.getBaseUrl() + AppData.Url.newsInfo + "?newsId=" + info.getId();
+//        WebActivity.start(this, info.getTitle(), url);
     }
 
     @Override

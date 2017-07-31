@@ -11,8 +11,8 @@
 
     <!--微信支付-->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 
     <application
@@ -50,8 +50,10 @@
         </activity>
         <activity
             android:name=".ui.activity.HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar"
             android:launchMode="singleTask"/>
+        <activity
+            android:name=".ui.activity.LoginActivity"
+            android:launchMode="singleTask" />
         <activity
             android:name=".ui.activity.VideoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -62,14 +64,17 @@
         <activity
             android:name=".ui.activity.LoadUpActivity"
             android:theme="@style/AppTheme.NoTitleFullscreen" />
-        <activity android:name=".wxapi.WXPayEntryActivity"
-            android:launchMode="singleTask"/>
-        <activity android:name=".ui.activity.CameraActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.activity.CameraActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.LessonActivity" />
         <activity android:name=".ui.activity.LessonDetailActivity" />
-        <activity android:name=".ui.activity.MeDetailActivity"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity
+            android:name=".ui.activity.MeDetailActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity android:name=".ui.activity.OrderActivity" />
         <activity android:name=".ui.activity.FavoActivity"></activity>
         <activity android:name=".ui.activity.MsgActivity" />
@@ -80,7 +85,7 @@
         <activity android:name=".ui.activity.ModifyPswActivity" />
         <activity android:name=".ui.activity.ForgetPswActivity" />
         <activity android:name=".ui.activity.WebActivity" />
-        <activity android:name=".ui.activity.LoginActivity" />
+        <activity android:name=".ui.activity.WebInfoActivity" />
         <activity android:name=".ui.activity.RegistActivity" />
         <activity android:name=".ui.activity.InfoActivity" />
         <activity android:name=".ui.activity.InfoSearchActivity" />
@@ -101,6 +106,7 @@
         <activity android:name=".ui.activity.CompInfoActivity" />
         <activity android:name=".ui.activity.LessonEmployActivity" />
         <activity android:name=".ui.activity.PhotoActivity" />
+        <activity android:name=".ui.activity.VersionActivity" />
 
     </application>
 </manifest>

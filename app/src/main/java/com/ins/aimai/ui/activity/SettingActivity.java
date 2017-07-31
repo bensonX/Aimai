@@ -17,6 +17,7 @@ import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.ui.dialog.DialogSure;
 import com.ins.common.utils.ClearCacheUtil;
+import com.shelwee.update.utils.VersionUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -25,6 +26,7 @@ import java.util.Map;
 public class SettingActivity extends BaseAppCompatActivity implements View.OnClickListener {
 
     private TextView text_setting_catchsize;
+    private TextView text_setting_version_name;
     private View lay_setting_logout;
 
     public static void start(Context context) {
@@ -48,16 +50,19 @@ public class SettingActivity extends BaseAppCompatActivity implements View.OnCli
 
     private void initView() {
         text_setting_catchsize = (TextView) findViewById(R.id.text_setting_catchsize);
+        text_setting_version_name = (TextView) findViewById(R.id.text_setting_version_name);
         lay_setting_logout = findViewById(R.id.lay_setting_logout);
         findViewById(R.id.text_setting_definition).setOnClickListener(this);
         findViewById(R.id.text_setting_modifypsw).setOnClickListener(this);
         findViewById(R.id.text_setting_clear).setOnClickListener(this);
+        findViewById(R.id.text_setting_version).setOnClickListener(this);
         findViewById(R.id.text_setting_about).setOnClickListener(this);
         findViewById(R.id.text_setting_logout).setOnClickListener(this);
     }
 
     private void initCtrl() {
         text_setting_catchsize.setText(ClearCacheUtil.getAppCacheSize(this));
+        text_setting_version_name.setText(VersionUtil.getVersion(this));
         if (AppData.App.getUser() == null) {
             lay_setting_logout.setVisibility(View.GONE);
         } else {
@@ -89,6 +94,9 @@ public class SettingActivity extends BaseAppCompatActivity implements View.OnCli
                         text_setting_catchsize.setText(ClearCacheUtil.getAppCacheSize(SettingActivity.this));
                     }
                 });
+                break;
+            case R.id.text_setting_version:
+                VersionActivity.start(this);
                 break;
             case R.id.text_setting_about:
                 WebActivity.start(this, "关于我们", "http://www.baidu.com");

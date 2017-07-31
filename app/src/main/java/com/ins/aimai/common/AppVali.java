@@ -26,6 +26,38 @@ public class AppVali {
         }
     }
 
+    public static String modifyPsw(String oldPsw, String newPsw, String newPsw_repeat) {
+        if (isEmpty(oldPsw)) {
+            return "请输入旧密码";
+        } else if (isEmpty(newPsw)) {
+            return "请输入新密码";
+        } else if (isEmpty(newPsw_repeat)) {
+            return "请再次输入新密码";
+        } else if (!length(oldPsw, 6, 32)) {
+            return "旧密码格式不正确";
+        } else if (!length(newPsw, 6, 32)) {
+            return "新密码格式不正确";
+        } else if (!newPsw.equals(newPsw_repeat)) {
+            return "两次输入不一致";
+        } else {
+            return null;
+        }
+    }
+
+    public static String forgetPsw(String newPsw, String newPsw_repeat) {
+        if (isEmpty(newPsw)) {
+            return "请输入新密码";
+        } else if (isEmpty(newPsw_repeat)) {
+            return "请再次输入新密码";
+        } else if (!length(newPsw, 6, 32)) {
+            return "新密码格式不正确";
+        } else if (!newPsw.equals(newPsw_repeat)) {
+            return "两次输入不一致";
+        } else {
+            return null;
+        }
+    }
+
     public static String phone(String phone) {
         if (TextUtils.isEmpty(phone)) {
             return "请输入手机号";

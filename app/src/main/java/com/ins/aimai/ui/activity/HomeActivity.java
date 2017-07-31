@@ -16,9 +16,11 @@ import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.utils.PermissionsUtil;
 import com.ins.common.utils.StatusBarTextUtil;
+import com.shelwee.update.UpdateHelper;
 
 public class HomeActivity extends BaseAppCompatActivity {
 
+    private UpdateHelper updateHelper;
     private RadioGroup group_tab;
     private ViewPager pager;
     private PagerAdapterHome pagerAdapter;
@@ -46,7 +48,12 @@ public class HomeActivity extends BaseAppCompatActivity {
         setNeedDoubleClickExit(true);
         registEventBus();
 
+        //权限检查
         PermissionsUtil.checkAndRequestPermissions(this);
+        //版本更新检查
+        //检查更新
+        updateHelper = new UpdateHelper.Builder(this).checkUrl(VersionActivity.versionUrl).isHintNewVersion(false).build();
+        updateHelper.check();
 
         StatusBarTextUtil.transparencyBar(HomeActivity.this);
         StatusBarTextUtil.StatusBarLightMode(HomeActivity.this);
@@ -57,16 +64,18 @@ public class HomeActivity extends BaseAppCompatActivity {
         initData();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (updateHelper != null) updateHelper.onDestory();
+    }
+
     private void initBase() {
-//        TypedArray actionbarSizeTypedArray = this.obtainStyledAttributes(new int[] { android.R.attr.actionBarSize });
-//        float result = actionbarSizeTypedArray.getDimension(0, 0);
-//        Toast.makeText(HomeActivity.this,result+":"+ DensityUtil.px2dp(this,result),Toast.LENGTH_SHORT).show();
     }
 
     private void initView() {
         pager = (ViewPager) findViewById(R.id.pager_home);
         group_tab = (RadioGroup) findViewById(R.id.group_tab);
-//        pager.setOffscreenPageLimit(4);
     }
 
     private void initCtrl() {

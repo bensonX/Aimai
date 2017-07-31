@@ -44,6 +44,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <RadioGroup
+            android:id="@+id/radiogroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -53,6 +54,7 @@
             <View style="@style/Line_H" />
 
             <RadioButton
+                android:id="@+id/radio_definition_low"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -70,6 +72,7 @@
                 android:layout_marginLeft="10dp" />
 
             <RadioButton
+                android:id="@+id/radio_definition_hight"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"

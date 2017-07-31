@@ -55,8 +55,10 @@
             <com.ins.common.view.EmojiEditText
                 android:id="@+id/edit_modifypsw_oldpsw"
                 style="@style/EditMeItem"
+                android:digits="0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
                 android:hint="输入原始密码"
-                android:inputType="textPersonName" />
+                android:inputType="textPassword"
+                android:maxLength="32" />
 
             <View
                 style="@style/Line_H"
@@ -65,8 +67,10 @@
             <com.ins.common.view.EmojiEditText
                 android:id="@+id/edit_modifypsw_newpsw"
                 style="@style/EditMeItem"
+                android:digits="0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
                 android:hint="输入新密码"
-                android:inputType="textPersonName" />
+                android:inputType="textPassword"
+                android:maxLength="32" />
 
             <View
                 style="@style/Line_H"
@@ -75,8 +79,10 @@
             <com.ins.common.view.EmojiEditText
                 android:id="@+id/edit_modifypsw_newpsw_repeat"
                 style="@style/EditMeItem"
+                android:digits="0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
                 android:hint="再次输入新密码"
-                android:inputType="textPersonName" />
+                android:inputType="textPassword"
+                android:maxLength="32" />
 
             <View style="@style/Line_H" />
 

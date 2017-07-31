@@ -395,7 +395,7 @@ public class RegistInfoFragment extends BaseFragment implements View.OnClickList
                 AppData.App.saveUser(user);
                 //注册不保存状态
                 //AppData.App.saveToken(user.getToken());
-                EventBus.getDefault().post(new EventBean(EventBean.EVENT_LOGIN));
+                //EventBus.getDefault().post(new EventBean(EventBean.EVENT_LOGIN));
                 getActivity().finish();
             }
 

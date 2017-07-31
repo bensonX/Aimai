@@ -16,6 +16,7 @@ import com.ins.aimai.interfaces.PagerFragmentInter;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
+import com.ins.aimai.ui.activity.RegistActivity;
 import com.ins.aimai.ui.base.BaseFragment;
 import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.helper.ValiHelper;
@@ -23,6 +24,9 @@ import com.ins.common.helper.ValiHelper;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.Map;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
 
 /**
  * Created by liaoinstan
@@ -119,7 +123,13 @@ public class PhoneValiFragment extends BaseFragment implements View.OnClickListe
         Map<String, Object> param = new NetParam()
                 .put("phone", phone)
                 .build();
-        NetApi.NI().sendMessageRegist(param).enqueue(new BaseCallback<String>(String.class) {
+        Call<ResponseBody> call;
+        if (getActivity() instanceof RegistActivity) {
+            call = NetApi.NI().sendMessageRegist(param);
+        } else {
+            call = NetApi.NI().sendMessage(param);
+        }
+        call.enqueue(new BaseCallback<String>(String.class) {
             @Override
             public void onSuccess(int status, String bean, String msg) {
                 valiHelper.phone = phone;

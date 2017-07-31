@@ -20,7 +20,9 @@ import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
 import com.ins.aimai.net.helper.NetListHelper;
+import com.ins.aimai.ui.activity.MsgActivity;
 import com.ins.aimai.ui.activity.WebActivity;
+import com.ins.aimai.ui.activity.WebInfoActivity;
 import com.ins.aimai.ui.adapter.RecycleAdapterHomeBanner;
 import com.ins.aimai.ui.adapter.RecycleAdapterHomeInfo;
 import com.ins.aimai.ui.base.BaseFragment;
@@ -40,10 +42,12 @@ import java.util.Map;
 /**
  * Created by liaoinstan
  */
-public class HomeFragment extends BaseFragment implements OnRecycleItemClickListener, BannerView.OnBannerClickListener {
+public class HomeFragment extends BaseFragment implements OnRecycleItemClickListener, BannerView.OnBannerClickListener, View.OnClickListener {
 
     private int position;
     private View rootView;
+
+    private View img_msg_dot;
 
     private LoadingLayout loadingLayout;
     private SpringView springView;
@@ -93,7 +97,8 @@ public class HomeFragment extends BaseFragment implements OnRecycleItemClickList
         loadingLayout = (LoadingLayout) rootView.findViewById(R.id.loadingLayout);
         recycler = (RecyclerView) rootView.findViewById(R.id.recycler);
         springView = (SpringView) rootView.findViewById(R.id.spring);
-
+        img_msg_dot = rootView.findViewById(R.id.img_msg_dot);
+        rootView.findViewById(R.id.btn_right).setOnClickListener(this);
     }
 
     private void initCtrl() {
@@ -148,17 +153,28 @@ public class HomeFragment extends BaseFragment implements OnRecycleItemClickList
     }
 
     @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_right:
+                MsgActivity.start(getActivity());
+                break;
+        }
+    }
+
+    @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
         Info info = adapterInfo.getResults().get(viewHolder.getLayoutPosition() - 1);
-        String url = NetApi.getBaseUrl() + AppData.Url.newsInfo + "?newsId=" + info.getId();
-        WebActivity.start(getContext(), info.getTitle(), url);
+        WebInfoActivity.start(getContext(), info);
+//        String url = NetApi.getBaseUrl() + AppData.Url.newsInfo + "?newsId=" + info.getId();
+//        WebActivity.start(getContext(), info.getTitle(), url);
     }
 
     @Override
     public void onBannerClick(int position) {
         Image img = adapterBanner.getResults().get(position);
-        String url = NetApi.getBaseUrl() + AppData.Url.bannerInfo + "?bannerId=" + img.getId();
-        WebActivity.start(getContext(), img.getTitle(), url);
+        WebInfoActivity.start(getContext(), img);
+//        String url = NetApi.getBaseUrl() + AppData.Url.bannerInfo + "?bannerId=" + img.getId();
+//        WebActivity.start(getContext(), img.getTitle(), url);
     }
 
     private void netQueryBanner() {

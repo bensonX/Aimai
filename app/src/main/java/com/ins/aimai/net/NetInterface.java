@@ -63,7 +63,6 @@ public interface NetInterface {
     Call<ResponseBody> queryBanner(@FieldMap Map<String, Object> param);
 
 
-
     //##################################################################
     //#########               登录注册个人中心
     //##################################################################
@@ -91,11 +90,24 @@ public interface NetInterface {
     Call<ResponseBody> getInfo(@FieldMap Map<String, Object> param);
 
     /**
+     * 更新用户信息
      * java.lang.String showName, java.lang.String avatar, java.lang.Integer cityId, java.lang.Integer definition
      */
     @FormUrlEncoded
     @POST("/api/user/updateUser")
     Call<ResponseBody> updateUser(@FieldMap Map<String, Object> param);
+
+    /**
+     * 更新用户信息
+     * 修改或忘记密码
+     * 找回密码 | 修改密码,旧密码 和 手机号 互斥存在 手机号存在 则 不知道旧密码|忘记密码 修改密码
+     * newPwd
+     * oldPwd
+     * phone
+     */
+    @FormUrlEncoded
+    @POST("/api//user/setPwd")
+    Call<ResponseBody> setPwd(@FieldMap Map<String, Object> param);
 
     /**
      * 获取验证码
@@ -135,6 +147,19 @@ public interface NetInterface {
     @FormUrlEncoded
     @POST("/api/city/queryCityByParentId")
     Call<ResponseBody> queryCity(@FieldMap Map<String, Object> param);
+
+    //##################################################################
+    //#########               收藏
+    //##################################################################
+
+    /**
+     * 添加收藏
+     * type 收藏类型 参数类型:int  0:资讯 1:课程 2：考题
+     * targetId
+     */
+    @FormUrlEncoded
+    @POST("/api/collect/addCollect")
+    Call<ResponseBody> addCollect(@FieldMap Map<String, Object> param);
 
     //##################################################################
     //#########               课时

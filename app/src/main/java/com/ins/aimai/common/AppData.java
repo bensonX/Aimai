@@ -83,7 +83,7 @@ public class AppData {
         /**
          * 接口请求地址
          */
-        public static String version = "updateAPK/version_feast.json";                                   //客户端检查更新
+        public static String version = "api/updateAPK/version_feast.json";                                   //客户端检查更新
         public static String upload = "images/res/upload";                                                 //上传文件
 
         public static String bannerInfo = "api/page/app/bannerInfo";                                            //banner详情?bannerId=1

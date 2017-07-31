@@ -80,6 +80,7 @@ public class NetHelper {
         });
     }
 
+    //查询课程详情
     public void netQueryLessonDetail(int type, int lessonId, int orderId, final OnLessonCallback callback) {
         if (type == 0) {
             Map<String, Object> param = new NetParam()

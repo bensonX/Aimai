@@ -3,10 +3,12 @@ package com.ins.aimai.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.ins.aimai.R;
+import com.ins.aimai.interfaces.PagerFragmentInter;
 import com.ins.aimai.ui.adapter.PagerAdapterForgetPsw;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.common.utils.ViewPagerUtil;
@@ -77,7 +79,14 @@ public class ForgetPswActivity extends BaseAppCompatActivity implements View.OnC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_right:
-                ViewPagerUtil.next(pager);
+                Fragment currentFragment = adapterPager.getCurrentFragment();
+                if (currentFragment instanceof PagerFragmentInter) {
+                    if (((PagerFragmentInter) currentFragment).next()) {
+                        ViewPagerUtil.next(pager);
+                    }
+                } else {
+                    ViewPagerUtil.next(pager);
+                }
                 break;
         }
     }
