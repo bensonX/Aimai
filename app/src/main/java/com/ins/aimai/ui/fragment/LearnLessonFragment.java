@@ -13,13 +13,19 @@ import android.view.ViewGroup;
 import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.Study;
+import com.ins.aimai.bean.User;
+import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.bean.common.TestBean;
+import com.ins.aimai.common.AppData;
+import com.ins.aimai.common.AppHelper;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
 import com.ins.aimai.ui.activity.LessonDetailActivity;
 import com.ins.aimai.ui.activity.VideoActivity;
 import com.ins.aimai.ui.adapter.RecycleAdapterLearnLesson;
+import com.ins.aimai.ui.adapter.RecycleAdapterLearnLessonComp;
+import com.ins.aimai.ui.adapter.base.BaseRecycleAdapterLearnLesson;
 import com.ins.aimai.ui.base.BaseFragment;
 import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.helper.LoadingViewHelper;
@@ -45,7 +51,7 @@ public class LearnLessonFragment extends BaseFragment implements OnRecycleItemCl
 
     private SpringView springView;
     private RecyclerView recycler;
-    private RecycleAdapterLearnLesson adapter;
+    private BaseRecycleAdapterLearnLesson adapter;
 
     public static Fragment newInstance(int position) {
         LearnLessonFragment fragment = new LearnLessonFragment();
@@ -56,8 +62,16 @@ public class LearnLessonFragment extends BaseFragment implements OnRecycleItemCl
     }
 
     @Override
+    public void onCommonEvent(EventBean event) {
+        if (event.getEvent() == EventBean.EVENT_LESSON_ALLOCAT) {
+            netQueryStudy(1);
+        }
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        registEventBus();
         this.position = getArguments().getInt("position");
     }
 
@@ -87,7 +101,12 @@ public class LearnLessonFragment extends BaseFragment implements OnRecycleItemCl
     }
 
     private void initCtrl() {
-        adapter = new RecycleAdapterLearnLesson(getContext());
+        //用户和公司使用不同的adapter
+        if (AppHelper.isUser()) {
+            adapter = new RecycleAdapterLearnLesson(getContext());
+        } else {
+            adapter = new RecycleAdapterLearnLessonComp(getContext());
+        }
         recycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recycler.setAdapter(adapter);
         adapter.setOnItemClickListener(this);
@@ -118,8 +137,14 @@ public class LearnLessonFragment extends BaseFragment implements OnRecycleItemCl
 
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
-        Study study = adapter.getResults().get(viewHolder.getLayoutPosition());
-        VideoActivity.startByOrder(getContext(), study.getOrderId());
+        List<Study> results = adapter.getResults();
+        Study study = results.get(viewHolder.getLayoutPosition());
+        //个人进入播放页面，其余进入详情页面
+        if (AppHelper.isUser()) {
+            VideoActivity.startByOrder(getContext(), study.getOrderId());
+        } else {
+            LessonDetailActivity.startByOrder(getContext(), study);
+        }
     }
 
     ///////////////////////////////////

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.ins.aimai.bean.CourseWare;
 import com.ins.aimai.bean.Lesson;
+import com.ins.aimai.bean.User;
 import com.ins.aimai.bean.Video;
 import com.ins.aimai.bean.VideoStatus;
 import com.ins.aimai.bean.common.CheckPoint;
@@ -34,6 +35,16 @@ public class AppHelper {
     public static void hideLoadingDialog(Context context) {
         if (context instanceof BaseAppCompatActivity) {
             ((BaseAppCompatActivity) context).hideLoadingDialog();
+        }
+    }
+
+    //判断当前登录用户是否为普通用户，未登录返回否
+    public static boolean isUser() {
+        User user = AppData.App.getUser();
+        if (user != null && user.isUser()) {
+            return true;
+        } else {
+            return false;
         }
     }
 

@@ -10,6 +10,7 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
+import android.text.style.RelativeSizeSpan;
 
 import com.ins.common.common.ConerBkSpan;
 
@@ -57,6 +58,22 @@ public class SpannableStringUtil {
             int start = end;
             end += strs[i].length();
             strSpan.setSpan(new ForegroundColorSpan(colors[i]), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        return strSpan;
+    }
+
+    //生成一条SpannableString，指定每一段文字和对应大小，要求strs，size不为空，且长度一样：不验证自行遵守
+    public static SpannableString createSize(String[] strs, float[] sizes) {
+        String strall = "";
+        for (String str : strs) {
+            strall += str;
+        }
+        SpannableString strSpan = new SpannableString(strall);
+        int end = 0;
+        for (int i = 0; i < strs.length; i++) {
+            int start = end;
+            end += strs[i].length();
+            strSpan.setSpan(new RelativeSizeSpan(sizes[i]), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         return strSpan;
     }

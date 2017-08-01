@@ -17,36 +17,53 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
+import com.ins.aimai.bean.User;
+import com.ins.aimai.bean.common.CommonBean;
+import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.bean.common.SortBean;
+import com.ins.aimai.common.AppVali;
+import com.ins.aimai.net.BaseCallback;
+import com.ins.aimai.net.NetApi;
+import com.ins.aimai.net.NetParam;
 import com.ins.aimai.ui.adapter.RecycleAdapterSortUser;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.aimai.utils.ColorUtil;
 import com.ins.aimai.utils.SortUtil;
+import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.common.ItemDecorationSortStickTop;
 import com.ins.common.helper.LoadingViewHelper;
+import com.ins.common.ui.dialog.DialogSure;
+import com.ins.common.utils.ClearCacheUtil;
 import com.ins.common.utils.FocusUtil;
+import com.ins.common.utils.StrUtil;
 import com.ins.common.view.IndexBar;
+import com.ins.common.view.LoadingLayout;
 import com.ins.common.view.SideBar;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class SortUserActivity extends BaseAppCompatActivity implements View.OnClickListener {
 
-    private View showin;
-    private ViewGroup showingroup;
+    private LoadingLayout loadingLayout;
 
     private EditText edit_query;
     private IndexBar index_bar;
     private RecyclerView recycler;
     private RecycleAdapterSortUser adapter;
     private ItemDecorationSortStickTop decoration;
-    private List<SortBean> results = new ArrayList<>();
     private LinearLayoutManager layoutManager;
 
-    public static void start(Context context) {
+    private int orderId;
+
+    public static void start(Context context, int orderId) {
         Intent intent = new Intent(context, SortUserActivity.class);
+        intent.putExtra("orderId", orderId);
         context.startActivity(intent);
     }
 
@@ -55,13 +72,20 @@ public class SortUserActivity extends BaseAppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sort_user);
         setToolbar();
+        initBase();
         initView();
         initCtrl();
         initData();
     }
 
+    private void initBase() {
+        if (getIntent().hasExtra("orderId")) {
+            orderId = getIntent().getIntExtra("orderId", 0);
+        }
+    }
+
     public void initView() {
-        showingroup = (ViewGroup) findViewById(R.id.showingroup);
+        loadingLayout = (LoadingLayout) findViewById(R.id.loadingLayout);
         edit_query = (EditText) findViewById(R.id.edit_query);
         index_bar = (IndexBar) findViewById(R.id.index_bar);
         recycler = (RecyclerView) findViewById(R.id.rl_recycle_view);
@@ -74,12 +98,18 @@ public class SortUserActivity extends BaseAppCompatActivity implements View.OnCl
         recycler.setLayoutManager(layoutManager = new LinearLayoutManager(this));
         recycler.addItemDecoration(decoration = new ItemDecorationSortStickTop(this, ColorUtil.colors));
         recycler.setAdapter(adapter);
+        loadingLayout.setOnRefreshListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initData();
+            }
+        });
 
         index_bar.setColors(ColorUtil.colors);
         index_bar.addOnIndexChangeListener(new SideBar.OnIndexChangeListener() {
             @Override
             public void onIndexChanged(float centerY, String tag, int position) {
-                int pos = SortUtil.getPosByTag(results, tag);
+                int pos = SortUtil.getPosByTag(adapter.getResults(), tag);
                 if (pos != -1) layoutManager.scrollToPositionWithOffset(pos, 0);
             }
         });
@@ -102,35 +132,30 @@ public class SortUserActivity extends BaseAppCompatActivity implements View.OnCl
     }
 
     private void initData() {
-        showin = LoadingViewHelper.showin(showingroup, R.layout.layout_loading, showin);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                String[] names = {"孙尚香", "安其拉", "白起", "不知火舞", "@小马快跑", "_德玛西亚之力_", "妲己", "狄仁杰", "典韦", "韩信",
-                        "老夫子", "刘邦", "刘禅", "鲁班七号", "墨子", "孙膑", "孙尚香", "孙悟空", "项羽", "亚瑟",
-                        "周瑜", "庄周", "蔡文姬", "甄姬", "廉颇", "程咬金", "后羿", "扁鹊", "钟无艳", "小乔", "王昭君", "虞姬",
-                        "李元芳", "张飞", "刘备", "牛魔", "张良", "兰陵王", "露娜", "貂蝉", "达摩", "曹操", "芈月", "荆轲", "高渐离",
-                        "钟馗", "花木兰", "关羽", "李白", "宫本武藏", "吕布", "嬴政", "娜可露露", "武则天", "赵云", "姜子牙",};
-                for (String name : names) {
-                    SortBean bean = new SortBean();
-                    bean.setName(name);
-                    results.add(bean);
-                }
-                freshData(results);
-                LoadingViewHelper.showout(showingroup, showin);
-            }
-        }, 1000);
+        netQueryUserAlloc();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_right:
+                final String ids = adapter.getSelectedIds();
+                String msg = AppVali.allocatLesson(ids);
+                if (msg != null) {
+                    ToastUtil.showToastShort(msg);
+                } else {
+                    DialogSure.showDialog(this, "确定要为这些员工分配课程？", new DialogSure.CallBack() {
+                        @Override
+                        public void onSure() {
+                            netAddAllocation(ids);
+                        }
+                    });
+                }
                 break;
         }
     }
 
-    private void freshData(List<SortBean> results) {
+    private void freshData(List<User> results) {
         SortUtil.sortData(results);
         String tagsStr = SortUtil.getTags(results);
         List<String> tagsArr = SortUtil.getTagsArr(results);
@@ -142,8 +167,8 @@ public class SortUserActivity extends BaseAppCompatActivity implements View.OnCl
     }
 
     public void search(String filterStr) {
-        List<SortBean> resultsSort = new ArrayList<>();
-        for (SortBean sortBean : results) {
+        List<User> resultsSort = new ArrayList<>();
+        for (User sortBean : adapter.getResults()) {
             if (SortUtil.match(sortBean, filterStr)) {
                 resultsSort.add(sortBean);
             }
@@ -152,12 +177,74 @@ public class SortUserActivity extends BaseAppCompatActivity implements View.OnCl
     }
 
     //给Edit设置Hint文字（带图片）
-    private SpannableString makeSearchHint(){
+    private SpannableString makeSearchHint() {
         SpannableString spannableString = new SpannableString("1 搜索");
         Drawable drawable = getResources().getDrawable(R.drawable.ic_home_search_edit);
         drawable.setBounds(0, 0, 42, 42);
         ImageSpan imageSpan = new ImageSpan(drawable);
         spannableString.setSpan(imageSpan, 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         return spannableString;
+    }
+
+    private void netQueryUserAlloc() {
+        Map<String, Object> param = new NetParam()
+                .put("orderId", orderId)
+                .put("isAllocation", 1)
+                .put("pageNO", 1)
+                .put("pageSize", 1000)
+                .build();
+        loadingLayout.showLoadingView();
+        NetApi.NI().queryUserAlloc(param).enqueue(new BaseCallback<List<User>>(new TypeToken<List<User>>() {
+        }.getType()) {
+            @Override
+            public void onSuccess(int status, List<User> users, String msg) {
+                if (!StrUtil.isEmpty(users)) {
+                    convert(users);
+                    freshData(users);
+                    loadingLayout.showOut();
+                } else {
+                    loadingLayout.showLackView();
+                }
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+                ToastUtil.showToastShort(msg);
+                loadingLayout.showOut();
+            }
+        });
+    }
+
+    private void convert(List<User> users) {
+        for (User user : users) {
+            user.setSortName(user.getShowName());
+        }
+    }
+
+    private void netAddAllocation(final String ids) {
+        Map<String, Object> param = new NetParam()
+                .put("orderId", orderId)
+                .put("userIds", ids)
+                .put("number", 1)
+                .build();
+        showLoadingDialog();
+        NetApi.NI().addAllocation(param).enqueue(new BaseCallback<CommonBean>(CommonBean.class) {
+            @Override
+            public void onSuccess(int status, CommonBean com, String msg) {
+                ToastUtil.showToastShort(msg, true);
+                hideLoadingDialog();
+                //post分配成功消息，附带分配人数（课程数）
+                EventBean eventBean = new EventBean(EventBean.EVENT_LESSON_ALLOCAT);
+                eventBean.put("count", ids.split(",").length);
+                EventBus.getDefault().post(eventBean);
+                finish();
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+                ToastUtil.showToastShort(msg);
+                hideLoadingDialog();
+            }
+        });
     }
 }

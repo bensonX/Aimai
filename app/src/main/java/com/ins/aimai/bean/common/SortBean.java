@@ -3,49 +3,51 @@ package com.ins.aimai.bean.common;
 import android.text.Html;
 import android.text.TextUtils;
 
+import com.ins.common.entity.BaseSelectBean;
+
 /**
  * by liaoinstan
  * 排序列表实体基类，提供基础字段，这些字段必须存在，其余需求增加字段可以基础该类进行拓展
  */
 
-public class SortBean {
+public class SortBean extends BaseSelectBean{
 
     //根据name解析出的首字母，例如（'廖'->'l'）
-    private String tag;
+    private String sortTag;
     //名称，也是选择实体的唯一选择依据
-    private String name;
+    private String sortName;
     //存储名称的有色html字符，（用户查找匹配的时候匹配部分文字要变为高亮，未匹配部分原色，为实现这种复杂颜色字符串，这里采用html文本添加color标签处理，也可以使用SpanableString）
-    private String nameHtml;
+    private String sortNameHtml;
 
-    public String getTag() {
-        return tag;
+    public String getSortTag() {
+        return sortTag;
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
+    public void setSortTag(String sortTag) {
+        this.sortTag = sortTag;
     }
 
-    public String getName() {
-        return name;
+    public String getSortName() {
+        return sortName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSortName(String sortName) {
+        this.sortName = sortName;
     }
 
-    public String getNameHtml() {
-        return nameHtml;
+    public String getSortNameHtml() {
+        return sortNameHtml;
     }
 
-    public void setNameHtml(String nameHtml) {
-        this.nameHtml = nameHtml;
+    public void setSortNameHtml(String sortNameHtml) {
+        this.sortNameHtml = sortNameHtml;
     }
 
-    public CharSequence getNameSmart() {
-        if (!TextUtils.isEmpty(nameHtml)){
-            return Html.fromHtml(nameHtml);
+    public CharSequence getSortNameSmart() {
+        if (!TextUtils.isEmpty(sortNameHtml)){
+            return Html.fromHtml(sortNameHtml);
         }else {
-            return name;
+            return sortName;
         }
     }
 }

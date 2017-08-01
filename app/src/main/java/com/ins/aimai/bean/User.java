@@ -1,6 +1,7 @@
 package com.ins.aimai.bean;
 
 import com.google.gson.annotations.SerializedName;
+import com.ins.aimai.bean.common.SortBean;
 
 import java.io.Serializable;
 
@@ -8,7 +9,7 @@ import java.io.Serializable;
  * 用户 entity
  * Created by Eric Xie on 2017/7/12 0012.
  */
-public class User implements Serializable {
+public class User extends SortBean implements Serializable {
 
     public static final int NONE = 0;
     public static final int ADMIN_USER = 1;              // 平台用户

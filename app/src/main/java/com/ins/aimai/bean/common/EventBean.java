@@ -36,6 +36,10 @@ public class EventBean implements Serializable {
     public static final int EVENT_VIDEO_FINISH = 0xffa011;
     //人脸采集页面返回结果
     public static final int EVENT_CAMERA_RESULT = 0xffa012;
+    //添加员工成功
+    public static final int EVENT_EMPLOY_ADD = 0xffa013;
+    //课程分配成功
+    public static final int EVENT_LESSON_ALLOCAT = 0xffa014;
 
     private int event;
     private Map<String, Object> map = new HashMap<>();

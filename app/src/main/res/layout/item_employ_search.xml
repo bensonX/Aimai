@@ -31,7 +31,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_name"
+                android:id="@+id/text_employ_search_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -40,12 +40,12 @@
                 android:textSize="@dimen/text_nomal" />
 
             <TextView
-                android:id="@+id/tv_phone"
+                android:id="@+id/text_employ_search_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:gravity="center_vertical"
-                android:text="魔豆互动科技有限公司"
+                android:text="180****5412"
                 android:textColor="@color/com_text_dark_light"
                 android:textSize="@dimen/text_small" />
 

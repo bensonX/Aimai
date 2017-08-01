@@ -6,10 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.ins.aimai.R;
-import com.ins.aimai.bean.common.TestBean;
+import com.ins.aimai.bean.User;
 import com.ins.aimai.ui.activity.EmployAddActivity;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
 import com.ins.common.utils.GlideUtil;
@@ -21,9 +22,9 @@ public class RecycleAdapterEmploySearch extends RecyclerView.Adapter<RecycleAdap
 
     private Context context;
     private LayoutHelper layoutHelper;
-    private List<TestBean> results = new ArrayList<>();
+    private List<User> results = new ArrayList<>();
 
-    public List<TestBean> getResults() {
+    public List<User> getResults() {
         return results;
     }
 
@@ -38,20 +39,22 @@ public class RecycleAdapterEmploySearch extends RecyclerView.Adapter<RecycleAdap
 
     @Override
     public void onBindViewHolder(final RecycleAdapterEmploySearch.Holder holder, final int position) {
-        final TestBean bean = results.get(position);
+        final User user = results.get(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) listener.onItemClick(holder);
             }
         });
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.btn_employ_search_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EmployAddActivity.start(context);
+                EmployAddActivity.start(context, user);
             }
         });
-        GlideUtil.loadCircleImgTest(holder.img_employ_search_header);
+        GlideUtil.loadCircleImg(holder.img_employ_search_header, R.drawable.default_header_edit, user.getAvatar());
+        holder.text_employ_search_name.setText(user.getShowName());
+        holder.text_employ_search_phone.setText(user.getPhone());
     }
 
     @Override
@@ -62,11 +65,15 @@ public class RecycleAdapterEmploySearch extends RecyclerView.Adapter<RecycleAdap
     public class Holder extends RecyclerView.ViewHolder {
 
         private ImageView img_employ_search_header;
+        private TextView text_employ_search_name;
+        private TextView text_employ_search_phone;
         private View btn_employ_search_add;
 
         public Holder(View itemView) {
             super(itemView);
             img_employ_search_header = (ImageView) itemView.findViewById(R.id.img_employ_search_header);
+            text_employ_search_name = (TextView) itemView.findViewById(R.id.text_employ_search_name);
+            text_employ_search_phone = (TextView) itemView.findViewById(R.id.text_employ_search_phone);
             btn_employ_search_add = itemView.findViewById(R.id.btn_employ_search_add);
         }
     }

@@ -3,6 +3,7 @@ package com.ins.aimai.utils;
 import com.github.promeg.pinyinhelper.Pinyin;
 import com.ins.aimai.bean.common.SortBean;
 import com.ins.common.common.CharacterParser;
+import com.ins.common.entity.BaseSelectBean;
 import com.ins.common.utils.StrUtil;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * Created by MQ on 2017/5/3.
+ * Created by liaoinstan on 2017/5/3.
  */
 
 public class SortUtil {
@@ -21,36 +22,36 @@ public class SortUtil {
      *
      * @param list 要进行排序的数据源
      */
-    public static void sortData(List<SortBean> list) {
+    public static <T extends SortBean> void sortData(List<T> list) {
         if (list == null || list.size() == 0) return;
         for (int i = 0; i < list.size(); i++) {
             SortBean bean = list.get(i);
-            String tag = Pinyin.toPinyin(bean.getName().substring(0, 1).charAt(0)).substring(0, 1);
+            String tag = Pinyin.toPinyin(bean.getSortName().substring(0, 1).charAt(0)).substring(0, 1);
             if (tag.matches("[A-Z]")) {
-                bean.setTag(tag);
+                bean.setSortTag(tag);
             } else {
-                bean.setTag("#");
+                bean.setSortTag("#");
             }
         }
         Collections.sort(list, new Comparator<SortBean>() {
             @Override
             public int compare(SortBean o1, SortBean o2) {
-                if ("#".equals(o1.getTag())) {
+                if ("#".equals(o1.getSortTag())) {
                     return 1;
-                } else if ("#".equals(o2.getTag())) {
+                } else if ("#".equals(o2.getSortTag())) {
                     return -1;
                 } else {
-                    return o1.getTag().compareTo(o2.getTag());
+                    return o1.getSortTag().compareTo(o2.getSortTag());
                 }
             }
         });
     }
 
     //从联系人中获取tag标记的位置，如果未获取到，返回-1
-    public static int getPosByTag(List<SortBean> results, String tag) {
+    public static <T extends SortBean> int getPosByTag(List<T> results, String tag) {
         if (!StrUtil.isEmpty(results) || !StrUtil.isEmpty(tag)) {
             for (int i = 0; i < results.size(); i++) {
-                if (tag.equals(results.get(i).getTag())) {
+                if (tag.equals(results.get(i).getSortTag())) {
                     return i;
                 }
             }
@@ -62,11 +63,11 @@ public class SortUtil {
      * @param beans 数据源
      * @return tags 返回一个包含所有Tag字母在内的字符串
      */
-    public static String getTags(List<SortBean> beans) {
+    public static <T extends SortBean> String getTags(List<T> beans) {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < beans.size(); i++) {
-            if (!builder.toString().contains(beans.get(i).getTag())) {
-                builder.append(beans.get(i).getTag());
+            if (!builder.toString().contains(beans.get(i).getSortTag())) {
+                builder.append(beans.get(i).getSortTag());
             }
         }
         return builder.toString();
@@ -75,11 +76,11 @@ public class SortUtil {
     /**
      * 返回所有实体的tag集合
      */
-    public static List<String> getTagsArr(List<SortBean> beans) {
+    public static <T extends SortBean> List<String> getTagsArr(List<T> beans) {
         ArrayList<String> tagsArr = new ArrayList<>();
         if (!StrUtil.isEmpty(beans)) {
             for (SortBean bean : beans) {
-                tagsArr.add(bean.getTag());
+                tagsArr.add(bean.getSortTag());
             }
         }
         return tagsArr;
@@ -90,17 +91,17 @@ public class SortUtil {
      */
     public static boolean match(SortBean sortbean, String filterStr) {
         boolean isMatch = false;
-        String name = sortbean.getName();
+        String name = sortbean.getSortName();
         int sellingCount = matchText(name, filterStr);
         if (sellingCount != 0) {
             isMatch = true;
-            sortbean.setNameHtml("<font color='#2f76b8'><b>" + name.substring(0, sellingCount) + "</b></font>" + name.substring(sellingCount));
+            sortbean.setSortNameHtml("<font color='#2f76b8'><b>" + name.substring(0, sellingCount) + "</b></font>" + name.substring(sellingCount));
         }
         int index = name.toLowerCase().indexOf(filterStr.toLowerCase().toString());
         int length = filterStr.length();
         if (index != -1) {
             isMatch = true;
-            sortbean.setNameHtml(name.substring(0, index) + "<font color='#2f76b8'><b>" + filterStr + "</b></font>" + name.substring(index + length));
+            sortbean.setSortNameHtml(name.substring(0, index) + "<font color='#2f76b8'><b>" + filterStr + "</b></font>" + name.substring(index + length));
         }
         return isMatch;
     }

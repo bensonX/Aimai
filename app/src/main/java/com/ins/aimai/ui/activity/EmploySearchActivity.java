@@ -7,24 +7,42 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
+import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
+import com.ins.aimai.bean.User;
+import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.bean.common.TestBean;
+import com.ins.aimai.net.BaseCallback;
+import com.ins.aimai.net.NetApi;
+import com.ins.aimai.net.NetParam;
 import com.ins.aimai.ui.adapter.RecycleAdapterEmploySearch;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
+import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.common.ItemDecorationDivider;
 import com.ins.common.helper.LoadingViewHelper;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
+import com.ins.common.utils.StrUtil;
+import com.ins.common.view.LoadingLayout;
 import com.liaoinstan.springview.container.AliFooter;
 import com.liaoinstan.springview.container.AliHeader;
 import com.liaoinstan.springview.widget.SpringView;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class EmploySearchActivity extends BaseAppCompatActivity implements OnRecycleItemClickListener, View.OnClickListener {
 
-    private View showin;
-    private ViewGroup showingroup;
+    private EditText edit_employ_search;
+    private LoadingLayout loadingLayout;
     private SpringView springView;
     private RecyclerView recycler;
     private RecycleAdapterEmploySearch adapter;
@@ -42,10 +60,18 @@ public class EmploySearchActivity extends BaseAppCompatActivity implements OnRec
     }
 
     @Override
+    public void onCommonEvent(EventBean event) {
+        if (event.getEvent() == EventBean.EVENT_EMPLOY_ADD) {
+            netQueryUser(1);
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_employ_search);
         setToolbar(null, false);
+        registEventBus();
         initBase();
         initView();
         initCtrl();
@@ -56,7 +82,8 @@ public class EmploySearchActivity extends BaseAppCompatActivity implements OnRec
     }
 
     private void initView() {
-        showingroup = (ViewGroup) findViewById(R.id.showingroup);
+        edit_employ_search = (EditText) findViewById(R.id.edit_employ_search);
+        loadingLayout = (LoadingLayout) findViewById(R.id.loadingLayout);
         recycler = (RecyclerView) findViewById(R.id.recycler);
         springView = (SpringView) findViewById(R.id.spring);
         findViewById(R.id.btn_right).setOnClickListener(this);
@@ -68,52 +95,46 @@ public class EmploySearchActivity extends BaseAppCompatActivity implements OnRec
         recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recycler.addItemDecoration(new ItemDecorationDivider(this));
         recycler.setAdapter(adapter);
+        loadingLayout.setOnRefreshListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                netQueryUser(0);
+            }
+        });
         springView.setHeader(new AliHeader(this, false));
         springView.setFooter(new AliFooter(this, false));
         springView.setListener(new SpringView.OnFreshListener() {
             @Override
             public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        springView.onFinishFreshAndLoad();
-                    }
-                }, 800);
+                netQueryUser(1);
             }
 
             @Override
             public void onLoadmore() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        adapter.getResults().add(new TestBean());
-                        adapter.getResults().add(new TestBean());
-                        adapter.getResults().add(new TestBean());
-                        adapter.notifyItemRangeChanged(adapter.getItemCount() - 1 - 3, adapter.getItemCount() - 1);
-                        springView.onFinishFreshAndLoad();
-                    }
-                }, 800);
+                netQueryUser(2);
             }
         });
+        edit_employ_search.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
+                    netQueryUser(0);
+                    return true;
+                }
+                return false;
+            }
+        });
+
     }
 
     private void initData() {
-        showin = LoadingViewHelper.showin(showingroup, R.layout.layout_loading, showin);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                adapter.getResults().clear();
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.notifyDataSetChanged();
-                LoadingViewHelper.showout(showingroup, showin);
-            }
-        }, 1000);
+        netQueryUser(0);
     }
 
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
-        WebActivity.start(this, "http://http://cn.bing.com");
+        User user = adapter.getResults().get(viewHolder.getLayoutPosition());
+        UserDetailActivity.start(this, user, 1);
     }
 
     @Override
@@ -123,5 +144,70 @@ public class EmploySearchActivity extends BaseAppCompatActivity implements OnRec
                 finish();
                 break;
         }
+    }
+
+    ///////////////////////////////////
+    //////////////分页查询
+    ///////////////////////////////////
+
+    private int page;
+    private final int PAGE_COUNT = 20;
+
+    /**
+     * type:0 首次加载 1:下拉刷新 2:上拉加载
+     *
+     * @param type
+     */
+    private void netQueryUser(final int type) {
+        final String searchParam = edit_employ_search.getText().toString();
+        Map map = new HashMap<String, Object>() {{
+            put("pageNO", type == 0 || type == 1 ? "1" : page + 1 + "");
+            put("pageSize", PAGE_COUNT + "");
+            if (!TextUtils.isEmpty(searchParam)) put("searchParam", searchParam);
+        }};
+        if (type == 0) loadingLayout.showLoadingView();
+        NetApi.NI().queryUserSearch(NetParam.newInstance().put(map).build()).enqueue(new BaseCallback<List<User>>(new TypeToken<List<User>>() {
+        }.getType()) {
+            @Override
+            public void onSuccess(int status, List<User> beans, String msg) {
+                if (!StrUtil.isEmpty(beans)) {
+                    //下拉加载和首次加载要清除原有数据并把页码置为1，上拉加载不断累加页码
+                    if (type == 0 || type == 1) {
+                        adapter.getResults().clear();
+                        page = 1;
+                    } else {
+                        page++;
+                    }
+                    adapter.getResults().addAll(beans);
+                    adapter.notifyDataSetChanged();
+
+                    //加载结束恢复列表
+                    if (type == 0) {
+                        loadingLayout.showOut();
+                    } else {
+                        springView.onFinishFreshAndLoad();
+                    }
+                } else {
+                    //没有数据设置空数据页面，下拉加载不用，仅提示
+                    if (type == 0 || type == 1) {
+                        loadingLayout.showLackView();
+                    } else {
+                        springView.onFinishFreshAndLoad();
+                        ToastUtil.showToastShort("没有更多的数据了");
+                    }
+                }
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+                ToastUtil.showToastShort(msg);
+                //首次加载发生异常设置error页面，其余仅提示
+                if (type == 0) {
+                    loadingLayout.showFailView();
+                } else {
+                    springView.onFinishFreshAndLoad();
+                }
+            }
+        });
     }
 }

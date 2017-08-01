@@ -123,6 +123,26 @@ public class AppVali {
         }
     }
 
+    public static String addEmployee(User employ, String departmentName, String jobTitle) {
+        if (employ == null || employ.getId() == 0) {
+            return "错误：无效的用户";
+        } else if (isEmpty(departmentName)) {
+            return "请输入部门";
+        } else if (isEmpty(jobTitle)) {
+            return "请输入职位";
+        } else {
+            return null;
+        }
+    }
+
+    public static String allocatLesson(String userIds) {
+        if (isEmpty(userIds)) {
+            return "请至少选择一员工进行分配";
+        } else {
+            return null;
+        }
+    }
+
     public static String regist_info(int type, String phone, String psw, String path, String faceId, String u_name, String u_num, String c_name, String c_num, int c_tradeid, String g_name, String g_num, int cityid) {
         switch (type) {
             case 0:

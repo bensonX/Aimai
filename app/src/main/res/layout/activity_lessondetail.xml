@@ -82,7 +82,7 @@
                             android:drawableLeft="@drawable/ic_lesson_tv_hot"
                             android:drawablePadding="3dp"
                             android:gravity="center"
-                            android:text="12个视频课程"
+                            android:text="0个视频课程"
                             android:textColor="@color/com_text_dark_light"
                             android:textSize="@dimen/text_small" />
 
@@ -94,7 +94,7 @@
                             android:drawableLeft="@drawable/ic_lesson_time"
                             android:drawablePadding="3dp"
                             android:gravity="center"
-                            android:text="110分钟"
+                            android:text="0分钟"
                             android:textColor="@color/com_text_dark_light"
                             android:textSize="@dimen/text_small" />
 
@@ -155,7 +155,7 @@
                         android:id="@+id/text_lessondetail_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="￥158"
+                        android:text="￥0"
                         android:textColor="@color/am_red"
                         android:textSize="22sp" />
 
@@ -164,7 +164,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="50份"
+                        android:text="0份"
                         android:textColor="@color/com_text_dark_light"
                         android:textSize="@dimen/text_nomal_small" />
 
@@ -208,8 +208,8 @@
                 <LinearLayout
                     android:id="@+id/lay_lessondetail_btn_comp"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:orientation="horizontal">
 
                     <android.support.v7.widget.CardView
@@ -220,10 +220,11 @@
                         app:cardUseCompatPadding="true">
 
                         <TextView
+                            android:id="@+id/btn_lessondetail_countalloc"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center"
-                            android:text="0/50"
+                            android:text="0/0"
                             android:textColor="@color/white"
                             android:textSize="@dimen/text_big" />
 

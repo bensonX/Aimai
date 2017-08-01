@@ -378,4 +378,52 @@ public interface NetInterface {
     Call<ResponseBody> queryStudy(@FieldMap Map<String, Object> param);
 
 
+    //##################################################################
+    //#########               课程分配
+    //##################################################################
+
+    /**
+     * 公司用户获取公司下的用户列表
+     * 如果是课程分配时 获取用户列表 则 isAllocation 值为 1同时 orderId不能为空,其他情况，此两参数 可为null
+     * searchParam  搜索参数
+     * orderId
+     * isAllocation 是否是课程分配时获取的用户列表 0:否 1：是
+     * pageNO
+     * pageSize
+     */
+    @FormUrlEncoded
+    @POST("/api/user/queryUserForAllocation")
+    Call<ResponseBody> queryUserAlloc(@FieldMap Map<String, Object> param);
+
+    /**
+     * 获取游离状态下的用户
+     * searchParam  搜索参数
+     * pageNO
+     * pageSize
+     */
+    @FormUrlEncoded
+    @POST("/api/user/queryUserNoCompany")
+    Call<ResponseBody> queryUserSearch(@FieldMap Map<String, Object> param);
+
+    /**
+     * 添加同事接口
+     * 只有公司用户才能对此操作，并且是游离状态的用户
+     * userId
+     * departmentName
+     * jobTitle
+     */
+    @FormUrlEncoded
+    @POST("/api/user/addColleague")
+    Call<ResponseBody> addEmployee(@FieldMap Map<String, Object> param);
+
+    /**
+     * 分配课程
+     * 只有公司用户才能对此操作，并且是游离状态的用户
+     * userIds  用户ID集合 逗号隔开 类型:string
+     * orderId
+     * number   分配的数量 一期功能 默认传 1 类型:int
+     */
+    @FormUrlEncoded
+    @POST("/api/allocation/addAllocation")
+    Call<ResponseBody> addAllocation(@FieldMap Map<String, Object> param);
 }

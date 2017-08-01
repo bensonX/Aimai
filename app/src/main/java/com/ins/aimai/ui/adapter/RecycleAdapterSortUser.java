@@ -2,6 +2,7 @@ package com.ins.aimai.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,19 +12,23 @@ import android.widget.TextView;
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.ins.aimai.R;
+import com.ins.aimai.bean.User;
 import com.ins.aimai.bean.common.SortBean;
+import com.ins.common.interfaces.OnRecycleItemClickListener;
+import com.ins.common.utils.GlideUtil;
+import com.ins.common.utils.StrUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecycleAdapterSortUser extends RecyclerView.Adapter<RecycleAdapterSortUser.MyRecycleHolder> {
+public class RecycleAdapterSortUser extends RecyclerView.Adapter<RecycleAdapterSortUser.Holder> {
 
-    private List<SortBean> results;
+    private List<User> results;
     private Context context;
     private ColorGenerator mColorGenerator = ColorGenerator.MATERIAL;
     private TextDrawable.IBuilder mDrawableBuilder = TextDrawable.builder().round();
 
-    public List<SortBean> getResults() {
+    public List<User> getResults() {
         return results;
     }
 
@@ -32,51 +37,71 @@ public class RecycleAdapterSortUser extends RecyclerView.Adapter<RecycleAdapterS
         results = new ArrayList<>();
     }
 
-    public void addAll(List<SortBean> results){
+    public void addAll(List<User> results) {
         results.addAll(results);
     }
 
-    public void add(SortBean bean, int position) {
+    public void add(User bean, int position) {
         results.add(position, bean);
         notifyItemInserted(position);
     }
 
     @Override
-    public MyRecycleHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_sort_user, parent, false);
-        return new MyRecycleHolder(view);
+        return new Holder(view);
     }
 
     @Override
-    public void onBindViewHolder(MyRecycleHolder holder, int position) {
+    public void onBindViewHolder(final Holder holder, final int position) {
         if (results == null || results.size() == 0 || results.size() <= position)
             return;
-        SortBean bean = results.get(position);
-        if (bean != null) {
-            holder.tv_name.setText(bean.getNameSmart());
-            TextDrawable drawable = mDrawableBuilder.build(String.valueOf(bean.getName().charAt(0)), mColorGenerator.getColor(bean.getName()));
-            holder.iv_img.setImageDrawable(drawable);
+        final User user = results.get(position);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                user.setSelect(!user.isSelect());
+                notifyItemChanged(position);
+            }
+        });
+        if (user != null) {
+            //TextDrawable drawable = mDrawableBuilder.build(String.valueOf(user.getSortName().charAt(0)), mColorGenerator.getColor(user.getSortName()));
+            //holder.iv_img.setImageDrawable(drawable);
+            GlideUtil.loadCircleImg(holder.iv_img, R.drawable.default_header_edit, user.getAvatar());
+            holder.tv_name.setText(user.getSortNameSmart());
+            holder.tv_phone.setText(user.getPhone());
+            holder.img_check.setSelected(user.isSelect());
         }
     }
-
-//    @Override
-//    public void onBindViewHolder(MyRecycleHolder holder, int position, List<Object> payloads) {
-//        super.onBindViewHolder(holder, position, payloads);
-//    }
 
     @Override
     public int getItemCount() {
         return results.size();
     }
 
-    public static class MyRecycleHolder extends RecyclerView.ViewHolder {
-        public final TextView tv_name;
-        public final ImageView iv_img;
+    public String getSelectedIds() {
+        String ids = "";
+        for (User user : results) {
+            if (user.isSelect()) {
+                ids += user.getId() + ",";
+            }
+        }
+        ids = StrUtil.subLastChart(ids, ",");
+        return ids;
+    }
 
-        public MyRecycleHolder(View itemView) {
+    public static class Holder extends RecyclerView.ViewHolder {
+        public final ImageView iv_img;
+        public final TextView tv_name;
+        public final TextView tv_phone;
+        public final ImageView img_check;
+
+        public Holder(View itemView) {
             super(itemView);
-            tv_name = (TextView) itemView.findViewById(R.id.tv_name);
             iv_img = (ImageView) itemView.findViewById(R.id.iv_img);
+            tv_name = (TextView) itemView.findViewById(R.id.tv_name);
+            tv_phone = (TextView) itemView.findViewById(R.id.tv_phone);
+            img_check = (ImageView) itemView.findViewById(R.id.img_check);
         }
     }
 }

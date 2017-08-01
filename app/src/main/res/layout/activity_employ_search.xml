@@ -26,15 +26,15 @@
                 android:orientation="horizontal">
 
                 <EditText
-                    android:id="@+id/edit_info_search"
+                    android:id="@+id/edit_employ_search"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:background="@drawable/shape_rect_corner_white_line_dark"
-                    android:drawablePadding="10dp"
                     android:drawableLeft="@drawable/ic_home_search_edit"
+                    android:drawablePadding="10dp"
                     android:hint="搜索关键字"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
@@ -63,12 +63,15 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <LinearLayout
-        android:id="@+id/showingroup"
+
+    <com.ins.common.view.LoadingLayout
+        android:id="@+id/loadingLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_fail="@layout/layout_fail"
+        app:layout_lack="@layout/layout_lack"
+        app:layout_loading="@layout/layout_loading">
 
         <com.liaoinstan.springview.widget.SpringView
             android:id="@+id/spring"
@@ -85,6 +88,6 @@
 
         </com.liaoinstan.springview.widget.SpringView>
 
-    </LinearLayout>
+    </com.ins.common.view.LoadingLayout>
 
 </android.support.design.widget.CoordinatorLayout>

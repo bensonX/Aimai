@@ -38,7 +38,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tv_name"
+                    android:id="@+id/text_learn_employ_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="姓名"
@@ -46,6 +46,7 @@
                     android:textSize="@dimen/text_big_nomal" />
 
                 <com.ins.common.view.RectBackTextView
+                    android:id="@+id/text_learn_employ_status"
                     android:layout_width="wrap_content"
                     android:layout_height="18dp"
                     android:layout_marginLeft="10dp"
@@ -60,7 +61,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/tv_phone"
+                android:id="@+id/text_learn_employ_lesson"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -72,6 +73,7 @@
                 android:textSize="@dimen/text_nomal" />
 
             <TextView
+                android:id="@+id/text_learn_employ_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="17dp"
@@ -84,6 +86,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/lay_learn_employ_leaned"
             android:layout_width="80dp"
             android:layout_height="40dp"
             android:layout_marginRight="10dp"
@@ -106,6 +109,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/text_learn_employ_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="9"
