@@ -8,27 +8,31 @@ import android.view.View;
 
 import com.ins.aimai.R;
 import com.ins.aimai.interfaces.PagerInter;
-import com.ins.aimai.ui.adapter.PagerAdapterPractice;
+import com.ins.aimai.ui.adapter.PagerAdapterQuestionBank;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.common.utils.ViewPagerUtil;
 
-public class PracticeActivity extends BaseAppCompatActivity implements View.OnClickListener, PagerInter {
+public class QuestionBankActivity extends BaseAppCompatActivity implements View.OnClickListener{
 
     private ViewPager pager;
-    private PagerAdapterPractice adapterPager;
+    private PagerAdapterQuestionBank adapterPager;
+    private int type;
+    private String[] titles;
 
-    private String[] titles = new String[]{"练习题库", "练习列表"};
+    public int getType() {
+        return type;
+    }
 
-    public static void start(Context context) {
-        Intent intent = new Intent(context, PracticeActivity.class);
+    public static void start(Context context, int type) {
+        Intent intent = new Intent(context, QuestionBankActivity.class);
+        intent.putExtra("type", type);
         context.startActivity(intent);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_practice);
-        setToolbar(titles[0]);
+        setContentView(R.layout.activity_questionbank);
         initBase();
         initView();
         initCtrl();
@@ -36,6 +40,15 @@ public class PracticeActivity extends BaseAppCompatActivity implements View.OnCl
     }
 
     private void initBase() {
+        if (getIntent().hasExtra("type")) {
+            type = getIntent().getIntExtra("type", 0);
+        }
+        if (type == 0) {
+            titles = new String[]{"练习题库", "练习列表"};
+        } else {
+            titles = new String[]{"错题库", "错题列表"};
+        }
+        setToolbar(titles[0]);
     }
 
     private void initView() {
@@ -43,7 +56,7 @@ public class PracticeActivity extends BaseAppCompatActivity implements View.OnCl
     }
 
     private void initCtrl() {
-        adapterPager = new PagerAdapterPractice(getSupportFragmentManager(), titles);
+        adapterPager = new PagerAdapterQuestionBank(getSupportFragmentManager(), titles);
         pager.setAdapter(adapterPager);
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -84,17 +97,14 @@ public class PracticeActivity extends BaseAppCompatActivity implements View.OnCl
         }
     }
 
-    @Override
     public void next() {
         ViewPagerUtil.next(pager);
     }
 
-    @Override
     public void last() {
         ViewPagerUtil.last(pager);
     }
 
-    @Override
     public void goPosition(int position) {
         ViewPagerUtil.goPosition(pager, position);
     }

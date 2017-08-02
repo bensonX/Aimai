@@ -1,5 +1,6 @@
 package com.ins.aimai.bean.common;
 
+import com.google.gson.annotations.SerializedName;
 import com.ins.aimai.ui.view.QuestionView;
 import com.ins.common.entity.BaseSelectBean;
 
@@ -13,6 +14,7 @@ import java.util.List;
  */
 
 public class QuestionBean extends BaseSelectBean implements Serializable {
+
     private int id;
     //题号
     private int num;
@@ -28,6 +30,10 @@ public class QuestionBean extends BaseSelectBean implements Serializable {
     private String point;
     //解析
     private String analysis;
+    //试题类型 0:单选题 1:多选题  2:判断题
+    private int type;
+    //试题类型
+    private String typeName;
 
 
     public QuestionBean() {
@@ -62,6 +68,23 @@ public class QuestionBean extends BaseSelectBean implements Serializable {
     }
 
     ////////////////////  get & set /////////////////////
+
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 
     public int getId() {
         return id;

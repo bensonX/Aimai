@@ -224,6 +224,7 @@ public class VideoCommentFragment extends BaseFragment implements View.OnClickLi
             @Override
             public void onSuccess(int status, CommonBean com, String msg) {
                 ToastUtil.showToastShort(msg);
+                edit_comment_detail.setText("");
                 AppHelper.hideLoadingDialog(getActivity());
                 initData();
             }

@@ -3,13 +3,17 @@ package com.ins.aimai.common;
 import android.content.Context;
 
 import com.ins.aimai.bean.CourseWare;
+import com.ins.aimai.bean.Examination;
+import com.ins.aimai.bean.ExaminationItems;
 import com.ins.aimai.bean.Lesson;
 import com.ins.aimai.bean.User;
 import com.ins.aimai.bean.Video;
 import com.ins.aimai.bean.VideoStatus;
 import com.ins.aimai.bean.common.CheckPoint;
 import com.ins.aimai.bean.common.FaceRecord;
+import com.ins.aimai.bean.common.QuestionBean;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
+import com.ins.aimai.ui.view.QuestionView;
 import com.ins.common.utils.NumUtil;
 import com.ins.common.utils.StrUtil;
 
@@ -24,6 +28,10 @@ public class AppHelper {
 
     public static String formatPrice(double ksum) {
         return NumUtil.num2half(ksum, 2);
+    }
+
+    public static String formatPercent(double percent) {
+        return NumUtil.num2half(percent, 2) + "%";
     }
 
     public static void showLoadingDialog(Context context) {
@@ -141,6 +149,58 @@ public class AppHelper {
                 default:
                     return "";
             }
+        }
+    }
+
+    public static class Exam {
+
+        public static List<QuestionBean> transExamination2QuestionBeans(List<Examination> examinations) {
+            List<QuestionBean> questions = new ArrayList<>();
+            if (!StrUtil.isEmpty(examinations)) {
+                for (Examination exam : examinations) {
+                    QuestionBean questionBean = new QuestionBean();
+                    questionBean.setId(exam.getId());
+                    questionBean.setTitle(exam.getTitle());
+                    questionBean.setType(exam.getType());
+                    questionBean.setTypeName(exam.getType() == 0 ? "单选题" : (exam.getType() == 1 ? "多选题" : "判断题"));
+                    questionBean.setOptionBeans(transExaminationItem2Potions(exam.getExaminationItemsList(), exam.getType()));
+                    questions.add(questionBean);
+                }
+            }
+            return questions;
+        }
+
+        private static List<QuestionView.Option> transExaminationItem2Potions(List<ExaminationItems> itemses, int type) {
+            List<QuestionView.Option> options = new ArrayList<>();
+            if (!StrUtil.isEmpty(itemses)) {
+                for (int i = 0; i < itemses.size(); i++) {
+                    ExaminationItems item = itemses.get(i);
+                    QuestionView.Option option = new QuestionView.Option(item.getItemTitle());
+                    option.id = item.getId();
+                    option.index = i;
+                    option.isCorrect = item.getIsCorrect() == 1 ? true : false;
+                    options.add(option);
+                }
+                //如果是判断题加一个错误选项（服务器没有加，移动端帮忙处理）
+                if (type == 2) {
+                    QuestionView.Option option = new QuestionView.Option("错误");
+                    options.add(option);
+                }
+            }
+            return options;
+        }
+
+        public static String getAnswerStr(QuestionBean question) {
+            if (question == null || StrUtil.isEmpty(question.getOptionBeans())) {
+                return "";
+            }
+            String ret = "";
+            for (QuestionView.Option option : question.getOptionBeans()) {
+                if (option.isSelect()) {
+                    ret += NumUtil.intToABC(option.index) + ",";
+                }
+            }
+            return StrUtil.subLastChart(ret, ",");
         }
     }
 }

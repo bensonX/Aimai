@@ -119,6 +119,7 @@ public class NumUtil {
         return String.format("%." + m + "f", f);
     }
 
+    //强制将小数格式化（小数点后的0也会显示）
     public static float NumberFormatFloat(float f, int m) {
         String strfloat = NumberFormat(f, m);
         return Float.parseFloat(strfloat);
@@ -129,12 +130,12 @@ public class NumUtil {
      */
     public static String num2half(float f, int m) {
         BigDecimal b = new BigDecimal(f);
-        return NumberFormat(b.setScale(m, BigDecimal.ROUND_HALF_UP).floatValue(), 2);
+        return b.setScale(m, BigDecimal.ROUND_HALF_UP).floatValue() + "";
     }
 
     public static String num2half(double f, int m) {
         BigDecimal b = new BigDecimal(f);
-        return NumberFormat(b.setScale(m, BigDecimal.ROUND_HALF_UP).doubleValue(), 2);
+        return b.setScale(m, BigDecimal.ROUND_HALF_UP).doubleValue() + "";
     }
 
     public static String num2half(float f) {

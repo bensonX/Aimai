@@ -199,6 +199,13 @@ public interface NetInterface {
     @POST("/api/curriculum/queryCurriculumByOrder")
     Call<ResponseBody> queryLessonDetailByOrder(@FieldMap Map<String, Object> param);
 
+    /**
+     * 统计用户 最新一次 考题记录得分情况
+     */
+    @FormUrlEncoded
+    @POST("/api/curriculum/statisticsCurriculum")
+    Call<ResponseBody> statisLearn(@FieldMap Map<String, Object> param);
+
     //##################################################################
     //#########               支付
     //##################################################################
@@ -376,6 +383,29 @@ public interface NetInterface {
     @FormUrlEncoded
     @POST("/api/curriculum/queryCurriculumStudy")
     Call<ResponseBody> queryStudy(@FieldMap Map<String, Object> param);
+
+
+    /**
+     * 获取练习题列表
+     * orderId
+     * pageNO
+     * pageSize
+     */
+    @FormUrlEncoded
+    @POST("/api/courseWare/statisticsCourseWare")
+    Call<ResponseBody> queryPracticeExams(@FieldMap Map<String, Object> param);
+
+
+    //##################################################################
+    //#########               考试
+    //##################################################################
+    /**
+     * 获取试卷列表
+     * paperId
+     */
+    @FormUrlEncoded
+    @POST("/api/paper/queryPaperById")
+    Call<ResponseBody> queryQuestions(@FieldMap Map<String, Object> param);
 
 
     //##################################################################

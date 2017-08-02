@@ -60,7 +60,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
                 android:scaleType="center"
-                android:src="@drawable/ic_learn_textsize" />
+                android:src="@drawable/ic_exam_answerboard" />
 
         </android.support.v7.widget.Toolbar>
 
@@ -80,6 +80,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/text_exam_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"

@@ -90,7 +90,7 @@
         <activity android:name=".ui.activity.InfoActivity" />
         <activity android:name=".ui.activity.InfoSearchActivity" />
         <activity android:name=".ui.activity.ModelActivity" />
-        <activity android:name=".ui.activity.PracticeActivity" />
+        <activity android:name=".ui.activity.QuestionBankActivity" />
         <activity android:name=".ui.activity.OfficialActivity" />
         <activity android:name=".ui.activity.AnswerBoardActivity" />
         <activity android:name=".ui.activity.ExamResultActivity" />

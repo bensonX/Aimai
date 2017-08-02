@@ -79,7 +79,7 @@ public class QuestionView extends FrameLayout implements AdapterView.OnItemClick
 
     private void initData() {
         if (isInEditMode()) {
-            String title = "党的十八大以来，一些标志性话语深刻反映了中央治国理政新理念，其中，下列标志性话语与治国理政新理念对应错误是（ ）";
+            String title = "党的十八大以来，一些标志性话语深刻反映了中央治国理政新理念，其中，下列标志性话语与治国理政新理念对应错误是";
             final String option1 = "“刮骨疗毒，壮士割腕”——加强党风";
             final String option2 = "“踏石留印，抓铁有痕”--推动国防军队改革";
             final String option3 = "“凝聚共识，合作共赢”--发展大国外交";
@@ -102,7 +102,7 @@ public class QuestionView extends FrameLayout implements AdapterView.OnItemClick
 
     public void notifyDataSetChanged() {
         if (questionBean != null) {
-            text_question_title.setText(StrUtil.getSpace() + questionBean.getTitle());
+            text_question_title.setText(StrUtil.getSpace() + questionBean.getTitle() + "（ ）");
             adapter.getResults().clear();
             adapter.getResults().addAll(questionBean.getOptionBeans());
             adapter.notifyDataSetChanged();
@@ -112,14 +112,35 @@ public class QuestionView extends FrameLayout implements AdapterView.OnItemClick
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (needCheck) {
-            Option bean = adapter.getResults().get(position);
-            SelectHelper.selectAllSelectBeans(adapter.getResults(), false);
-            bean.setSelect(true);
-            adapter.notifyDataSetChanged();
+            switch (questionBean.getType()) {
+                case 0://单选
+                case 2://判断
+                {
+                    Option bean = adapter.getResults().get(position);
+                    SelectHelper.selectAllSelectBeans(adapter.getResults(), false);
+                    bean.setSelect(true);
+                    adapter.notifyDataSetChanged();
+                    break;
+                }
+                //多选
+                case 1: {
+                    Option bean = adapter.getResults().get(position);
+                    bean.setSelect(!bean.isSelect());
+                    adapter.notifyDataSetChanged();
+                    break;
+                }
+            }
         }
     }
 
     public static class Option extends BaseSelectBean {
+
+        public int id;
+
+        public int index;
+
+        public boolean isCorrect;
+
         public String content;
 
         public Option(String content) {

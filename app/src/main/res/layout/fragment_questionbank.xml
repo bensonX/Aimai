@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.ins.common.view.LoadingLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/showingroup"
+    android:id="@+id/loadingLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    app:layout_fail="@layout/layout_fail"
+    app:layout_lack="@layout/layout_lack"
+    app:layout_loading="@layout/layout_loading">
 
     <com.liaoinstan.springview.widget.SpringView
         android:id="@+id/spring"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_weight="1"
         app:type="follow">
 
         <android.support.v7.widget.RecyclerView
@@ -25,4 +26,4 @@
 
     </com.liaoinstan.springview.widget.SpringView>
 
-</LinearLayout>
+</com.ins.common.view.LoadingLayout>

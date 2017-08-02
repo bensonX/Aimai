@@ -11,7 +11,9 @@ import com.ins.aimai.R;
 import com.ins.aimai.bean.common.QuestionBean;
 import com.ins.aimai.bean.common.TestBean;
 import com.ins.aimai.ui.view.QuestionView;
+import com.ins.common.helper.SelectHelper;
 import com.ins.common.utils.NumUtil;
+import com.ins.common.utils.StrUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +66,7 @@ public class ListAdapterQuestionItem extends BaseAdapter {
         }
         final QuestionView.Option bean = results.get(position);
 
-        holder.text_question_item.setText(NumUtil.intToABC(position) + "、" + bean.content);
+        holder.text_question_item.setText(NumUtil.intToABC(bean.index) + "、" + bean.content);
         holder.text_question_item.setSelected(bean.isSelect());
 
         if (needCheck) {
@@ -74,6 +76,16 @@ public class ListAdapterQuestionItem extends BaseAdapter {
         }
 
         return convertView;
+    }
+
+    public String getSelectIds() {
+        String ids = "";
+        for (QuestionView.Option option : results) {
+            if (option.isSelect()) {
+                ids += option.id + ",";
+            }
+        }
+        return StrUtil.subLastChart(ids, ",");
     }
 
     public class ViewHolder {

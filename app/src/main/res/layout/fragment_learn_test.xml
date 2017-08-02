@@ -76,6 +76,7 @@
                     android:textSize="@dimen/text_nomal" />
 
                 <TextView
+                    android:id="@+id/text_learntest_prictice_done"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="7dp"
@@ -104,7 +105,8 @@
                     android:textSize="@dimen/text_nomal" />
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:id="@+id/text_learntest_prictice_lv"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="7dp"
                     android:gravity="left"
@@ -146,6 +148,7 @@
                     android:textSize="@dimen/text_big_nomal" />
 
                 <TextView
+                    android:id="@+id/text_learntest_error_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="6dp"
@@ -236,6 +239,7 @@
                     android:textSize="@dimen/text_nomal" />
 
                 <TextView
+                    android:id="@+id/text_learntest_model_done"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="7dp"
@@ -264,7 +268,8 @@
                     android:textSize="@dimen/text_nomal" />
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:id="@+id/text_learntest_model_lv"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="7dp"
                     android:gravity="left"
@@ -342,6 +347,7 @@
                     android:textSize="@dimen/text_nomal" />
 
                 <TextView
+                    android:id="@+id/text_learntest_official_pass"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="7dp"
@@ -361,7 +367,8 @@
                     android:textSize="@dimen/text_nomal" />
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:id="@+id/text_learntest_official_unpass"
+                    android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="7dp"
                     android:gravity="left"

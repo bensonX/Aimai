@@ -2,7 +2,8 @@
 <com.ins.common.view.SquareFramelayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bk_answerboard"
+    android:id="@+id/lay_item_answerboard"
+    android:background="@drawable/selector_answerboard_select"
     android:foreground="?attr/selectableItemBackground">
 
     <TextView
@@ -12,10 +13,11 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="3dp"
         android:text="24"
-        android:textColor="@color/com_text_dark_light"
+        android:textColor="@color/text_white_darklight_select"
         android:textSize="@dimen/text_small" />
 
     <TextView
+        android:id="@+id/text_item_answerboard_answer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
