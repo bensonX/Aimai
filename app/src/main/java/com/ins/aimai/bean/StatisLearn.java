@@ -8,19 +8,19 @@ import java.io.Serializable;
 
 public class StatisLearn implements Serializable {
 
-    private int correctPercent;
+    private float correctPercent;
     private int countNum;
     private int errorNum;
     private int nonPassNum;
     private int passNum;
-    private int simulationCorrectPercent;
+    private float simulationCorrectPercent;
     private int simulationCountNum;
 
-    public int getCorrectPercent() {
+    public float getCorrectPercent() {
         return correctPercent;
     }
 
-    public void setCorrectPercent(int correctPercent) {
+    public void setCorrectPercent(float correctPercent) {
         this.correctPercent = correctPercent;
     }
 
@@ -56,11 +56,11 @@ public class StatisLearn implements Serializable {
         this.passNum = passNum;
     }
 
-    public int getSimulationCorrectPercent() {
+    public float getSimulationCorrectPercent() {
         return simulationCorrectPercent;
     }
 
-    public void setSimulationCorrectPercent(int simulationCorrectPercent) {
+    public void setSimulationCorrectPercent(float simulationCorrectPercent) {
         this.simulationCorrectPercent = simulationCorrectPercent;
     }
 

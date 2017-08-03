@@ -8,10 +8,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ins.aimai.R;
+import com.ins.aimai.bean.ExamResultPojo;
+import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.bean.common.QuestionBean;
+import com.ins.aimai.common.AppHelper;
+import com.ins.aimai.net.helper.NetExamHelper;
 import com.ins.aimai.ui.activity.ExamActivity;
+import com.ins.aimai.ui.activity.ExamResultActivity;
 import com.ins.aimai.ui.base.BaseFragment;
+import com.ins.aimai.ui.dialog.DialogSureAimai;
 import com.ins.aimai.ui.view.QuestionView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +27,7 @@ import java.util.List;
 /**
  * Created by liaoinstan
  */
-public class ExamFragment extends BaseFragment implements View.OnClickListener {
+public class ExamFragment extends BaseFragment implements View.OnClickListener, QuestionView.OnOptionSelectListener {
 
     private int position;
     private View rootView;
@@ -66,6 +74,7 @@ public class ExamFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void initCtrl() {
+        questionView.setOnOptionSelectListener(this);
     }
 
     private void initData() {
@@ -83,6 +92,32 @@ public class ExamFragment extends BaseFragment implements View.OnClickListener {
 //        QuestionBean questionBean = new QuestionBean(title, options);
         QuestionBean questionBean = activity.getQuestions().get(position);
         questionView.setData(questionBean);
+    }
+
+
+    private DialogSureAimai dialogSureCommit;
+
+    @Override
+    public void onOptionSelect(QuestionView.Option option, int position) {
+        //判断dialog为null是为了只弹窗一次
+        if (dialogSureCommit == null && AppHelper.Exam.checkIsFinishQuestions(activity.getQuestions())) {
+            dialogSureCommit = new DialogSureAimai(getActivity(), "您已打完所有考题！是否提交考卷？", null, "提交并查看", "返回检阅");
+            dialogSureCommit.setOnCancleListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    activity.showLoadingDialog();
+                    NetExamHelper.getInstance().submitExam(activity.getPaperId(), activity.getOrderId(), 0, activity.getQuestions(), new NetExamHelper.OnExamSubmitCallback() {
+                        @Override
+                        public void onSuccess(ExamResultPojo examResultPojo) {
+                            EventBus.getDefault().post(new EventBean(EventBean.EVENT_EXAM_SUBMITED));
+                            ExamResultActivity.start(activity, activity.getPaperId(), activity.getOrderId(), activity.getType());
+                            activity.finish();
+                        }
+                    });
+                }
+            });
+            dialogSureCommit.show();
+        }
     }
 
     @Override

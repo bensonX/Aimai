@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ins.aimai.R;
+import com.ins.aimai.bean.ExamResult;
 import com.ins.aimai.bean.common.TestBean;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
 
@@ -17,9 +18,9 @@ import java.util.List;
 public class RecycleAdapterExamResult extends RecyclerView.Adapter<RecycleAdapterExamResult.Holder> {
 
     private Context context;
-    private List<TestBean> results = new ArrayList<>();
+    private List<ExamResult> results = new ArrayList<>();
 
-    public List<TestBean> getResults() {
+    public List<ExamResult> getResults() {
         return results;
     }
 
@@ -34,7 +35,7 @@ public class RecycleAdapterExamResult extends RecyclerView.Adapter<RecycleAdapte
 
     @Override
     public void onBindViewHolder(final RecycleAdapterExamResult.Holder holder, final int position) {
-        final TestBean bean = results.get(position);
+        final ExamResult examResult = results.get(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,11 +43,30 @@ public class RecycleAdapterExamResult extends RecyclerView.Adapter<RecycleAdapte
             }
         });
         holder.text_item_examresult_num.setText(position + 1 + "");
+        holder.text_item_examresult_num.setSelected(examResult.getIsCorrect() == 1 ? true : false);
     }
 
     @Override
     public int getItemCount() {
         return results.size();
+    }
+
+    public ArrayList<Integer> getErrorIdsList() {
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (ExamResult examResult : results) {
+            if (examResult.isCorrect()) {
+                ids.add(examResult.getExaminationId());
+            }
+        }
+        return ids;
+    }
+
+    public ArrayList<Integer> getAllIdsList() {
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (ExamResult examResult : results) {
+            ids.add(examResult.getExaminationId());
+        }
+        return ids;
     }
 
     public class Holder extends RecyclerView.ViewHolder {

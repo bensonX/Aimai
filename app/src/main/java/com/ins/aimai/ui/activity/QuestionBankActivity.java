@@ -12,7 +12,8 @@ import com.ins.aimai.ui.adapter.PagerAdapterQuestionBank;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.common.utils.ViewPagerUtil;
 
-public class QuestionBankActivity extends BaseAppCompatActivity implements View.OnClickListener{
+//type 0:练习题 1：错题库
+public class QuestionBankActivity extends BaseAppCompatActivity implements View.OnClickListener {
 
     private ViewPager pager;
     private PagerAdapterQuestionBank adapterPager;
@@ -23,7 +24,15 @@ public class QuestionBankActivity extends BaseAppCompatActivity implements View.
         return type;
     }
 
-    public static void start(Context context, int type) {
+    public static void startPractice(Context context) {
+        start(context, 0);
+    }
+
+    public static void startError(Context context) {
+        start(context, 1);
+    }
+
+    private static void start(Context context, int type) {
         Intent intent = new Intent(context, QuestionBankActivity.class);
         intent.putExtra("type", type);
         context.startActivity(intent);

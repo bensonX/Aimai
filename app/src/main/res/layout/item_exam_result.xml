@@ -8,11 +8,10 @@
         android:id="@+id/text_item_examresult_num"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/shape_oval_blue"
+        android:background="@drawable/selector_examresult_select"
         android:text="1"
         android:gravity="center"
         android:textSize="@dimen/text_nomal_small"
-        android:textColor="@color/white" />
-
+        android:textColor="@color/text_white_reddark_select" />
 
 </com.ins.common.view.SquareFramelayout>

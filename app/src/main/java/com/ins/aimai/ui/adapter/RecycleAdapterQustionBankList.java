@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ins.aimai.R;
-import com.ins.aimai.bean.Exam;
+import com.ins.aimai.bean.ExamPractice;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
 import com.ins.common.utils.SpannableStringUtil;
 import com.ins.common.view.RectBackTextView;
@@ -19,10 +19,10 @@ import java.util.List;
 public class RecycleAdapterQustionBankList extends RecyclerView.Adapter<RecycleAdapterQustionBankList.Holder> {
 
     private Context context;
-    private List<Exam> results = new ArrayList<>();
+    private List<ExamPractice> results = new ArrayList<>();
     private int type;
 
-    public List<Exam> getResults() {
+    public List<ExamPractice> getResults() {
         return results;
     }
 
@@ -38,7 +38,7 @@ public class RecycleAdapterQustionBankList extends RecyclerView.Adapter<RecycleA
 
     @Override
     public void onBindViewHolder(final RecycleAdapterQustionBankList.Holder holder, final int position) {
-        final Exam exam = results.get(position);
+        final ExamPractice examPractice = results.get(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,10 +46,10 @@ public class RecycleAdapterQustionBankList extends RecyclerView.Adapter<RecycleA
             }
         });
 
-        holder.text_questionbank_title.setText(exam.getCourseWareName());
-        holder.text_questionbank_count_question.setText(SpannableStringUtil.create(context, new String[]{"共 " , exam.getExaminationNum() + "", " 题"}, new int[]{R.color.com_text_dark, R.color.am_blue, R.color.com_text_dark}));
+        holder.text_questionbank_title.setText(examPractice.getCourseWareName());
+        holder.text_questionbank_count_question.setText(SpannableStringUtil.create(context, new String[]{"共 " , examPractice.getExaminationNum() + "", " 题"}, new int[]{R.color.com_text_dark, R.color.am_blue, R.color.com_text_dark}));
         if (type == 0) {
-            if (exam.getIsExamination() == 0) {
+            if (examPractice.getIsExamination() == 0) {
                 holder.text_questionbank_status.setVisibility(View.GONE);
             } else {
                 holder.text_questionbank_status.setVisibility(View.VISIBLE);
@@ -58,7 +58,7 @@ public class RecycleAdapterQustionBankList extends RecyclerView.Adapter<RecycleA
         } else {
             holder.text_questionbank_status.setVisibility(View.GONE);
             holder.text_questionbank_count_error.setVisibility(View.VISIBLE);
-            holder.text_questionbank_count_error.setText(SpannableStringUtil.create(context, new String[]{"错误 ", exam.getExaminationNum() + "", " 题"}, new int[]{R.color.com_text_dark, R.color.am_yellow, R.color.com_text_dark}));
+            holder.text_questionbank_count_error.setText(SpannableStringUtil.create(context, new String[]{"错误 ", examPractice.getErrorNum() + "", " 题"}, new int[]{R.color.com_text_dark, R.color.am_yellow, R.color.com_text_dark}));
         }
     }
 

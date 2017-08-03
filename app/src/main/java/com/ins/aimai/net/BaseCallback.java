@@ -54,9 +54,6 @@ public abstract class BaseCallback<T> implements Callback<ResponseBody> {
             }
             T t;
             if (data != null && !data.equals("")) {
-//                TypeAdapter<T> adapter = gson.getAdapter(type);
-//                JsonReader reader = gson.newJsonReader(new StringReader(data));
-//                t = adapter.read(reader);
                 t = gson.fromJson(data, type);
             } else {
                 t = null;

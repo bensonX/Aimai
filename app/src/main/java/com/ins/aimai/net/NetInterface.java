@@ -395,10 +395,50 @@ public interface NetInterface {
     @POST("/api/courseWare/statisticsCourseWare")
     Call<ResponseBody> queryPracticeExams(@FieldMap Map<String, Object> param);
 
+    /**
+     * 获取 错题库课程 列表接口
+     * pageNO
+     * pageSize
+     */
+    @FormUrlEncoded
+    @POST("/api/curriculum/queryCurriculumError")
+    Call<ResponseBody> queryErrorLesson(@FieldMap Map<String, Object> param);
+
+
+    /**
+     * 获取错题库列表
+     * pageNO
+     * pageSize
+     */
+    @FormUrlEncoded
+    @POST("/api/courseWare/queryCourseWareError")
+    Call<ResponseBody> queryErrorWare(@FieldMap Map<String, Object> param);
+
+
+    /**
+     * 获取 模拟题列表接口
+     * pageNO
+     * pageSize
+     */
+    @FormUrlEncoded
+    @POST("/api/curriculum/queryCurriculumStudyForExamination")
+    Call<ResponseBody> queryModelPapers(@FieldMap Map<String, Object> param);
+
+
+    /**
+     * 获取 考试题列表接口
+     * pageNO
+     * pageSize
+     */
+    @FormUrlEncoded
+    @POST("/api/curriculum/queryCurriculumPass")
+    Call<ResponseBody> queryOffiPapers(@FieldMap Map<String, Object> param);
+
 
     //##################################################################
     //#########               考试
     //##################################################################
+
     /**
      * 获取试卷列表
      * paperId
@@ -406,6 +446,48 @@ public interface NetInterface {
     @FormUrlEncoded
     @POST("/api/paper/queryPaperById")
     Call<ResponseBody> queryQuestions(@FieldMap Map<String, Object> param);
+
+    /**
+     * 获取试卷列表
+     * answers     [ { "examinationId":1, "answers":[1,2]},{ "examinationId":2,"answers":[1] }]
+     * paperId
+     * orderId
+     * seconds
+     */
+    @FormUrlEncoded
+    @POST("/api/paper/submitPaper")
+    Call<ResponseBody> submitExam(@FieldMap Map<String, Object> param);
+
+
+    /**
+     * 本人获取考试成绩记录
+     * paperId
+     * orderId
+     */
+    @FormUrlEncoded
+    @POST("/api/paper/queryPaperRecord")
+    Call<ResponseBody> queryPaperRecord(@FieldMap Map<String, Object> param);
+
+
+    /**
+     * 通过题目的ID集合查询题解
+     * ids   试题ID集合 参数事例：[1,2,3]
+     */
+    @FormUrlEncoded
+    @POST("/api/examination/queryExaminationKey")
+    Call<ResponseBody> queryQuestionAnalysis(@FieldMap Map<String, Object> param);
+
+
+    /**
+     * 获取错题集 只有入口为没有错题ID集合的情况下调用
+     * orderId
+     * courseWareId
+     * pageNO
+     * pageSize
+     */
+    @FormUrlEncoded
+    @POST("/api/examination/queryErrorExamination")
+    Call<ResponseBody> queryQuestionAnalysisByPage(@FieldMap Map<String, Object> param);
 
 
     //##################################################################

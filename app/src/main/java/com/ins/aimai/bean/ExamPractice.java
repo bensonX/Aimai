@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by Eric Xie on 2017/8/2 0002.
  */
-public class Exam implements Serializable {
+public class ExamPractice implements Serializable {
 
     /** 课件ID */
     private int courseWareId;
@@ -27,6 +27,8 @@ public class Exam implements Serializable {
     //试卷id
     private int paperId;
     private int orderId;
+    //错题数量
+    private int errorNum;
 
     public int getPaperId() {
         return paperId;
@@ -42,6 +44,14 @@ public class Exam implements Serializable {
 
     public void setOrderId(int orderId) {
         this.orderId = orderId;
+    }
+
+    public int getErrorNum() {
+        return errorNum;
+    }
+
+    public void setErrorNum(int errorNum) {
+        this.errorNum = errorNum;
     }
 
     /** 获取 课件ID */

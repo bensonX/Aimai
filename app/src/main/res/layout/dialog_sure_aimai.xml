@@ -8,15 +8,16 @@
     android:layout_marginRight="30dp"
     android:background="@drawable/shape_rect_cornerbig_white"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingBottom="30dp"
+    android:paddingTop="30dp">
 
     <TextView
         android:id="@+id/text_dialog_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:gravity="center"
-        android:paddingTop="10dp"
         android:text="确认"
         android:textColor="@color/com_text_blank_deep_light"
         android:textSize="@dimen/text_big" />
@@ -27,7 +28,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginBottom="25dp"
-        android:layout_marginTop="20dp"
         android:gravity="center"
         android:lineSpacingExtra="5dp"
         android:paddingLeft="27dp"
@@ -41,7 +41,6 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginBottom="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:gravity="center_vertical"

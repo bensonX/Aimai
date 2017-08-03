@@ -39,16 +39,18 @@
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
-        android:id="@+id/showingroup"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
+            android:id="@+id/lay_examresult_gradeboard"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_margin="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/shape_rect_cornerbig_white"
             android:gravity="center"
             android:orientation="vertical">
@@ -59,17 +61,18 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_marginLeft="20dp"
+                    android:id="@+id/text_examresult_grade"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
                     android:text="59"
                     android:textColor="@color/com_text_dark"
                     android:textSize="40sp" />
 
                 <TextView
-                    android:layout_marginLeft="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:text="分"
                     android:textColor="@color/com_text_dark"
                     android:textSize="@dimen/text_nomal" />
@@ -77,6 +80,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/text_examresult_remind"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -85,6 +89,7 @@
                 android:textSize="@dimen/text_big" />
 
             <TextView
+                android:id="@+id/text_examresult_note"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -97,6 +102,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="10dp"
             android:layout_weight="1">
 
             <LinearLayout

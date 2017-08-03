@@ -9,7 +9,9 @@ import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
-import com.ins.aimai.bean.Exam;
+import com.ins.aimai.bean.ExamModelOffi;
+import com.ins.aimai.bean.ExamPractice;
+import com.ins.aimai.bean.ExamResultPojo;
 import com.ins.aimai.bean.Examination;
 import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.bean.common.QuestionBean;
@@ -17,12 +19,17 @@ import com.ins.aimai.common.AppHelper;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
+import com.ins.aimai.net.helper.NetExamHelper;
+import com.ins.aimai.net.helper.NetFavoHelper;
 import com.ins.aimai.ui.adapter.PagerAdapterExam;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
+import com.ins.aimai.ui.dialog.DialogSureAimai;
 import com.ins.aimai.ui.dialog.PopTextSize;
 import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.utils.StatusBarTextUtil;
 import com.ins.common.utils.ViewPagerUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,20 +53,16 @@ public class ExamActivity extends BaseAppCompatActivity implements View.OnClickL
     private int paperId;
     private int orderId;
 
-    public List<QuestionBean> getQuestions() {
-        return questions;
+    public static void startPractice(Context context, ExamPractice examPractice) {
+        start(context, 0, examPractice.getPaperId(), examPractice.getOrderId());
     }
 
-    public static void startPractice(Context context, Exam exam) {
-        start(context, 0, exam.getPaperId(), exam.getOrderId());
+    public static void startMoldel(Context context, ExamModelOffi exam) {
+        start(context, 1, exam.getPaperId(), exam.getOrderId());
     }
 
-    public static void startMoldel(Context context, int paperId, int orderId) {
-        start(context, 1, paperId, orderId);
-    }
-
-    public static void startOfficial(Context context, int paperId, int orderId) {
-        start(context, 2, paperId, orderId);
+    public static void startOfficial(Context context, ExamModelOffi exam) {
+        start(context, 2, exam.getPaperId(), exam.getOrderId());
     }
 
     private static void start(Context context, int type, int paperId, int orderId) {
@@ -74,7 +77,9 @@ public class ExamActivity extends BaseAppCompatActivity implements View.OnClickL
     public void onCommonEvent(EventBean event) {
         if (event.getEvent() == EventBean.EVENT_EXAMBOARD_SELECT) {
             int position = (int) event.get("position");
-            ViewPagerUtil.goPosition(pager, position);
+            ViewPagerUtil.goPosition(pager, position, false);
+        } else if (event.getEvent() == EventBean.EVENT_EXAM_SUBMITED) {
+            finish();
         }
     }
 
@@ -89,6 +94,11 @@ public class ExamActivity extends BaseAppCompatActivity implements View.OnClickL
         initView();
         initCtrl();
         initData();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     private void initBase() {
@@ -159,12 +169,13 @@ public class ExamActivity extends BaseAppCompatActivity implements View.OnClickL
                 ViewPagerUtil.next(pager);
                 break;
             case R.id.btn_right_answerboard:
-                AnswerBoardActivity.start(this, questions);
+                AnswerBoardActivity.start(this, questions, paperId, orderId, type);
                 break;
             case R.id.btn_right_textsize:
                 popTextSize.showPopupWindow(btn_right_textsize);
                 break;
             case R.id.btn_right_favo:
+                NetFavoHelper.getInstance().netAddCollect(questions.get(pager.getCurrentItem()).getId(), 2);
                 break;
         }
     }
@@ -192,5 +203,22 @@ public class ExamActivity extends BaseAppCompatActivity implements View.OnClickL
                 hideLoadingDialog();
             }
         });
+    }
+
+    //####################  get & set ########################
+    public List<QuestionBean> getQuestions() {
+        return questions;
+    }
+
+    public int getPaperId() {
+        return paperId;
+    }
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public int getType() {
+        return type;
     }
 }

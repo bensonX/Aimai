@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:background="@color/am_bk"
+        android:id="@+id/lay_analysis_cate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="3dp"
+        android:paddingBottom="13dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text_analysis_cate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/com_text_blank"
+            android:textSize="@dimen/text_big_nomal"
+            android:text="安全生产管理培训课"/>
+        <TextView
+            android:id="@+id/text_analysis_ware"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="7dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/com_text_dark"
+            android:textSize="@dimen/text_nomal_small"
+            android:text="课时：生产经营单位安全基础管理"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:id="@+id/text_analysis_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="单选题"
+            android:textColor="@color/am_blue"
+            android:textSize="@dimen/text_big_nomal" />
+
+        <Space style="@style/Space_H" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_analysis_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="1"
+                android:textColor="@color/am_blue"
+                android:textSize="@dimen/text_big" />
+
+            <TextView
+                android:id="@+id/text_analysis_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="/50"
+                android:textColor="@color/com_text_dark_light"
+                android:textSize="@dimen/text_small" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        style="@style/Line_H"
+        android:layout_marginLeft="10dp" />
+
+    <com.ins.aimai.ui.view.AnswerView
+        android:id="@+id/answerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp" />
+
+</LinearLayout>

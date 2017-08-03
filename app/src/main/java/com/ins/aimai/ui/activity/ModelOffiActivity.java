@@ -1,25 +1,20 @@
-package com.ins.aimai.ui.fragment;
+package com.ins.aimai.ui.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
-import com.ins.aimai.bean.Study;
-import com.ins.aimai.bean.common.EventBean;
-import com.ins.aimai.interfaces.PagerInter;
+import com.ins.aimai.bean.ExamModelOffi;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
-import com.ins.aimai.ui.activity.QuestionBankActivity;
-import com.ins.aimai.ui.adapter.RecycleAdapterQustionBankCate;
-import com.ins.aimai.ui.base.BaseFragment;
+import com.ins.aimai.ui.adapter.RecycleAdapterModelOffi;
+import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.common.ItemDecorationDivider;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
@@ -29,53 +24,40 @@ import com.liaoinstan.springview.container.AliFooter;
 import com.liaoinstan.springview.container.AliHeader;
 import com.liaoinstan.springview.widget.SpringView;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.List;
 import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 
-/**
- * Created by liaoinstan
- */
-public class QuestionBankCateFragment extends BaseFragment implements OnRecycleItemClickListener {
-
-    private int position;
-    private View rootView;
+//type 0:模拟开始 1：正式考试
+public class ModelOffiActivity extends BaseAppCompatActivity implements OnRecycleItemClickListener {
 
     private LoadingLayout loadingLayout;
-
     private SpringView springView;
     private RecyclerView recycler;
-    private RecycleAdapterQustionBankCate adapter;
-    private QuestionBankActivity activity;
+    private RecycleAdapterModelOffi adapter;
 
-    public static Fragment newInstance(int position) {
-        QuestionBankCateFragment fragment = new QuestionBankCateFragment();
-        Bundle bundle = new Bundle();
-        bundle.putInt("position", position);
-        fragment.setArguments(bundle);
-        return fragment;
+    private int type;
+
+    public static void startModel(Context context) {
+        start(context, 0);
+    }
+
+    public static void startOffi(Context context) {
+        start(context, 1);
+    }
+
+    public static void start(Context context, int type) {
+        Intent intent = new Intent(context, ModelOffiActivity.class);
+        intent.putExtra("type", type);
+        context.startActivity(intent);
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.position = getArguments().getInt("position");
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_questionbank, container, false);
-        return rootView;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+        setContentView(R.layout.activity_model);
         initBase();
         initView();
         initCtrl();
@@ -83,54 +65,70 @@ public class QuestionBankCateFragment extends BaseFragment implements OnRecycleI
     }
 
     private void initBase() {
-        activity = (QuestionBankActivity) getActivity();
+        if (getIntent().hasExtra("type")) {
+            type = getIntent().getIntExtra("type", 0);
+        }
+        setToolbar(type == 0 ? "模拟题库" : "正式考试");
     }
 
     private void initView() {
-        loadingLayout = (LoadingLayout) rootView.findViewById(R.id.loadingLayout);
-        springView = (SpringView) rootView.findViewById(R.id.spring);
-        recycler = (RecyclerView) rootView.findViewById(R.id.recycler);
+        loadingLayout = (LoadingLayout) findViewById(R.id.loadingLayout);
+        recycler = (RecyclerView) findViewById(R.id.recycler);
+        springView = (SpringView) findViewById(R.id.spring);
     }
 
     private void initCtrl() {
-        adapter = new RecycleAdapterQustionBankCate(getContext(), activity.getType());
+        adapter = new RecycleAdapterModelOffi(this, type);
         adapter.setOnItemClickListener(this);
-        recycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        recycler.addItemDecoration(new ItemDecorationDivider(getContext()));
+        recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recycler.addItemDecoration(new ItemDecorationDivider(this));
         recycler.setAdapter(adapter);
         loadingLayout.setOnRefreshListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                netQueryStudy(0);
+                netQueryModelPapers(0);
             }
         });
-        springView.setHeader(new AliHeader(getContext(), false));
-        springView.setFooter(new AliFooter(getContext(), false));
+        springView.setHeader(new AliHeader(this, false));
+        springView.setFooter(new AliFooter(this, false));
         springView.setListener(new SpringView.OnFreshListener() {
             @Override
             public void onRefresh() {
-                netQueryStudy(1);
+                netQueryModelPapers(1);
             }
 
             @Override
             public void onLoadmore() {
-                netQueryStudy(2);
+                netQueryModelPapers(2);
             }
         });
     }
 
     private void initData() {
-        netQueryStudy(0);
+        netQueryModelPapers(0);
     }
 
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
-        Study study = adapter.getResults().get(viewHolder.getLayoutPosition());
-        EventBean eventBean = new EventBean(EventBean.EVENT_QUESTIONBANK_NEXT);
-        eventBean.put("orderId", study.getOrderId());
-        eventBean.put("lessonName", study.getCurriculumName());
-        EventBus.getDefault().post(eventBean);
-        activity.next();
+        ExamModelOffi exam = adapter.getResults().get(viewHolder.getLayoutPosition());
+        switch (type) {
+            case 0:
+                if (exam.getExaminationNum() == 0) {
+                    ToastUtil.showToastShort("该课程还没有模拟题");
+                    return;
+                }
+                //模拟考试
+                ExamActivity.startMoldel(this, exam);
+                break;
+            case 1:
+                if (exam.getExaminationNum() == 0) {
+                    ToastUtil.showToastShort("该课程还没有考试题");
+                    return;
+                }
+                //正式考试
+                ExamActivity.startOfficial(this, exam);
+                break;
+        }
     }
 
     ///////////////////////////////////
@@ -145,25 +143,25 @@ public class QuestionBankCateFragment extends BaseFragment implements OnRecycleI
      *
      * @param type
      */
-    private void netQueryStudy(final int type) {
+    private void netQueryModelPapers(final int type) {
         Map<String, Object> param = new NetParam()
                 .put("pageNO", type == 0 || type == 1 ? "1" : page + 1 + "")
                 .put("pageSize", PAGE_COUNT + "")
                 .build();
         if (type == 0) loadingLayout.showLoadingView();
         Call<ResponseBody> call;
-        if (activity.getType()==0){
-            //练习题库
-            call = NetApi.NI().queryStudy(param);
-        }else {
-            //错题库
-            call = NetApi.NI().queryErrorLesson(param);
+        if (this.type == 0) {
+            //模拟考试
+            call = NetApi.NI().queryModelPapers(param);
+        } else {
+            //正式考试
+            call = NetApi.NI().queryOffiPapers(param);
         }
-        call.enqueue(new BaseCallback<List<Study>>(new TypeToken<List<Study>>() {
+        call.enqueue(new BaseCallback<List<ExamModelOffi>>(new TypeToken<List<ExamModelOffi>>() {
         }.getType()) {
             @Override
-            public void onSuccess(int status, List<Study> beans, String msg) {
-                if (!StrUtil.isEmpty(beans)) {
+            public void onSuccess(int status, List<ExamModelOffi> exams, String msg) {
+                if (!StrUtil.isEmpty(exams)) {
                     //下拉加载和首次加载要清除原有数据并把页码置为1，上拉加载不断累加页码
                     if (type == 0 || type == 1) {
                         adapter.getResults().clear();
@@ -171,7 +169,7 @@ public class QuestionBankCateFragment extends BaseFragment implements OnRecycleI
                     } else {
                         page++;
                     }
-                    adapter.getResults().addAll(beans);
+                    adapter.getResults().addAll(exams);
                     adapter.notifyDataSetChanged();
 
                     //加载结束恢复列表

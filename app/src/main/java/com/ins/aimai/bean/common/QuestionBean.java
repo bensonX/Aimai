@@ -1,8 +1,12 @@
 package com.ins.aimai.bean.common;
 
+import android.text.TextUtils;
+
 import com.google.gson.annotations.SerializedName;
 import com.ins.aimai.ui.view.QuestionView;
 import com.ins.common.entity.BaseSelectBean;
+import com.ins.common.utils.NumUtil;
+import com.ins.common.utils.StrUtil;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,8 +24,6 @@ public class QuestionBean extends BaseSelectBean implements Serializable {
     private int num;
     //题目
     private String title;
-    //选项
-    private List<String> options;
     //选项实体
     private List<QuestionView.Option> optionBeans;
     //答案
@@ -39,36 +41,59 @@ public class QuestionBean extends BaseSelectBean implements Serializable {
     public QuestionBean() {
     }
 
-    public QuestionBean(String title, List<String> options) {
+    public QuestionBean(String title, List<QuestionView.Option> optionBeans) {
         this.title = title;
-        this.options = options;
+        this.optionBeans = optionBeans;
     }
 
-    ////////////////////  转换方法 /////////////////////
+    ////////////////////  业务方法 /////////////////////
 
-    private List<QuestionView.Option> transStrs2Options(List<String> optionStrs) {
-        List<QuestionView.Option> options = new ArrayList<>();
-        if (optionStrs != null) {
-            for (String optionStr : optionStrs) {
-                options.add(new QuestionView.Option(optionStr));
+    //是否已经答题
+    public boolean isChoosed() {
+        if (TextUtils.isEmpty(getChooseStr())) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    //获取选择的答案 （A,B,C）
+    public String getChooseStr() {
+        if (StrUtil.isEmpty(getOptionBeans())) {
+            return "";
+        }
+        String ret = "";
+        for (QuestionView.Option option : getOptionBeans()) {
+            if (option.isSelect()) {
+                ret += NumUtil.intToABC(option.index) + ",";
             }
         }
-        return options;
+        return StrUtil.subLastChart(ret, ",");
     }
 
-    public List<QuestionView.Option> getOptionBeans() {
-        if (optionBeans == null) {
-            setOptionBeans(transStrs2Options(options));
+    //获取正确的答案 （A,B,C）
+    public String getAnswerStr() {
+        if (StrUtil.isEmpty(getOptionBeans())) {
+            return "";
         }
+        String ret = "";
+        for (QuestionView.Option option : getOptionBeans()) {
+            if (option.isCorrect) {
+                ret += NumUtil.intToABC(option.index) + ",";
+            }
+        }
+        return StrUtil.subLastChart(ret, ",");
+    }
+
+    ////////////////////  get & set /////////////////////
+
+    public List<QuestionView.Option> getOptionBeans() {
         return optionBeans;
     }
 
     public void setOptionBeans(List<QuestionView.Option> optionBeans) {
         this.optionBeans = optionBeans;
     }
-
-    ////////////////////  get & set /////////////////////
-
 
     public String getTypeName() {
         return typeName;
@@ -108,14 +133,6 @@ public class QuestionBean extends BaseSelectBean implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public List<String> getOptions() {
-        return options;
-    }
-
-    public void setOptions(List<String> options) {
-        this.options = options;
     }
 
     public String getAnswer() {

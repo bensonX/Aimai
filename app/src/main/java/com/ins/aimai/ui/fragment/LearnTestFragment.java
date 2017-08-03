@@ -14,7 +14,7 @@ import com.ins.aimai.common.AppHelper;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
-import com.ins.aimai.ui.activity.ModelActivity;
+import com.ins.aimai.ui.activity.ModelOffiActivity;
 import com.ins.aimai.ui.activity.OfficialActivity;
 import com.ins.aimai.ui.activity.QuestionBankActivity;
 import com.ins.aimai.ui.base.BaseFragment;
@@ -96,16 +96,16 @@ public class LearnTestFragment extends BaseFragment implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.lay_learntest_practice:
-                QuestionBankActivity.start(getContext(),0);
+                QuestionBankActivity.startPractice(getContext());
                 break;
             case R.id.lay_learntest_error:
-                QuestionBankActivity.start(getContext(),1);
+                QuestionBankActivity.startError(getContext());
                 break;
             case R.id.lay_learntest_model:
-                ModelActivity.start(getContext());
+                ModelOffiActivity.startModel(getContext());
                 break;
             case R.id.lay_learntest_official:
-                OfficialActivity.start(getContext());
+                ModelOffiActivity.startOffi(getContext());
                 break;
         }
     }

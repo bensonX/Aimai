@@ -21,6 +21,9 @@ public class Examination implements Serializable {
     /** 题解 */
     private String examinationKey;
 
+    /** 考点 */
+    private String emphasis;
+
     /** 该题的分数 */
     private int score;
 
@@ -58,6 +61,13 @@ public class Examination implements Serializable {
 
     private String companyName;
 
+    public String getEmphasis() {
+        return emphasis;
+    }
+
+    public void setEmphasis(String emphasis) {
+        this.emphasis = emphasis;
+    }
 
     /** 获取 考题ID */
     public int getId() {

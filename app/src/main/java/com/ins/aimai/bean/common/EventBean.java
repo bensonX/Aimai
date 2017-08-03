@@ -44,6 +44,8 @@ public class EventBean implements Serializable {
     public static final int EVENT_QUESTIONBANK_NEXT = 0xffa015;
     //答题卡选择了一道试题
     public static final int EVENT_EXAMBOARD_SELECT = 0xffa016;
+    //考试已交卷
+    public static final int EVENT_EXAM_SUBMITED = 0xffa017;
 
     private int event;
     private Map<String, Object> map = new HashMap<>();

@@ -39,12 +39,13 @@ public class RecycleAdapterFavoExam extends RecyclerView.Adapter<RecycleAdapterF
     public void onBindViewHolder(final RecycleAdapterFavoExam.Holder holder, final int position) {
         final TestBean bean = results.get(position);
 
-        String title = "党的十八大以来，一些标志性话语深刻反映了中央治国理政新理念，其中，下列标志性话语与治国理政新理念对应错误是（ ）";
-        final String option1 = "“刮骨疗毒，壮士割腕”——加强党风";
-        final String option2 = "“踏石留印，抓铁有痕”--推动国防军队改革";
-        final String option3 = "“凝聚共识，合作共赢”--发展大国外交";
-        final String option4 = "“一个都不能少”——全面建设小康社会";
-        List<String> options = new ArrayList<String>() {{
+
+        String title = "党的十八大以来，一些标志性话语深刻反映了中央治国理政新理念，其中，下列标志性话语与治国理政新理念对应错误是";
+        final QuestionView.Option option1 = new QuestionView.Option("“刮骨疗毒，壮士割腕”——加强党风");
+        final QuestionView.Option option2 = new QuestionView.Option("“踏石留印，抓铁有痕”--推动国防军队改革");
+        final QuestionView.Option option3 = new QuestionView.Option("“凝聚共识，合作共赢”--发展大国外交");
+        final QuestionView.Option option4 = new QuestionView.Option("“一个都不能少”——全面建设小康社会");
+        List<QuestionView.Option> options = new ArrayList<QuestionView.Option>() {{
             add(option1);
             add(option2);
             add(option3);

@@ -50,7 +50,7 @@ public class RecycleAdapterQustionBankCate extends RecyclerView.Adapter<RecycleA
             holder.text_questionbank_cate_count_question.setVisibility(View.GONE);
         } else {
             holder.text_questionbank_cate_count_question.setVisibility(View.VISIBLE);
-            holder.text_questionbank_cate_count_question.setText(SpannableStringUtil.create(context, new String[]{"错误 " , study.getVideoNum() + "", " 题"}, new int[]{R.color.com_text_dark, R.color.am_yellow, R.color.com_text_dark}));
+            holder.text_questionbank_cate_count_question.setText(SpannableStringUtil.create(context, new String[]{"错误 " , study.getErrorNum() + "", " 题"}, new int[]{R.color.com_text_dark, R.color.am_yellow, R.color.com_text_dark}));
         }
     }
 

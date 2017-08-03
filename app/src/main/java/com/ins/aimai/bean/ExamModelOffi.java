@@ -6,9 +6,7 @@ import java.io.Serializable;
  * 学习模块 课程列表 entity
  * Created by Eric Xie on 2017/7/25 0025.
  */
-public class Study implements Serializable {
-
-    private static final long serialVersionUID = -7543006557054465977L;
+public class ExamModelOffi implements Serializable {
 
     /** 课程ID */
     private int id;
@@ -46,10 +44,17 @@ public class Study implements Serializable {
     /** 视频购买时的单价 */
     private double price;
 
-    //新增字段
-    /** 课程错题数量 */
-    private int errorNum;
+    /** 是否模拟完   0:没有  1:有 */
+    private int isFinish;
 
+    /** 已通过考试的次数 */
+    private int passNum;
+
+    /** 未通过考试的次数 */
+    private int unPassNum;
+
+    /** 试卷ID */
+    private int paperId;
 
     /** 获取 课程ID */
     public int getId() {
@@ -94,14 +99,6 @@ public class Study implements Serializable {
     /** 获取 课程视频数量 */
     public int getVideoNum() {
         return this.videoNum;
-    }
-
-    public int getErrorNum() {
-        return errorNum;
-    }
-
-    public void setErrorNum(int errorNum) {
-        this.errorNum = errorNum;
     }
 
     /** 设置 课程视频数量 */
@@ -177,5 +174,45 @@ public class Study implements Serializable {
     /** 设置 订单ID */
     public void setOrderId(int orderId) {
         this.orderId = orderId;
+    }
+
+    /** 获取 是否模拟完   0:没有  1:有 */
+    public int getIsFinish() {
+        return this.isFinish;
+    }
+
+    /** 设置 是否模拟完   0:没有  1:有 */
+    public void setIsFinish(int isFinish) {
+        this.isFinish = isFinish;
+    }
+
+    /** 获取 已通过考试的次数 */
+    public int getPassNum() {
+        return this.passNum;
+    }
+
+    /** 设置 已通过考试的次数 */
+    public void setPassNum(int passNum) {
+        this.passNum = passNum;
+    }
+
+    /** 获取 未通过考试的次数 */
+    public int getUnPassNum() {
+        return this.unPassNum;
+    }
+
+    /** 设置 未通过考试的次数 */
+    public void setUnPassNum(int unPassNum) {
+        this.unPassNum = unPassNum;
+    }
+
+    /** 获取 试卷ID */
+    public int getPaperId() {
+        return this.paperId;
+    }
+
+    /** 设置 试卷ID */
+    public void setPaperId(int paperId) {
+        this.paperId = paperId;
     }
 }

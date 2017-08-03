@@ -2,6 +2,7 @@ package com.ins.aimai.common;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
 import com.ins.aimai.bean.CourseWare;
 import com.ins.aimai.bean.Examination;
 import com.ins.aimai.bean.ExaminationItems;
@@ -10,6 +11,7 @@ import com.ins.aimai.bean.User;
 import com.ins.aimai.bean.Video;
 import com.ins.aimai.bean.VideoStatus;
 import com.ins.aimai.bean.common.CheckPoint;
+import com.ins.aimai.bean.common.ExamSubmitBean;
 import com.ins.aimai.bean.common.FaceRecord;
 import com.ins.aimai.bean.common.QuestionBean;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
@@ -159,11 +161,13 @@ public class AppHelper {
             if (!StrUtil.isEmpty(examinations)) {
                 for (Examination exam : examinations) {
                     QuestionBean questionBean = new QuestionBean();
-                    questionBean.setId(exam.getId());
-                    questionBean.setTitle(exam.getTitle());
-                    questionBean.setType(exam.getType());
-                    questionBean.setTypeName(exam.getType() == 0 ? "单选题" : (exam.getType() == 1 ? "多选题" : "判断题"));
-                    questionBean.setOptionBeans(transExaminationItem2Potions(exam.getExaminationItemsList(), exam.getType()));
+                    questionBean.setId(exam.getId());           //id
+                    questionBean.setTitle(exam.getTitle());     //题目
+                    questionBean.setType(exam.getType());       //类型
+                    questionBean.setTypeName(exam.getType() == 0 ? "单选题" : (exam.getType() == 1 ? "多选题" : "判断题"));  //类型的文本描述
+                    questionBean.setOptionBeans(transExaminationItem2Potions(exam.getExaminationItemsList(), exam.getType()));  //选项实体
+                    questionBean.setAnalysis(exam.getExaminationKey()); //解析
+                    questionBean.setPoint(exam.getEmphasis());          //考点
                     questions.add(questionBean);
                 }
             }
@@ -190,17 +194,43 @@ public class AppHelper {
             return options;
         }
 
-        public static String getAnswerStr(QuestionBean question) {
-            if (question == null || StrUtil.isEmpty(question.getOptionBeans())) {
-                return "";
-            }
-            String ret = "";
-            for (QuestionView.Option option : question.getOptionBeans()) {
-                if (option.isSelect()) {
-                    ret += NumUtil.intToABC(option.index) + ",";
+        private static List<Integer> getAnswerIdsList(QuestionBean question) {
+            ArrayList<Integer> ids = new ArrayList<>();
+            if (question != null && !StrUtil.isEmpty(question.getOptionBeans())) {
+                for (QuestionView.Option option : question.getOptionBeans()) {
+                    if (option.isSelect()) {
+                        ids.add(option.id);
+                    }
                 }
             }
-            return StrUtil.subLastChart(ret, ",");
+            return ids;
+        }
+
+        public static String getAnswerSubmitParam(List<QuestionBean> questions) {
+            if (StrUtil.isEmpty(questions)) {
+                return "";
+            }
+            ArrayList<ExamSubmitBean> submits = new ArrayList<>();
+            for (QuestionBean question : questions) {
+                ExamSubmitBean submit = new ExamSubmitBean();
+                submit.setExaminationId(question.getId());
+                submit.setAnswers(getAnswerIdsList(question));
+                submits.add(submit);
+            }
+            return new Gson().toJson(submits);
+        }
+
+        //是否已经做完所有题了
+        public static boolean checkIsFinishQuestions(List<QuestionBean> questions) {
+            if (StrUtil.isEmpty(questions)) {
+                return true;
+            }
+            for (QuestionBean question : questions) {
+                if (!question.isChoosed()) {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

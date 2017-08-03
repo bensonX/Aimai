@@ -1,28 +1,16 @@
 package com.ins.aimai.ui.view;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.ins.aimai.R;
 import com.ins.aimai.bean.common.QuestionBean;
-import com.ins.aimai.ui.adapter.ListAdapterQuestionItem;
-import com.ins.common.entity.BaseSelectBean;
-import com.ins.common.helper.SelectHelper;
-import com.ins.common.utils.FontUtils;
 import com.ins.common.utils.SpannableStringUtil;
-import com.ins.common.utils.StrUtil;
-import com.ins.common.view.ListViewLinearLayout;
-import com.ins.common.view.SideBar;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * liaoinstan
@@ -99,12 +87,16 @@ public class AnswerView extends FrameLayout {
 
     public void setData(QuestionBean questionBean) {
         questionView.setData(questionBean);
-        SpannableString spanStrAnswer = SpannableStringUtil.makeConorBkStr(context, R.color.am_blue, R.color.white, "答案", questionBean.getAnswer());
+        SpannableString spanStrAnswer = SpannableStringUtil.makeConorBkStr(context, R.color.am_blue, R.color.white, "答案", questionBean.getAnswerStr());
         SpannableString spanStrPoint = SpannableStringUtil.makeConorBkStr(context, R.color.com_dark, R.color.white, "考点", questionBean.getPoint());
         SpannableString spanStrAnalysis = SpannableStringUtil.makeConorBkStr(context, R.color.com_dark, R.color.white, "解析", questionBean.getAnalysis());
         text_answerview_answer.setText(spanStrAnswer);
         text_answerview_point.setText(spanStrPoint);
         text_answerview_analysis.setText(spanStrAnalysis);
+        //设置可见性。为空要隐藏
+        text_answerview_answer.setVisibility(!TextUtils.isEmpty(questionBean.getAnswerStr()) ? VISIBLE : GONE);
+        text_answerview_point.setVisibility(!TextUtils.isEmpty(questionBean.getPoint()) ? VISIBLE : GONE);
+        text_answerview_analysis.setVisibility(!TextUtils.isEmpty(questionBean.getAnalysis()) ? VISIBLE : GONE);
     }
 
     public void notifyDataSetChanged() {

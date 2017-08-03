@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.ins.aimai.R;
 import com.ins.aimai.bean.common.QuestionBean;
-import com.ins.aimai.bean.common.TestBean;
 import com.ins.aimai.common.AppHelper;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
 
@@ -45,7 +44,7 @@ public class RecycleAdapterAnswerBoard extends RecyclerView.Adapter<RecycleAdapt
             }
         });
         holder.text_item_answerboard_num.setText(position + 1 + "");
-        String answerStr = AppHelper.Exam.getAnswerStr(questionBean);
+        String answerStr = questionBean.getChooseStr();
         if (TextUtils.isEmpty(answerStr)) {
             //还未答题
             holder.lay_item_answerboard.setSelected(false);

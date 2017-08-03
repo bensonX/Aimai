@@ -117,11 +117,9 @@ public class DialogSureAimai extends Dialog {
         text_dialog_sure.setText(msg);
         text_cancle.setText(cancelStr);
         text_ok.setText(sureStr);
-        if (TextUtils.isEmpty(title)) {
-            text_dialog_title.setVisibility(View.GONE);
-        } else {
-            text_dialog_title.setVisibility(View.VISIBLE);
-        }
+        //设置可见性
+        text_dialog_title.setVisibility(!TextUtils.isEmpty(title) ? View.VISIBLE : View.GONE);
+        text_dialog_sure.setVisibility(!TextUtils.isEmpty(msg) ? View.VISIBLE : View.GONE);
     }
 
     public void setOnCancleListener(View.OnClickListener listener) {

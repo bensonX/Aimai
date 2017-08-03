@@ -20,9 +20,13 @@ public class ViewPagerUtil {
     }
 
     public static void goPosition(ViewPager viewPager, int position) {
+        goPosition(viewPager, position, true);
+    }
+
+    public static void goPosition(ViewPager viewPager, int position, boolean needAnim) {
         int count = viewPager.getAdapter().getCount();
         if (position >= 0 && position < count) {
-            viewPager.setCurrentItem(position);
+            viewPager.setCurrentItem(position, needAnim);
         }
     }
 

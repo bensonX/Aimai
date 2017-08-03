@@ -11,13 +11,14 @@ import android.view.ViewGroup;
 
 import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
-import com.ins.aimai.bean.Exam;
+import com.ins.aimai.bean.ExamPractice;
 import com.ins.aimai.bean.common.EventBean;
-import com.ins.aimai.interfaces.PagerInter;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
 import com.ins.aimai.ui.activity.ExamActivity;
+import com.ins.aimai.ui.activity.ExamResultActivity;
+import com.ins.aimai.ui.activity.QuestionAnalysisActivity;
 import com.ins.aimai.ui.activity.QuestionBankActivity;
 import com.ins.aimai.ui.adapter.RecycleAdapterQustionBankList;
 import com.ins.aimai.ui.base.BaseFragment;
@@ -32,6 +33,9 @@ import com.liaoinstan.springview.widget.SpringView;
 
 import java.util.List;
 import java.util.Map;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
 
 /**
  * Created by liaoinstan
@@ -48,6 +52,7 @@ public class QustionBankListFragment extends BaseFragment implements OnRecycleIt
     private RecycleAdapterQustionBankList adapter;
     private QuestionBankActivity activity;
     private int orderId;
+    private String lessonName;
 
     public static Fragment newInstance(int position) {
         QustionBankListFragment fragment = new QustionBankListFragment();
@@ -61,6 +66,9 @@ public class QustionBankListFragment extends BaseFragment implements OnRecycleIt
     public void onCommonEvent(EventBean event) {
         if (event.getEvent() == EventBean.EVENT_QUESTIONBANK_NEXT) {
             orderId = (int) event.get("orderId");
+            lessonName = (String) event.get("lessonName");
+            netQueryPracticeExams(0);
+        } else if (event.getEvent() == EventBean.EVENT_EXAM_SUBMITED) {
             netQueryPracticeExams(0);
         }
     }
@@ -130,17 +138,31 @@ public class QustionBankListFragment extends BaseFragment implements OnRecycleIt
 
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
-        Exam exam = adapter.getResults().get(viewHolder.getLayoutPosition());
-        //练习题数量不为0 && 未练习过 （0） && 该课程已经学习完 （1）才能进入进行练习
-//        if (exam.getExaminationNum() == 0) {
-//            ToastUtil.showToastShort("该课程还没有练习题");
-//        } else if (exam.getIsStudy() == 0) {
-//            ToastUtil.showToastShort("您还没有学完该课程");
-//        } else if (exam.getIsExamination() == 1) {
-//            ToastUtil.showToastShort("您已经做完了该练习题");
-//        } else {
-        ExamActivity.startPractice(getActivity(), exam);
-//        }
+        ExamPractice examPractice = adapter.getResults().get(viewHolder.getLayoutPosition());
+        switch (activity.getType()) {
+            case 0:
+                if (examPractice.getExaminationNum() == 0) {
+                    ToastUtil.showToastShort("该课程还没有练习题");
+                }
+//                else if (examPractice.getIsStudy() == 0) {
+//                    ToastUtil.showToastShort("您还没有学完该课程");
+//                }
+                else if (examPractice.getIsExamination() == 1) {
+                    //练习题已经做完
+//                    ExamResultActivity.start(getActivity(), examPractice.getPaperId(), examPractice.getOrderId(), activity.getType());
+                    ExamActivity.startPractice(getActivity(), examPractice);
+                } else {
+                    ExamActivity.startPractice(getActivity(), examPractice);
+                }
+                break;
+            case 1:
+                if (examPractice.getExaminationNum() == 0) {
+                    ToastUtil.showToastShort("该课程没有错题");
+                }
+                //错题库
+                QuestionAnalysisActivity.startErrorWithCate(getActivity(), orderId, examPractice.getCourseWareId(), lessonName, examPractice.getCourseWareName());
+                break;
+        }
     }
 
     ///////////////////////////////////
@@ -162,10 +184,18 @@ public class QustionBankListFragment extends BaseFragment implements OnRecycleIt
                 .put("orderId", orderId)
                 .build();
         if (type == 0) loadingLayout.showLoadingView();
-        NetApi.NI().queryPracticeExams(param).enqueue(new BaseCallback<List<Exam>>(new TypeToken<List<Exam>>() {
+        Call<ResponseBody> call;
+        if (activity.getType() == 0) {
+            //练习题库
+            call = NetApi.NI().queryPracticeExams(param);
+        } else {
+            //错题库
+            call = NetApi.NI().queryErrorWare(param);
+        }
+        call.enqueue(new BaseCallback<List<ExamPractice>>(new TypeToken<List<ExamPractice>>() {
         }.getType()) {
             @Override
-            public void onSuccess(int status, List<Exam> beans, String msg) {
+            public void onSuccess(int status, List<ExamPractice> beans, String msg) {
                 if (!StrUtil.isEmpty(beans)) {
                     //下拉加载和首次加载要清除原有数据并把页码置为1，上拉加载不断累加页码
                     if (type == 0 || type == 1) {
