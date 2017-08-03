@@ -1,5 +1,7 @@
 package com.ins.aimai.bean;
 
+import com.ins.common.entity.BaseSelectBean;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -7,7 +9,7 @@ import java.util.List;
  * 课程 entity
  * Created by Eric Xie on 2017/7/13 0013.
  */
-public class Lesson implements Serializable {
+public class Lesson extends BaseSelectBean implements Serializable {
 
     /** ID */
     private int id;
@@ -90,6 +92,11 @@ public class Lesson implements Serializable {
     /** 用户 是否拥有该课程 0：不拥有  1：拥有 */
     private int isOwn;
 
+    //新增字段
+    //购买数量
+    private int number;
+    private int orderId;
+
     /** 获取 ID */
     public int getId() {
         return this.id;
@@ -100,12 +107,29 @@ public class Lesson implements Serializable {
         this.id = id;
     }
 
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
     /** 获取 课程名 */
     public String getCurriculumName() {
         return this.curriculumName;
     }
 
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+
     /** 设置 课程名 */
+
     public void setCurriculumName(String curriculumName) {
         this.curriculumName = curriculumName;
     }

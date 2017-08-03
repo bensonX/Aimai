@@ -538,4 +538,24 @@ public interface NetInterface {
     @FormUrlEncoded
     @POST("/api/allocation/addAllocation")
     Call<ResponseBody> addAllocation(@FieldMap Map<String, Object> param);
+
+    /**
+     * 公司或者代理商 通过用户 获取待分配的课程列表
+     * userId
+     * pageNO
+     * pageSize
+     */
+    @FormUrlEncoded
+    @POST("/api/curriculum/queryWaitAllocationCurriculum")
+    Call<ResponseBody> queryLessonAllocatList(@FieldMap Map<String, Object> param);
+
+    /**
+     * 给用户批量分配课程
+     * userId
+     * orderIds     订单ID集合 逗号隔开 类型:string
+     * number       分配的数量 一期功能 默认传 1 类型:int
+     */
+    @FormUrlEncoded
+    @POST("/api/allocation/batchAddAllocation")
+    Call<ResponseBody> lessonAllocat(@FieldMap Map<String, Object> param);
 }

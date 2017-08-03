@@ -13,9 +13,11 @@ import com.ins.aimai.bean.User;
 import com.ins.aimai.bean.common.TestBean;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
 import com.ins.common.utils.GlideUtil;
+import com.ins.common.utils.TimeUtil;
 import com.ins.common.view.RectBackTextView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class RecycleAdapterLearnEmploy extends RecyclerView.Adapter<RecycleAdapterLearnEmploy.Holder> {
@@ -47,7 +49,18 @@ public class RecycleAdapterLearnEmploy extends RecyclerView.Adapter<RecycleAdapt
         });
         GlideUtil.loadCircleImg(holder.img_learn_employ_header, R.drawable.default_header_edit, user.getAvatar());
         holder.text_learn_employ_name.setText(user.getShowName());
-        //TODO:课程学习信息还暂时没有
+        holder.text_learn_employ_lesson.setText(user.getCurriculumName());
+        holder.text_learn_employ_count.setText(user.getFinishCourseWareNum() + "");
+        if (user.getIsPass() == 0) {
+            //未通过
+            holder.text_learn_employ_status.setVisibility(View.GONE);
+            holder.lay_learn_employ_leaned.setVisibility(View.VISIBLE);
+        } else {
+            //通过
+            holder.text_learn_employ_status.setVisibility(View.VISIBLE);
+            holder.lay_learn_employ_leaned.setVisibility(View.GONE);
+            holder.text_learn_employ_time.setText(TimeUtil.getTimeFor("yyyy-MM-dd HH:mm",new Date(user.getCreateTime())));
+        }
     }
 
     @Override
@@ -72,6 +85,7 @@ public class RecycleAdapterLearnEmploy extends RecyclerView.Adapter<RecycleAdapt
             text_learn_employ_name = (TextView) itemView.findViewById(R.id.text_learn_employ_name);
             text_learn_employ_lesson = (TextView) itemView.findViewById(R.id.text_learn_employ_lesson);
             text_learn_employ_time = (TextView) itemView.findViewById(R.id.text_learn_employ_time);
+            text_learn_employ_count = (TextView) itemView.findViewById(R.id.text_learn_employ_count);
             lay_learn_employ_leaned = itemView.findViewById(R.id.lay_learn_employ_leaned);
         }
     }

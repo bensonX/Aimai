@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.ins.aimai.R;
 import com.ins.aimai.bean.common.TestBean;
@@ -50,6 +52,11 @@ public class GridAdapterLesson extends BaseAdapter {
             convertView = inflater.inflate(R.layout.item_userdetail_lesson, parent, false);
             holder = new ViewHolder();
             holder.img_userdetail_pic = (ImageView) convertView.findViewById(R.id.img_userdetail_pic);
+            holder.img_userdetail_flag = (ImageView) convertView.findViewById(R.id.img_userdetail_flag);
+            holder.text_userdetail_title = (TextView) convertView.findViewById(R.id.text_userdetail_title);
+            holder.text_userdetail_count_video = (TextView) convertView.findViewById(R.id.text_userdetail_count_video);
+            holder.text_userdetail_count_learned = (TextView) convertView.findViewById(R.id.text_userdetail_count_learned);
+            holder.progress = (ProgressBar) convertView.findViewById(R.id.progress);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -63,5 +70,10 @@ public class GridAdapterLesson extends BaseAdapter {
 
     public class ViewHolder {
         ImageView img_userdetail_pic;
+        ImageView img_userdetail_flag;
+        TextView text_userdetail_title;
+        TextView text_userdetail_count_video;
+        TextView text_userdetail_count_learned;
+        ProgressBar progress;
     }
 }

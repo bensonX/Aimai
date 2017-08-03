@@ -15,7 +15,6 @@ import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
 import com.ins.aimai.ui.activity.ModelOffiActivity;
-import com.ins.aimai.ui.activity.OfficialActivity;
 import com.ins.aimai.ui.activity.QuestionBankActivity;
 import com.ins.aimai.ui.base.BaseFragment;
 import com.ins.aimai.utils.ToastUtil;

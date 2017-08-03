@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.Lesson;
 import com.ins.aimai.bean.User;
+import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.bean.common.TestBean;
 import com.ins.aimai.ui.adapter.GridAdapterLesson;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
@@ -54,6 +55,13 @@ public class UserDetailActivity extends BaseAppCompatActivity implements View.On
     }
 
     @Override
+    public void onCommonEvent(EventBean event) {
+        if (event.getEvent() == EventBean.EVENT_LESSON_ALLOCAT) {
+            initData();
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_userdetail);
@@ -61,6 +69,7 @@ public class UserDetailActivity extends BaseAppCompatActivity implements View.On
         StatusBarTextUtil.StatusBarLightMode(this);
         setToolbar();
         toolbar.bringToFront();
+        registEventBus();
         initBase();
         initView();
         initCtrl();
@@ -152,6 +161,9 @@ public class UserDetailActivity extends BaseAppCompatActivity implements View.On
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.btn_go:
+                LessonAllocatActivity.start(this, user.getId());
+                break;
             case R.id.btn_right:
                 finish();
                 EmployAddActivity.start(this, user);

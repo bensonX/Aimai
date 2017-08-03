@@ -1,7 +1,6 @@
 package com.ins.aimai.ui.fragment;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,10 +12,7 @@ import android.view.ViewGroup;
 import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.Study;
-import com.ins.aimai.bean.User;
 import com.ins.aimai.bean.common.EventBean;
-import com.ins.aimai.bean.common.TestBean;
-import com.ins.aimai.common.AppData;
 import com.ins.aimai.common.AppHelper;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
@@ -28,7 +24,6 @@ import com.ins.aimai.ui.adapter.RecycleAdapterLearnLessonComp;
 import com.ins.aimai.ui.adapter.base.BaseRecycleAdapterLearnLesson;
 import com.ins.aimai.ui.base.BaseFragment;
 import com.ins.aimai.utils.ToastUtil;
-import com.ins.common.helper.LoadingViewHelper;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
 import com.ins.common.utils.StrUtil;
 import com.ins.common.view.LoadingLayout;
@@ -63,7 +58,7 @@ public class LearnLessonFragment extends BaseFragment implements OnRecycleItemCl
 
     @Override
     public void onCommonEvent(EventBean event) {
-        if (event.getEvent() == EventBean.EVENT_LESSON_ALLOCAT) {
+        if (event.getEvent() == EventBean.EVENT_USER_ALLOCAT) {
             netQueryStudy(1);
         }
     }

@@ -11,21 +11,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.CourseWare;
 import com.ins.aimai.bean.Lesson;
 import com.ins.aimai.bean.Study;
-import com.ins.aimai.bean.Trade;
-import com.ins.aimai.bean.User;
 import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.bean.common.TestBean;
-import com.ins.aimai.common.AppData;
 import com.ins.aimai.common.AppHelper;
 import com.ins.aimai.common.StatusHelper;
-import com.ins.aimai.net.BaseCallback;
-import com.ins.aimai.net.NetApi;
-import com.ins.aimai.net.NetParam;
 import com.ins.aimai.net.helper.NetHelper;
 import com.ins.aimai.ui.adapter.PagerAdapterLessonDetail;
 import com.ins.aimai.ui.adapter.RecycleAdapterLable;
@@ -39,7 +32,6 @@ import com.ins.common.utils.TimeUtil;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
-import java.util.Map;
 
 public class LessonDetailActivity extends BaseAppCompatActivity implements View.OnClickListener {
     private TabLayout tab;
@@ -91,7 +83,7 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
 
     @Override
     public void onCommonEvent(EventBean event) {
-        if (event.getEvent() == EventBean.EVENT_LESSON_ALLOCAT) {
+        if (event.getEvent() == EventBean.EVENT_USER_ALLOCAT) {
             int count = (int) event.get("count");
             countAlloc += count;
             setData(lesson);

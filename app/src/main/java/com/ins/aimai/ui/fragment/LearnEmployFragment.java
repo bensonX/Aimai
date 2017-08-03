@@ -57,6 +57,10 @@ public class LearnEmployFragment extends BaseFragment implements OnRecycleItemCl
     public void onCommonEvent(EventBean event) {
         if (event.getEvent() == EventBean.EVENT_EMPLOY_ADD) {
             netQueryUser(1);
+        }else if (event.getEvent() == EventBean.EVENT_USER_ALLOCAT){
+            netQueryUser(1);
+        }else if (event.getEvent() == EventBean.EVENT_LESSON_ALLOCAT){
+            netQueryUser(1);
         }
     }
 
@@ -137,7 +141,7 @@ public class LearnEmployFragment extends BaseFragment implements OnRecycleItemCl
                 EmploySearchActivity.start(getContext());
                 break;
             case R.id.btn_learnpeople_add:
-//                EmployAddActivity.start(getContext(), user);
+                EmploySearchActivity.start(getContext());
                 break;
         }
     }

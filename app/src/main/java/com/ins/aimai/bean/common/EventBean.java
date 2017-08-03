@@ -38,14 +38,16 @@ public class EventBean implements Serializable {
     public static final int EVENT_CAMERA_RESULT = 0xffa012;
     //添加员工成功
     public static final int EVENT_EMPLOY_ADD = 0xffa013;
-    //课程分配成功
-    public static final int EVENT_LESSON_ALLOCAT = 0xffa014;
+    //课程分配成功（给课程分配用户）
+    public static final int EVENT_USER_ALLOCAT = 0xffa014;
     //题库（练习题，出题库）下一页
     public static final int EVENT_QUESTIONBANK_NEXT = 0xffa015;
     //答题卡选择了一道试题
     public static final int EVENT_EXAMBOARD_SELECT = 0xffa016;
     //考试已交卷
     public static final int EVENT_EXAM_SUBMITED = 0xffa017;
+    //课程分配成功(给用户分配课程)
+    public static final int EVENT_LESSON_ALLOCAT = 0xffa018;
 
     private int event;
     private Map<String, Object> map = new HashMap<>();

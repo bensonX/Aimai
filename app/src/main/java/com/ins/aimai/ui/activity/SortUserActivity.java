@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +13,6 @@ import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.style.ImageSpan;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.google.gson.reflect.TypeToken;
@@ -22,7 +20,6 @@ import com.ins.aimai.R;
 import com.ins.aimai.bean.User;
 import com.ins.aimai.bean.common.CommonBean;
 import com.ins.aimai.bean.common.EventBean;
-import com.ins.aimai.bean.common.SortBean;
 import com.ins.aimai.common.AppVali;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
@@ -33,9 +30,7 @@ import com.ins.aimai.utils.ColorUtil;
 import com.ins.aimai.utils.SortUtil;
 import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.common.ItemDecorationSortStickTop;
-import com.ins.common.helper.LoadingViewHelper;
 import com.ins.common.ui.dialog.DialogSure;
-import com.ins.common.utils.ClearCacheUtil;
 import com.ins.common.utils.FocusUtil;
 import com.ins.common.utils.StrUtil;
 import com.ins.common.view.IndexBar;
@@ -140,7 +135,7 @@ public class SortUserActivity extends BaseAppCompatActivity implements View.OnCl
         switch (v.getId()) {
             case R.id.btn_right:
                 final String ids = adapter.getSelectedIds();
-                String msg = AppVali.allocatLesson(ids);
+                String msg = AppVali.allocatUser(ids);
                 if (msg != null) {
                     ToastUtil.showToastShort(msg);
                 } else {
@@ -234,7 +229,7 @@ public class SortUserActivity extends BaseAppCompatActivity implements View.OnCl
                 ToastUtil.showToastShort(msg, true);
                 hideLoadingDialog();
                 //post分配成功消息，附带分配人数（课程数）
-                EventBean eventBean = new EventBean(EventBean.EVENT_LESSON_ALLOCAT);
+                EventBean eventBean = new EventBean(EventBean.EVENT_USER_ALLOCAT);
                 eventBean.put("count", ids.split(",").length);
                 EventBus.getDefault().post(eventBean);
                 finish();

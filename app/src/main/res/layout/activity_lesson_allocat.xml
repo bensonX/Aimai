@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/am_bk"
-    tools:context=".ui.activity.MsgActivity">
+    tools:context=".ui.activity.InfoActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -25,9 +25,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="正式考试"
-                android:textColor="@color/com_blue"
+                android:text="课程分配"
+                android:textColor="@color/am_blue"
                 android:textSize="@dimen/text_big" />
+
+            <TextView
+                android:id="@+id/btn_right"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:gravity="center"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="确定"
+                android:textColor="@color/am_blue"
+                android:textSize="@dimen/text_big_nomal" />
 
         </android.support.v7.widget.Toolbar>
 
@@ -38,24 +50,23 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <LinearLayout
-        android:id="@+id/showingroup"
+    <com.ins.common.view.LoadingLayout
+        android:id="@+id/loadingLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_fail="@layout/layout_fail"
+        app:layout_lack="@layout/layout_lack"
+        app:layout_loading="@layout/layout_loading">
 
         <com.liaoinstan.springview.widget.SpringView
             android:id="@+id/spring"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             app:type="follow">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler"
-                android:paddingTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
@@ -63,6 +74,6 @@
 
         </com.liaoinstan.springview.widget.SpringView>
 
-    </LinearLayout>
+    </com.ins.common.view.LoadingLayout>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -91,7 +91,6 @@
         <activity android:name=".ui.activity.InfoSearchActivity" />
         <activity android:name=".ui.activity.ModelOffiActivity" />
         <activity android:name=".ui.activity.QuestionBankActivity" />
-        <activity android:name=".ui.activity.OfficialActivity" />
         <activity android:name=".ui.activity.AnswerBoardActivity" />
         <activity android:name=".ui.activity.ExamResultActivity" />
         <activity android:name=".ui.activity.SortUserActivity" />
@@ -108,6 +107,7 @@
         <activity android:name=".ui.activity.PhotoActivity" />
         <activity android:name=".ui.activity.VersionActivity" />
         <activity android:name=".ui.activity.QuestionAnalysisActivity" />
+        <activity android:name=".ui.activity.LessonAllocatActivity" />
 
     </application>
 </manifest>

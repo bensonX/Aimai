@@ -22,7 +22,6 @@ import com.ins.aimai.common.AppHelper;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
-import com.ins.aimai.ui.adapter.RecycleAdapterOfficial;
 import com.ins.aimai.ui.adapter.RecycleAdapterQuestionAnalysis;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.aimai.utils.ToastUtil;

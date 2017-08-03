@@ -135,9 +135,17 @@ public class AppVali {
         }
     }
 
-    public static String allocatLesson(String userIds) {
+    public static String allocatUser(String userIds) {
         if (isEmpty(userIds)) {
             return "请至少选择一员工进行分配";
+        } else {
+            return null;
+        }
+    }
+
+    public static String allocatLesson(String lessonIds) {
+        if (isEmpty(lessonIds)) {
+            return "请至少选择一个课程进行分配";
         } else {
             return null;
         }

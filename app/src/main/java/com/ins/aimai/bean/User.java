@@ -164,6 +164,13 @@ public class User extends SortBean implements Serializable {
     private String tradeName;
     //人脸id
     private String faceId;
+    //正在学习课程名称
+    private String curriculumName;
+    //已学习课时数量
+    private int finishCourseWareNum;
+    //是否通过
+    private int isPass;
+
 
     //####################### 逻辑方法 ##########################
 
@@ -179,6 +186,32 @@ public class User extends SortBean implements Serializable {
         return roleId == GOVERNMENT_USER;
     }
 
+    //###########################################################
+
+
+    public int getIsPass() {
+        return isPass;
+    }
+
+    public void setIsPass(int isPass) {
+        this.isPass = isPass;
+    }
+
+    public String getCurriculumName() {
+        return curriculumName;
+    }
+
+    public void setCurriculumName(String curriculumName) {
+        this.curriculumName = curriculumName;
+    }
+
+    public int getFinishCourseWareNum() {
+        return finishCourseWareNum;
+    }
+
+    public void setFinishCourseWareNum(int finishCourseWareNum) {
+        this.finishCourseWareNum = finishCourseWareNum;
+    }
 
     public String getTradeName() {
         return tradeName;
