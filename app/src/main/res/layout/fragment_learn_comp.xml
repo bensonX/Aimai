@@ -8,8 +8,9 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="76dp"
         android:background="@color/none"
+        android:paddingTop="20dp"
         app:popupTheme="@style/AppTheme.PopupOverlay">
 
         <TextView
@@ -28,27 +29,21 @@
         android:layout_height="50dp"
         android:background="@color/white">
 
-        <FrameLayout
-            android:id="@+id/lay_learnpeople_search"
+        <com.ins.common.view.EmojiEditText
+            android:id="@+id/edit_query"
             android:layout_width="match_parent"
             android:layout_height="33dp"
             android:layout_gravity="center"
             android:layout_marginLeft="22dp"
             android:layout_marginRight="22dp"
             android:background="@drawable/shape_rect_corner_none_line_dark"
-            android:foreground="?attr/selectableItemBackground">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:drawableLeft="@drawable/ic_home_search_edit"
-                android:drawablePadding="10dp"
-                android:text="搜索公司名称、地区"
-                android:textColor="@color/com_text_light"
-                android:textSize="@dimen/text_nomal_small" />
-
-        </FrameLayout>
+            android:gravity="center"
+            android:hint="搜索公司名称、地区"
+            android:lines="1"
+            android:textColor="@color/com_text_blank"
+            android:textColorHint="@color/com_text_dark_light"
+            android:inputType="text"
+            android:textSize="@dimen/text_nomal_small" />
 
     </FrameLayout>
 
@@ -59,6 +54,7 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/text_learncomp_note"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"

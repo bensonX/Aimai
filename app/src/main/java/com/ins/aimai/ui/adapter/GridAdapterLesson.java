@@ -10,8 +10,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.ins.aimai.R;
+import com.ins.aimai.bean.Lesson;
 import com.ins.aimai.bean.common.TestBean;
 import com.ins.common.utils.GlideUtil;
+import com.ins.common.utils.SpannableStringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +21,9 @@ import java.util.List;
 public class GridAdapterLesson extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
-    private List<TestBean> results = new ArrayList<>();
+    private List<Lesson> results = new ArrayList<>();
 
-    public List<TestBean> getResults() {
+    public List<Lesson> getResults() {
         return results;
     }
 
@@ -61,10 +63,14 @@ public class GridAdapterLesson extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        final TestBean bean = results.get(position);
+        final Lesson lesson = results.get(position);
 
-        GlideUtil.loadImgTest(holder.img_userdetail_pic);
-
+        GlideUtil.loadImg(holder.img_userdetail_pic, R.drawable.default_bk_img, lesson.getCover());
+        holder.text_userdetail_title.setText(lesson.getCurriculumName());
+        holder.text_userdetail_count_video.setText(SpannableStringUtil.create(context, new String[]{lesson.getVideoNum() + "", " 个视频课程"}, new int[]{R.color.am_blue, R.color.com_text_dark_light}));
+        holder.text_userdetail_count_learned.setText(SpannableStringUtil.create(context, new String[]{"已学习 ", lesson.getStudyNum() + "", " 课时"}, new int[]{R.color.com_text_blank, R.color.am_blue, R.color.com_text_blank}));
+        holder.progress.setProgress((int) ((float) lesson.getStudyNum() / (float) lesson.getCourseWareNum() * 100));
+        holder.img_userdetail_flag.setVisibility(lesson.getIsPass() == 1 ? View.VISIBLE : View.GONE);
         return convertView;
     }
 

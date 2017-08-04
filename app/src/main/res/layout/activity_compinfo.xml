@@ -66,6 +66,7 @@
                     android:textSize="@dimen/text_nomal" />
 
                 <TextView
+                    android:id="@+id/text_compinfo_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -98,6 +99,7 @@
                     android:textSize="@dimen/text_nomal" />
 
                 <TextView
+                    android:id="@+id/text_compinfo_yyzz"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -130,6 +132,7 @@
                     android:textSize="@dimen/text_nomal" />
 
                 <TextView
+                    android:id="@+id/text_compinfo_trade"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -163,6 +166,7 @@
                     android:textSize="@dimen/text_nomal" />
 
                 <TextView
+                    android:id="@+id/text_compinfo_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"

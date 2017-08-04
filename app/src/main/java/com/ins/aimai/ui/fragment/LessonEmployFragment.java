@@ -11,12 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ins.aimai.R;
+import com.ins.aimai.bean.User;
 import com.ins.aimai.bean.common.TestBean;
 import com.ins.aimai.ui.activity.LessonEmployActivity;
 import com.ins.aimai.ui.adapter.RecycleAdapterLessonEmploy;
 import com.ins.aimai.ui.base.BaseFragment;
 import com.ins.common.helper.LoadingViewHelper;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
+import com.ins.common.utils.StrUtil;
+
+import java.util.List;
 
 /**
  * Created by liaoinstan
@@ -80,30 +84,20 @@ public class LessonEmployFragment extends BaseFragment implements OnRecycleItemC
     }
 
     private void initData() {
-        showin = LoadingViewHelper.showin(showingroup, R.layout.layout_loading, showin);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                adapter.getResults().clear();
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.notifyDataSetChanged();
-                activity.setTabTextCount(position, adapter.getResults().size());
-                LoadingViewHelper.showout(showingroup, showin);
-            }
-        }, 1000);
+        if (position == 0) {
+            setData(activity.getLesson().getWatchUsers());
+        } else {
+            setData(activity.getLesson().getSafeUsers());
+        }
+    }
+
+    private void setData(List<User> users) {
+        if (!StrUtil.isEmpty(users)) {
+            adapter.getResults().clear();
+            adapter.getResults().addAll(users);
+            adapter.notifyDataSetChanged();
+        }
+        activity.setTabTextCount(position, adapter.getResults().size());
     }
 
     @Override

@@ -9,19 +9,26 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.Lesson;
+import com.ins.aimai.bean.Trade;
 import com.ins.aimai.bean.User;
 import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.bean.common.TestBean;
+import com.ins.aimai.net.BaseCallback;
+import com.ins.aimai.net.NetApi;
+import com.ins.aimai.net.NetParam;
 import com.ins.aimai.ui.adapter.GridAdapterLesson;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
+import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.utils.FocusUtil;
 import com.ins.common.utils.GlideUtil;
 import com.ins.common.utils.StatusBarTextUtil;
 import com.ins.common.utils.StrUtil;
 
 import java.util.List;
+import java.util.Map;
 
 public class UserDetailActivity extends BaseAppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
@@ -57,7 +64,7 @@ public class UserDetailActivity extends BaseAppCompatActivity implements View.On
     @Override
     public void onCommonEvent(EventBean event) {
         if (event.getEvent() == EventBean.EVENT_LESSON_ALLOCAT) {
-            initData();
+            netQueryUserDetail();
         }
     }
 
@@ -119,22 +126,7 @@ public class UserDetailActivity extends BaseAppCompatActivity implements View.On
     }
 
     private void initData() {
-        adapter.getResults().clear();
-        adapter.getResults().add(new TestBean());
-        adapter.getResults().add(new TestBean());
-        adapter.getResults().add(new TestBean());
-        adapter.getResults().add(new TestBean());
-        adapter.getResults().add(new TestBean());
-        adapter.getResults().add(new TestBean());
-        adapter.getResults().add(new TestBean());
-        adapter.getResults().add(new TestBean());
-        adapter.getResults().add(new TestBean());
-        adapter.getResults().add(new TestBean());
-        adapter.getResults().add(new TestBean());
-        adapter.getResults().add(new TestBean());
-        adapter.getResults().add(new TestBean());
-        adapter.getResults().add(new TestBean());
-        adapter.notifyDataSetChanged();
+        netQueryUserDetail();
     }
 
     private void setData(User user) {
@@ -155,6 +147,9 @@ public class UserDetailActivity extends BaseAppCompatActivity implements View.On
             lay_userdetail_lesson.setVisibility(View.GONE);
         } else {
             lay_userdetail_lesson.setVisibility(View.VISIBLE);
+            adapter.getResults().clear();
+            adapter.getResults().addAll(lessons);
+            adapter.notifyDataSetChanged();
         }
     }
 
@@ -173,5 +168,25 @@ public class UserDetailActivity extends BaseAppCompatActivity implements View.On
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Lesson lesson = adapter.getResults().get(position);
+        ToastUtil.showToastShort("跳转课程详情（还没做）");
+    }
+
+    private void netQueryUserDetail() {
+        Map<String, Object> param = new NetParam()
+                .put("userId", user.getId())
+                .build();
+        NetApi.NI().queryUserDetail(param).enqueue(new BaseCallback<User>(User.class) {
+            @Override
+            public void onSuccess(int status, User user, String msg) {
+                List<Lesson> lessons = user.getCurriculumList();
+                setLessonData(lessons);
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+                ToastUtil.showToastShort(msg);
+            }
+        });
     }
 }

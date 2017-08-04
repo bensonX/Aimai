@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 import com.ins.aimai.bean.common.SortBean;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 用户 entity
@@ -170,6 +171,14 @@ public class User extends SortBean implements Serializable {
     private int finishCourseWareNum;
     //是否通过
     private int isPass;
+    //学习课程
+    private List<Lesson> curriculumList;
+    //参培人员
+    private int peopleNum;
+    //参培人员2（公司详情使用，和上面字段同义）
+    private int joinNum;
+    //安全人员
+    private int safeNum;
 
 
     //####################### 逻辑方法 ##########################
@@ -188,6 +197,30 @@ public class User extends SortBean implements Serializable {
 
     //###########################################################
 
+
+    public int getJoinNum() {
+        return joinNum;
+    }
+
+    public void setJoinNum(int joinNum) {
+        this.joinNum = joinNum;
+    }
+
+    public int getSafeNum() {
+        return safeNum;
+    }
+
+    public void setSafeNum(int safeNum) {
+        this.safeNum = safeNum;
+    }
+
+    public int getPeopleNum() {
+        return peopleNum;
+    }
+
+    public void setPeopleNum(int peopleNum) {
+        this.peopleNum = peopleNum;
+    }
 
     public int getIsPass() {
         return isPass;
@@ -227,6 +260,14 @@ public class User extends SortBean implements Serializable {
 
     public void setFaceId(String faceId) {
         this.faceId = faceId;
+    }
+
+    public List<Lesson> getCurriculumList() {
+        return curriculumList;
+    }
+
+    public void setCurriculumList(List<Lesson> curriculumList) {
+        this.curriculumList = curriculumList;
     }
 
     /**

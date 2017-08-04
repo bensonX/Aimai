@@ -12,6 +12,7 @@ import com.ins.aimai.common.PayHelperEx;
 import com.ins.aimai.ui.activity.HomeActivity;
 import com.ins.aimai.ui.activity.PayDialogActivity;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
+import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.utils.L;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
@@ -127,20 +128,35 @@ public class WXPayEntryActivity extends BaseAppCompatActivity implements IWXAPIE
     @Override
     public void onResp(BaseResp resp) {
         L.d("onPayFinish, errCode = " + resp.errCode);
+        L.d("onPayFinish, errStr = " + resp.errStr);
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
             type = resp.errCode;
+            setPayData();
             switch (resp.errCode) {
                 case 0:
                     //成功
-                    setPayData();
                     break;
                 case -1:
                     //失败
-                    setPayData();
                     break;
                 case -2:
                     //用户取消
-                    setPayData();
+                    break;
+                case -3:
+                    //发送失败
+                    ToastUtil.showToastShort("微信支付：发送失败");
+                    break;
+                case -4:
+                    //授权失败
+                    ToastUtil.showToastShort("微信支付：授权失败");
+                    break;
+                case -5:
+                    //微信不支持
+                    ToastUtil.showToastShort("微信支付：微信版本不支持");
+                    break;
+                case -6:
+                    //BAN
+                    ToastUtil.showToastShort("微信支付：BAN");
                     break;
             }
         }

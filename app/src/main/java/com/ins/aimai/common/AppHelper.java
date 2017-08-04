@@ -58,6 +58,16 @@ public class AppHelper {
         }
     }
 
+    //判断当前登录用户是否为政府用户，未登录返回否
+    public static boolean isGov() {
+        User user = AppData.App.getUser();
+        if (user != null && user.isGovUser()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static class VideoPlay {
 
         //设置video为已播放状态
@@ -231,6 +241,24 @@ public class AppHelper {
                 }
             }
             return true;
+        }
+    }
+
+    public static class Gov {
+        public static String getCompAddressStr(User comp) {
+            if (comp == null || comp.getCity() == null) {
+                return "";
+            }
+            String mergerName = comp.getCity().getMergerName();
+            String distic = comp.getCity().getShortName();
+            String[] split = mergerName.split(",");
+            if (!StrUtil.isEmpty(split) && split.length == 4) {
+                String city = split[2];
+                city = StrUtil.subLastChart(city, "市");
+                return city + "·" + distic;
+            } else {
+                return mergerName;
+            }
         }
     }
 }

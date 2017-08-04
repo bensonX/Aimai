@@ -29,6 +29,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/text_compdetail_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -39,6 +40,7 @@
             android:textSize="@dimen/text_nomal_small" />
 
         <TextView
+            android:id="@+id/text_compdetail_count_video"
             android:layout_width="wrap_content"
             android:layout_height="17dp"
             android:layout_marginTop="7dp"
@@ -50,6 +52,7 @@
             android:textSize="@dimen/text_small" />
 
         <TextView
+            android:id="@+id/text_compdetail_count_watch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -61,6 +64,7 @@
             android:textSize="@dimen/text_small" />
 
         <TextView
+            android:id="@+id/text_compdetail_count_safe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"

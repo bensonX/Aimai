@@ -29,6 +29,10 @@ public class BaseFragment extends Fragment {
         setToolbar(null, needback);
     }
 
+    public void setToolbar(String title) {
+        setToolbar(title, false);
+    }
+
     public void setToolbar(String title, boolean needback) {
         View root = getView();
         if (root == null) {

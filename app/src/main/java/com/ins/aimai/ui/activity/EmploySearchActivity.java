@@ -124,7 +124,6 @@ public class EmploySearchActivity extends BaseAppCompatActivity implements OnRec
                 return false;
             }
         });
-
     }
 
     private void initData() {

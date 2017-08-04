@@ -144,13 +144,13 @@ public class QustionBankListFragment extends BaseFragment implements OnRecycleIt
                 if (examPractice.getExaminationNum() == 0) {
                     ToastUtil.showToastShort("该课程还没有练习题");
                 }
-//                else if (examPractice.getIsStudy() == 0) {
-//                    ToastUtil.showToastShort("您还没有学完该课程");
-//                }
+                else if (examPractice.getIsStudy() == 0) {
+                    ToastUtil.showToastShort("您还没有学完该课程");
+                }
                 else if (examPractice.getIsExamination() == 1) {
                     //练习题已经做完
-//                    ExamResultActivity.start(getActivity(), examPractice.getPaperId(), examPractice.getOrderId(), activity.getType());
-                    ExamActivity.startPractice(getActivity(), examPractice);
+                    ExamResultActivity.start(getActivity(), examPractice.getPaperId(), examPractice.getOrderId(), activity.getType());
+//                    ExamActivity.startPractice(getActivity(), examPractice);
                 } else {
                     ExamActivity.startPractice(getActivity(), examPractice);
                 }

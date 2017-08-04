@@ -63,7 +63,7 @@ public class AimaiApp extends MobApplication {
             }
         });
         DomainLauncher.getInstance()
-                .addDomain("192.168.118.206:8080", "(Web开发服务器)")
+                .addDomain("192.168.1.206:8080", "(Web开发服务器)")
                 .addDomain("192.168.1.205:8080", "(开发服务器：李作焕)")
                 .addDomain("192.168.1.166", "(开发服务器：谢启谋)")
                 .addDomain("139.129.111.76:8110", "(远程测试服务器)");

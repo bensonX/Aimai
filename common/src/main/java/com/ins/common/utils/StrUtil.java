@@ -2,6 +2,7 @@ package com.ins.common.utils;
 
 import java.lang.reflect.Array;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -126,6 +127,13 @@ public class StrUtil {
         } else {
             return str;
         }
+    }
+
+    /**
+     * 获取集合长度，为null返回0
+     */
+    public static int getSize(List list) {
+        return list != null ? list.size() : 0;
     }
 
     /**

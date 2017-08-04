@@ -223,7 +223,7 @@ public interface NetInterface {
      * orderId
      */
     @FormUrlEncoded
-    @POST("/api/jsPay/sign")
+    @POST("/api/wxPay/sign")
     Call<ResponseBody> signWeixin(@FieldMap Map<String, Object> param);
 
     //##################################################################
@@ -508,6 +508,14 @@ public interface NetInterface {
     Call<ResponseBody> queryUserAlloc(@FieldMap Map<String, Object> param);
 
     /**
+     * 公司用户列表，获取用户详情接口
+     * userId
+     */
+    @FormUrlEncoded
+    @POST("/api/user/queryUserDetail")
+    Call<ResponseBody> queryUserDetail(@FieldMap Map<String, Object> param);
+
+    /**
      * 获取游离状态下的用户
      * searchParam  搜索参数
      * pageNO
@@ -558,4 +566,46 @@ public interface NetInterface {
     @FormUrlEncoded
     @POST("/api/allocation/batchAddAllocation")
     Call<ResponseBody> lessonAllocat(@FieldMap Map<String, Object> param);
+
+    //##################################################################
+    //#########               政府
+    //##################################################################
+
+    /**
+     * 给用户批量分配课程
+     * searchParams
+     * cityId
+     * pageNO
+     * pageSize
+     */
+    @FormUrlEncoded
+    @POST("/api/user/queryCompanyList")
+    Call<ResponseBody> queryComps(@FieldMap Map<String, Object> param);
+
+    /**
+     * 获取公司详情
+     * companyId
+     */
+    @FormUrlEncoded
+    @POST("/api/user/queryCompanyDetail")
+    Call<ResponseBody> queryCompDetail(@FieldMap Map<String, Object> param);
+
+    /**
+     * 政府学习中心 统计接口
+     * cityId
+     * levelType  城市级别 1:省级,2:市级,3:区县级 当cityId不为空时,该字段必选
+     */
+    @FormUrlEncoded
+    @POST("/api/user/statistics")
+    Call<ResponseBody> govStatis(@FieldMap Map<String, Object> param);
+
+    /**
+     * 通过公司ID 获取 公司下的课程列表
+     * companyId
+     * pageNO
+     * pageSize
+     */
+    @FormUrlEncoded
+    @POST("/api/curriculum/queryCurriculumByCompany")
+    Call<ResponseBody> queryLessonsByCompId(@FieldMap Map<String, Object> param);
 }

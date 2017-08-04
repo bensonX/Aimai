@@ -1,6 +1,7 @@
 package com.ins.aimai.bean;
 
 import com.ins.common.entity.BaseSelectBean;
+import com.ins.common.utils.StrUtil;
 
 import java.io.Serializable;
 
@@ -19,6 +20,14 @@ public class Address extends BaseSelectBean implements Serializable {
 
     public Address() {
     }
+
+    //////////////// 业务方法 /////////////////////
+
+    public String getMergerNameNoDot() {
+        return StrUtil.subFirstChart(mergerName.replaceAll(",", ""), "中国");
+    }
+
+    ///////////////////////////////////////////////
 
     public String getAddress() {
         return address;

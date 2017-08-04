@@ -93,6 +93,16 @@ public class SpannableStringUtil {
         return strSpan;
     }
 
+//    //给Edit设置Hint文字（带图片）
+//    private SpannableString makeSearchHint() {
+//        SpannableString spannableString = new SpannableString("1 搜索");
+//        Drawable drawable = getResources().getDrawable(R.drawable.ic_home_search_edit);
+//        drawable.setBounds(0, 0, 42, 42);
+//        ImageSpan imageSpan = new ImageSpan(drawable);
+//        spannableString.setSpan(imageSpan, 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+//        return spannableString;
+//    }
+
     //给Edit设置Hint文字（带图片）
     public static SpannableString makeImageStartStr(Context context, int src, Rect rect, String text) {
         SpannableString spannableString = new SpannableString(text);

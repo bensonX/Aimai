@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.ins.aimai.R;
 import com.ins.aimai.bean.common.EventBean;
+import com.ins.aimai.common.AppHelper;
 import com.ins.aimai.ui.adapter.PagerAdapterLearn;
 import com.ins.aimai.ui.base.BaseFragment;
 
@@ -43,6 +44,7 @@ public class LearnFragment extends BaseFragment {
             case EventBean.EVENT_LOGOUT:
             case EventBean.EVENT_LOGIN:
                 adapterPager.notifyDataSetChanged();
+                tab.setVisibility(AppHelper.isGov() ? View.GONE : View.VISIBLE);
                 break;
         }
     }
@@ -76,6 +78,7 @@ public class LearnFragment extends BaseFragment {
     private void initView() {
         tab = (TabLayout) rootView.findViewById(R.id.tab);
         pager = (ViewPager) rootView.findViewById(R.id.pager);
+        tab.setVisibility(AppHelper.isGov() ? View.GONE : View.VISIBLE);
     }
 
     private void initCtrl() {
