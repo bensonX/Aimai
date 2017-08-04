@@ -25,17 +25,27 @@ public class NetListHelper<T> {
     private int page;
     private final int PAGE_COUNT = 10;
 
+    private CallHander callHander;
     private LoadingLayout loadingLayout;
     private SpringView springView;
     private OnListLoadCallback callback;
     private Type classType;
 
-    public NetListHelper init(LoadingLayout loadingLayout, SpringView springView,Type classType, OnListLoadCallback<T> callback) {
+    public NetListHelper init(LoadingLayout loadingLayout, SpringView springView, Type classType,CallHander callHander, OnListLoadCallback<T> callback) {
         this.loadingLayout = loadingLayout;
         this.springView = springView;
         this.classType = classType;
+        this.callHander = callHander;
         this.callback = callback;
         return this;
+    }
+
+    public Map<String, Object> getParam(int type) {
+        Map<String, Object> param = new NetParam()
+                .put("pageNO", type == 0 || type == 1 ? "1" : page + 1 + "")
+                .put("pageSize", PAGE_COUNT + "")
+                .build();
+        return param;
     }
 
     /**
@@ -43,13 +53,10 @@ public class NetListHelper<T> {
      *
      * @param type
      */
-    public void netQueryInfo(final int type) {
-        Map<String, Object> param = new NetParam()
-                .put("pageNO", type == 0 || type == 1 ? "1" : page + 1 + "")
-                .put("pageSize", PAGE_COUNT + "")
-                .build();
+    public void netQueryList(final int type) {
+
         if (type == 0) loadingLayout.showLoadingView();
-        NetApi.NI().queryInfo(param).enqueue(new BaseCallback<List<T>>(classType) {
+        callHander.getCall(type).enqueue(new BaseCallback<List<T>>(classType) {
             @Override
             public void onSuccess(int status, List<T> beans, String msg) {
                 if (!StrUtil.isEmpty(beans)) {
@@ -90,6 +97,10 @@ public class NetListHelper<T> {
                 }
             }
         });
+    }
+
+    public interface CallHander {
+        Call getCall(int type);
     }
 
     public interface OnListLoadCallback<T> {

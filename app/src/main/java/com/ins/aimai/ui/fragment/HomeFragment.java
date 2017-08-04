@@ -14,14 +14,11 @@ import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
 import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.Info;
-import com.ins.aimai.bean.common.TestBean;
-import com.ins.aimai.common.AppData;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
 import com.ins.aimai.net.helper.NetListHelper;
 import com.ins.aimai.ui.activity.MsgActivity;
-import com.ins.aimai.ui.activity.WebActivity;
 import com.ins.aimai.ui.activity.WebInfoActivity;
 import com.ins.aimai.ui.adapter.RecycleAdapterHomeBanner;
 import com.ins.aimai.ui.adapter.RecycleAdapterHomeInfo;
@@ -35,9 +32,10 @@ import com.liaoinstan.springview.container.AliFooter;
 import com.liaoinstan.springview.container.AliHeader;
 import com.liaoinstan.springview.widget.SpringView;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import retrofit2.Call;
 
 /**
  * Created by liaoinstan
@@ -112,7 +110,7 @@ public class HomeFragment extends BaseFragment implements OnRecycleItemClickList
         loadingLayout.setOnRefreshListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                netListHelper.netQueryInfo(0);
+                netListHelper.netQueryList(0);
             }
         });
         springView.setHeader(new AliHeader(getContext(), false));
@@ -120,35 +118,46 @@ public class HomeFragment extends BaseFragment implements OnRecycleItemClickList
         springView.setListener(new SpringView.OnFreshListener() {
             @Override
             public void onRefresh() {
-                netListHelper.netQueryInfo(1);
+                netListHelper.netQueryList(1);
                 netQueryBanner();
             }
 
             @Override
             public void onLoadmore() {
-                netListHelper.netQueryInfo(2);
+                netListHelper.netQueryList(2);
             }
         });
-        netListHelper = new NetListHelper<Info>().init(loadingLayout, springView, new TypeToken<List<Info>>() {
-        }.getType(), new NetListHelper.OnListLoadCallback<Info>() {
-            @Override
-            public void onFreshSuccess(int status, List<Info> beans, String msg) {
-                adapterInfo.getResults().clear();
-                adapterInfo.getResults().addAll(beans);
-                adapterInfo.notifyDataSetChanged();
-            }
+        netListHelper = new NetListHelper<Info>().init(
+                loadingLayout,
+                springView,
+                new TypeToken<List<Info>>() {
+                }.getType(),
+                new NetListHelper.CallHander() {
+                    @Override
+                    public Call getCall(int type) {
+                        Map param = netListHelper.getParam(type);
+                        return NetApi.NI().queryInfo(param);
+                    }
+                },
+                new NetListHelper.OnListLoadCallback<Info>() {
+                    @Override
+                    public void onFreshSuccess(int status, List<Info> beans, String msg) {
+                        adapterInfo.getResults().clear();
+                        adapterInfo.getResults().addAll(beans);
+                        adapterInfo.notifyDataSetChanged();
+                    }
 
-            @Override
-            public void onLoadSuccess(int status, List<Info> beans, String msg) {
-                adapterInfo.getResults().addAll(beans);
-                adapterInfo.notifyDataSetChanged();
-            }
-        });
+                    @Override
+                    public void onLoadSuccess(int status, List<Info> beans, String msg) {
+                        adapterInfo.getResults().addAll(beans);
+                        adapterInfo.notifyDataSetChanged();
+                    }
+                });
         adapterBanner.setOnBannerClickListener(this);
     }
 
     private void initData() {
-        netListHelper.netQueryInfo(0);
+        netListHelper.netQueryList(0);
         netQueryBanner();
     }
 
@@ -165,8 +174,6 @@ public class HomeFragment extends BaseFragment implements OnRecycleItemClickList
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
         Info info = adapterInfo.getResults().get(viewHolder.getLayoutPosition() - 1);
         WebInfoActivity.start(getContext(), info);
-//        String url = NetApi.getBaseUrl() + AppData.Url.newsInfo + "?newsId=" + info.getId();
-//        WebActivity.start(getContext(), info.getTitle(), url);
     }
 
     @Override
@@ -174,7 +181,7 @@ public class HomeFragment extends BaseFragment implements OnRecycleItemClickList
         Image img = adapterBanner.getResults().get(position);
         WebInfoActivity.start(getContext(), img);
 //        String url = NetApi.getBaseUrl() + AppData.Url.bannerInfo + "?bannerId=" + img.getId();
-//        WebActivity.start(getContext(), img.getTitle(), url);
+//        WebActivity.startByLesson(getContext(), img.getTitle(), url);
     }
 
     private void netQueryBanner() {

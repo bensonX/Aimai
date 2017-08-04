@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
     android:background="@color/white"
+    android:foreground="?attr/selectableItemBackground"
     android:gravity="center_vertical"
     android:orientation="vertical">
 
@@ -23,7 +24,7 @@
             app:cardElevation="0dp">
 
             <ImageView
-                android:id="@+id/img_item_order_header"
+                android:id="@+id/img_item_favolesson_header"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
@@ -38,6 +39,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/text_item_favolesson_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
@@ -58,21 +60,22 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/text_item_favolesson_count"
                     android:layout_width="wrap_content"
                     android:layout_height="19dp"
-                    android:text="12"
                     android:drawableLeft="@drawable/ic_lesson_tv"
                     android:drawablePadding="7dp"
                     android:gravity="bottom"
+                    android:text="12"
                     android:textColor="@color/am_blue"
                     android:textSize="@dimen/text_nomal" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="19dp"
-                    android:text="个视频课"
-                    android:paddingLeft="3dp"
                     android:gravity="bottom"
+                    android:paddingLeft="3dp"
+                    android:text="个视频课"
                     android:textColor="@color/com_text_dark"
                     android:textSize="@dimen/text_nomal" />
 

@@ -3,32 +3,28 @@ package com.ins.aimai.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.Info;
-import com.ins.aimai.bean.common.TestBean;
-import com.ins.aimai.common.AppData;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.helper.NetListHelper;
 import com.ins.aimai.ui.adapter.RecycleAdapterHomeInfo;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
-import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.common.ItemDecorationDivider;
-import com.ins.common.helper.LoadingViewHelper;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
-import com.ins.common.view.BannerView;
 import com.ins.common.view.LoadingLayout;
 import com.liaoinstan.springview.container.AliFooter;
 import com.liaoinstan.springview.container.AliHeader;
 import com.liaoinstan.springview.widget.SpringView;
 
 import java.util.List;
+import java.util.Map;
+
+import retrofit2.Call;
 
 public class InfoActivity extends BaseAppCompatActivity implements OnRecycleItemClickListener, View.OnClickListener {
 
@@ -74,7 +70,7 @@ public class InfoActivity extends BaseAppCompatActivity implements OnRecycleItem
         loadingLayout.setOnRefreshListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                netListHelper.netQueryInfo(0);
+                netListHelper.netQueryList(0);
             }
         });
         springView.setHeader(new AliHeader(this, false));
@@ -82,41 +78,50 @@ public class InfoActivity extends BaseAppCompatActivity implements OnRecycleItem
         springView.setListener(new SpringView.OnFreshListener() {
             @Override
             public void onRefresh() {
-                netListHelper.netQueryInfo(1);
+                netListHelper.netQueryList(1);
             }
 
             @Override
             public void onLoadmore() {
-                netListHelper.netQueryInfo(2);
+                netListHelper.netQueryList(2);
             }
         });
-        netListHelper = new NetListHelper<Info>().init(loadingLayout, springView, new TypeToken<List<Info>>() {
-        }.getType(), new NetListHelper.OnListLoadCallback<Info>() {
-            @Override
-            public void onFreshSuccess(int status, List<Info> beans, String msg) {
-                adapter.getResults().clear();
-                adapter.getResults().addAll(beans);
-                adapter.notifyDataSetChanged();
-            }
+        netListHelper = new NetListHelper<Info>().init(loadingLayout, springView,
+                new TypeToken<List<Info>>() {
+                }.getType(),
+                new NetListHelper.CallHander() {
+                    @Override
+                    public Call getCall(int type) {
+                        Map param = netListHelper.getParam(type);
+                        return NetApi.NI().queryInfo(param);
+                    }
+                },
+                new NetListHelper.OnListLoadCallback<Info>() {
+                    @Override
+                    public void onFreshSuccess(int status, List<Info> beans, String msg) {
+                        adapter.getResults().clear();
+                        adapter.getResults().addAll(beans);
+                        adapter.notifyDataSetChanged();
+                    }
 
-            @Override
-            public void onLoadSuccess(int status, List<Info> beans, String msg) {
-                adapter.getResults().addAll(beans);
-                adapter.notifyDataSetChanged();
-            }
-        });
+                    @Override
+                    public void onLoadSuccess(int status, List<Info> beans, String msg) {
+                        adapter.getResults().addAll(beans);
+                        adapter.notifyDataSetChanged();
+                    }
+                });
     }
 
     private void initData() {
-        netListHelper.netQueryInfo(0);
+        netListHelper.netQueryList(0);
     }
 
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
         Info info = adapter.getResults().get(viewHolder.getLayoutPosition());
-        WebInfoActivity.start(this,info);
+        WebInfoActivity.start(this, info);
 //        String url = NetApi.getBaseUrl() + AppData.Url.newsInfo + "?newsId=" + info.getId();
-//        WebActivity.start(this, info.getTitle(), url);
+//        WebActivity.startByLesson(this, info.getTitle(), url);
     }
 
     @Override

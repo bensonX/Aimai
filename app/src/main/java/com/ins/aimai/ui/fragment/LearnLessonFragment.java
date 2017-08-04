@@ -138,7 +138,7 @@ public class LearnLessonFragment extends BaseFragment implements OnRecycleItemCl
         if (AppHelper.isUser()) {
             VideoActivity.startByOrder(getContext(), study.getOrderId());
         } else {
-            LessonDetailActivity.startByOrder(getContext(), study);
+            LessonDetailActivity.startByOrder(getContext(), study.getOrderId());
         }
     }
 

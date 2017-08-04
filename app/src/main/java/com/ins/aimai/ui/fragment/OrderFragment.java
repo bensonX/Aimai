@@ -21,10 +21,12 @@ import com.ins.aimai.common.AppHelper;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
+import com.ins.aimai.ui.activity.LessonDetailActivity;
 import com.ins.aimai.ui.adapter.RecycleAdapterOrder;
 import com.ins.aimai.ui.base.BaseFragment;
 import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.helper.LoadingViewHelper;
+import com.ins.common.interfaces.OnRecycleItemClickListener;
 import com.ins.common.ui.dialog.DialogSure;
 import com.ins.common.utils.StrUtil;
 import com.ins.common.view.LoadingLayout;
@@ -41,7 +43,7 @@ import static com.ins.aimai.R.id.loadingLayout;
 /**
  * Created by liaoinstan
  */
-public class OrderFragment extends BaseFragment implements RecycleAdapterOrder.OnOrderBtnClickListener {
+public class OrderFragment extends BaseFragment implements OnRecycleItemClickListener, RecycleAdapterOrder.OnOrderBtnClickListener {
 
     private int position;
     private View rootView;
@@ -102,6 +104,7 @@ public class OrderFragment extends BaseFragment implements RecycleAdapterOrder.O
     private void initCtrl() {
         adapter = new RecycleAdapterOrder(getContext());
         adapter.setOnOrderBtnClickListener(this);
+        adapter.setOnItemClickListener(this);
         recycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recycler.setAdapter(adapter);
         loadingLayout.setOnRefreshListener(new View.OnClickListener() {
@@ -137,6 +140,12 @@ public class OrderFragment extends BaseFragment implements RecycleAdapterOrder.O
                 netDelOrder(order.getId());
             }
         });
+    }
+
+    @Override
+    public void onItemClick(RecyclerView.ViewHolder viewHolder) {
+        Order order = adapter.getResults().get(viewHolder.getLayoutPosition());
+        LessonDetailActivity.startByOrder(getActivity(), order.getId());
     }
 
     ///////////////////////////////////

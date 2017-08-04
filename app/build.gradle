@@ -12,7 +12,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         //使用矢量图兼容库
         vectorDrawables.useSupportLibrary = true
-        ///////////////////////jpush配置 start
+        ///////////////////////jpush配置 startByLesson
         ndk {
             //选择要添加的对应cpu类型的.so库。
             abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a'
@@ -26,7 +26,7 @@ android {
         ///////////////////////jpush配置 end
     }
     //##########################
-    //配置keystore签名 start
+    //配置keystore签名 startByLesson
     //签名秘钥应避免暴露在受版本控制的文件中
     signingConfigs {
         myConfig {

@@ -161,6 +161,14 @@ public interface NetInterface {
     @POST("/api/collect/addCollect")
     Call<ResponseBody> addCollect(@FieldMap Map<String, Object> param);
 
+    /**
+     * 通过类型 获取收藏
+     * type 收藏类型 参数类型:int  0:资讯 1:课程 2：考题
+     */
+    @FormUrlEncoded
+    @POST("/api/collect/queryCollect")
+    Call<ResponseBody> queryCollect(@FieldMap Map<String, Object> param);
+
     //##################################################################
     //#########               课时
     //##################################################################

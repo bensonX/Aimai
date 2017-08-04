@@ -153,7 +153,8 @@ public class Lesson extends BaseSelectBean implements Serializable {
     private int isPass;   //是否考核通过
     private List<User> watchUsers;  //观看人员
     private List<User> safeUsers;   //安全人员
-
+    private int countAlloc;
+    private int countAll;
     /**
      * 获取 ID
      */
@@ -174,6 +175,22 @@ public class Lesson extends BaseSelectBean implements Serializable {
 
     public void setNumber(int number) {
         this.number = number;
+    }
+
+    public int getCountAlloc() {
+        return countAlloc;
+    }
+
+    public void setCountAlloc(int countAlloc) {
+        this.countAlloc = countAlloc;
+    }
+
+    public int getCountAll() {
+        return countAll;
+    }
+
+    public void setCountAll(int countAll) {
+        this.countAll = countAll;
     }
 
     /**

@@ -3,6 +3,7 @@ package com.ins.aimai.ui.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.ViewGroup;
 
 import com.ins.aimai.ui.fragment.FavoExamFragment;
 import com.ins.aimai.ui.fragment.FavoLessonFragment;
@@ -19,6 +20,10 @@ public class PagerAdapterFavo extends FragmentPagerAdapter {
     public PagerAdapterFavo(FragmentManager fm, String[] titles) {
         super(fm);
         this.titles = titles;
+    }
+
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.ins.aimai.ui.fragment;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,29 +9,39 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
-import com.ins.aimai.bean.common.TestBean;
+import com.ins.aimai.bean.Lesson;
+import com.ins.aimai.net.NetApi;
+import com.ins.aimai.net.helper.NetListHelper;
+import com.ins.aimai.ui.activity.LessonDetailActivity;
 import com.ins.aimai.ui.adapter.RecycleAdapterFavoLesson;
 import com.ins.aimai.ui.base.BaseFragment;
-import com.ins.common.helper.LoadingViewHelper;
+import com.ins.common.interfaces.OnRecycleItemClickListener;
+import com.ins.common.view.LoadingLayout;
 import com.liaoinstan.springview.container.AliFooter;
 import com.liaoinstan.springview.container.AliHeader;
 import com.liaoinstan.springview.widget.SpringView;
 
+import java.util.List;
+import java.util.Map;
+
+import retrofit2.Call;
+
 /**
  * Created by liaoinstan
  */
-public class FavoLessonFragment extends BaseFragment {
+public class FavoLessonFragment extends BaseFragment implements OnRecycleItemClickListener {
 
     private int position;
     private View rootView;
 
-    private View showin;
-    private ViewGroup showingroup;
-
+    private LoadingLayout loadingLayout;
     private SpringView springView;
     private RecyclerView recycler;
     private RecycleAdapterFavoLesson adapter;
+
+    private NetListHelper netListHelper;
 
     public static Fragment newInstance(int position) {
         FavoLessonFragment fragment = new FavoLessonFragment();
@@ -68,66 +77,69 @@ public class FavoLessonFragment extends BaseFragment {
     }
 
     private void initView() {
-        showingroup = (ViewGroup) rootView.findViewById(R.id.showingroup);
+        loadingLayout = (LoadingLayout) rootView.findViewById(R.id.loadingLayout);
         springView = (SpringView) rootView.findViewById(R.id.spring);
         recycler = (RecyclerView) rootView.findViewById(R.id.recycler);
     }
 
     private void initCtrl() {
         adapter = new RecycleAdapterFavoLesson(getContext());
+        adapter.setOnItemClickListener(this);
         recycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recycler.setAdapter(adapter);
+        loadingLayout.setOnRefreshListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                netListHelper.netQueryList(0);
+            }
+        });
         springView.setHeader(new AliHeader(getContext(), false));
         springView.setFooter(new AliFooter(getContext(), false));
         springView.setListener(new SpringView.OnFreshListener() {
             @Override
             public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        springView.onFinishFreshAndLoad();
-                    }
-                }, 800);
+                netListHelper.netQueryList(1);
             }
 
             @Override
             public void onLoadmore() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        adapter.getResults().add(new TestBean());
-                        adapter.getResults().add(new TestBean());
-                        adapter.notifyDataSetChanged();
-                        springView.onFinishFreshAndLoad();
-                    }
-                }, 800);
+                netListHelper.netQueryList(2);
             }
         });
+        netListHelper = new NetListHelper<Lesson>().init(loadingLayout, springView,
+                new TypeToken<List<Lesson>>() {
+                }.getType(),
+                new NetListHelper.CallHander() {
+                    @Override
+                    public Call getCall(int type) {
+                        Map param = netListHelper.getParam(type);
+                        param.put("type", 1);
+                        return NetApi.NI().queryCollect(param);
+                    }
+                },
+                new NetListHelper.OnListLoadCallback<Lesson>() {
+                    @Override
+                    public void onFreshSuccess(int status, List<Lesson> beans, String msg) {
+                        adapter.getResults().clear();
+                        adapter.getResults().addAll(beans);
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onLoadSuccess(int status, List<Lesson> beans, String msg) {
+                        adapter.getResults().addAll(beans);
+                        adapter.notifyDataSetChanged();
+                    }
+                });
     }
 
     private void initData() {
-        showin = LoadingViewHelper.showin(showingroup, R.layout.layout_loading, showin);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                adapter.getResults().clear();
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.getResults().add(new TestBean());
-                adapter.notifyDataSetChanged();
-                LoadingViewHelper.showout(showingroup, showin);
-            }
-        }, 1000);
+        netListHelper.netQueryList(0);
+    }
+
+    @Override
+    public void onItemClick(RecyclerView.ViewHolder viewHolder) {
+        Lesson lesson = adapter.getResults().get(viewHolder.getLayoutPosition());
+        LessonDetailActivity.startByLesson(getActivity(), lesson.getId());
     }
 }

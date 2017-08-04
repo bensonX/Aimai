@@ -15,6 +15,15 @@
         android:paddingTop="20dp"
         app:popupTheme="@style/AppTheme.PopupOverlay">
 
+        <ImageView
+            android:id="@+id/btn_right"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:foreground="?attr/selectableItemBackground"
+            android:scaleType="center"
+            android:src="@drawable/ic_lesson_favo" />
+
     </android.support.v7.widget.Toolbar>
 
     <LinearLayout

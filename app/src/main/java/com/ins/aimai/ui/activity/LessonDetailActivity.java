@@ -19,6 +19,7 @@ import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.bean.common.TestBean;
 import com.ins.aimai.common.AppHelper;
 import com.ins.aimai.common.StatusHelper;
+import com.ins.aimai.net.helper.NetFavoHelper;
 import com.ins.aimai.net.helper.NetHelper;
 import com.ins.aimai.ui.adapter.PagerAdapterLessonDetail;
 import com.ins.aimai.ui.adapter.RecycleAdapterLable;
@@ -53,31 +54,26 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
 
     private View lay_lessondetail_btn_comp;
     private View lay_lessondetail_btn_user;
+    private View btn_right;
 
     private String[] titles = new String[]{"介绍", "目录", "评论"};
 
     private int type;   //0:课程，1：订单
     private int lessonId;
     private int orderId;
-    private int countAlloc;
-    private int countAll;
     private Lesson lesson;
 
-    public static void start(Context context, int lessonId) {
+    //课程详情页面
+    public static void startByLesson(Context context, int lessonId) {
         Intent intent = new Intent(context, LessonDetailActivity.class);
         intent.putExtra("lessonId", lessonId);
         context.startActivity(intent);
     }
 
-    public static void startByOrder(Context context, Study study) {
-        startByOrder(context, study.getOrderId(), study.getAllocationNum(), study.getNumber());
-    }
-
-    public static void startByOrder(Context context, int orderId, int countAlloc, int countAll) {
+    //订单页面
+    public static void startByOrder(Context context, int orderId) {
         Intent intent = new Intent(context, LessonDetailActivity.class);
         intent.putExtra("orderId", orderId);
-        intent.putExtra("countAlloc", countAlloc);
-        intent.putExtra("countAll", countAll);
         context.startActivity(intent);
     }
 
@@ -85,7 +81,7 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
     public void onCommonEvent(EventBean event) {
         if (event.getEvent() == EventBean.EVENT_USER_ALLOCAT) {
             int count = (int) event.get("count");
-            countAlloc += count;
+            lesson.setCountAlloc(lesson.getCountAlloc() + count);
             setData(lesson);
         }
     }
@@ -113,12 +109,6 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
             orderId = getIntent().getIntExtra("orderId", 0);
             type = 1;
         }
-        if (getIntent().hasExtra("countAlloc")) {
-            countAlloc = getIntent().getIntExtra("countAlloc", 0);
-        }
-        if (getIntent().hasExtra("countAll")) {
-            countAll = getIntent().getIntExtra("countAll", 0);
-        }
     }
 
     private void initView() {
@@ -138,11 +128,13 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
         btn_lessondetail_countalloc = (TextView) findViewById(R.id.btn_lessondetail_countalloc);
         lay_lessondetail_btn_comp = findViewById(R.id.lay_lessondetail_btn_comp);
         lay_lessondetail_btn_user = findViewById(R.id.lay_lessondetail_btn_user);
+        btn_right = findViewById(R.id.btn_right);
         findViewById(R.id.btn_go).setOnClickListener(this);
         findViewById(R.id.btn_go_allot).setOnClickListener(this);
         btn_lessondetail_watchcount.setOnClickListener(this);
         btn_lessondetail_unwatchcount.setOnClickListener(this);
         btn_lessondetail_testcount.setOnClickListener(this);
+        btn_right.setOnClickListener(this);
     }
 
     private void initCtrl() {
@@ -172,9 +164,13 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
                 break;
         }
         if (type == 0) {
+            //课程
             text_lessondetail_salecount.setVisibility(View.GONE);
+            btn_right.setVisibility(View.VISIBLE);
         } else {
+            //订单
             text_lessondetail_salecount.setVisibility(View.VISIBLE);
+            btn_right.setVisibility(View.GONE);
         }
     }
 
@@ -189,11 +185,11 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
             text_lessondetail_count.setText(lesson.getVideoNum() + "个视频课");
             text_lessondetail_time.setText(TimeUtil.formatSecond(lesson.getHdSeconds()));
             text_lessondetail_price.setText("￥" + AppHelper.formatPrice(lesson.getPrice()));
-            text_lessondetail_salecount.setText(countAll + "份");
+            text_lessondetail_salecount.setText(lesson.getCountAll() + "份");
             btn_lessondetail_watchcount.setText(0 + "人已观看");
             btn_lessondetail_unwatchcount.setText(0 + "人未观看");
             btn_lessondetail_testcount.setText(0 + "人已考核");
-            btn_lessondetail_countalloc.setText(countAlloc + "/" + countAll);
+            btn_lessondetail_countalloc.setText(lesson.getCountAlloc() + "/" + lesson.getCountAll());
 
             adapter.getResults().clear();
             adapter.getResults().add(new TestBean());
@@ -218,10 +214,13 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
             case R.id.btn_go:
                 PayDialogActivity.start(this, lessonId);
                 break;
+            case R.id.btn_right:
+                NetFavoHelper.getInstance().netAddCollect(lessonId, 1);
+                break;
             case R.id.btn_go_allot:
-                if (countAlloc<countAll) {
+                if (lesson.getCountAlloc() < lesson.getCountAll()) {
                     SortUserActivity.start(this, orderId);
-                }else {
+                } else {
                     ToastUtil.showToastShort("所购课程已全部分配完");
                 }
                 break;

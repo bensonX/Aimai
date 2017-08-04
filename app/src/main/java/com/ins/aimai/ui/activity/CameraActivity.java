@@ -197,7 +197,7 @@ public class CameraActivity extends AppCompatActivity implements ActivityCompat.
                     Toast.makeText(this, R.string.camera_permission_not_granted,
                             Toast.LENGTH_SHORT).show();
                 }
-                // No need to start camera here; it is handled by onResume
+                // No need to startByLesson camera here; it is handled by onResume
                 break;
         }
     }

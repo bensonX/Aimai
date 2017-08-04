@@ -137,7 +137,7 @@ public class LessonActivity extends BaseAppCompatActivity implements OnRecycleIt
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
         Lesson lesson = adapter.getResults().get(viewHolder.getLayoutPosition());
-        LessonDetailActivity.start(this, lesson.getId());
+        LessonDetailActivity.startByLesson(this, lesson.getId());
     }
 
     ///////////////////////////////////

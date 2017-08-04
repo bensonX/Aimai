@@ -19,6 +19,7 @@ import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
 import com.ins.aimai.ui.activity.PayDialogActivity;
 import com.ins.aimai.utils.ToastUtil;
+import com.ins.common.interfaces.OnRecycleItemClickListener;
 import com.ins.common.ui.dialog.DialogSure;
 import com.ins.common.utils.GlideUtil;
 
@@ -47,6 +48,12 @@ public class RecycleAdapterOrder extends RecyclerView.Adapter<RecycleAdapterOrde
     @Override
     public void onBindViewHolder(final RecycleAdapterOrder.Holder holder, final int position) {
         final Order order = results.get(position);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) listener.onItemClick(holder);
+            }
+        });
         holder.btn_item_order_gopay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,5 +119,11 @@ public class RecycleAdapterOrder extends RecyclerView.Adapter<RecycleAdapterOrde
 
     public interface OnOrderBtnClickListener{
         void onDelClick(Order order);
+    }
+
+    private OnRecycleItemClickListener listener;
+
+    public void setOnItemClickListener(OnRecycleItemClickListener listener) {
+        this.listener = listener;
     }
 }

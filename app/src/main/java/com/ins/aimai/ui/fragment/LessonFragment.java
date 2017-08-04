@@ -16,7 +16,6 @@ import com.ins.aimai.R;
 import com.ins.aimai.bean.Lesson;
 import com.ins.aimai.bean.LessonHomePojo;
 import com.ins.aimai.bean.common.EventBean;
-import com.ins.aimai.bean.common.TestBean;
 import com.ins.aimai.interfaces.OnLessonClickListener;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
@@ -148,7 +147,7 @@ public class LessonFragment extends BaseFragment implements OnLessonClickListene
 
     @Override
     public void onLessonClick(Lesson lesson) {
-        LessonDetailActivity.start(getContext(), lesson.getId());
+        LessonDetailActivity.startByLesson(getContext(), lesson.getId());
     }
 
     ///////////////////////////////////
