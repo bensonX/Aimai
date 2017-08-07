@@ -58,8 +58,8 @@
             android:drawableTop="@drawable/ic_learn_add_blue"
             android:foreground="?attr/selectableItemBackground"
             android:gravity="center"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
+            android:paddingBottom="8dp"
+            android:paddingTop="15dp"
             android:text="添加"
             android:textColor="@color/am_blue"
             android:textSize="@dimen/text_small" />

@@ -56,6 +56,10 @@ public class ExamModelOffi implements Serializable {
     /** 试卷ID */
     private int paperId;
 
+    //新增字段
+    //考试总时长
+    private int useTime;
+
     /** 获取 课程ID */
     public int getId() {
         return this.id;
@@ -214,5 +218,13 @@ public class ExamModelOffi implements Serializable {
     /** 设置 试卷ID */
     public void setPaperId(int paperId) {
         this.paperId = paperId;
+    }
+
+    public int getUseTime() {
+        return useTime;
+    }
+
+    public void setUseTime(int useTime) {
+        this.useTime = useTime;
     }
 }

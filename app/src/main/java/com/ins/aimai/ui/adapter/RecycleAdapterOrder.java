@@ -63,7 +63,7 @@ public class RecycleAdapterOrder extends RecyclerView.Adapter<RecycleAdapterOrde
         holder.btn_item_order_del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (onOrderBtnClickListener!=null) onOrderBtnClickListener.onDelClick(order);
+                if (onOrderBtnClickListener != null) onOrderBtnClickListener.onDelClick(order);
             }
         });
 
@@ -117,7 +117,7 @@ public class RecycleAdapterOrder extends RecyclerView.Adapter<RecycleAdapterOrde
         this.onOrderBtnClickListener = onOrderBtnClickListener;
     }
 
-    public interface OnOrderBtnClickListener{
+    public interface OnOrderBtnClickListener {
         void onDelClick(Order order);
     }
 

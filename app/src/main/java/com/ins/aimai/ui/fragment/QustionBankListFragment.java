@@ -150,7 +150,6 @@ public class QustionBankListFragment extends BaseFragment implements OnRecycleIt
                 else if (examPractice.getIsExamination() == 1) {
                     //练习题已经做完
                     ExamResultActivity.start(getActivity(), examPractice.getPaperId(), examPractice.getOrderId(), activity.getType());
-//                    ExamActivity.startPractice(getActivity(), examPractice);
                 } else {
                     ExamActivity.startPractice(getActivity(), examPractice);
                 }

@@ -104,7 +104,11 @@ public class VideoCommentFragment extends BaseFragment implements View.OnClickLi
         btn_comment_commit.setOnClickListener(this);
 
         if (getActivity() instanceof VideoActivity) {
-            lay_comment_send.setVisibility(View.VISIBLE);
+            if (AppData.App.getUser() == null) {
+                lay_comment_send.setVisibility(View.GONE);
+            } else {
+                lay_comment_send.setVisibility(View.VISIBLE);
+            }
         } else {
             lay_comment_send.setVisibility(View.GONE);
         }
@@ -223,7 +227,6 @@ public class VideoCommentFragment extends BaseFragment implements View.OnClickLi
         NetApi.NI().addComment(param).enqueue(new BaseCallback<CommonBean>(CommonBean.class) {
             @Override
             public void onSuccess(int status, CommonBean com, String msg) {
-                ToastUtil.showToastShort(msg);
                 edit_comment_detail.setText("");
                 AppHelper.hideLoadingDialog(getActivity());
                 initData();

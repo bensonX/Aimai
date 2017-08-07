@@ -11,6 +11,7 @@ import android.widget.RadioGroup;
 
 import com.ins.aimai.R;
 import com.ins.aimai.bean.common.EventBean;
+import com.ins.aimai.common.AppData;
 import com.ins.aimai.ui.adapter.PagerAdapterHome;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.aimai.utils.ToastUtil;
@@ -117,7 +118,17 @@ public class HomeActivity extends BaseAppCompatActivity {
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
                 for (int i = 0; i < tabsId.length; i++) {
                     if (tabsId[i] == checkedId) {
-                        pager.setCurrentItem(i, false);
+                        if (checkedId == R.id.tab_3) {
+                            //未登录点击学习要弹出登录页面
+                            if (AppData.App.getUser() == null) {
+                                LoginActivity.start(HomeActivity.this);
+                                group_tab.check(tabsId[pager.getCurrentItem()]);
+                            } else {
+                                pager.setCurrentItem(i, false);
+                            }
+                        } else {
+                            pager.setCurrentItem(i, false);
+                        }
                     }
                 }
             }

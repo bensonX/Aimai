@@ -12,6 +12,7 @@ import com.ins.aimai.bean.ExamResultPojo;
 import com.ins.aimai.bean.common.CommonBean;
 import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.bean.common.QuestionBean;
+import com.ins.aimai.common.ExamCountDownTimer;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
@@ -31,7 +32,6 @@ public class AnswerBoardActivity extends BaseAppCompatActivity implements OnRecy
 
     private RecyclerView recycler;
     private RecycleAdapterAnswerBoard adapter;
-    private DialogTimeEnd dialogTimeEnd;
 
     private int type;
     private ArrayList<QuestionBean> questions;
@@ -72,7 +72,6 @@ public class AnswerBoardActivity extends BaseAppCompatActivity implements OnRecy
         if (getIntent().hasExtra("type")) {
             type = getIntent().getIntExtra("type", 0);
         }
-        dialogTimeEnd = new DialogTimeEnd(this);
     }
 
     private void initView() {
@@ -105,7 +104,7 @@ public class AnswerBoardActivity extends BaseAppCompatActivity implements OnRecy
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_go:
-                NetExamHelper.getInstance().submitExam(paperId, orderId, 0, questions, new NetExamHelper.OnExamSubmitCallback() {
+                NetExamHelper.getInstance().submitExam(paperId, orderId, ExamCountDownTimer.useTime, questions, new NetExamHelper.OnExamSubmitCallback() {
                     @Override
                     public void onSuccess(ExamResultPojo examResultPojo) {
                         EventBus.getDefault().post(new EventBean(EventBean.EVENT_EXAM_SUBMITED));

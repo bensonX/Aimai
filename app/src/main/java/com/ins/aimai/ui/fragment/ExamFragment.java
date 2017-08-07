@@ -12,6 +12,7 @@ import com.ins.aimai.bean.ExamResultPojo;
 import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.bean.common.QuestionBean;
 import com.ins.aimai.common.AppHelper;
+import com.ins.aimai.common.ExamCountDownTimer;
 import com.ins.aimai.net.helper.NetExamHelper;
 import com.ins.aimai.ui.activity.ExamActivity;
 import com.ins.aimai.ui.activity.ExamResultActivity;
@@ -106,7 +107,7 @@ public class ExamFragment extends BaseFragment implements View.OnClickListener, 
                 @Override
                 public void onClick(View v) {
                     activity.showLoadingDialog();
-                    NetExamHelper.getInstance().submitExam(activity.getPaperId(), activity.getOrderId(), 0, activity.getQuestions(), new NetExamHelper.OnExamSubmitCallback() {
+                    NetExamHelper.getInstance().submitExam(activity.getPaperId(), activity.getOrderId(), ExamCountDownTimer.useTime, activity.getQuestions(), new NetExamHelper.OnExamSubmitCallback() {
                         @Override
                         public void onSuccess(ExamResultPojo examResultPojo) {
                             EventBus.getDefault().post(new EventBean(EventBean.EVENT_EXAM_SUBMITED));

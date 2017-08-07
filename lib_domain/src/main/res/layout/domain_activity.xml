@@ -40,7 +40,10 @@
                 android:id="@+id/edit_domain"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:digits="0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM.:_"
                 android:hint="输入或选择API服务器域名或IP地址"
+                android:inputType="text"
+                android:lines="1"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:textSize="14sp" />

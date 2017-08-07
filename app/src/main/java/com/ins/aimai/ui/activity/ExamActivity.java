@@ -3,6 +3,7 @@ package com.ins.aimai.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import com.ins.aimai.bean.Examination;
 import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.bean.common.QuestionBean;
 import com.ins.aimai.common.AppHelper;
+import com.ins.aimai.common.ExamCountDownTimer;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
@@ -26,7 +28,10 @@ import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.aimai.ui.dialog.DialogSureAimai;
 import com.ins.aimai.ui.dialog.PopTextSize;
 import com.ins.aimai.utils.ToastUtil;
+import com.ins.common.ui.dialog.DialogSure;
+import com.ins.common.utils.ClearCacheUtil;
 import com.ins.common.utils.StatusBarTextUtil;
+import com.ins.common.utils.TimeUtil;
 import com.ins.common.utils.ViewPagerUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -46,30 +51,36 @@ public class ExamActivity extends BaseAppCompatActivity implements View.OnClickL
     private TextView text_exam_type;
     private TextView text_exam_num;
     private TextView text_exam_count;
+    private TextView text_time;
+    private View btn_pause;
+
     private PopTextSize popTextSize;
+    private ExamCountDownTimer timer;
 
     private ArrayList<QuestionBean> questions;
     private int type;
     private int paperId;
     private int orderId;
+    private int useTime;    //考试时长（模拟题和正式考试题）
 
     public static void startPractice(Context context, ExamPractice examPractice) {
-        start(context, 0, examPractice.getPaperId(), examPractice.getOrderId());
+        start(context, 0, examPractice.getPaperId(), examPractice.getOrderId(), 0);
     }
 
     public static void startMoldel(Context context, ExamModelOffi exam) {
-        start(context, 1, exam.getPaperId(), exam.getOrderId());
+        start(context, 1, exam.getPaperId(), exam.getOrderId(), exam.getUseTime());
     }
 
     public static void startOfficial(Context context, ExamModelOffi exam) {
-        start(context, 2, exam.getPaperId(), exam.getOrderId());
+        start(context, 2, exam.getPaperId(), exam.getOrderId(), exam.getUseTime());
     }
 
-    private static void start(Context context, int type, int paperId, int orderId) {
+    private static void start(Context context, int type, int paperId, int orderId, int useTime) {
         Intent intent = new Intent(context, ExamActivity.class);
         intent.putExtra("type", type);
         intent.putExtra("paperId", paperId);
         intent.putExtra("orderId", orderId);
+        intent.putExtra("useTime", useTime);
         context.startActivity(intent);
     }
 
@@ -80,6 +91,12 @@ public class ExamActivity extends BaseAppCompatActivity implements View.OnClickL
             ViewPagerUtil.goPosition(pager, position, false);
         } else if (event.getEvent() == EventBean.EVENT_EXAM_SUBMITED) {
             finish();
+        } else if (event.getEvent() == EventBean.EVENT_EXAM_TIME) {
+            int time = (int) event.get("time");
+            setTimeNote(time);
+            //最后5秒弹窗窗口提示（练习题例外）
+            if (time <= 5 && type != 0)
+                ExamDialogActivity.start(this, questions, paperId, orderId, type);
         }
     }
 
@@ -99,6 +116,7 @@ public class ExamActivity extends BaseAppCompatActivity implements View.OnClickL
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (timer != null) timer.cancel();
     }
 
     private void initBase() {
@@ -111,12 +129,18 @@ public class ExamActivity extends BaseAppCompatActivity implements View.OnClickL
         if (getIntent().hasExtra("orderId")) {
             orderId = getIntent().getIntExtra("orderId", 0);
         }
+        if (getIntent().hasExtra("useTime")) {
+            useTime = getIntent().getIntExtra("useTime", 0);
+        }
+        timer = new ExamCountDownTimer(1 * 15);
         popTextSize = new PopTextSize(this);
         popTextSize.setNeedanim(false);
     }
 
     private void initView() {
         pager = (ViewPager) findViewById(R.id.pager);
+        text_time = (TextView) findViewById(R.id.text_toolbar_title);
+        btn_pause = findViewById(R.id.btn_pause);
         btn_right_textsize = findViewById(R.id.btn_right_textsize);
         btn_last = findViewById(R.id.btn_last);
         btn_next = findViewById(R.id.btn_next);
@@ -129,6 +153,7 @@ public class ExamActivity extends BaseAppCompatActivity implements View.OnClickL
         btn_right_textsize.setOnClickListener(this);
         btn_last.setOnClickListener(this);
         btn_next.setOnClickListener(this);
+        btn_pause.setOnClickListener(this);
     }
 
     private void initCtrl() {
@@ -150,10 +175,33 @@ public class ExamActivity extends BaseAppCompatActivity implements View.OnClickL
             }
         });
         text_exam_num.setText("1");
+        //根据不同实体类型设置不同的可见性
+        switch (type) {
+            case 0:
+                text_time.setVisibility(View.GONE);
+                btn_pause.setVisibility(View.GONE);
+                break;
+            case 1:
+                text_time.setVisibility(View.VISIBLE);
+                btn_pause.setVisibility(View.VISIBLE);
+                setTimeNote(useTime);
+                break;
+            case 2:
+                text_time.setVisibility(View.VISIBLE);
+                btn_pause.setVisibility(View.GONE);
+                setTimeNote(useTime);
+                break;
+        }
     }
 
     private void initData() {
         netQueryQuestions();
+    }
+
+    private void setTimeNote(int time) {
+        //时间小于10分钟要显示橙色
+        text_time.setTextColor(ContextCompat.getColor(this, time <= 10 * 60 ? R.color.am_orage : R.color.com_text_blank));
+        text_time.setText(TimeUtil.formatSecond(time * 1000, "HH:mm:ss"));
     }
 
     @Override
@@ -177,7 +225,34 @@ public class ExamActivity extends BaseAppCompatActivity implements View.OnClickL
             case R.id.btn_right_favo:
                 NetFavoHelper.getInstance().netAddCollect(questions.get(pager.getCurrentItem()).getId(), 2);
                 break;
+            case R.id.btn_pause:
+                if (btn_pause.isSelected()) {
+                    timePause();
+                } else {
+                    timeStart();
+                }
+                break;
         }
+    }
+
+    private void timeStart() {
+        timer.start();
+        btn_pause.setSelected(true);
+    }
+
+    private void timePause() {
+        timer.cancel();
+        btn_pause.setSelected(false);
+    }
+
+    @Override
+    public void onBackPressed() {
+        DialogSure.showDialog(this, "考试中途退出将会取消该次考试，确定退出？", new DialogSure.CallBack() {
+            @Override
+            public void onSure() {
+                ExamActivity.super.onBackPressed();
+            }
+        });
     }
 
     private void netQueryQuestions() {
@@ -194,6 +269,8 @@ public class ExamActivity extends BaseAppCompatActivity implements View.OnClickL
                 adapterPager.getResults().addAll(questions);
                 adapterPager.notifyDataSetChanged();
                 text_exam_count.setText("/" + adapterPager.getCount());
+                //不是练习题则开始计时
+                if (type != 0) timeStart();
                 hideLoadingDialog();
             }
 

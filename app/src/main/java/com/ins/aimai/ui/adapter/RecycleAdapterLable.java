@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.ins.aimai.R;
@@ -17,9 +18,9 @@ public class RecycleAdapterLable extends RecyclerView.Adapter<RecycleAdapterLabl
 
     private Context context;
     private LayoutHelper layoutHelper;
-    private List<TestBean> results = new ArrayList<>();
+    private List<String> results = new ArrayList<>();
 
-    public List<TestBean> getResults() {
+    public List<String> getResults() {
         return results;
     }
 
@@ -34,7 +35,8 @@ public class RecycleAdapterLable extends RecyclerView.Adapter<RecycleAdapterLabl
 
     @Override
     public void onBindViewHolder(final RecycleAdapterLable.Holder holder, final int position) {
-        final TestBean bean = results.get(position);
+        final String name = results.get(position);
+        holder.text_lessondetail_lable.setText(name);
     }
 
     @Override
@@ -44,11 +46,11 @@ public class RecycleAdapterLable extends RecyclerView.Adapter<RecycleAdapterLabl
 
     public class Holder extends RecyclerView.ViewHolder {
 
-//        private ImageView img_lession;
+        private TextView text_lessondetail_lable;
 
         public Holder(View itemView) {
             super(itemView);
-//            img_lession = (ImageView) itemView.findViewById(R.id.img_lession);
+            text_lessondetail_lable = (TextView) itemView.findViewById(R.id.text_lessondetail_lable);
         }
     }
 }

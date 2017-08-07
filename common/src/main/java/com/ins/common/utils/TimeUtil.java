@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 /**
  * 时间处理工具
@@ -12,16 +13,6 @@ import java.util.GregorianCalendar;
 public class TimeUtil {
 
     private static GregorianCalendar gc = new GregorianCalendar();
-
-    /**
-     * 获取当前时间
-     *
-     * @param format
-     * @return
-     */
-    public static String getNowTime(String format) {
-        return new SimpleDateFormat(format).format(Calendar.getInstance().getTime());
-    }
 
     /**
      * 日期转字符串  格式:yyyy年MM月dd日 E (带星期)
@@ -34,20 +25,6 @@ public class TimeUtil {
             return "";
         } else {
             return new SimpleDateFormat("yyyy年MM月dd日 E").format(date);
-        }
-    }
-
-    /**
-     * 日期转字符串  格式:yyyy/MM/dd
-     *
-     * @param date
-     * @return
-     */
-    public static String getTimeSimple(Date date) {
-        if (date == null) {
-            return "";
-        } else {
-            return new SimpleDateFormat("yyyy/MM/dd").format(date);
         }
     }
 
@@ -176,9 +153,14 @@ public class TimeUtil {
             array = new Object[]{seconds};
         }
         html = String.format(format, array);
-
         return html;
+    }
 
+    public static String formatSecond(long time, String format) {
+        SimpleDateFormat formatter = new SimpleDateFormat(format);
+        // 设置格式化器的时区为格林威治时区，否则格式化的结果不对，中国的时间比格林威治时间早8小时，比如0点会被格式化为8:00
+        formatter.setTimeZone(TimeZone.getTimeZone("GMT+0:00"));
+        return formatter.format(time);
     }
 
     public static int getHour(Date date) {

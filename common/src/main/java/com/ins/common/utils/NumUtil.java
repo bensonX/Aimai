@@ -145,4 +145,9 @@ public class NumUtil {
     public static String num2half(double f) {
         return num2half(f, 2);
     }
+
+    public static int long2int(long l) {
+        BigDecimal b = new BigDecimal(l);
+        return b.setScale(0, BigDecimal.ROUND_HALF_UP).intValue();
+    }
 }

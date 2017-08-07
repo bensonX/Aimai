@@ -9,13 +9,10 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.Lesson;
-import com.ins.aimai.bean.Trade;
 import com.ins.aimai.bean.User;
 import com.ins.aimai.bean.common.EventBean;
-import com.ins.aimai.bean.common.TestBean;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
@@ -122,20 +119,25 @@ public class UserDetailActivity extends BaseAppCompatActivity implements View.On
         adapter = new GridAdapterLesson(this);
         grid.setAdapter(adapter);
         grid.setOnItemClickListener(this);
-        setData(user);
+        setBaseData(user);
     }
 
     private void initData() {
         netQueryUserDetail();
     }
 
-    private void setData(User user) {
+    private void setBaseData(User user) {
         if (user != null) {
             GlideUtil.loadCircleImg(img_userdetail_header, R.drawable.default_header, user.getAvatar());
             text_userdetail_name.setText(user.getShowName());
             text_userdetail_name2.setText(user.getShowName());
             text_userdetail_comp.setText(user.getCompanyName());
             text_userdetail_phone.setText(user.getPhone());
+        }
+    }
+
+    private void setUserData(User user) {
+        if (user != null) {
             text_userdetail_idcard.setText(user.getPid());
             text_userdetail_department.setText(user.getDepartmentName());
             text_userdetail_job.setText(user.getJobTitle());
@@ -180,6 +182,7 @@ public class UserDetailActivity extends BaseAppCompatActivity implements View.On
             @Override
             public void onSuccess(int status, User user, String msg) {
                 List<Lesson> lessons = user.getCurriculumList();
+                setUserData(user);
                 setLessonData(lessons);
             }
 

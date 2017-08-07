@@ -48,6 +48,10 @@ public class EventBean implements Serializable {
     public static final int EVENT_EXAM_SUBMITED = 0xffa017;
     //课程分配成功(给用户分配课程)
     public static final int EVENT_LESSON_ALLOCAT = 0xffa018;
+    //考试计时消息（子项：time）
+    public static final int EVENT_EXAM_TIME = 0xffa019;
+    //考试计时时间到
+    public static final int EVENT_EXAM_TIMEOUT = 0xffa020;
 
     private int event;
     private Map<String, Object> map = new HashMap<>();

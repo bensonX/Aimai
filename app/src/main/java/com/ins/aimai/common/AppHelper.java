@@ -1,6 +1,7 @@
 package com.ins.aimai.common;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.ins.aimai.bean.CourseWare;
@@ -258,6 +259,26 @@ public class AppHelper {
                 return city + "·" + distic;
             } else {
                 return mergerName;
+            }
+        }
+    }
+
+    public static class Comment {
+        public static String getShadowName(String name) {
+            if (TextUtils.isEmpty(name)) {
+                return "";
+            } else if (name.length() == 1) {
+                return name.substring(0, 1);
+            } else if (name.length() == 2) {
+                return name.substring(0, 1) + "*";
+            } else {
+                String startName = name.substring(0, 1);
+                String endName = name.substring(name.length() - 1);
+                String shadow = "";
+                for (int i = 0; i < name.length() - 2; i++) {
+                    shadow += "*";
+                }
+                return startName + shadow + endName;
             }
         }
     }

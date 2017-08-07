@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,6 +33,8 @@ import com.ins.common.utils.TimeUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class LessonDetailActivity extends BaseAppCompatActivity implements View.OnClickListener {
@@ -81,7 +84,7 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
     public void onCommonEvent(EventBean event) {
         if (event.getEvent() == EventBean.EVENT_USER_ALLOCAT) {
             int count = (int) event.get("count");
-            lesson.setCountAlloc(lesson.getCountAlloc() + count);
+            lesson.setAllocationNum(lesson.getAllocationNum() + count);
             setData(lesson);
         }
     }
@@ -185,16 +188,20 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
             text_lessondetail_count.setText(lesson.getVideoNum() + "个视频课");
             text_lessondetail_time.setText(TimeUtil.formatSecond(lesson.getHdSeconds()));
             text_lessondetail_price.setText("￥" + AppHelper.formatPrice(lesson.getPrice()));
-            text_lessondetail_salecount.setText(lesson.getCountAll() + "份");
-            btn_lessondetail_watchcount.setText(0 + "人已观看");
-            btn_lessondetail_unwatchcount.setText(0 + "人未观看");
-            btn_lessondetail_testcount.setText(0 + "人已考核");
-            btn_lessondetail_countalloc.setText(lesson.getCountAlloc() + "/" + lesson.getCountAll());
+            text_lessondetail_salecount.setText(lesson.getNumber() + "份");
+            btn_lessondetail_watchcount.setText(lesson.getWatchNum() + "人已观看");
+            btn_lessondetail_unwatchcount.setText(lesson.getCountUser() - lesson.getWatchNum() + "人未观看");
+            btn_lessondetail_testcount.setText(lesson.getFinishExamine() + "人已考核");
+            btn_lessondetail_countalloc.setText(lesson.getAllocationNum() + "/" + lesson.getNumber());
 
+            //设置标签数据
             adapter.getResults().clear();
-            adapter.getResults().add(new TestBean());
-            adapter.getResults().add(new TestBean());
-            adapter.getResults().add(new TestBean());
+            if (!TextUtils.isEmpty(lesson.getStageName()))
+                adapter.getResults().add(lesson.getStageName());
+            if (!TextUtils.isEmpty(lesson.getTypeName()))
+                adapter.getResults().add(lesson.getTypeName());
+            if (lesson.getYear() != 0)
+                adapter.getResults().add(TimeUtil.getTimeFor("yyyy年", new Date(lesson.getYear())));
             adapter.notifyDataSetChanged();
         }
     }
@@ -218,7 +225,7 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
                 NetFavoHelper.getInstance().netAddCollect(lessonId, 1);
                 break;
             case R.id.btn_go_allot:
-                if (lesson.getCountAlloc() < lesson.getCountAll()) {
+                if (lesson.getAllocationNum() < lesson.getNumber()) {
                     SortUserActivity.start(this, orderId);
                 } else {
                     ToastUtil.showToastShort("所购课程已全部分配完");

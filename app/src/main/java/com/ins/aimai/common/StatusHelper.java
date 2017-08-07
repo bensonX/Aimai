@@ -49,7 +49,7 @@ public class StatusHelper {
         public static void setModelStatus(RectBackTextView textView, ExamModelOffi exam) {
             if (exam.getIsFinish() == 1) {
                 textView.setVisibility(View.VISIBLE);
-                textView.setColor(R.color.com_dark);
+                textView.setColorSrc(R.color.com_dark);
                 textView.setTextColor(ContextCompat.getColor(textView.getContext(), R.color.white));
                 textView.setText("已模拟");
             } else {
@@ -63,7 +63,7 @@ public class StatusHelper {
             if (exam.getPassNum() == 1) {
                 //已通过
                 textView.setVisibility(View.VISIBLE);
-                textView.setColor(R.color.am_blue);
+                textView.setColorSrc(R.color.am_blue);
                 textView.setTextColor(ContextCompat.getColor(textView.getContext(), R.color.white));
                 textView.setText("已通过");
             } else {
@@ -73,13 +73,13 @@ public class StatusHelper {
                 } else if (exam.getUnPassNum() == 1) {
                     //未通过
                     textView.setVisibility(View.VISIBLE);
-                    textView.setColor(R.color.com_dark);
+                    textView.setColorSrc(R.color.com_dark);
                     textView.setTextColor(ContextCompat.getColor(textView.getContext(), R.color.white));
                     textView.setText("未通过");
                 } else {
                     //多次未通过
                     textView.setVisibility(View.VISIBLE);
-                    textView.setColor(R.color.com_dark);
+                    textView.setColorSrc(R.color.com_dark);
                     textView.setTextColor(ContextCompat.getColor(textView.getContext(), R.color.white));
                     textView.setText(exam.getUnPassNum() + "次未通过");
                 }

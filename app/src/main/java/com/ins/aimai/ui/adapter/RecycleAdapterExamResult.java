@@ -54,7 +54,7 @@ public class RecycleAdapterExamResult extends RecyclerView.Adapter<RecycleAdapte
     public ArrayList<Integer> getErrorIdsList() {
         ArrayList<Integer> ids = new ArrayList<>();
         for (ExamResult examResult : results) {
-            if (examResult.isCorrect()) {
+            if (!examResult.isCorrect()) {
                 ids.add(examResult.getExaminationId());
             }
         }

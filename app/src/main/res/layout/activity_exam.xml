@@ -29,12 +29,20 @@
                 android:scaleType="center"
                 android:src="@drawable/ic_back" />
 
+            <ImageView
+                android:id="@+id/btn_pause"
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="left"
+                android:scaleType="center"
+                android:src="@drawable/selector_exampause_select" />
+
             <TextView
                 android:id="@+id/text_toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:text="1:59:59"
+                android:text="0:00:00"
                 android:textColor="@color/com_text_blank"
                 android:textSize="@dimen/text_big" />
 

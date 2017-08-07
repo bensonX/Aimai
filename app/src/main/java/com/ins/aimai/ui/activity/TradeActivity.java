@@ -109,7 +109,7 @@ public class TradeActivity extends BaseAppCompatActivity implements OnRecycleIte
     ///////////////////////////////////
 
     private int page;
-    private final int PAGE_COUNT = 10;
+    private final int PAGE_COUNT = 50;
 
     /**
      * type:0 首次加载 1:下拉刷新 2:上拉加载

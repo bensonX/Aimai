@@ -62,6 +62,10 @@
             android:name=".ui.activity.PayDialogActivity"
             android:theme="@style/MyAppDialogStyle" />
         <activity
+            android:name=".ui.activity.ExamDialogActivity"
+            android:theme="@style/MyAppDialogStyle"
+            android:launchMode="singleTask"/>
+        <activity
             android:name=".ui.activity.LoadUpActivity"
             android:theme="@style/AppTheme.NoTitleFullscreen" />
         <activity

@@ -106,6 +106,7 @@ public class SettingActivity extends BaseAppCompatActivity implements View.OnCli
                     @Override
                     public void onSure() {
                         netLogout();
+                        getOut();
                     }
                 });
                 break;
@@ -117,16 +118,18 @@ public class SettingActivity extends BaseAppCompatActivity implements View.OnCli
         NetApi.NI().loginout(param).enqueue(new BaseCallback<CommonBean>(CommonBean.class) {
             @Override
             public void onSuccess(int status, CommonBean com, String msg) {
-                AppData.App.removeToken();
-                AppData.App.removeUser();
-                EventBus.getDefault().post(new EventBean(EventBean.EVENT_LOGOUT));
-                finish();
             }
 
             @Override
             public void onError(int status, String msg) {
-                ToastUtil.showToastShort(msg);
             }
         });
+    }
+
+    private void getOut() {
+        AppData.App.removeToken();
+        AppData.App.removeUser();
+        EventBus.getDefault().post(new EventBean(EventBean.EVENT_LOGOUT));
+        finish();
     }
 }

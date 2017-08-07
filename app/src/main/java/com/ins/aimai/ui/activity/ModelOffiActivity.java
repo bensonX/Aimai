@@ -6,10 +6,13 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.ExamModelOffi;
+import com.ins.aimai.bean.common.EventBean;
+import com.ins.aimai.common.ExamCountDownTimer;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
@@ -19,10 +22,13 @@ import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.common.ItemDecorationDivider;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
 import com.ins.common.utils.StrUtil;
+import com.ins.common.utils.TimeUtil;
 import com.ins.common.view.LoadingLayout;
 import com.liaoinstan.springview.container.AliFooter;
 import com.liaoinstan.springview.container.AliHeader;
 import com.liaoinstan.springview.widget.SpringView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 import java.util.Map;
@@ -37,6 +43,7 @@ public class ModelOffiActivity extends BaseAppCompatActivity implements OnRecycl
     private SpringView springView;
     private RecyclerView recycler;
     private RecycleAdapterModelOffi adapter;
+
 
     private int type;
 
@@ -55,9 +62,17 @@ public class ModelOffiActivity extends BaseAppCompatActivity implements OnRecycl
     }
 
     @Override
+    public void onCommonEvent(EventBean event) {
+        if (event.getEvent() == EventBean.EVENT_EXAM_SUBMITED) {
+            netQueryModelPapers(0);
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_model);
+        registEventBus();
         initBase();
         initView();
         initCtrl();
@@ -112,22 +127,37 @@ public class ModelOffiActivity extends BaseAppCompatActivity implements OnRecycl
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
         ExamModelOffi exam = adapter.getResults().get(viewHolder.getLayoutPosition());
         switch (type) {
+            //模拟考试
             case 0:
                 if (exam.getExaminationNum() == 0) {
                     ToastUtil.showToastShort("该课程还没有模拟题");
                     return;
+                } else if (exam.getIsFinish() == 1) {
+                    //已模拟
+                    ExamResultActivity.start(this, exam.getPaperId(), exam.getOrderId(), type);
+                    return;
+                } else {
+                    ExamActivity.startMoldel(this, exam);
+                    break;
                 }
-                //模拟考试
-                ExamActivity.startMoldel(this, exam);
-                break;
+                //正式考试
             case 1:
                 if (exam.getExaminationNum() == 0) {
                     ToastUtil.showToastShort("该课程还没有考试题");
                     return;
+                } else if (exam.getPassNum() > 0) {
+                    //已通过
+                    ExamResultActivity.start(this, exam.getPaperId(), exam.getOrderId(), type);
+                    return;
+                } else if (exam.getUnPassNum() > 2) {
+                    //已挂科
+                    ToastUtil.showToastShort("您已经挂科");
+                    ExamResultActivity.start(this, exam.getPaperId(), exam.getOrderId(), type);
+                    return;
+                } else {
+                    ExamActivity.startOfficial(this, exam);
+                    break;
                 }
-                //正式考试
-                ExamActivity.startOfficial(this, exam);
-                break;
         }
     }
 

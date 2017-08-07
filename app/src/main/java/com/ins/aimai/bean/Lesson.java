@@ -1,5 +1,6 @@
 package com.ins.aimai.bean;
 
+import com.google.gson.annotations.SerializedName;
 import com.ins.common.entity.BaseSelectBean;
 
 import java.io.Serializable;
@@ -153,8 +154,11 @@ public class Lesson extends BaseSelectBean implements Serializable {
     private int isPass;   //是否考核通过
     private List<User> watchUsers;  //观看人员
     private List<User> safeUsers;   //安全人员
-    private int countAlloc;
-    private int countAll;
+    private int allocationNum;
+    private int watchNum;   //观看人数
+    private int finishExamine;  //以考核人数
+    private int countUser;  //总人数
+
     /**
      * 获取 ID
      */
@@ -177,20 +181,36 @@ public class Lesson extends BaseSelectBean implements Serializable {
         this.number = number;
     }
 
-    public int getCountAlloc() {
-        return countAlloc;
+    public int getAllocationNum() {
+        return allocationNum;
     }
 
-    public void setCountAlloc(int countAlloc) {
-        this.countAlloc = countAlloc;
+    public void setAllocationNum(int allocationNum) {
+        this.allocationNum = allocationNum;
     }
 
-    public int getCountAll() {
-        return countAll;
+    public int getWatchNum() {
+        return watchNum;
     }
 
-    public void setCountAll(int countAll) {
-        this.countAll = countAll;
+    public void setWatchNum(int watchNum) {
+        this.watchNum = watchNum;
+    }
+
+    public int getFinishExamine() {
+        return finishExamine;
+    }
+
+    public void setFinishExamine(int finishExamine) {
+        this.finishExamine = finishExamine;
+    }
+
+    public int getCountUser() {
+        return countUser;
+    }
+
+    public void setCountUser(int countUser) {
+        this.countUser = countUser;
     }
 
     /**

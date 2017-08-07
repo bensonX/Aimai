@@ -22,6 +22,7 @@ import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
 import com.ins.aimai.ui.activity.LessonDetailActivity;
+import com.ins.aimai.ui.activity.VideoActivity;
 import com.ins.aimai.ui.adapter.RecycleAdapterOrder;
 import com.ins.aimai.ui.base.BaseFragment;
 import com.ins.aimai.utils.ToastUtil;
@@ -145,7 +146,11 @@ public class OrderFragment extends BaseFragment implements OnRecycleItemClickLis
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
         Order order = adapter.getResults().get(viewHolder.getLayoutPosition());
-        LessonDetailActivity.startByOrder(getActivity(), order.getId());
+        if (order.isPay()) {
+            VideoActivity.startByOrder(getActivity(), order.getId());
+        } else {
+            LessonDetailActivity.startByOrder(getActivity(), order.getId());
+        }
     }
 
     ///////////////////////////////////
