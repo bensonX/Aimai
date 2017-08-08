@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
@@ -29,6 +32,12 @@ import retrofit2.Call;
 public class InfoActivity extends BaseAppCompatActivity implements OnRecycleItemClickListener, View.OnClickListener {
 
     private LoadingLayout loadingLayout;
+    private View lay_info_search;
+    private TextView text_toolbar_title;
+    private EditText edit_query;
+    private View btn_search;
+    private View btn_close;
+
     private SpringView springView;
     private RecyclerView recycler;
     private RecycleAdapterHomeInfo adapter;
@@ -56,9 +65,15 @@ public class InfoActivity extends BaseAppCompatActivity implements OnRecycleItem
 
     private void initView() {
         loadingLayout = (LoadingLayout) findViewById(R.id.loadingLayout);
+        lay_info_search = findViewById(R.id.lay_info_search);
+        text_toolbar_title = (TextView) findViewById(R.id.text_toolbar_title);
+        edit_query = (EditText) findViewById(R.id.edit_query);
         recycler = (RecyclerView) findViewById(R.id.recycler);
         springView = (SpringView) findViewById(R.id.spring);
-        findViewById(R.id.btn_right).setOnClickListener(this);
+        btn_search = findViewById(R.id.btn_search);
+        btn_close = findViewById(R.id.btn_close);
+        btn_search.setOnClickListener(this);
+        btn_close.setOnClickListener(this);
     }
 
     private void initCtrl() {
@@ -92,7 +107,9 @@ public class InfoActivity extends BaseAppCompatActivity implements OnRecycleItem
                 new NetListHelper.CallHander() {
                     @Override
                     public Call getCall(int type) {
+                        String searchParam = edit_query.getText().toString();
                         Map param = netListHelper.getParam(type);
+                        param.put("searchParam", searchParam);
                         return NetApi.NI().queryInfo(param);
                     }
                 },
@@ -110,6 +127,16 @@ public class InfoActivity extends BaseAppCompatActivity implements OnRecycleItem
                         adapter.notifyDataSetChanged();
                     }
                 });
+        edit_query.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
+                    netListHelper.netQueryList(0);
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     private void initData() {
@@ -127,8 +154,19 @@ public class InfoActivity extends BaseAppCompatActivity implements OnRecycleItem
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_right:
-                InfoSearchActivity.start(this);
+            case R.id.btn_search:
+                lay_info_search.setVisibility(View.VISIBLE);
+                text_toolbar_title.setVisibility(View.GONE);
+                btn_search.setVisibility(View.GONE);
+                setToolbar(false);
+                break;
+            case R.id.btn_close:
+                lay_info_search.setVisibility(View.GONE);
+                text_toolbar_title.setVisibility(View.VISIBLE);
+                btn_search.setVisibility(View.VISIBLE);
+                //edit_query.setText("");
+                //netListHelper.netQueryList(0);
+                setToolbar(true);
                 break;
         }
     }

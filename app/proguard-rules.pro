@@ -135,6 +135,9 @@ public static java.lang.String TABLENAME;
 -keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
     <init>(Java.lang.Throwable);
 }
+#bugly
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}
 
 #支付宝支付
 #-libraryjars libs/alipaySdk-20160825.jar

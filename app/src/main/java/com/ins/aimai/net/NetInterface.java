@@ -214,6 +214,13 @@ public interface NetInterface {
     @POST("/api/curriculum/statisticsCurriculum")
     Call<ResponseBody> statisLearn(@FieldMap Map<String, Object> param);
 
+    /**
+     * 获取学习列表
+     */
+    @FormUrlEncoded
+    @POST("/api/curriculum/queryLearnUser")
+    Call<ResponseBody> queryLearnUser(@FieldMap Map<String, Object> param);
+
     //##################################################################
     //#########               支付
     //##################################################################

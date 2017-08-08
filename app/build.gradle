@@ -104,4 +104,6 @@ dependencies {
     //photoView
     compile 'com.github.chrisbanes:PhotoView:2.0.0'
     compile project(':lib_version')
+    //bugly
+    compile 'com.tencent.bugly:crashreport:latest.release'
 }

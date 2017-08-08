@@ -149,7 +149,7 @@ public class OrderFragment extends BaseFragment implements OnRecycleItemClickLis
         if (order.isPay()) {
             VideoActivity.startByOrder(getActivity(), order.getId());
         } else {
-            LessonDetailActivity.startByOrder(getActivity(), order.getId());
+            LessonDetailActivity.startByLesson(getActivity(), order.getCurriculumId());
         }
     }
 

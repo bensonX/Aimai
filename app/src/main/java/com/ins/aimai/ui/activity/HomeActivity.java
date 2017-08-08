@@ -18,6 +18,7 @@ import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.utils.PermissionsUtil;
 import com.ins.common.utils.StatusBarTextUtil;
 import com.shelwee.update.UpdateHelper;
+import com.tencent.bugly.crashreport.CrashReport;
 
 public class HomeActivity extends BaseAppCompatActivity {
 

@@ -1,13 +1,16 @@
 package com.ins.aimai.ui.fragment;
 
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
@@ -23,6 +26,7 @@ import com.ins.aimai.ui.adapter.RecycleAdapterLearnEmploy;
 import com.ins.aimai.ui.base.BaseFragment;
 import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
+import com.ins.common.utils.SpannableStringUtil;
 import com.ins.common.utils.StrUtil;
 import com.ins.common.view.LoadingLayout;
 import com.liaoinstan.springview.container.AliFooter;
@@ -45,6 +49,8 @@ public class LearnEmployFragment extends BaseFragment implements OnRecycleItemCl
     private RecyclerView recycler;
     private RecycleAdapterLearnEmploy adapter;
 
+    private EditText edit_query;
+
     public static Fragment newInstance(int position) {
         LearnEmployFragment fragment = new LearnEmployFragment();
         Bundle bundle = new Bundle();
@@ -57,9 +63,9 @@ public class LearnEmployFragment extends BaseFragment implements OnRecycleItemCl
     public void onCommonEvent(EventBean event) {
         if (event.getEvent() == EventBean.EVENT_EMPLOY_ADD) {
             netQueryUser(1);
-        }else if (event.getEvent() == EventBean.EVENT_USER_ALLOCAT){
+        } else if (event.getEvent() == EventBean.EVENT_USER_ALLOCAT) {
             netQueryUser(1);
-        }else if (event.getEvent() == EventBean.EVENT_LESSON_ALLOCAT){
+        } else if (event.getEvent() == EventBean.EVENT_LESSON_ALLOCAT) {
             netQueryUser(1);
         }
     }
@@ -94,7 +100,7 @@ public class LearnEmployFragment extends BaseFragment implements OnRecycleItemCl
         loadingLayout = (LoadingLayout) rootView.findViewById(R.id.loadingLayout);
         springView = (SpringView) rootView.findViewById(R.id.spring);
         recycler = (RecyclerView) rootView.findViewById(R.id.recycler);
-        rootView.findViewById(R.id.lay_learnpeople_search).setOnClickListener(this);
+        edit_query = (EditText) rootView.findViewById(R.id.edit_query);
         rootView.findViewById(R.id.btn_learnpeople_add).setOnClickListener(this);
     }
 
@@ -122,6 +128,17 @@ public class LearnEmployFragment extends BaseFragment implements OnRecycleItemCl
                 netQueryUser(2);
             }
         });
+        edit_query.setHint(SpannableStringUtil.makeImageStartStr(getContext(), R.drawable.ic_home_search_edit, new Rect(0, 0, 42, 42), "1 搜索名字、身份证、电话"));
+        edit_query.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
+                    netQueryUser(0);
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     private void initData() {
@@ -137,9 +154,6 @@ public class LearnEmployFragment extends BaseFragment implements OnRecycleItemCl
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.lay_learnpeople_search:
-                EmploySearchActivity.start(getContext());
-                break;
             case R.id.btn_learnpeople_add:
                 EmploySearchActivity.start(getContext());
                 break;
@@ -159,9 +173,11 @@ public class LearnEmployFragment extends BaseFragment implements OnRecycleItemCl
      * @param type
      */
     private void netQueryUser(final int type) {
+        final String searchParam = edit_query.getText().toString();
         Map<String, Object> param = new NetParam()
                 .put("pageNO", type == 0 || type == 1 ? "1" : page + 1 + "")
                 .put("pageSize", PAGE_COUNT + "")
+                .put("searchParam", searchParam)
                 .build();
         if (type == 0) loadingLayout.showLoadingView();
         NetApi.NI().queryUserAlloc(param).enqueue(new BaseCallback<List<User>>(new TypeToken<List<User>>() {

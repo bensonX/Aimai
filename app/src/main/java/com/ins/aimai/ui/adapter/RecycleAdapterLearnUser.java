@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.ins.aimai.R;
+import com.ins.aimai.bean.User;
 import com.ins.aimai.bean.common.TestBean;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
 import com.ins.common.utils.GlideUtil;
@@ -20,9 +21,9 @@ public class RecycleAdapterLearnUser extends RecyclerView.Adapter<RecycleAdapter
 
     private Context context;
     private LayoutHelper layoutHelper;
-    private List<TestBean> results = new ArrayList<>();
+    private List<User> results = new ArrayList<>();
 
-    public List<TestBean> getResults() {
+    public List<User> getResults() {
         return results;
     }
 
@@ -37,7 +38,7 @@ public class RecycleAdapterLearnUser extends RecyclerView.Adapter<RecycleAdapter
 
     @Override
     public void onBindViewHolder(final RecycleAdapterLearnUser.Holder holder, final int position) {
-        final TestBean bean = results.get(position);
+        final User bean = results.get(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

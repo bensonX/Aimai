@@ -51,6 +51,7 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
     private TextView text_lessondetail_price;
     private TextView text_lessondetail_salecount;
     private TextView btn_lessondetail_watchcount;
+    private View lay_lessondetail_count;
     private TextView btn_lessondetail_unwatchcount;
     private TextView btn_lessondetail_testcount;
     private TextView btn_lessondetail_countalloc;
@@ -126,6 +127,7 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
         text_lessondetail_price = (TextView) findViewById(R.id.text_lessondetail_price);
         text_lessondetail_salecount = (TextView) findViewById(R.id.text_lessondetail_salecount);
         btn_lessondetail_watchcount = (TextView) findViewById(R.id.btn_lessondetail_watchcount);
+        lay_lessondetail_count = findViewById(R.id.lay_lessondetail_count);
         btn_lessondetail_unwatchcount = (TextView) findViewById(R.id.btn_lessondetail_unwatchcount);
         btn_lessondetail_testcount = (TextView) findViewById(R.id.btn_lessondetail_testcount);
         btn_lessondetail_countalloc = (TextView) findViewById(R.id.btn_lessondetail_countalloc);
@@ -150,7 +152,7 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
         recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recycler.setAdapter(adapter);
 
-        //根据不同身份设置不同状态
+        //根据不同身份设置按钮不同状态
         int status = StatusHelper.lessonDetailBtn(type);
         switch (status) {
             case 0:
@@ -166,6 +168,7 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
                 lay_lessondetail_btn_comp.setVisibility(View.GONE);
                 break;
         }
+        //设置收藏按钮和购买数量可见性
         if (type == 0) {
             //课程
             text_lessondetail_salecount.setVisibility(View.GONE);
@@ -174,6 +177,12 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
             //订单
             text_lessondetail_salecount.setVisibility(View.VISIBLE);
             btn_right.setVisibility(View.GONE);
+        }
+        //设置观看人员可见性
+        if (AppHelper.isUser()) {
+            lay_lessondetail_count.setVisibility(View.GONE);
+        } else {
+            lay_lessondetail_count.setVisibility(View.VISIBLE);
         }
     }
 
@@ -210,13 +219,13 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_lessondetail_watchcount:
-                LearnUserActivity.start(this);
+                LearnUserActivity.startWatch(this, lesson.getWatchNum());
                 break;
             case R.id.btn_lessondetail_unwatchcount:
-                LearnUserActivity.start(this);
+                LearnUserActivity.startUnWatch(this, lesson.getCountUser() - lesson.getWatchNum());
                 break;
             case R.id.btn_lessondetail_testcount:
-                LearnUserActivity.start(this);
+                LearnUserActivity.startExamed(this, lesson.getFinishExamine());
                 break;
             case R.id.btn_go:
                 PayDialogActivity.start(this, lessonId);
