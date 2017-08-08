@@ -1,6 +1,7 @@
 package com.ins.aimai.ui.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,10 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.alibaba.android.vlayout.LayoutHelper;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.Lesson;
-import com.ins.aimai.bean.common.TestBean;
 import com.ins.aimai.common.AppHelper;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
 import com.ins.common.utils.GlideUtil;
@@ -24,18 +23,25 @@ public class RecycleAdapterLesson extends RecyclerView.Adapter<RecycleAdapterLes
 
     private Context context;
     private List<Lesson> results = new ArrayList<>();
+    private int orientation;
 
     public List<Lesson> getResults() {
         return results;
     }
 
     public RecycleAdapterLesson(Context context) {
+        this(context, OrientationHelper.VERTICAL);
+    }
+
+    public RecycleAdapterLesson(Context context, int orientation) {
         this.context = context;
+        this.orientation = orientation;
     }
 
     @Override
     public RecycleAdapterLesson.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new Holder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_lession, parent, false));
+        int src = (orientation == OrientationHelper.VERTICAL ? R.layout.item_lession_v : R.layout.item_lession_h);
+        return new Holder(LayoutInflater.from(parent.getContext()).inflate(src, parent, false));
     }
 
     @Override

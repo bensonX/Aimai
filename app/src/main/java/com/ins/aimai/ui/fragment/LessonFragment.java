@@ -21,6 +21,7 @@ import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
 import com.ins.aimai.ui.activity.LessonDetailActivity;
+import com.ins.aimai.ui.activity.LessonSearchActivity;
 import com.ins.aimai.ui.activity.VideoActivity;
 import com.ins.aimai.ui.adapter.RecycleAdapterLessonCate;
 import com.ins.aimai.ui.adapter.RecycleAdapterLessonTasteBanner;
@@ -37,7 +38,7 @@ import java.util.Map;
 /**
  * Created by liaoinstan
  */
-public class LessonFragment extends BaseFragment implements OnLessonClickListener {
+public class LessonFragment extends BaseFragment implements OnLessonClickListener, View.OnClickListener {
 
     private int position;
     private View rootView;
@@ -97,6 +98,7 @@ public class LessonFragment extends BaseFragment implements OnLessonClickListene
         loadingLayout = (LoadingLayout) rootView.findViewById(R.id.loadingLayout);
         recycler = (RecyclerView) rootView.findViewById(R.id.recycler);
         springView = (SpringView) rootView.findViewById(R.id.spring);
+        rootView.findViewById(R.id.lay_lesson_search).setOnClickListener(this);
     }
 
     private void initCtrl() {
@@ -148,6 +150,15 @@ public class LessonFragment extends BaseFragment implements OnLessonClickListene
     @Override
     public void onLessonClick(Lesson lesson) {
         LessonDetailActivity.startByLesson(getContext(), lesson.getId());
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.lay_lesson_search:
+                LessonSearchActivity.start(getActivity());
+                break;
+        }
     }
 
     ///////////////////////////////////
