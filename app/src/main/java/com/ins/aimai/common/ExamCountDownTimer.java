@@ -34,7 +34,7 @@ public class ExamCountDownTimer {
     }
 
     public void cancel() {
-        timer.cancel();
+        if (timer != null) timer.cancel();
     }
 
     private class MyCountDownTimer extends CountDownTimer {
