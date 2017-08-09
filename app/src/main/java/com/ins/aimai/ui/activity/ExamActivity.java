@@ -12,7 +12,6 @@ import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.ExamModelOffi;
 import com.ins.aimai.bean.ExamPractice;
-import com.ins.aimai.bean.ExamResultPojo;
 import com.ins.aimai.bean.Examination;
 import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.bean.common.QuestionBean;
@@ -21,20 +20,15 @@ import com.ins.aimai.common.ExamCountDownTimer;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
-import com.ins.aimai.net.helper.NetExamHelper;
 import com.ins.aimai.net.helper.NetFavoHelper;
 import com.ins.aimai.ui.adapter.PagerAdapterExam;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
-import com.ins.aimai.ui.dialog.DialogSureAimai;
 import com.ins.aimai.ui.dialog.PopTextSize;
 import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.ui.dialog.DialogSure;
-import com.ins.common.utils.ClearCacheUtil;
 import com.ins.common.utils.StatusBarTextUtil;
 import com.ins.common.utils.TimeUtil;
 import com.ins.common.utils.ViewPagerUtil;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -201,7 +195,7 @@ public class ExamActivity extends BaseAppCompatActivity implements View.OnClickL
     private void setTimeNote(int time) {
         //时间小于10分钟要显示橙色
         text_time.setTextColor(ContextCompat.getColor(this, time <= 10 * 60 ? R.color.am_orage : R.color.com_text_blank));
-        text_time.setText(TimeUtil.formatSecond(time * 1000, "HH:mm:ss"));
+        text_time.setText(TimeUtil.formatTimeRange(time * 1000, "HH:mm:ss"));
     }
 
     @Override

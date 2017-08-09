@@ -13,14 +13,11 @@ import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.Info;
-import com.ins.aimai.bean.common.TestBean;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
 import com.ins.common.utils.DensityUtil;
 import com.ins.common.utils.GlideUtil;
-import com.ins.common.utils.L;
 import com.ins.common.utils.TimeUtil;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,7 +82,7 @@ public class RecycleAdapterHomeInfo extends DelegateAdapter.Adapter<RecycleAdapt
 
         GlideUtil.loadImg(holder.img_item_info, R.drawable.default_bk_img, info.getImage());
         holder.text_item_info_title.setText(info.getTitle());
-        holder.text_item_info_time.setText(TimeUtil.formatSecond(System.currentTimeMillis() - info.getCreateTime()) + "前");
+        holder.text_item_info_time.setText(TimeUtil.formatTimeRangeBefore(System.currentTimeMillis() - info.getCreateTime()));
         holder.text_item_info_favo.setText(info.getCollectNum() + "");
     }
 

@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.ins.aimai.R;
 import com.ins.aimai.bean.Comment;
-import com.ins.aimai.bean.common.TestBean;
 import com.ins.aimai.common.AppHelper;
 import com.ins.common.utils.GlideUtil;
 import com.ins.common.utils.TimeUtil;
@@ -42,7 +41,7 @@ public class RecycleAdapterVideoCommet extends RecyclerView.Adapter<RecycleAdapt
         GlideUtil.loadCircleImg(holder.img_comment_header, R.drawable.default_header_edit, comment.getAvatar());
         holder.text_comment_name.setText(AppHelper.Comment.getShadowName(comment.getUserName()));
         holder.text_comment_detail.setText(comment.getContent());
-        holder.text_comment_time.setText(TimeUtil.formatSecond(comment.getTimeStamp() - comment.getCreateTime()) + "前");
+        holder.text_comment_time.setText(TimeUtil.formatTimeRangeBefore(comment.getTimeStamp() - comment.getCreateTime()));
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.ins.common.utils;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.util.TypedValue;
 
 /**
@@ -16,8 +17,7 @@ public class DensityUtil {
      * dp转px
      */
     public static int dp2px(Context context, float dpVal) {
-        if (context == null) return (int) dpVal;
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpVal, context.getResources().getDisplayMetrics());
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpVal, Resources.getSystem().getDisplayMetrics());
     }
 
 
@@ -25,8 +25,7 @@ public class DensityUtil {
      * sp转px
      */
     public static int sp2px(Context context, float spVal) {
-        if (context == null) return (int) spVal;
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, spVal, context.getResources().getDisplayMetrics());
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, spVal, Resources.getSystem().getDisplayMetrics());
     }
 
 
@@ -34,8 +33,7 @@ public class DensityUtil {
      * px转dp
      */
     public static float px2dp(Context context, float pxVal) {
-        if (context == null) return pxVal;
-        final float scale = context.getResources().getDisplayMetrics().density;
+        final float scale = Resources.getSystem().getDisplayMetrics().density;
         return (pxVal / scale);
     }
 
@@ -44,8 +42,7 @@ public class DensityUtil {
      * px转sp
      */
     public static float px2sp(Context context, float pxVal) {
-        if (context == null) return pxVal;
-        return (pxVal / context.getResources().getDisplayMetrics().scaledDensity);
+        return (pxVal / Resources.getSystem().getDisplayMetrics().scaledDensity);
     }
 
 

@@ -127,67 +127,95 @@ public class TimeUtil {
         }
     }
 
-    public static String formatSecond(long s) {
-        return formatSecond((int) (s / 1000));
-    }
-
-    public static String formatSecond(int s) {
-        String html = "0秒";
+    //格式化时长为（天，小时，分钟 前），超过10天直接显示日期
+    public static String formatTimeRangeBefore(long l) {
+        int day = getDay((int) (l / 1000));
+        int hour = getHour((int) (l / 1000));
+        int minute = getMinite((int) (l / 1000));
         String format;
-        Object[] array;
-        int day = (s / (60 * 60 * 24));
-        int hours = (s / (60 * 60));
-        int minutes = (s / 60 - hours * 60);
-        int seconds = (s - minutes * 60 - hours * 60 * 60);
-        if (day > 0) {
-            format = "%1$,d天%2$,d时%3$,d分%4$,d秒";
-            array = new Object[]{day, hours, minutes, seconds};
-        } else if (hours > 0) {
-            format = "%1$,d时%2$,d分%3$,d秒";
-            array = new Object[]{hours, minutes, seconds};
-        } else if (minutes > 0) {
-            format = "%1$,d分%2$,d秒";
-            array = new Object[]{minutes, seconds};
+        if (day >= 0 && day < 10) {
+            format = "d天";
+        } else if (day >= 10) {
+            return getTimeFor("yyyy年M月d日", new Date(System.currentTimeMillis() - l));
         } else {
-            format = "%1$,d秒";
-            array = new Object[]{seconds};
+            if (hour != 0) {
+                format = "H小时";
+            } else {
+                if (minute != 0) {
+                    format = "m分钟";
+                } else {
+                    format = "s秒";
+                }
+            }
         }
-        html = String.format(format, array);
-        return html;
+        return formatTimeRange(l, format) + "前";
     }
 
-    public static String formatSecond(long time, String format) {
+    //格式化秒为（小时-分钟）
+    public static String formatSecond(int s) {
+        int hour = getHour(s);
+        int minute = getMinite(s);
+        String format;
+        if (hour != 0) {
+            format = "H小时m分钟";
+        } else {
+            if (minute != 0) {
+                format = "m分钟";
+            } else {
+                format = "s秒";
+            }
+        }
+        return formatTimeRange(s * 1000, format);
+    }
+
+    //格式化时间段为format
+    public static String formatTimeRange(long time, String format) {
         SimpleDateFormat formatter = new SimpleDateFormat(format);
         // 设置格式化器的时区为格林威治时区，否则格式化的结果不对，中国的时间比格林威治时间早8小时，比如0点会被格式化为8:00
-        formatter.setTimeZone(TimeZone.getTimeZone("GMT+0:00"));
+        formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
         return formatter.format(time);
     }
 
-    public static int getHour(Date date) {
+    /**
+     * 获取一个时间的特定单位（时分秒等等）
+     * 当前年
+     * int year = cal.get(Calendar.YEAR);
+     * 当前月
+     * int month = (cal.get(Calendar.MONTH)) + 1;
+     * 当前月的第几天：即当前日
+     * int day_of_month = cal.get(Calendar.DAY_OF_MONTH);
+     * 当前时：HOUR_OF_DAY-24小时制；HOUR-12小时制
+     * int hour = cal.get(Calendar.HOUR_OF_DAY);
+     * 当前分
+     * int minute = cal.get(Calendar.MINUTE);
+     * 当前秒
+     * int second = cal.get(Calendar.SECOND);
+     * 0-上午；1-下午
+     * int ampm = cal.get(Calendar.AM_PM);
+     * 当前年的第几周
+     * int week_of_year = cal.get(Calendar.WEEK_OF_YEAR);
+     * 当前月的第几周
+     * int week_of_month = cal.get(Calendar.WEEK_OF_MONTH);
+     * 当前年的第几天
+     * int day_of_year = cal.get(Calendar.DAY_OF_YEAR);
+     */
+    public static int getTimeCell(long time, int field) {
         Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-//        // 当前年
-//        int year = cal.get(Calendar.YEAR);
-//        // 当前月
-//        int month = (cal.get(Calendar.MONTH)) + 1;
-//        // 当前月的第几天：即当前日
-//        int day_of_month = cal.get(Calendar.DAY_OF_MONTH);
-        // 当前时：HOUR_OF_DAY-24小时制；HOUR-12小时制
-        int hour = cal.get(Calendar.HOUR_OF_DAY);
-//        // 当前分
-//        int minute = cal.get(Calendar.MINUTE);
-//        // 当前秒
-//        int second = cal.get(Calendar.SECOND);
-//        // 0-上午；1-下午
-//        int ampm = cal.get(Calendar.AM_PM);
-//        // 当前年的第几周
-//        int week_of_year = cal.get(Calendar.WEEK_OF_YEAR);
-//        // 当前月的第几周
-//        int week_of_month = cal.get(Calendar.WEEK_OF_MONTH);
-//        // 当前年的第几天
-//        int day_of_year = cal.get(Calendar.DAY_OF_YEAR);
+        cal.setTimeInMillis(time);
+        int cell = cal.get(field);
+        return cell;
+    }
 
-        return hour;
+    public static int getHour(int s) {
+        return (s / (60 * 60));
+    }
+
+    public static int getMinite(int s) {
+        return (s / 60);
+    }
+
+    public static int getDay(int s) {
+        return (s / (60 * 60 * 24));
     }
 
     public static void main(String[] args) {
