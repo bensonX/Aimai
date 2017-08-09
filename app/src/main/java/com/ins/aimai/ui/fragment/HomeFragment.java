@@ -1,5 +1,6 @@
 package com.ins.aimai.ui.fragment;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
 import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.Info;
+import com.ins.aimai.common.ToobarTansColorHelper;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
@@ -26,6 +28,7 @@ import com.ins.aimai.ui.base.BaseFragment;
 import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.entity.Image;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
+import com.ins.common.utils.L;
 import com.ins.common.view.BannerView;
 import com.ins.common.view.LoadingLayout;
 import com.liaoinstan.springview.container.AliFooter;
@@ -154,6 +157,13 @@ public class HomeFragment extends BaseFragment implements OnRecycleItemClickList
                     }
                 });
         adapterBanner.setOnBannerClickListener(this);
+        //设置toolbar的颜色渐变器及阈值回调
+        ToobarTansColorHelper.getInstance().with(recycler,toolbar).onPointCallback(new ToobarTansColorHelper.OnPointListener() {
+            @Override
+            public void onPoint(boolean upOrDown) {
+                L.e(upOrDown);
+            }
+        });
     }
 
     private void initData() {

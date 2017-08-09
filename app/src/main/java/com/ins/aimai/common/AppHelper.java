@@ -196,9 +196,10 @@ public class AppHelper {
                     option.isCorrect = item.getIsCorrect() == 1 ? true : false;
                     options.add(option);
                 }
-                //如果是判断题加一个错误选项（服务器没有加，移动端帮忙处理）
+                //如果是判断题加一个正确或者错误选项（服务器没有加，移动端帮忙处理）
                 if (type == 2) {
-                    QuestionView.Option option = new QuestionView.Option("错误");
+                    ExaminationItems lastItem = itemses.get(0);
+                    QuestionView.Option option = new QuestionView.Option(lastItem.getExaminationName().contains("正确") ? "错误" : "正确");
                     options.add(option);
                 }
             }

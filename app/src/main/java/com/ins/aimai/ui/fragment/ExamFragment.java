@@ -118,7 +118,6 @@ public class ExamFragment extends BaseFragment implements View.OnClickListener, 
         questionView.setData(questionBean);
     }
 
-
     private DialogSureAimai dialogSureCommit;
 
     @Override
