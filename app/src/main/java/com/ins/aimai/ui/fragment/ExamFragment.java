@@ -11,6 +11,7 @@ import com.ins.aimai.R;
 import com.ins.aimai.bean.ExamResultPojo;
 import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.bean.common.QuestionBean;
+import com.ins.aimai.common.AppData;
 import com.ins.aimai.common.AppHelper;
 import com.ins.aimai.common.ExamCountDownTimer;
 import com.ins.aimai.net.helper.NetExamHelper;
@@ -45,8 +46,17 @@ public class ExamFragment extends BaseFragment implements View.OnClickListener, 
     }
 
     @Override
+    public void onCommonEvent(EventBean event) {
+        if (event.getEvent() == EventBean.EVENT_EXAM_TEXISIZE) {
+            int size = (int) event.get("size");
+            questionView.setTextSize(size);
+        }
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        registEventBus();
         this.position = getArguments().getInt("position");
     }
 
@@ -76,6 +86,19 @@ public class ExamFragment extends BaseFragment implements View.OnClickListener, 
 
     private void initCtrl() {
         questionView.setOnOptionSelectListener(this);
+        //恢复上次选择的字体大小
+        int textSize = AppData.App.getTextSizeExam();
+        switch (textSize) {
+            case QuestionView.TEXTSIZE_BIG:
+                questionView.setTextSize(textSize);
+                break;
+            case QuestionView.TEXTSIZE_NOMAL:
+                //默认大小，不用设置
+                break;
+            case QuestionView.TEXTSIZE_SMALL:
+                questionView.setTextSize(textSize);
+                break;
+        }
     }
 
     private void initData() {

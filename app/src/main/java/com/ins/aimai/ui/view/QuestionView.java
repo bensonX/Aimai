@@ -14,6 +14,7 @@ import com.ins.aimai.bean.common.TestBean;
 import com.ins.aimai.ui.adapter.ListAdapterQuestionItem;
 import com.ins.common.entity.BaseSelectBean;
 import com.ins.common.helper.SelectHelper;
+import com.ins.common.utils.DensityUtil;
 import com.ins.common.utils.FontUtils;
 import com.ins.common.utils.StrUtil;
 import com.ins.common.view.ListViewLinearLayout;
@@ -27,9 +28,11 @@ import java.util.List;
 
 public class QuestionView extends FrameLayout implements AdapterView.OnItemClickListener {
 
-    private Context context;
-    private View showin;
+    public static final int TEXTSIZE_BIG = 15;
+    public static final int TEXTSIZE_NOMAL = 14;
+    public static final int TEXTSIZE_SMALL = 13;
 
+    private Context context;
     private TextView text_question_title;
     private ListViewLinearLayout list_qustion;
     private ListAdapterQuestionItem adapter;
@@ -98,6 +101,11 @@ public class QuestionView extends FrameLayout implements AdapterView.OnItemClick
     public void setData(QuestionBean questionBean) {
         this.questionBean = questionBean;
         notifyDataSetChanged();
+    }
+
+    public void setTextSize(int sp) {
+        text_question_title.setTextSize(sp);
+        adapter.setTextSize(sp);
     }
 
     public void notifyDataSetChanged() {

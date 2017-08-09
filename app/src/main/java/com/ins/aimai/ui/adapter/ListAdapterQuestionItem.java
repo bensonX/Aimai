@@ -12,11 +12,14 @@ import com.ins.aimai.bean.common.QuestionBean;
 import com.ins.aimai.bean.common.TestBean;
 import com.ins.aimai.ui.view.QuestionView;
 import com.ins.common.helper.SelectHelper;
+import com.ins.common.utils.DensityUtil;
 import com.ins.common.utils.NumUtil;
 import com.ins.common.utils.StrUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.ins.aimai.ui.view.QuestionView.TEXTSIZE_NOMAL;
 
 public class ListAdapterQuestionItem extends BaseAdapter {
     private Context context;
@@ -24,6 +27,8 @@ public class ListAdapterQuestionItem extends BaseAdapter {
     private List<QuestionView.Option> results = new ArrayList<>();
     //是否可以勾选
     private boolean needCheck = true;
+    //是否可以勾选
+    private int textSize = TEXTSIZE_NOMAL;
 
     public void setNeedCheck(boolean needCheck) {
         this.needCheck = needCheck;
@@ -68,7 +73,7 @@ public class ListAdapterQuestionItem extends BaseAdapter {
 
         holder.text_question_item.setText(NumUtil.intToABC(bean.index) + "、" + bean.content);
         holder.text_question_item.setSelected(bean.isSelect());
-
+        holder.text_question_item.setTextSize(textSize);
         if (needCheck) {
             holder.text_question_item.setCompoundDrawablesWithIntrinsicBounds(R.drawable.selector_check_select_learn_small, 0, 0, 0);
         } else {
@@ -76,6 +81,11 @@ public class ListAdapterQuestionItem extends BaseAdapter {
         }
 
         return convertView;
+    }
+
+    public void setTextSize(int sp) {
+        this.textSize = sp;
+        notifyDataSetChanged();
     }
 
     public String getSelectIds() {

@@ -60,7 +60,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
                 android:scaleType="center"
-                android:src="@drawable/ic_learn_textsize" />
+                android:src="@drawable/ic_learn_textsize_middle" />
 
             <ImageView
                 android:id="@+id/btn_right_answerboard"

@@ -9,8 +9,8 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="76dp"
-        android:paddingTop="20dp"
         android:background="@color/none"
+        android:paddingTop="20dp"
         app:popupTheme="@style/AppTheme.PopupOverlay">
 
         <ImageView
@@ -39,7 +39,8 @@
                 android:layout_gravity="right"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/shape_oval_red" />
+                android:src="@drawable/shape_oval_red"
+                android:visibility="gone" />
 
         </FrameLayout>
 

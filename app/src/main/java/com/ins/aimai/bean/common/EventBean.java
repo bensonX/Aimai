@@ -52,6 +52,8 @@ public class EventBean implements Serializable {
     public static final int EVENT_EXAM_TIME = 0xffa019;
     //考试计时时间到
     public static final int EVENT_EXAM_TIMEOUT = 0xffa020;
+    //改变字体大小（考试）
+    public static final int EVENT_EXAM_TEXISIZE = 0xffa021;
 
     private int event;
     private Map<String, Object> map = new HashMap<>();

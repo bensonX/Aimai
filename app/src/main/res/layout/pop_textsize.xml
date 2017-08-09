@@ -11,6 +11,20 @@
         android:layout_marginRight="5dp" />
 
     <ImageView
+        android:id="@+id/img_popsize_big"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:foreground="?attr/selectableItemBackground"
+        android:scaleType="center"
+        android:src="@drawable/ic_learn_textsize_big" />
+
+    <View
+        style="@style/Line_H"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp" />
+
+    <ImageView
+        android:id="@+id/img_popsize_nomal"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:foreground="?attr/selectableItemBackground"
@@ -23,6 +37,7 @@
         android:layout_marginRight="5dp" />
 
     <ImageView
+        android:id="@+id/img_popsize_small"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:foreground="?attr/selectableItemBackground"

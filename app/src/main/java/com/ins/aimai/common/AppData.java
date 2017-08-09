@@ -19,7 +19,7 @@ public class AppData {
         private static final String SHARENAME = "app_config";
         private static final String KEY_TOKEN = "token";
         private static final String KEY_USER = "user";
-        private static final String KEY_VIDEO_TIME = "video_time";
+        private static final String KEY_TEXTSIZE_EXAM = "video_time";
 
         public static void saveToken(String token) {
             SharedPrefUtilV2.open(SHARENAME).putString(KEY_TOKEN, token);
@@ -45,12 +45,12 @@ public class AppData {
             SharedPrefUtilV2.open(SHARENAME).remove(KEY_USER);
         }
 
-        public static void saveVideoTime(int videoId, int userId, int seek) {
-            SharedPrefUtilV2.open(SHARENAME).putInt(KEY_VIDEO_TIME + videoId + ":" + userId, seek);
+        public static void saveTextSizeExam(int textsize) {
+            SharedPrefUtilV2.open(SHARENAME).putInt(KEY_TEXTSIZE_EXAM, textsize);
         }
 
-        public static int getVideoTime(int videoId, int userId) {
-            return SharedPrefUtilV2.open(SHARENAME).getInt(KEY_VIDEO_TIME + videoId + ":" + userId);
+        public static int getTextSizeExam() {
+            return SharedPrefUtilV2.open(SHARENAME).getInt(KEY_TEXTSIZE_EXAM);
         }
 
         public static List<CheckPoint> getVideoCheckPoint() {

@@ -27,6 +27,9 @@ public class DensityUtil {
     public static int sp2px(Context context, float spVal) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, spVal, Resources.getSystem().getDisplayMetrics());
     }
+    public static int sp2px(float spVal) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, spVal, Resources.getSystem().getDisplayMetrics());
+    }
 
 
     /**

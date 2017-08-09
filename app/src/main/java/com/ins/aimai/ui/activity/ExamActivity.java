@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
@@ -15,6 +16,7 @@ import com.ins.aimai.bean.ExamPractice;
 import com.ins.aimai.bean.Examination;
 import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.bean.common.QuestionBean;
+import com.ins.aimai.common.AppData;
 import com.ins.aimai.common.AppHelper;
 import com.ins.aimai.common.ExamCountDownTimer;
 import com.ins.aimai.net.BaseCallback;
@@ -24,6 +26,7 @@ import com.ins.aimai.net.helper.NetFavoHelper;
 import com.ins.aimai.ui.adapter.PagerAdapterExam;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.aimai.ui.dialog.PopTextSize;
+import com.ins.aimai.ui.view.QuestionView;
 import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.ui.dialog.DialogSure;
 import com.ins.common.utils.StatusBarTextUtil;
@@ -39,7 +42,7 @@ public class ExamActivity extends BaseAppCompatActivity implements View.OnClickL
 
     private ViewPager pager;
     private PagerAdapterExam adapterPager;
-    private View btn_right_textsize;
+    private ImageView btn_right_textsize;
     private View btn_last;
     private View btn_next;
     private TextView text_exam_type;
@@ -91,6 +94,20 @@ public class ExamActivity extends BaseAppCompatActivity implements View.OnClickL
             //最后5秒弹窗窗口提示（练习题例外）
             if (time <= 5 && type != 0)
                 ExamDialogActivity.start(this, questions, paperId, orderId, type);
+        } else if (event.getEvent() == EventBean.EVENT_EXAM_TEXISIZE) {
+            int size = (int) event.get("size");
+            AppData.App.saveTextSizeExam(size);
+            switch (size) {
+                case QuestionView.TEXTSIZE_BIG:
+                    btn_right_textsize.setImageResource(R.drawable.ic_learn_textsize_big);
+                    break;
+                case QuestionView.TEXTSIZE_NOMAL:
+                    btn_right_textsize.setImageResource(R.drawable.ic_learn_textsize_middle);
+                    break;
+                case QuestionView.TEXTSIZE_SMALL:
+                    btn_right_textsize.setImageResource(R.drawable.ic_learn_textsize_small);
+                    break;
+            }
         }
     }
 
@@ -126,7 +143,7 @@ public class ExamActivity extends BaseAppCompatActivity implements View.OnClickL
         if (getIntent().hasExtra("useTime")) {
             useTime = getIntent().getIntExtra("useTime", 0);
         }
-        timer = new ExamCountDownTimer(1 * 15);
+        timer = new ExamCountDownTimer(useTime);
         popTextSize = new PopTextSize(this);
         popTextSize.setNeedanim(false);
     }
@@ -135,7 +152,7 @@ public class ExamActivity extends BaseAppCompatActivity implements View.OnClickL
         pager = (ViewPager) findViewById(R.id.pager);
         text_time = (TextView) findViewById(R.id.text_toolbar_title);
         btn_pause = findViewById(R.id.btn_pause);
-        btn_right_textsize = findViewById(R.id.btn_right_textsize);
+        btn_right_textsize = (ImageView) findViewById(R.id.btn_right_textsize);
         btn_last = findViewById(R.id.btn_last);
         btn_next = findViewById(R.id.btn_next);
         text_exam_type = (TextView) findViewById(R.id.text_exam_type);
@@ -184,6 +201,19 @@ public class ExamActivity extends BaseAppCompatActivity implements View.OnClickL
                 text_time.setVisibility(View.VISIBLE);
                 btn_pause.setVisibility(View.GONE);
                 setTimeNote(useTime);
+                break;
+        }
+        //恢复上次选择的字体大小
+        int textSize = AppData.App.getTextSizeExam();
+        switch (textSize) {
+            case QuestionView.TEXTSIZE_BIG:
+                btn_right_textsize.setImageResource(R.drawable.ic_learn_textsize_big);
+                break;
+            case QuestionView.TEXTSIZE_NOMAL:
+                btn_right_textsize.setImageResource(R.drawable.ic_learn_textsize_middle);
+                break;
+            case QuestionView.TEXTSIZE_SMALL:
+                btn_right_textsize.setImageResource(R.drawable.ic_learn_textsize_small);
                 break;
         }
     }

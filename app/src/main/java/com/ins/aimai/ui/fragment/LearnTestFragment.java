@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.ins.aimai.R;
 import com.ins.aimai.bean.StatisLearn;
+import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.common.AppHelper;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
@@ -46,8 +47,17 @@ public class LearnTestFragment extends BaseFragment implements View.OnClickListe
     }
 
     @Override
+    public void onCommonEvent(EventBean event) {
+        if (event.getEvent() == EventBean.EVENT_EXAM_SUBMITED) {
+            netStatisLearn();
+        }
+    }
+
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        registEventBus();
         this.position = getArguments().getInt("position");
     }
 
