@@ -10,6 +10,7 @@
         android:layout_gravity="center"
         android:drawableLeft="@drawable/ic_video_start"
         android:drawablePadding="8dp"
+        android:gravity="center_vertical"
         android:text="tab"
         android:textColor="@color/com_text_blank"
         android:textSize="@dimen/text_big_nomal" />

@@ -119,7 +119,13 @@ public class ExamResultActivity extends BaseAppCompatActivity implements OnRecyc
             } else {
                 text_examresult_grade.setTextColor(ContextCompat.getColor(this, R.color.com_text_dark));
                 text_examresult_remind.setText("抱歉！您没有通过本次考核。");
-                text_examresult_note.setVisibility(View.VISIBLE);
+                //正式考试才有note提示
+                if (type != 2) {
+                    text_examresult_note.setVisibility(View.GONE);
+                } else {
+                    text_examresult_note.setVisibility(View.VISIBLE);
+                    text_examresult_note.setText("您还有" + "一" + "次重新考核的机会");
+                }
             }
             //设置答题数据
             adapter.getResults().clear();

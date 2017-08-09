@@ -2,6 +2,7 @@ package com.ins.aimai.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,15 +52,20 @@ public class RecycleAdapterLearnEmploy extends RecyclerView.Adapter<RecycleAdapt
         holder.text_learn_employ_name.setText(user.getShowName());
         holder.text_learn_employ_lesson.setText(user.getCurriculumName());
         holder.text_learn_employ_count.setText(user.getFinishCourseWareNum() + "");
+        if (TextUtils.isEmpty(user.getDepartmentName())){
+            holder.text_learn_employ_lesson.setVisibility(View.GONE);
+        }
         if (user.getIsPass() == 0) {
             //未通过
-            holder.text_learn_employ_status.setVisibility(View.GONE);
             holder.lay_learn_employ_leaned.setVisibility(View.VISIBLE);
+            holder.text_learn_employ_status.setVisibility(View.GONE);
+            holder.text_learn_employ_time.setVisibility(View.GONE);
         } else {
             //通过
-            holder.text_learn_employ_status.setVisibility(View.VISIBLE);
             holder.lay_learn_employ_leaned.setVisibility(View.GONE);
-            holder.text_learn_employ_time.setText(TimeUtil.getTimeFor("yyyy-MM-dd HH:mm",new Date(user.getCreateTime())));
+            holder.text_learn_employ_status.setVisibility(View.VISIBLE);
+            holder.text_learn_employ_time.setVisibility(View.VISIBLE);
+            holder.text_learn_employ_time.setText(TimeUtil.getTimeFor("yyyy-MM-dd HH:mm",new Date(user.getPassTime())));
         }
     }
 

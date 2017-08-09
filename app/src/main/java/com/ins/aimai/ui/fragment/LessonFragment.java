@@ -28,6 +28,7 @@ import com.ins.aimai.ui.adapter.RecycleAdapterLessonTasteBanner;
 import com.ins.aimai.ui.base.BaseFragment;
 import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
+import com.ins.common.utils.StrUtil;
 import com.ins.common.view.LoadingLayout;
 import com.liaoinstan.springview.container.AliFooter;
 import com.liaoinstan.springview.container.AliHeader;
@@ -183,6 +184,7 @@ public class LessonFragment extends BaseFragment implements OnLessonClickListene
                 adapterCate.getResults().clear();
                 adapterCate.getResults().addAll(pojo.getLessonCates());
                 adapterCate.notifyDataSetChanged();
+                StrUtil.removeNull(pojo.getFreeLessons());
                 adapterTasteBanner.getResults().clear();
                 adapterTasteBanner.getResults().addAll(pojo.getFreeLessons());
                 adapterTasteBanner.notifyItemChanged(0);

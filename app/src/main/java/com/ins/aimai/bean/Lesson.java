@@ -159,6 +159,15 @@ public class Lesson extends BaseSelectBean implements Serializable {
     private int finishExamine;  //以考核人数
     private int countUser;  //总人数
 
+
+    /////////////////////  业务方法 /////////////////
+
+    public boolean isPass() {
+        return isPass == 1;
+    }
+
+    /////////////////////////////////////////////////
+
     /**
      * 获取 ID
      */

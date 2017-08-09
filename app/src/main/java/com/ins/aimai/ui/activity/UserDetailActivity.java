@@ -171,7 +171,7 @@ public class UserDetailActivity extends BaseAppCompatActivity implements View.On
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Lesson lesson = adapter.getResults().get(position);
-        ToastUtil.showToastShort("跳转课程详情（还没做）");
+        LessonDetailCompActivity.start(this, lesson);
     }
 
     private void netQueryUserDetail() {

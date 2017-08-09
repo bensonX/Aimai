@@ -4,11 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -146,6 +149,7 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
         adapterPager = new PagerAdapterLessonDetail(getSupportFragmentManager(), titles, lessonId);
         pager.setAdapter(adapterPager);
         tab.setupWithViewPager(pager);
+        setTab();
 
         //设置lable
         adapter = new RecycleAdapterLable(this);
@@ -240,6 +244,26 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
                     ToastUtil.showToastShort("所购课程已全部分配完");
                 }
                 break;
+        }
+    }
+
+    //设置TabLayout为自定义样式
+    private void setTab() {
+        for (int i = 0; i < tab.getTabCount(); i++) {
+            TabLayout.Tab t = tab.getTabAt(i);
+            if (t.getCustomView() == null) {
+                t.setCustomView(LayoutInflater.from(this).inflate(R.layout.layout_tab, tab, false));
+            }
+            TextView textView = (TextView) ((ViewGroup) t.getCustomView()).getChildAt(0);
+            textView.setTextSize(14);
+            if (i == 0) {
+                textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.selector_lessontab_intro_select, 0, 0, 0);
+            } else if (i == 1) {
+                textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.selector_lessontab_directory_select, 0, 0, 0);
+            } else if (i == 2) {
+                textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.selector_lessontab_comment_select, 0, 0, 0);
+            }
+            textView.setText(t.getText());
         }
     }
 

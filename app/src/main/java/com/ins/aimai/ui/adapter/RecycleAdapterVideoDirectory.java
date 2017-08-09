@@ -48,8 +48,7 @@ public class RecycleAdapterVideoDirectory extends RecyclerView.Adapter<RecycleAd
         });
 
         holder.text_directory_title.setText(video.getCourseWareName() + ": " + video.getName());
-        holder.text_directory_time.setText(TimeUtil.formatSecond(video.getHighDefinitionSeconds()));
-
+        holder.text_directory_time.setText(TimeUtil.formatTimeRange(video.getHighDefinitionSeconds() * 1000, "mm:ss"));
         holder.text_directory_title.setSelected(AppHelper.VideoPlay.isVideoStatusFinish(video));
     }
 

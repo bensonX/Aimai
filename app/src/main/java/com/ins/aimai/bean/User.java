@@ -179,6 +179,8 @@ public class User extends SortBean implements Serializable {
     private int joinNum;
     //安全人员
     private int safeNum;
+    //通过时间
+    private long passTime;
 
 
     //####################### 逻辑方法 ##########################
@@ -197,6 +199,14 @@ public class User extends SortBean implements Serializable {
 
     //###########################################################
 
+
+    public long getPassTime() {
+        return passTime;
+    }
+
+    public void setPassTime(long passTime) {
+        this.passTime = passTime;
+    }
 
     public int getJoinNum() {
         return joinNum;

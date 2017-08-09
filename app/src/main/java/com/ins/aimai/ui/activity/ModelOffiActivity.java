@@ -21,6 +21,8 @@ import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.common.ItemDecorationDivider;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
+import com.ins.common.ui.dialog.DialogSure;
+import com.ins.common.utils.ClearCacheUtil;
 import com.ins.common.utils.StrUtil;
 import com.ins.common.utils.TimeUtil;
 import com.ins.common.view.LoadingLayout;
@@ -36,7 +38,7 @@ import java.util.Map;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 
-//type 0:模拟开始 1：正式考试
+//type 1:模拟开始 2：正式考试
 public class ModelOffiActivity extends BaseAppCompatActivity implements OnRecycleItemClickListener {
 
     private LoadingLayout loadingLayout;
@@ -48,11 +50,11 @@ public class ModelOffiActivity extends BaseAppCompatActivity implements OnRecycl
     private int type;
 
     public static void startModel(Context context) {
-        start(context, 0);
+        start(context, 1);
     }
 
     public static void startOffi(Context context) {
-        start(context, 1);
+        start(context, 2);
     }
 
     public static void start(Context context, int type) {
@@ -81,9 +83,9 @@ public class ModelOffiActivity extends BaseAppCompatActivity implements OnRecycl
 
     private void initBase() {
         if (getIntent().hasExtra("type")) {
-            type = getIntent().getIntExtra("type", 0);
+            type = getIntent().getIntExtra("type", 1);
         }
-        setToolbar(type == 0 ? "模拟题库" : "正式考试");
+        setToolbar(type == 1 ? "模拟题库" : "正式考试");
     }
 
     private void initView() {
@@ -125,10 +127,10 @@ public class ModelOffiActivity extends BaseAppCompatActivity implements OnRecycl
 
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
-        ExamModelOffi exam = adapter.getResults().get(viewHolder.getLayoutPosition());
+        final ExamModelOffi exam = adapter.getResults().get(viewHolder.getLayoutPosition());
         switch (type) {
             //模拟考试
-            case 0:
+            case 1:
                 if (exam.getExaminationNum() == 0) {
                     ToastUtil.showToastShort("该课程还没有模拟题");
                     return;
@@ -141,7 +143,7 @@ public class ModelOffiActivity extends BaseAppCompatActivity implements OnRecycl
                     break;
                 }
                 //正式考试
-            case 1:
+            case 2:
                 if (exam.getExaminationNum() == 0) {
                     ToastUtil.showToastShort("该课程还没有考试题");
                     return;
@@ -155,7 +157,12 @@ public class ModelOffiActivity extends BaseAppCompatActivity implements OnRecycl
                     ExamResultActivity.start(this, exam.getPaperId(), exam.getOrderId(), type);
                     return;
                 } else {
-                    ExamActivity.startOfficial(this, exam);
+                    DialogSure.showDialog(this, "确定要开始正式考试？", new DialogSure.CallBack() {
+                        @Override
+                        public void onSure() {
+                            ExamActivity.startOfficial(ModelOffiActivity.this, exam);
+                        }
+                    });
                     break;
                 }
         }
@@ -180,7 +187,7 @@ public class ModelOffiActivity extends BaseAppCompatActivity implements OnRecycl
                 .build();
         if (type == 0) loadingLayout.showLoadingView();
         Call<ResponseBody> call;
-        if (this.type == 0) {
+        if (this.type == 1) {
             //模拟考试
             call = NetApi.NI().queryModelPapers(param);
         } else {

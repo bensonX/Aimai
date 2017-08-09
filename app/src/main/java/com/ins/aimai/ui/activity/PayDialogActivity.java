@@ -43,6 +43,12 @@ public class PayDialogActivity extends BaseAppCompatActivity {
         context.startActivity(intent);
     }
 
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0, R.anim.dialog_bottom_out);
+    }
+
     private ViewPager viewPager;
     private PayDialogActivity.MyPagerAdapter pagerAdapter;
     private String[] title = new String[]{"购买数量", "选择支付方式"};
@@ -145,7 +151,7 @@ public class PayDialogActivity extends BaseAppCompatActivity {
             } else {
                 finish();
             }
-        }else {
+        } else {
             finish();
         }
     }

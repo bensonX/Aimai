@@ -64,6 +64,15 @@ public class StrUtil {
         }
     }
 
+    //移除集合中的null项目，[null]
+    public static void removeNull(List list) {
+        if (StrUtil.isEmpty(list)) return;
+        for (Object object : list) {
+            if (object == null)
+                list.remove(object);
+        }
+    }
+
     public static boolean isUrl(String str) {
         if (str == null) return false;
         if (str.startsWith("http")) {
