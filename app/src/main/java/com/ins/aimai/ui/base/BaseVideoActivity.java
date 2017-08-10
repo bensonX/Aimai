@@ -65,6 +65,6 @@ public class BaseVideoActivity extends BaseAppCompatActivity{
     public void setIjkPlayerView(IjkPlayerView ijkPlayerView){
         this.ijkPlayerView = ijkPlayerView;
         //初始化播放器
-        ijkPlayerView.init();
+        ijkPlayerView.init(this);
     }
 }

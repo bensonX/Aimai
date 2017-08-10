@@ -268,7 +268,9 @@ public class IjkPlayerView extends FrameLayout implements View.OnClickListener {
         if (context instanceof AppCompatActivity) {
             mAttachActivity = (AppCompatActivity) context;
         } else {
-            throw new IllegalArgumentException("Context must be AppCompatActivity");
+            //throw new IllegalArgumentException("Context must be AppCompatActivity");
+            mAttachActivity = null;
+            return;
         }
         View.inflate(context, R.layout.layout_player_view, this);
         mVideoView = (IjkVideoView) findViewById(R.id.video_view);
@@ -499,6 +501,14 @@ public class IjkPlayerView extends FrameLayout implements View.OnClickListener {
      * @return
      */
     public IjkPlayerView init() {
+        _initMediaPlayer();
+        return this;
+    }
+
+    public IjkPlayerView init(AppCompatActivity appCompatActivity) {
+        if (mAttachActivity == null) {
+            _initView(appCompatActivity);
+        }
         _initMediaPlayer();
         return this;
     }

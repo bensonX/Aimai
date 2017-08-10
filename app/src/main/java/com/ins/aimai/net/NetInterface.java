@@ -216,9 +216,14 @@ public interface NetInterface {
 
     /**
      * 获取学习列表
+     * 企业用户获取课程下 已观看 和 已考核 人列表
+     * orderId
+     * flag   标记 0:查看已观看的人数 1:查看已考核人数
+     * pageNO
+     * pageSize
      */
     @FormUrlEncoded
-    @POST("/api/curriculum/queryLearnUser")
+    @POST("/api/user/queryUserStudyStatus")
     Call<ResponseBody> queryLearnUser(@FieldMap Map<String, Object> param);
 
     //##################################################################

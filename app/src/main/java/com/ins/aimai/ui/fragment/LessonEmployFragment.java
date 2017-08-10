@@ -30,9 +30,6 @@ public class LessonEmployFragment extends BaseFragment implements OnRecycleItemC
     private int position;
     private View rootView;
 
-    private View showin;
-    private ViewGroup showingroup;
-
     private RecyclerView recycler;
     private RecycleAdapterLessonEmploy adapter;
     private LessonEmployActivity activity;
@@ -72,7 +69,6 @@ public class LessonEmployFragment extends BaseFragment implements OnRecycleItemC
     }
 
     private void initView() {
-        showingroup = (ViewGroup) rootView.findViewById(R.id.showingroup);
         recycler = (RecyclerView) rootView.findViewById(R.id.recycler);
     }
 

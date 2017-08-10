@@ -154,7 +154,6 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
         findViewById(R.id.btn_go).setOnClickListener(this);
         findViewById(R.id.btn_go_allot).setOnClickListener(this);
         btn_lessondetail_watchcount.setOnClickListener(this);
-        btn_lessondetail_unwatchcount.setOnClickListener(this);
         btn_lessondetail_testcount.setOnClickListener(this);
         btn_right.setOnClickListener(this);
     }
@@ -239,9 +238,6 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
         switch (v.getId()) {
             case R.id.btn_lessondetail_watchcount:
                 LearnUserActivity.startWatch(this, lesson.getWatchNum());
-                break;
-            case R.id.btn_lessondetail_unwatchcount:
-                LearnUserActivity.startUnWatch(this, lesson.getCountUser() - lesson.getWatchNum());
                 break;
             case R.id.btn_lessondetail_testcount:
                 LearnUserActivity.startExamed(this, lesson.getFinishExamine());

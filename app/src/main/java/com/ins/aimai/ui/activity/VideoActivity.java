@@ -3,6 +3,8 @@ package com.ins.aimai.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -31,6 +33,7 @@ import com.ins.common.utils.L;
 import com.ins.common.utils.PermissionsUtil;
 import com.ins.common.utils.StatusBarTextUtil;
 import com.ins.common.utils.StrUtil;
+import com.ins.common.utils.others.CommonUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -40,6 +43,8 @@ import tv.danmaku.ijk.media.player.IMediaPlayer;
 
 //type: 0:使用lessonId进入 1:使用orderId进入
 public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnInfoListener, OnProgressChageListener, NetFaceHelper.OnFaceCompareCallback {
+
+    private CollapsingToolbarLayout collapsingToolbarLayout;
 
     private IjkPlayerView player;
     private TabLayout tab;
@@ -94,6 +99,7 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
         registEventBus();
         toolbar.bringToFront();
         StatusBarTextUtil.transparencyBar(this);
+        StatusBarTextUtil.StatusBarLightMode(this);
         initBase();
         initView();
         initCtrl();
@@ -122,6 +128,7 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
     }
 
     private void initView() {
+        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbarLayout);
         tab = (TabLayout) findViewById(R.id.tab);
         pager = (ViewPager) findViewById(R.id.pager);
         player = (IjkPlayerView) findViewById(R.id.player);
@@ -156,6 +163,7 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
 
     private void setVideo(final Video video) {
         if (video == null) return;
+        setToolbar(video.getName());
         //保存正在播放的视频实体
         this.video = video;
         if (AppHelper.VideoPlay.isVideoFreeCtrl(video, type)) {
@@ -207,8 +215,14 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
                 EventBus.getDefault().post(new EventBean(EventBean.EVENT_VIDEO_FINISH));
                 break;
             case IMediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START:    //开始播放
+                NetHelper.getInstance().netAddVideoStatus(video.getVideoStatus(), orderId, video.getId(), player.getCurPosition() / 1000, false);
+                break;
             case MediaPlayerParams.STATE_PAUSED:    //暂停
+                CommonUtil.setEnableCollapsing(collapsingToolbarLayout, true);
+                NetHelper.getInstance().netAddVideoStatus(video.getVideoStatus(), orderId, video.getId(), player.getCurPosition() / 1000, false);
+                break;
             case MediaPlayerParams.STATE_PLAYING:   //播放中（继续）
+                CommonUtil.setEnableCollapsing(collapsingToolbarLayout, false);
                 NetHelper.getInstance().netAddVideoStatus(video.getVideoStatus(), orderId, video.getId(), player.getCurPosition() / 1000, false);
                 break;
             default:

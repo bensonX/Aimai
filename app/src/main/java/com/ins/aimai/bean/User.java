@@ -173,7 +173,7 @@ public class User extends SortBean implements Serializable {
     private int isPass;
     //学习课程
     private List<Lesson> curriculumList;
-    //参培人员
+    //参培人员（总人数，在人员列表使用）
     private int peopleNum;
     //参培人员2（公司详情使用，和上面字段同义）
     private int joinNum;
@@ -181,7 +181,6 @@ public class User extends SortBean implements Serializable {
     private int safeNum;
     //通过时间
     private long passTime;
-
 
     //####################### 逻辑方法 ##########################
 
@@ -195,6 +194,10 @@ public class User extends SortBean implements Serializable {
 
     public boolean isGovUser() {
         return roleId == GOVERNMENT_USER;
+    }
+
+    public boolean isPass() {
+        return isPass == 1;
     }
 
     //###########################################################

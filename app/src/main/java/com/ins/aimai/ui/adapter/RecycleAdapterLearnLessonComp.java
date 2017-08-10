@@ -56,6 +56,8 @@ public class RecycleAdapterLearnLessonComp extends BaseRecycleAdapterLearnLesson
         holder.text_item_study_countalloc.setText(SpannableStringUtil.create(context, new String[]{"已分配", study.getAllocationNum() + "", "份"}, new int[]{R.color.com_text_blank, R.color.am_blue, R.color.com_text_blank}));
         holder.text_item_study_countall.setText("共" + study.getNumber() + "份");
         holder.progress.setProgress((int) ((float) study.getFinishSeconds() / (float) study.getVideoSeconds() * 100));
+        //TODO：公司没有已学完状态，这个标志隐藏掉
+        holder.img_learn_study_flag_learned.setVisibility(View.GONE);
     }
 
     @Override
@@ -65,6 +67,7 @@ public class RecycleAdapterLearnLessonComp extends BaseRecycleAdapterLearnLesson
 
     public class Holder extends RecyclerView.ViewHolder {
 
+        private ImageView img_learn_study_flag_learned;
         private ImageView img_item_study_header;
         private TextView text_item_study_title;
         private TextView text_item_study_videocount;
@@ -75,6 +78,7 @@ public class RecycleAdapterLearnLessonComp extends BaseRecycleAdapterLearnLesson
 
         public Holder(View itemView) {
             super(itemView);
+            img_learn_study_flag_learned = (ImageView) itemView.findViewById(R.id.img_learn_study_flag_learned);
             img_item_study_header = (ImageView) itemView.findViewById(R.id.img_item_study_header);
             text_item_study_title = (TextView) itemView.findViewById(R.id.text_item_study_title);
             text_item_study_videocount = (TextView) itemView.findViewById(R.id.text_item_study_videocount);

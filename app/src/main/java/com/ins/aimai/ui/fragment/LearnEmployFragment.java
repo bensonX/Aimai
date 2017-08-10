@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
@@ -45,6 +46,7 @@ public class LearnEmployFragment extends BaseFragment implements OnRecycleItemCl
     private View rootView;
 
     private LoadingLayout loadingLayout;
+    private TextView text_learn_employ_countall;
     private SpringView springView;
     private RecyclerView recycler;
     private RecycleAdapterLearnEmploy adapter;
@@ -98,6 +100,7 @@ public class LearnEmployFragment extends BaseFragment implements OnRecycleItemCl
 
     private void initView() {
         loadingLayout = (LoadingLayout) rootView.findViewById(R.id.loadingLayout);
+        text_learn_employ_countall = (TextView) rootView.findViewById(R.id.text_learn_employ_countall);
         springView = (SpringView) rootView.findViewById(R.id.spring);
         recycler = (RecyclerView) rootView.findViewById(R.id.recycler);
         edit_query = (EditText) rootView.findViewById(R.id.edit_query);
@@ -143,6 +146,12 @@ public class LearnEmployFragment extends BaseFragment implements OnRecycleItemCl
 
     private void initData() {
         netQueryUser(0);
+    }
+
+    private void setData(List<User> users) {
+        if (!StrUtil.isEmpty(users)) {
+            text_learn_employ_countall.setText("共" + users.get(0).getPeopleNum() + "位员工");
+        }
     }
 
     @Override
@@ -194,6 +203,7 @@ public class LearnEmployFragment extends BaseFragment implements OnRecycleItemCl
                     }
                     adapter.getResults().addAll(beans);
                     adapter.notifyDataSetChanged();
+                    setData(beans);
 
                     //加载结束恢复列表
                     if (type == 0) {

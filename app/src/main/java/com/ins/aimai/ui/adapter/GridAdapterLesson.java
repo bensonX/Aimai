@@ -70,7 +70,7 @@ public class GridAdapterLesson extends BaseAdapter {
         holder.text_userdetail_count_video.setText(SpannableStringUtil.create(context, new String[]{lesson.getVideoNum() + "", " 个视频课程"}, new int[]{R.color.am_blue, R.color.com_text_dark_light}));
         holder.text_userdetail_count_learned.setText(SpannableStringUtil.create(context, new String[]{"已学习 ", lesson.getStudyNum() + "", " 课时"}, new int[]{R.color.com_text_blank, R.color.am_blue, R.color.com_text_blank}));
         holder.progress.setProgress((int) ((float) lesson.getStudyNum() / (float) lesson.getCourseWareNum() * 100));
-        holder.img_userdetail_flag.setVisibility(lesson.getIsPass() == 1 ? View.VISIBLE : View.GONE);
+        holder.img_userdetail_flag.setVisibility(lesson.isPass() ? View.VISIBLE : View.GONE);
         return convertView;
     }
 

@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
@@ -30,35 +31,33 @@ import java.util.Map;
 
 import retrofit2.Call;
 
-//type 0:已观看，1 围观看 2 以考核
+//flag 0:查看已观看的人数 1:查看已考核人数
 public class LearnUserActivity extends BaseAppCompatActivity implements OnRecycleItemClickListener {
 
     private LoadingLayout loadingLayout;
+    private TextView text_learnuser_count;
     private SpringView springView;
     private RecyclerView recycler;
     private RecycleAdapterLearnUser adapter;
 
     private NetListHelper netListHelper;
 
-    private int type;
+    private int flag;
     private int count;
+    private int orderId;
 
     public static void startWatch(Context context, int watchCount) {
         start(context, watchCount, 0);
     }
 
-    public static void startUnWatch(Context context, int unWatchCount) {
-        start(context, unWatchCount, 1);
-    }
-
     public static void startExamed(Context context, int examedCount) {
-        start(context, examedCount, 2);
+        start(context, examedCount, 1);
     }
 
-    private static void start(Context context, int count, int type) {
+    private static void start(Context context, int count, int flag) {
         Intent intent = new Intent(context, LearnUserActivity.class);
         intent.putExtra("count", count);
-        intent.putExtra("type", type);
+        intent.putExtra("flag", flag);
         context.startActivity(intent);
     }
 
@@ -74,8 +73,8 @@ public class LearnUserActivity extends BaseAppCompatActivity implements OnRecycl
     }
 
     private void initBase() {
-        if (getIntent().hasExtra("type")) {
-            type = getIntent().getIntExtra("type", 0);
+        if (getIntent().hasExtra("flag")) {
+            flag = getIntent().getIntExtra("flag", 0);
         }
         if (getIntent().hasExtra("count")) {
             count = getIntent().getIntExtra("count", 0);
@@ -84,12 +83,15 @@ public class LearnUserActivity extends BaseAppCompatActivity implements OnRecycl
 
     private void initView() {
         loadingLayout = (LoadingLayout) findViewById(R.id.loadingLayout);
+        text_learnuser_count = (TextView) findViewById(R.id.text_learnuser_count);
         recycler = (RecyclerView) findViewById(R.id.recycler);
         springView = (SpringView) findViewById(R.id.spring);
+
+        text_learnuser_count.setText("共" + count + "位同事" + (flag == 0 ? "观看" : "考核"));
     }
 
     private void initCtrl() {
-        adapter = new RecycleAdapterLearnUser(this);
+        adapter = new RecycleAdapterLearnUser(this, flag);
         adapter.setOnItemClickListener(this);
         recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recycler.setAdapter(adapter);
@@ -119,7 +121,8 @@ public class LearnUserActivity extends BaseAppCompatActivity implements OnRecycl
                     @Override
                     public Call getCall(int type) {
                         Map param = netListHelper.getParam(type);
-                        //param.put("type", 1);
+                        param.put("orderId", orderId);
+                        param.put("flag", flag);
                         return NetApi.NI().queryLearnUser(param);
                     }
                 },

@@ -53,6 +53,7 @@ public class RecycleAdapterLearnLesson extends BaseRecycleAdapterLearnLesson<Rec
         holder.progress.setProgress((int) ((float) study.getFinishSeconds() / (float) study.getVideoSeconds() * 100));
         String note = study.getExaminationNum() + "习题 " + study.getVideoNum() + "个视频课 " + study.getPptNum() + "个讲义";
         holder.text_item_study_note.setText(note);
+        holder.img_learn_study_flag_pass.setVisibility(study.isPass() ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -62,6 +63,7 @@ public class RecycleAdapterLearnLesson extends BaseRecycleAdapterLearnLesson<Rec
 
     public class Holder extends RecyclerView.ViewHolder {
 
+        private ImageView img_learn_study_flag_pass;
         private ImageView img_item_study_header;
         private TextView text_item_study_title;
         private TextView text_item_study_note;
@@ -71,6 +73,7 @@ public class RecycleAdapterLearnLesson extends BaseRecycleAdapterLearnLesson<Rec
 
         public Holder(View itemView) {
             super(itemView);
+            img_learn_study_flag_pass = (ImageView) itemView.findViewById(R.id.img_learn_study_flag_pass);
             img_item_study_header = (ImageView) itemView.findViewById(R.id.img_item_study_header);
             text_item_study_title = (TextView) itemView.findViewById(R.id.text_item_study_title);
             text_item_study_note = (TextView) itemView.findViewById(R.id.text_item_study_note);

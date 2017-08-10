@@ -31,6 +31,7 @@
             android:textSize="@dimen/text_subig" />
 
         <TextView
+            android:id="@+id/text_learnuser_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"

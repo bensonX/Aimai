@@ -60,7 +60,7 @@ public class LessonSearchActivity extends BaseAppCompatActivity implements OnRec
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lesson_search);
-        setToolbar();
+        setToolbar(false);
         initBase();
         initView();
         initCtrl();
@@ -76,6 +76,7 @@ public class LessonSearchActivity extends BaseAppCompatActivity implements OnRec
         springView = (SpringView) findViewById(R.id.spring);
         edit_query = (EditText) findViewById(R.id.edit_query);
         findViewById(R.id.btn_right).setOnClickListener(this);
+        findViewById(R.id.btn_left).setOnClickListener(this);
     }
 
     private void initCtrl() {
@@ -154,6 +155,9 @@ public class LessonSearchActivity extends BaseAppCompatActivity implements OnRec
         switch (v.getId()) {
             case R.id.btn_right:
                 netListHelper.netQueryList(0);
+                break;
+            case R.id.btn_left:
+                onBackPressed();
                 break;
         }
     }
