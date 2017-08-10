@@ -108,7 +108,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="30dp"
                         android:layout_marginTop="12dp"
-                        android:src="@drawable/shape_oval_red" />
+                        android:src="@drawable/shape_oval_red"
+                        android:visibility="gone" />
                 </FrameLayout>
 
                 <View

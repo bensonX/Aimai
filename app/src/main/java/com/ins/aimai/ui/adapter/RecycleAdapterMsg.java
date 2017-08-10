@@ -1,6 +1,7 @@
 package com.ins.aimai.ui.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,6 +51,17 @@ public class RecycleAdapterMsg extends RecyclerView.Adapter<RecycleAdapterMsg.Ho
         holder.text_item_msg_title.setText(msg.getTitle());
         holder.text_item_msg_time.setText(TimeUtil.getTimeFor("yyyy-mm-dd HH:mm", new Date(msg.getCreateTime())));
         holder.text_item_msg_content.setText(msg.getDigest());
+        if (!msg.isChecked()) {
+            //未看过的消息
+            holder.text_item_msg_title.setTextColor(ContextCompat.getColor(context, R.color.com_text_blank_deep_light));
+            holder.text_item_msg_time.setTextColor(ContextCompat.getColor(context, R.color.com_text_dark_light));
+            holder.text_item_msg_content.setTextColor(ContextCompat.getColor(context, R.color.com_text_blank));
+        } else {
+            //看过的消息
+            holder.text_item_msg_title.setTextColor(ContextCompat.getColor(context, R.color.com_text_dark_light));
+            holder.text_item_msg_time.setTextColor(ContextCompat.getColor(context, R.color.com_text_light));
+            holder.text_item_msg_content.setTextColor(ContextCompat.getColor(context, R.color.com_text_dark_light));
+        }
     }
 
     @Override

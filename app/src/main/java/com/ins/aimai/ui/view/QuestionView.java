@@ -28,9 +28,9 @@ import java.util.List;
 
 public class QuestionView extends FrameLayout implements AdapterView.OnItemClickListener {
 
-    public static final int TEXTSIZE_BIG = 15;
+    public static final int TEXTSIZE_BIG = 16;
     public static final int TEXTSIZE_NOMAL = 14;
-    public static final int TEXTSIZE_SMALL = 13;
+    public static final int TEXTSIZE_SMALL = 12;
 
     private Context context;
     private TextView text_question_title;
