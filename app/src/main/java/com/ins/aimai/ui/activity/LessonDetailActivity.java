@@ -2,6 +2,8 @@ package com.ins.aimai.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
@@ -12,6 +14,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +25,7 @@ import com.ins.aimai.bean.Lesson;
 import com.ins.aimai.bean.Study;
 import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.bean.common.TestBean;
+import com.ins.aimai.common.AppData;
 import com.ins.aimai.common.AppHelper;
 import com.ins.aimai.common.StatusHelper;
 import com.ins.aimai.net.helper.NetFavoHelper;
@@ -72,16 +77,24 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
 
     //课程详情页面
     public static void startByLesson(Context context, int lessonId) {
-        Intent intent = new Intent(context, LessonDetailActivity.class);
-        intent.putExtra("lessonId", lessonId);
-        context.startActivity(intent);
+        if (AppData.App.getUser() != null) {
+            Intent intent = new Intent(context, LessonDetailActivity.class);
+            intent.putExtra("lessonId", lessonId);
+            context.startActivity(intent);
+        } else {
+            LoginActivity.start(context);
+        }
     }
 
     //订单页面
     public static void startByOrder(Context context, int orderId) {
-        Intent intent = new Intent(context, LessonDetailActivity.class);
-        intent.putExtra("orderId", orderId);
-        context.startActivity(intent);
+        if (AppData.App.getUser() != null) {
+            Intent intent = new Intent(context, LessonDetailActivity.class);
+            intent.putExtra("orderId", orderId);
+            context.startActivity(intent);
+        } else {
+            LoginActivity.start(context);
+        }
     }
 
     @Override
@@ -101,6 +114,7 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
         setToolbar();
         toolbar.bringToFront();
         StatusBarTextUtil.transparencyBar(this);
+        StatusBarTextUtil.StatusBarLightMode(this);
         initBase();
         initView();
         initCtrl();
@@ -196,6 +210,7 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
 
     private void setData(Lesson lesson) {
         if (lesson != null) {
+            setToolbar(lesson.getCurriculumName());
             GlideUtil.loadImg(img_lessondetail_cover, R.drawable.default_bk_img, lesson.getCover());
             text_lessondetail_title.setText(lesson.getCurriculumName());
             text_lessondetail_count.setText(lesson.getVideoNum() + "个视频课");

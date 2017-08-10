@@ -13,6 +13,7 @@ import android.widget.EditText;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.User;
 import com.ins.aimai.common.AppData;
+import com.ins.aimai.common.AppHelper;
 import com.ins.aimai.common.AppVali;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
@@ -97,8 +98,7 @@ public class PayDialogCountFragment extends BaseFragment implements View.OnClick
             public void afterTextChanged(Editable s) {
             }
         });
-        User user = AppData.App.getUser();
-        if (user.getRoleId() == User.USER) {
+        if (AppHelper.isUser()) {
             edit_paydialog_count.setText("1");
             EditTextUtil.disableEditText(edit_paydialog_count);
         }
