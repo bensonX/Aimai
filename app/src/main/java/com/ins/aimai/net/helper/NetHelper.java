@@ -43,7 +43,7 @@ public class NetHelper {
     public void netAddVideoStatus(VideoStatus videoStatus, final int orderId, final int videoId, final int seconds, final boolean isFinish) {
         //只有播放进度比本地数据大时才上传
         L.e("second", seconds + ":" + videoStatus.getSeconds());
-        if (seconds >= videoStatus.getSeconds()) {
+        if (seconds > videoStatus.getSeconds() || isFinish) {
             //更新记录
             videoStatus.setSeconds(seconds);
             Map map = new HashMap<String, Object>() {{
