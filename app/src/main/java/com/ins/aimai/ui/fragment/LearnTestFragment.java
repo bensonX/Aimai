@@ -19,6 +19,9 @@ import com.ins.aimai.ui.activity.ModelOffiActivity;
 import com.ins.aimai.ui.activity.QuestionBankActivity;
 import com.ins.aimai.ui.base.BaseFragment;
 import com.ins.aimai.utils.ToastUtil;
+import com.liaoinstan.springview.container.AliFooter;
+import com.liaoinstan.springview.container.AliHeader;
+import com.liaoinstan.springview.widget.SpringView;
 
 import java.util.Map;
 
@@ -29,6 +32,8 @@ public class LearnTestFragment extends BaseFragment implements View.OnClickListe
 
     private int position;
     private View rootView;
+
+    private SpringView springView;
 
     private TextView text_learntest_prictice_done;
     private TextView text_learntest_prictice_lv;
@@ -88,6 +93,7 @@ public class LearnTestFragment extends BaseFragment implements View.OnClickListe
         text_learntest_model_lv = (TextView) rootView.findViewById(R.id.text_learntest_model_lv);
         text_learntest_official_pass = (TextView) rootView.findViewById(R.id.text_learntest_official_pass);
         text_learntest_official_unpass = (TextView) rootView.findViewById(R.id.text_learntest_official_unpass);
+        springView = (SpringView) rootView.findViewById(R.id.spring);
         rootView.findViewById(R.id.lay_learntest_practice).setOnClickListener(this);
         rootView.findViewById(R.id.lay_learntest_error).setOnClickListener(this);
         rootView.findViewById(R.id.lay_learntest_model).setOnClickListener(this);
@@ -95,6 +101,17 @@ public class LearnTestFragment extends BaseFragment implements View.OnClickListe
     }
 
     private void initCtrl() {
+        springView.setHeader(new AliHeader(getContext(), false));
+        springView.setListener(new SpringView.OnFreshListener() {
+            @Override
+            public void onRefresh() {
+                netStatisLearn();
+            }
+
+            @Override
+            public void onLoadmore() {
+            }
+        });
     }
 
     private void initData() {
@@ -137,6 +154,7 @@ public class LearnTestFragment extends BaseFragment implements View.OnClickListe
             @Override
             public void onSuccess(int status, StatisLearn statisLearn, String msg) {
                 setData(statisLearn);
+                springView.onFinishFreshAndLoad();
             }
 
             @Override

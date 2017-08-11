@@ -221,10 +221,10 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
             switch (status) {
                 case MediaPlayerParams.STATE_COMPLETED:
                     //播放完成
-                    player.stop();
                     AppHelper.VideoPlay.setVideoStatusFinish(video);
                     NetHelper.getInstance().netAddVideoStatus(video.getVideoStatus(), orderId, video.getId(), player.getCurPosition() / 1000, true);
                     EventBus.getDefault().post(new EventBean(EventBean.EVENT_VIDEO_FINISH));
+                    player.stop();
                     break;
                 case IMediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START:    //开始播放
                     NetHelper.getInstance().netAddVideoStatus(video.getVideoStatus(), orderId, video.getId(), player.getCurPosition() / 1000, false);
@@ -265,7 +265,6 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
     //播放器进度变化事件
     @Override
     public void onProgress(int progress, int duration) {
-        L.e("onProgress", progress + ":" + duration);
         if (AppHelper.VideoPlay.isVideoFreeCtrl(video, type)) return;
         float lv = (float) progress / (float) duration;
         if (AppHelper.VideoPlay.needCheckFace(faceRecords, lv)) {

@@ -14,6 +14,7 @@ import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
 import com.ins.aimai.ui.activity.VideoActivity;
 import com.ins.aimai.utils.ToastUtil;
+import com.ins.common.utils.L;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -41,7 +42,8 @@ public class NetHelper {
     //上传视频进度，并进行本地存储
     public void netAddVideoStatus(VideoStatus videoStatus, final int orderId, final int videoId, final int seconds, final boolean isFinish) {
         //只有播放进度比本地数据大时才上传
-        if (seconds > videoStatus.getStatus()) {
+        L.e("second", seconds + ":" + videoStatus.getSeconds());
+        if (seconds >= videoStatus.getSeconds()) {
             //更新记录
             videoStatus.setSeconds(seconds);
             Map map = new HashMap<String, Object>() {{

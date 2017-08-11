@@ -160,8 +160,9 @@
                         style="@style/EditMeItem"
                         android:layout_width="0dp"
                         android:layout_weight="1"
+                        android:digits="0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
                         android:hint="请输入营业执照编码"
-                        android:inputType="numberSigned"
+                        android:inputType="text"
                         android:singleLine="true" />
 
                 </LinearLayout>
@@ -278,8 +279,9 @@
                         style="@style/EditMeItem"
                         android:layout_width="0dp"
                         android:layout_weight="1"
+                        android:digits="0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
                         android:hint="请输入机构代码"
-                        android:inputType="numberSigned"
+                        android:inputType="text"
                         android:singleLine="true" />
 
                 </LinearLayout>

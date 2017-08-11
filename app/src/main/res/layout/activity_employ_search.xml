@@ -35,7 +35,7 @@
                     android:background="@drawable/shape_rect_corner_white_line_dark"
                     android:drawableLeft="@drawable/ic_home_search_edit"
                     android:drawablePadding="10dp"
-                    android:hint="搜索关键字"
+                    android:hint="搜索手机号"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:singleLine="true"
