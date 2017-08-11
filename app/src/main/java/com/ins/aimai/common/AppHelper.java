@@ -226,7 +226,8 @@ public class AppHelper {
                 //如果是判断题加一个正确或者错误选项（服务器没有加，移动端帮忙处理）
                 if (type == 2) {
                     ExaminationItems lastItem = itemses.get(0);
-                    QuestionView.Option option = new QuestionView.Option(lastItem.getExaminationName().contains("正确") ? "错误" : "正确");
+                    QuestionView.Option option = new QuestionView.Option(lastItem.getItemTitle().contains("正确") ? "错误" : "正确");
+                    option.index = 1;
                     options.add(option);
                 }
             }

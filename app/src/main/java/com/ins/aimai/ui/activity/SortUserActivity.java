@@ -53,6 +53,7 @@ public class SortUserActivity extends BaseAppCompatActivity implements View.OnCl
     private RecycleAdapterSortUser adapter;
     private ItemDecorationSortStickTop decoration;
     private LinearLayoutManager layoutManager;
+    private View text_sort_selectall;
 
     private int orderId;
 
@@ -84,12 +85,15 @@ public class SortUserActivity extends BaseAppCompatActivity implements View.OnCl
         edit_query = (EditText) findViewById(R.id.edit_query);
         index_bar = (IndexBar) findViewById(R.id.index_bar);
         recycler = (RecyclerView) findViewById(R.id.rl_recycle_view);
+        text_sort_selectall = findViewById(R.id.text_sort_selectall);
+        text_sort_selectall.setOnClickListener(this);
         findViewById(R.id.btn_right).setOnClickListener(this);
         FocusUtil.focusToTop(recycler);
     }
 
     public void initCtrl() {
         adapter = new RecycleAdapterSortUser(this);
+        adapter.setSelectAllView(text_sort_selectall);
         recycler.setLayoutManager(layoutManager = new LinearLayoutManager(this));
         recycler.addItemDecoration(decoration = new ItemDecorationSortStickTop(this, ColorUtil.colors));
         recycler.setAdapter(adapter);
@@ -145,6 +149,15 @@ public class SortUserActivity extends BaseAppCompatActivity implements View.OnCl
                             netAddAllocation(ids);
                         }
                     });
+                }
+                break;
+            case R.id.text_sort_selectall:
+                if (text_sort_selectall.isSelected()){
+                    text_sort_selectall.setSelected(false);
+                    adapter.setSelectAll(false);
+                }else {
+                    text_sort_selectall.setSelected(true);
+                    adapter.setSelectAll(true);
                 }
                 break;
         }

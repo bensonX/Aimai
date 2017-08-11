@@ -20,7 +20,7 @@ public class ToobarTansColorHelper {
     private ToobarTansColorHelper() {
     }
 
-    public static ToobarTansColorHelper getInstance(){
+    public static ToobarTansColorHelper getInstance() {
         return new ToobarTansColorHelper();
     }
 
@@ -41,7 +41,7 @@ public class ToobarTansColorHelper {
         return this;
     }
 
-    public ToobarTansColorHelper onPointCallback(OnPointListener onPointListener){
+    public ToobarTansColorHelper onPointCallback(OnPointListener onPointListener) {
         this.onPointListener = onPointListener;
         return this;
     }
@@ -89,11 +89,13 @@ public class ToobarTansColorHelper {
         lastLv = lv;
     }
 
+    //记录RecyclerView的scrollY
+    private int scrollY;
     RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-            int scollY = recyclerView.getChildAt(0).getTop();
-            float lv = caculAlpha(scollY);
+            scrollY -= dy;
+            float lv = caculAlpha(scrollY);
             setToolbar(lv);
             setPointCallback(lv);
         }

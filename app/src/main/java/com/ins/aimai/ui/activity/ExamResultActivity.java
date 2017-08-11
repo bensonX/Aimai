@@ -125,7 +125,7 @@ public class ExamResultActivity extends BaseAppCompatActivity implements OnRecyc
                     text_examresult_note.setVisibility(View.GONE);
                 } else {
                     text_examresult_note.setVisibility(View.VISIBLE);
-                    text_examresult_note.setText("您还有" + NumUtil.intToZH(1) + "次重新考核的机会");
+                    text_examresult_note.setText("您还有" + NumUtil.intToZH(examResultPojo.getCount()) + "次重新考核的机会");
                 }
             }
             //设置答题数据

@@ -51,8 +51,8 @@
             android:background="@drawable/shape_rect_corner_none_line_dark"
             android:gravity="center"
             android:hint="搜索"
-            android:lines="1"
             android:inputType="text"
+            android:lines="1"
             android:textColor="@color/com_text_blank"
             android:textColorHint="@color/com_text_dark_light"
             android:textSize="@dimen/text_nomal_small" />
@@ -79,10 +79,13 @@
             android:background="@color/white"
             android:orientation="vertical">
 
-            <RadioButton
+            <TextView
+                android:id="@+id/text_sort_selectall"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_marginLeft="10dp"
+                android:drawableLeft="@drawable/selector_radio_select"
+                android:drawablePadding="5dp"
                 android:gravity="center_vertical"
                 android:text="全选"
                 android:textColor="@color/com_text_dark"

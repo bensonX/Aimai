@@ -14,6 +14,7 @@ import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.User;
 import com.ins.aimai.bean.common.SortBean;
+import com.ins.common.helper.SelectHelper;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
 import com.ins.common.utils.GlideUtil;
 import com.ins.common.utils.StrUtil;
@@ -27,6 +28,8 @@ public class RecycleAdapterSortUser extends RecyclerView.Adapter<RecycleAdapterS
     private Context context;
     private ColorGenerator mColorGenerator = ColorGenerator.MATERIAL;
     private TextDrawable.IBuilder mDrawableBuilder = TextDrawable.builder().round();
+
+    private View selectAllView;
 
     public List<User> getResults() {
         return results;
@@ -62,6 +65,7 @@ public class RecycleAdapterSortUser extends RecyclerView.Adapter<RecycleAdapterS
             public void onClick(View v) {
                 user.setSelect(!user.isSelect());
                 notifyItemChanged(position);
+                if (selectAllView != null) selectAllView.setSelected(isAllSelect());
             }
         });
         if (user != null) {
@@ -72,6 +76,15 @@ public class RecycleAdapterSortUser extends RecyclerView.Adapter<RecycleAdapterS
             holder.tv_phone.setText(user.getPhone());
             holder.img_check.setSelected(user.isSelect());
         }
+    }
+
+    public void setSelectAll(boolean selectAll) {
+        SelectHelper.selectAllSelectBeans(results, selectAll);
+        notifyDataSetChanged();
+    }
+
+    public void setSelectAllView(View selectAllView) {
+        this.selectAllView = selectAllView;
     }
 
     @Override
@@ -88,6 +101,15 @@ public class RecycleAdapterSortUser extends RecyclerView.Adapter<RecycleAdapterS
         }
         ids = StrUtil.subLastChart(ids, ",");
         return ids;
+    }
+
+    public boolean isAllSelect() {
+        for (User user : results) {
+            if (!user.isSelect()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public static class Holder extends RecyclerView.ViewHolder {

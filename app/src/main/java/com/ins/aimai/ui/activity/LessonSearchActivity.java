@@ -32,10 +32,6 @@ import java.util.Map;
 
 import retrofit2.Call;
 
-/**
- * 这个页面已经移除，在APP内没有任何入口了
- * 资讯的搜索功能合并在了资讯列表中，不需要单独的资讯搜索页面了
- */
 public class LessonSearchActivity extends BaseAppCompatActivity implements OnRecycleItemClickListener, View.OnClickListener {
 
     private LoadingLayout loadingLayout;

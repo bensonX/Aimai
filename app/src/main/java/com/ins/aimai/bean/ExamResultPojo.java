@@ -18,6 +18,7 @@ public class ExamResultPojo implements Serializable {
     private int resultScore;
     private int correctNum;
     private int passScore;
+    private int count;
     private List<ExamResult> jsonArray;
 
     /////////////////业务方法 ////////////////////
@@ -27,6 +28,15 @@ public class ExamResultPojo implements Serializable {
     }
 
     /////////////////////////////////////////////
+
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
 
     public int getResultScore() {
         return resultScore;

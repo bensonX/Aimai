@@ -52,7 +52,7 @@ public class RecycleAdapterLearnEmploy extends RecyclerView.Adapter<RecycleAdapt
         holder.text_learn_employ_name.setText(user.getShowName());
         holder.text_learn_employ_lesson.setText(user.getCurriculumName());
         holder.text_learn_employ_count.setText(user.getFinishCourseWareNum() + "");
-        if (TextUtils.isEmpty(user.getDepartmentName())){
+        if (TextUtils.isEmpty(user.getCurriculumName())){
             holder.text_learn_employ_lesson.setVisibility(View.GONE);
         }
         if (user.getIsPass() == 0) {
