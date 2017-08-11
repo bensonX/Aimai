@@ -53,7 +53,17 @@ public class RecycleAdapterLearnLesson extends BaseRecycleAdapterLearnLesson<Rec
         holder.progress.setProgress((int) ((float) study.getFinishSeconds() / (float) study.getVideoSeconds() * 100));
         String note = study.getExaminationNum() + "习题 " + study.getVideoNum() + "个视频课 " + study.getPptNum() + "个讲义";
         holder.text_item_study_note.setText(note);
-        holder.img_learn_study_flag_pass.setVisibility(study.isPass() ? View.VISIBLE : View.GONE);
+        if (!study.isFinish() && !study.isPass()) {
+            holder.img_learn_study_flag_pass.setVisibility(View.GONE);
+        } else {
+            holder.img_learn_study_flag_pass.setVisibility(View.VISIBLE);
+            if (study.isFinish()) {
+                holder.img_learn_study_flag_pass.setImageResource(R.drawable.ic_learn_flag_top_learned);
+            }
+            if (study.isPass()) {
+                holder.img_learn_study_flag_pass.setImageResource(R.drawable.ic_learn_flag_top_pass);
+            }
+        }
     }
 
     @Override

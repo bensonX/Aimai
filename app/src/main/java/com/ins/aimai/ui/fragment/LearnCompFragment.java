@@ -132,7 +132,7 @@ public class LearnCompFragment extends BaseFragment implements OnRecycleItemClic
         loadingLayout.setOnRefreshListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                netQueryComps(0);
+                initData();
             }
         });
         springView.setHeader(new AliHeader(getContext(), false));

@@ -171,7 +171,7 @@ public class UserDetailActivity extends BaseAppCompatActivity implements View.On
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Lesson lesson = adapter.getResults().get(position);
-        LessonDetailCompActivity.start(this, lesson);
+        LessonDetailCompActivity.start(this, lesson, user.getId());
     }
 
     private void netQueryUserDetail() {

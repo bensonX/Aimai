@@ -62,11 +62,13 @@ public class LessonDetailCompActivity extends BaseAppCompatActivity {
     private View btn_right;
 
     private int orderId;
+    private int userId;
     private Lesson lesson;
 
-    public static void start(Context context, Lesson lesson) {
+    public static void start(Context context, Lesson lesson, int userId) {
         Intent intent = new Intent(context, LessonDetailCompActivity.class);
         intent.putExtra("orderId", lesson.getOrderId());
+        intent.putExtra("userId", userId);
         context.startActivity(intent);
     }
 
@@ -88,6 +90,9 @@ public class LessonDetailCompActivity extends BaseAppCompatActivity {
             orderId = getIntent().getIntExtra("orderId", 0);
             //测试订单ID：88
             //orderId = 88;
+        }
+        if (getIntent().hasExtra("userId")) {
+            userId = getIntent().getIntExtra("userId", 0);
         }
     }
 
@@ -156,6 +161,7 @@ public class LessonDetailCompActivity extends BaseAppCompatActivity {
     private void netQueryLessonDetail() {
         Map<String, Object> param = new NetParam()
                 .put("orderId", orderId)
+                .put("userId", userId)
                 .build();
         showLoadingDialog();
         NetApi.NI().queryLessonDetailByOrder(param).enqueue(new BaseCallback<Lesson>(Lesson.class) {

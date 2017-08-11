@@ -19,6 +19,7 @@ import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.helper.NetFavoHelper;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.common.entity.Image;
+import com.ins.common.utils.GlideUtil;
 import com.ins.common.utils.L;
 import com.ins.sharesdk.dialog.ShareDialog;
 
@@ -29,12 +30,16 @@ public class WebInfoActivity extends BaseAppCompatActivity implements View.OnCli
 
     private int id;
     private String title;
+    private String digest;  //摘要（用于分享）
+    private String img;  //图片（用于分享）
     private String url;
 
     public static void start(Context context, Info info) {
         Intent intent = new Intent(context, WebInfoActivity.class);
         intent.putExtra("id", info.getId());
         intent.putExtra("title", info.getTitle());
+        intent.putExtra("digest", info.getDigest());
+        intent.putExtra("img", info.getImage());
         intent.putExtra("url", NetApi.getBaseUrl() + AppData.Url.newsInfo + "?newsId=" + info.getId());
         context.startActivity(intent);
     }
@@ -43,6 +48,8 @@ public class WebInfoActivity extends BaseAppCompatActivity implements View.OnCli
         Intent intent = new Intent(context, WebInfoActivity.class);
         intent.putExtra("id", img.getId());
         intent.putExtra("title", img.getTitle());
+        intent.putExtra("digest", img.getTitle());
+        intent.putExtra("img", img.getImg());
         intent.putExtra("url", NetApi.getBaseUrl() + AppData.Url.bannerInfo + "?bannerId=" + img.getId());
         context.startActivity(intent);
     }
@@ -65,6 +72,12 @@ public class WebInfoActivity extends BaseAppCompatActivity implements View.OnCli
         if (getIntent().hasExtra("title")) {
             title = getIntent().getStringExtra("title");
             setToolbar(title);
+        }
+        if (getIntent().hasExtra("digest")) {
+            digest = getIntent().getStringExtra("digest");
+        }
+        if (getIntent().hasExtra("img")) {
+            img = getIntent().getStringExtra("img");
         }
         if (getIntent().hasExtra("url")) {
             url = getIntent().getStringExtra("url");
@@ -140,7 +153,9 @@ public class WebInfoActivity extends BaseAppCompatActivity implements View.OnCli
                 NetFavoHelper.getInstance().netAddCollect(id, 0);
                 break;
             case R.id.btn_right_share:
-                new ShareDialog(this).show();
+                new ShareDialog(this)
+                        .setShareData(title, digest, url, GlideUtil.getRealImgPath(img))
+                        .show();
                 break;
         }
     }

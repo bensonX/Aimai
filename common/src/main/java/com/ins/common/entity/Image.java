@@ -12,6 +12,7 @@ public class Image implements Serializable {
 
     private int id;
     private String title;
+    private String content;
     @SerializedName("apiImage")
     private String img;
     @SerializedName("linkUrl")
@@ -61,6 +62,14 @@ public class Image implements Serializable {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public void setTitle(String title) {

@@ -77,13 +77,17 @@ public class Study implements Serializable {
     private int errorNum;
 
     //新增字段
-    //是否通过
-    private int isPass;
+    //是否通过考试
+    private int passNum;
 
     ///////////////////////  业务方法 /////////////////////
 
     public boolean isPass() {
-        return isPass == 1;
+        return passNum == 1;
+    }
+
+    public boolean isFinish() {
+        return finishSeconds >= videoSeconds;
     }
 
     ///////////////////////////////////////////////////////

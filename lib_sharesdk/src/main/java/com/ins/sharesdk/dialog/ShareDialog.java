@@ -85,10 +85,11 @@ public class ShareDialog extends Dialog implements View.OnClickListener {
 //    private String img = "https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3956038193,2397454070&fm=58&s=0614EE22C7E05D030C5498D40000C0B3";
 
 
-    public void setShareData(String title, String content, String url, String img) {
+    public ShareDialog setShareData(String title, String content, String url, String img) {
         this.title = title;
         this.content = content;
         this.url = url;
         this.img = img;
+        return this;
     }
 }

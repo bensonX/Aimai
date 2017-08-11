@@ -28,6 +28,7 @@ import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.helper.LoadingViewHelper;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
+import com.ins.common.utils.NumUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -124,7 +125,7 @@ public class ExamResultActivity extends BaseAppCompatActivity implements OnRecyc
                     text_examresult_note.setVisibility(View.GONE);
                 } else {
                     text_examresult_note.setVisibility(View.VISIBLE);
-                    text_examresult_note.setText("您还有" + "一" + "次重新考核的机会");
+                    text_examresult_note.setText("您还有" + NumUtil.intToZH(1) + "次重新考核的机会");
                 }
             }
             //设置答题数据

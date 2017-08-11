@@ -3,7 +3,6 @@ package com.ins.aimai.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -20,6 +19,7 @@ import com.ins.aimai.bean.Video;
 import com.ins.aimai.bean.VideoStatus;
 import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.bean.common.FaceRecord;
+import com.ins.aimai.bean.common.VideoFinishStatus;
 import com.ins.aimai.common.AppData;
 import com.ins.aimai.common.AppHelper;
 import com.ins.aimai.net.helper.NetFaceHelper;
@@ -27,6 +27,7 @@ import com.ins.aimai.net.helper.NetHelper;
 import com.ins.aimai.ui.adapter.PagerAdapterVideo;
 import com.ins.aimai.ui.base.BaseVideoActivity;
 import com.ins.aimai.ui.dialog.DialogSureAimai;
+import com.ins.aimai.ui.dialog.DialogToExam;
 import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.utils.GlideUtil;
 import com.ins.common.utils.L;
@@ -51,7 +52,7 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
     private ViewPager pager;
     private PagerAdapterVideo adapterPager;
 
-    private DialogSureAimai dialogSureNext;
+    private DialogToExam dialogToExam;
     private DialogSureAimai dialogSureFace;
 
     private String[] titles = new String[]{"介绍", "目录", "讲义", "评论"};
@@ -62,7 +63,8 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
     private Video video;    //选择的video
     private List<FaceRecord> faceRecords;   //选择的video的播放记录
     private int type;
-
+    //是否自动开始播放
+    private boolean autoPlay = false;
 
     public static void start(Context context, int lessonId) {
         Intent intent = new Intent(context, VideoActivity.class);
@@ -88,6 +90,19 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
             showLoadingDialog();
             dialogSureFace.hide();
             NetFaceHelper.getInstance().initCompare(this, path, orderId, video.getId(), player.getCurPosition() / 1000).netEyeCheck(this);
+        } else if (event.getEvent() == EventBean.EVENT_VIDEO_FINISH_STATUS) {
+            //视频播放完成更新状态回调
+            VideoFinishStatus videoFinishStatus = (VideoFinishStatus) event.get("videoFinishStatus");
+            if (!videoFinishStatus.isAllHide()) {
+                //如果有试题就提示去做题
+                dialogToExam.setData(videoFinishStatus);
+                dialogToExam.show();
+            } else {
+                //否则直接播放下一个视频
+                EventBus.getDefault().post(new EventBean(EventBean.EVENT_VIDEO_START_NEXT));
+            }
+        } else if (event.getEvent() == EventBean.EVENT_VIDEO_START_NEXT) {
+            autoPlay = true;
         }
     }
 
@@ -114,8 +129,8 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
             orderId = getIntent().getIntExtra("orderId", 0);
             type = 1;
         }
-        dialogSureNext = new DialogSureAimai(this, "本课时已看完", "您可以选择开始考核该课时，或者观看下个课时", "观看下个课时", "开始考核");
-        dialogSureFace = new DialogSureAimai(this, "身份验证", "我们需要验证您是否本人观看，点击'开始验证'将对您进行人脸识别，如果您取消了本次验证你讲无法继续观看后面的课程", "取消", "开始验证");
+        dialogToExam = new DialogToExam(this);
+        dialogSureFace = new DialogSureAimai(this, "身份验证", "我们需要验证您是否本人观看，点击‘开始验证’将对您进行人脸识别，如果您取消了本次验证将讲无法继续观看后面的课程", "取消", "开始验证");
         dialogSureFace.setOnOkListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,13 +166,6 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
 
     private void setData(Lesson lesson) {
         if (lesson != null) {
-            //TODO:设置默认视频
-            Video video = AppHelper.VideoPlay.getDefaultVideoByLesson(lesson);
-            if (video != null) {
-                EventBean eventBean = new EventBean(EventBean.EVENT_VIDEO_SELECT_DIRECTORY);
-                eventBean.put("video", video);
-                EventBus.getDefault().post(eventBean);
-            }
         }
     }
 
@@ -197,6 +205,9 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
         } else {
             player.setNeedLimit(false);
         }
+        //是否自动开始
+        if (autoPlay) player.start();
+        autoPlay = false;
     }
 
     //#################### 事件监听 ######################
@@ -206,27 +217,47 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
     public boolean onInfo(IMediaPlayer iMediaPlayer, int status, int extra) {
         //TODO:这里进行进度本地化保存
         Log.e("liao", status + ":" + extra);
-        if (AppHelper.VideoPlay.isVideoFreeCtrl(video, type)) return false;
-        switch (status) {
-            case MediaPlayerParams.STATE_COMPLETED:
-                //播放完成
-                AppHelper.VideoPlay.setVideoStatusFinish(video);
-                NetHelper.getInstance().netAddVideoStatus(video.getVideoStatus(), orderId, video.getId(), player.getCurPosition() / 1000, true);
-                EventBus.getDefault().post(new EventBean(EventBean.EVENT_VIDEO_FINISH));
-                break;
-            case IMediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START:    //开始播放
-                NetHelper.getInstance().netAddVideoStatus(video.getVideoStatus(), orderId, video.getId(), player.getCurPosition() / 1000, false);
-                break;
-            case MediaPlayerParams.STATE_PAUSED:    //暂停
-                CommonUtil.setEnableCollapsing(collapsingToolbarLayout, true);
-                NetHelper.getInstance().netAddVideoStatus(video.getVideoStatus(), orderId, video.getId(), player.getCurPosition() / 1000, false);
-                break;
-            case MediaPlayerParams.STATE_PLAYING:   //播放中（继续）
-                CommonUtil.setEnableCollapsing(collapsingToolbarLayout, false);
-                NetHelper.getInstance().netAddVideoStatus(video.getVideoStatus(), orderId, video.getId(), player.getCurPosition() / 1000, false);
-                break;
-            default:
-                break;
+        if (!AppHelper.VideoPlay.isVideoFreeCtrl(video, type)) {
+            switch (status) {
+                case MediaPlayerParams.STATE_COMPLETED:
+                    //播放完成
+                    player.stop();
+                    AppHelper.VideoPlay.setVideoStatusFinish(video);
+                    NetHelper.getInstance().netAddVideoStatus(video.getVideoStatus(), orderId, video.getId(), player.getCurPosition() / 1000, true);
+                    EventBus.getDefault().post(new EventBean(EventBean.EVENT_VIDEO_FINISH));
+                    break;
+                case IMediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START:    //开始播放
+                    NetHelper.getInstance().netAddVideoStatus(video.getVideoStatus(), orderId, video.getId(), player.getCurPosition() / 1000, false);
+                    break;
+                case MediaPlayerParams.STATE_PAUSED:    //暂停
+                    CommonUtil.setEnableCollapsing(collapsingToolbarLayout, true);
+                    NetHelper.getInstance().netAddVideoStatus(video.getVideoStatus(), orderId, video.getId(), player.getCurPosition() / 1000, false);
+                    break;
+                case MediaPlayerParams.STATE_PLAYING:   //播放中（继续）
+                    CommonUtil.setEnableCollapsing(collapsingToolbarLayout, false);
+                    NetHelper.getInstance().netAddVideoStatus(video.getVideoStatus(), orderId, video.getId(), player.getCurPosition() / 1000, false);
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            switch (status) {
+                case MediaPlayerParams.STATE_COMPLETED:     //播放完成
+                    player.stop();
+                    //开始下个视频
+                    EventBus.getDefault().post(new EventBean(EventBean.EVENT_VIDEO_START_NEXT));
+                    break;
+                case IMediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START:    //开始播放
+                    break;
+                case MediaPlayerParams.STATE_PAUSED:    //暂停
+                    CommonUtil.setEnableCollapsing(collapsingToolbarLayout, true);
+                    break;
+                case MediaPlayerParams.STATE_PLAYING:   //播放中（继续）
+                    CommonUtil.setEnableCollapsing(collapsingToolbarLayout, false);
+                    break;
+                default:
+                    break;
+            }
         }
         return false;
     }
@@ -261,12 +292,14 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
     }
     ///////////////////////////////
 
+    //把数据post给介绍页
     private void postIntro(String intro) {
         EventBean eventBean = new EventBean(EventBean.EVENT_LESSONDETAIL_INTRO);
         eventBean.put("intro", intro);
         EventBus.getDefault().post(eventBean);
     }
 
+    //把数据post给目录
     private void postDirectory(List<CourseWare> courseWares) {
         if (!StrUtil.isEmpty(courseWares)) {
             EventBean eventBean = new EventBean(EventBean.EVENT_LESSONDETAIL_DIRECTORY);

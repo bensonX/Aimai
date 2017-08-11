@@ -5,13 +5,17 @@ import com.ins.aimai.bean.Lesson;
 import com.ins.aimai.bean.User;
 import com.ins.aimai.bean.VideoStatus;
 import com.ins.aimai.bean.common.CommonBean;
+import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.bean.common.FaceRecord;
+import com.ins.aimai.bean.common.VideoFinishStatus;
 import com.ins.aimai.common.AppData;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
 import com.ins.aimai.ui.activity.VideoActivity;
 import com.ins.aimai.utils.ToastUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.List;
@@ -46,9 +50,15 @@ public class NetHelper {
                 put("status", isFinish ? 2 : 1);
                 put("seconds", seconds);
             }};
-            NetApi.NI().addVideoStatus(NetParam.newInstance().put(map).build()).enqueue(new BaseCallback<CommonBean>(CommonBean.class) {
+            NetApi.NI().addVideoStatus(NetParam.newInstance().put(map).build()).enqueue(new BaseCallback<VideoFinishStatus>(VideoFinishStatus.class) {
                 @Override
-                public void onSuccess(int status, CommonBean commonBean, String msg) {
+                public void onSuccess(int status, VideoFinishStatus videoFinishStatus, String msg) {
+                    //如果是完成状态，把返回值post出去
+                    if (isFinish) {
+                        EventBean eventBean = new EventBean(EventBean.EVENT_VIDEO_FINISH_STATUS);
+                        eventBean.put("videoFinishStatus", videoFinishStatus);
+                        EventBus.getDefault().post(eventBean);
+                    }
                 }
 
                 @Override

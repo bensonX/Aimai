@@ -1,6 +1,7 @@
 package com.ins.aimai.common;
 
 import android.content.Context;
+import android.support.v7.util.AsyncListUtil;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
@@ -17,6 +18,7 @@ import com.ins.aimai.bean.common.FaceRecord;
 import com.ins.aimai.bean.common.QuestionBean;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.aimai.ui.view.QuestionView;
+import com.ins.common.utils.ListUtil;
 import com.ins.common.utils.NumUtil;
 import com.ins.common.utils.StrUtil;
 
@@ -136,7 +138,7 @@ public class AppHelper {
             return videos;
         }
 
-        //检查一个Video是否已经播放完成
+        //获取默认播放视频
         public static Video getDefaultVideoByLesson(Lesson lesson) {
             if (lesson == null || StrUtil.isEmpty(lesson.getCourseWares()))
                 return null;
@@ -146,6 +148,31 @@ public class AppHelper {
             for (Video video : videos) {
                 if (!isVideoStatusFinish(video)) {
                     return video;
+                }
+            }
+            return videos.get(videos.size() - 1);
+        }
+
+        //获取默认播放视频
+        public static Video getDefaultVideo(List<Video> videos) {
+            //返回第一个未播放完的视频，如果都播放完了，返回最后一个,否则返回null
+            if (StrUtil.isEmpty(videos)) return null;
+            for (Video video : videos) {
+                if (!isVideoStatusFinish(video)) {
+                    return video;
+                }
+            }
+            return videos.get(videos.size() - 1);
+        }
+
+        //获取下一个待播放视频
+        public static Video getNextVideo(List<Video> videos, Video videoNow) {
+            //返回第一个未播放完的视频，如果都播放完了，返回最后一个,否则返回null
+            if (StrUtil.isEmpty(videos) || videoNow == null) return null;
+            for (int i = 0; i < videos.size(); i++) {
+                Video video = videos.get(i);
+                if (video.getId() == videoNow.getId()) {
+                    return ListUtil.get(videos, i + 1);
                 }
             }
             return videos.get(videos.size() - 1);

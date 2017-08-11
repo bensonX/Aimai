@@ -24,10 +24,6 @@ import paytest.ins.com.common.SignUtils;
 
 public class PayHelper {
 
-    /*微信支付*/
-    public final static int PAY_WEIXIN = 0;
-    /*支付宝支付*/
-    public final static int PAY_ALIPAY = 1;
     public static String appid = "wx94b9103030fc353b";
     protected Activity activity;
     private IWXAPI api;
@@ -43,31 +39,6 @@ public class PayHelper {
     ///////////////////////////////
     //////// 对外方法
     ///////////////////////////////
-
-    ///////////////////////////////
-    //////// 请求支付参数并发起支付
-    ///////////////////////////////
-
-//    private void startPayWeixin(RequestParams params) {
-//        CommonNet.samplepost(params, new TypeToken<LinkedHashMap<String, String>>() {
-//        }.getType(), new CommonNet.SampleNetHander() {
-//            @Override
-//            public void netGo(int code, Object pojo, String text, Object obj) {
-//                LinkedHashMap<String, String> map = (LinkedHashMap<String, String>) pojo;
-//                callWeixin(map);
-//            }
-//
-//            @Override
-//            public void netSetError(int code, String text) {
-//                Toast.makeText(activity, text, Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void netStart(int status) {
-//                onPayStart();
-//            }
-//        });
-//    }
 
     //启动支付宝支付
     public void callZhifubao(LinkedHashMap<String, String> map) {
@@ -196,21 +167,12 @@ public class PayHelper {
     }
 
     protected void onPaySuccess() {
-//        Intent intent = new Intent(activity, WXPayEntryActivity.class);
-//        intent.putExtra("type", 0);
-//        activity.startActivity(intent);
     }
 
     protected void onPayFail() {
-//        Intent intent = new Intent(activity, WXPayEntryActivity.class);
-//        intent.putExtra("type", -1);
-//        activity.startActivity(intent);
     }
 
     protected void onPayCancel() {
-//        Intent intent = new Intent(activity, WXPayEntryActivity.class);
-//        intent.putExtra("type", -2);
-//        activity.startActivity(intent);
     }
 
 }

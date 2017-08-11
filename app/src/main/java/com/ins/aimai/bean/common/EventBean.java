@@ -54,6 +54,10 @@ public class EventBean implements Serializable {
     public static final int EVENT_EXAM_TIMEOUT = 0xffa020;
     //改变字体大小（考试）
     public static final int EVENT_EXAM_TEXISIZE = 0xffa021;
+    //视频播放完成状态更新成功
+    public static final int EVENT_VIDEO_FINISH_STATUS = 0xffa022;
+    //开始播放下个视频
+    public static final int EVENT_VIDEO_START_NEXT = 0xffa023;
 
     private int event;
     private Map<String, Object> map = new HashMap<>();

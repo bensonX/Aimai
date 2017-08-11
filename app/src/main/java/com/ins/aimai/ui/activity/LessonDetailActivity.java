@@ -77,13 +77,9 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
 
     //课程详情页面
     public static void startByLesson(Context context, int lessonId) {
-        if (AppData.App.getUser() != null) {
-            Intent intent = new Intent(context, LessonDetailActivity.class);
-            intent.putExtra("lessonId", lessonId);
-            context.startActivity(intent);
-        } else {
-            LoginActivity.start(context);
-        }
+        Intent intent = new Intent(context, LessonDetailActivity.class);
+        intent.putExtra("lessonId", lessonId);
+        context.startActivity(intent);
     }
 
     //订单页面
@@ -196,10 +192,10 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
             btn_right.setVisibility(View.GONE);
         }
         //设置观看人员可见性
-        if (AppHelper.isUser()) {
-            lay_lessondetail_count.setVisibility(View.GONE);
-        } else {
+        if (!AppHelper.isUser() && type == 1) {
             lay_lessondetail_count.setVisibility(View.VISIBLE);
+        } else {
+            lay_lessondetail_count.setVisibility(View.GONE);
         }
     }
 

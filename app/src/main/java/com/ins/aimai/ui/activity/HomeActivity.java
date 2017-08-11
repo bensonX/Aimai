@@ -82,6 +82,7 @@ public class HomeActivity extends BaseAppCompatActivity {
 
     private void initCtrl() {
         pagerAdapter = new PagerAdapterHome(getSupportFragmentManager());
+        //设置加载数量为全部（4），解决首页banner被销毁恢复异常的问题
         pager.setOffscreenPageLimit(4);
         pager.setAdapter(pagerAdapter);
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

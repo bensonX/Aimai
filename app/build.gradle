@@ -7,8 +7,8 @@ android {
         applicationId "com.ins.aimai"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 24
-        versionName "1.0.0.24"
+        versionCode 25
+        versionName "1.0.0.25"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         //使用矢量图兼容库
         vectorDrawables.useSupportLibrary = true
@@ -20,7 +20,7 @@ android {
         }
         manifestPlaceholders = [
                 JPUSH_PKGNAME : applicationId,
-                JPUSH_APPKEY : "bd2aae98f3b3cdd64120a050", //JPush上注册的包名对应的appkey.7ca5583d3774a0dc97cf9049
+                JPUSH_APPKEY : "1e1dd32afe59dddd689eb752", //JPush上注册的包名对应的appkey.7ca5583d3774a0dc97cf9049
                 JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
         ]
         ///////////////////////jpush配置 end

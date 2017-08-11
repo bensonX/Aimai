@@ -45,6 +45,9 @@ public class VideoDirectotyFragment extends BaseFragment implements OnRecycleIte
     private RecyclerView recycler;
     private RecycleAdapterVideoDirectory adapter;
 
+    //当前正在播放的视频
+    private Video video;
+
     public static Fragment newInstance(int position) {
         VideoDirectotyFragment fragment = new VideoDirectotyFragment();
         Bundle bundle = new Bundle();
@@ -57,11 +60,16 @@ public class VideoDirectotyFragment extends BaseFragment implements OnRecycleIte
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onCommonEvent(EventBean event) {
         if (event.getEvent() == EventBean.EVENT_LESSONDETAIL_DIRECTORY) {
+            //获取到课程列表数据集
             List<CourseWare> courseWares = (List<CourseWare>) event.get("courseWares");
             freshData(AppHelper.VideoPlay.convertVideosByCourseWares(courseWares));
+            playDefault();
         } else if (event.getEvent() == EventBean.EVENT_VIDEO_FINISH) {
-            //TODO:视频播放完成，这里要刷新播放列表
+            //视频播放完成，这里要刷新播放列表
             adapter.notifyDataSetChanged();
+        } else if (event.getEvent() == EventBean.EVENT_VIDEO_START_NEXT) {
+            //开始播放下一个视频
+            playNext();
         }
     }
 
@@ -114,10 +122,25 @@ public class VideoDirectotyFragment extends BaseFragment implements OnRecycleIte
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
         Video video = adapter.getResults().get(viewHolder.getLayoutPosition());
-        if (getActivity() instanceof BaseVideoActivity) {
+        playVideo(video);
+    }
+
+    private void playVideo(Video video) {
+        this.video = video;
+        if (getActivity() instanceof BaseVideoActivity && video != null) {
             EventBean eventBean = new EventBean(EventBean.EVENT_VIDEO_SELECT_DIRECTORY);
             eventBean.put("video", video);
             EventBus.getDefault().post(eventBean);
         }
+    }
+
+    private void playNext() {
+        Video defaultVideo = AppHelper.VideoPlay.getNextVideo(adapter.getResults(), video);
+        playVideo(defaultVideo);
+    }
+
+    private void playDefault() {
+        Video defaultVideo = AppHelper.VideoPlay.getDefaultVideo(adapter.getResults());
+        playVideo(defaultVideo);
     }
 }

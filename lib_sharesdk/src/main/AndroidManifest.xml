@@ -49,8 +49,8 @@
 
         </activity>
         <!-- 填写您从Mob开发者后台中得到的Appkey和AppSecret -->
-        <meta-data android:name="Mob-AppKey" android:value="1f9e2db763736"/>
-        <meta-data android:name="Mob-AppSecret" android:value="a4f19e2ac88ca329d600bd526f700203"/>
+        <meta-data android:name="Mob-AppKey" android:value="1f6b559dace68"/>
+        <meta-data android:name="Mob-AppSecret" android:value="b73c1f9041edf81faef7ec465792ebec"/>
 
     </application>
 
