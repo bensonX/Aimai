@@ -7,7 +7,12 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.dl7.player.interfaces.OnProgressChageListener;
 import com.dl7.player.media.IjkPlayerView;
@@ -28,6 +33,7 @@ import com.ins.aimai.ui.adapter.PagerAdapterVideo;
 import com.ins.aimai.ui.base.BaseVideoActivity;
 import com.ins.aimai.ui.dialog.DialogSureAimai;
 import com.ins.aimai.ui.dialog.DialogToExam;
+import com.ins.aimai.ui.view.TextTabLayout;
 import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.utils.GlideUtil;
 import com.ins.common.utils.L;
@@ -43,12 +49,13 @@ import java.util.List;
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 
 //type: 0:使用lessonId进入 1:使用orderId进入
-public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnInfoListener, OnProgressChageListener, NetFaceHelper.OnFaceCompareCallback {
+public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnInfoListener, OnProgressChageListener, NetFaceHelper.OnFaceCompareCallback, View.OnClickListener {
 
     private CollapsingToolbarLayout collapsingToolbarLayout;
 
+    private ImageView btn_right;
     private IjkPlayerView player;
-    private TabLayout tab;
+    private TextTabLayout tab;
     private ViewPager pager;
     private PagerAdapterVideo adapterPager;
 
@@ -103,6 +110,9 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
             }
         } else if (event.getEvent() == EventBean.EVENT_VIDEO_START_NEXT) {
             autoPlay = true;
+        } else if (event.getEvent() == EventBean.EVENT_VIDEO_TEXISIZE) {
+            int sizeType = (int) event.get("sizeType");
+            setTextSize(sizeType);
         }
     }
 
@@ -144,10 +154,12 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
 
     private void initView() {
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbarLayout);
-        tab = (TabLayout) findViewById(R.id.tab);
+        btn_right = (ImageView) findViewById(R.id.btn_right);
+        tab = (TextTabLayout) findViewById(R.id.tab);
         pager = (ViewPager) findViewById(R.id.pager);
         player = (IjkPlayerView) findViewById(R.id.player);
         setIjkPlayerView(player);
+        btn_right.setOnClickListener(this);
     }
 
     private void initCtrl() {
@@ -158,6 +170,11 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
 
         player.setOnInfoListener(this);
         player.setOnProgressChageListener(this);
+        //恢复上次选择的字体大小
+        int sizeType = AppData.App.getTextSizeVideo();
+        EventBean eventBean = new EventBean(EventBean.EVENT_VIDEO_TEXISIZE);
+        eventBean.put("sizeType", sizeType);
+        EventBus.getDefault().post(eventBean);
     }
 
     private void initData() {
@@ -210,7 +227,42 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
         autoPlay = false;
     }
 
+    private void setTextSize(int sizeType) {
+        switch (sizeType) {
+            case AppData.Constant.TEXTSIZE_BIG:
+                tab.setTextSize(15);
+                break;
+            case AppData.Constant.TEXTSIZE_MIDDLE:
+                tab.setTextSize(14);
+                break;
+            case AppData.Constant.TEXTSIZE_SMALL:
+                tab.setTextSize(13);
+                break;
+        }
+    }
+
     //#################### 事件监听 ######################
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_right:
+                EventBean eventBean = new EventBean(EventBean.EVENT_VIDEO_TEXISIZE);
+                int sizeType = AppData.App.getTextSizeVideo();
+                if (sizeType == AppData.Constant.TEXTSIZE_BIG) {
+                    eventBean.put("sizeType", AppData.Constant.TEXTSIZE_MIDDLE);
+                    AppData.App.saveTextSizeVideo(AppData.Constant.TEXTSIZE_MIDDLE);
+                } else if (sizeType == AppData.Constant.TEXTSIZE_MIDDLE) {
+                    eventBean.put("sizeType", AppData.Constant.TEXTSIZE_SMALL);
+                    AppData.App.saveTextSizeVideo(AppData.Constant.TEXTSIZE_SMALL);
+                } else if (sizeType == AppData.Constant.TEXTSIZE_SMALL) {
+                    eventBean.put("sizeType", AppData.Constant.TEXTSIZE_BIG);
+                    AppData.App.saveTextSizeVideo(AppData.Constant.TEXTSIZE_BIG);
+                }
+                EventBus.getDefault().post(eventBean);
+                break;
+        }
+    }
 
     //播放器状态变化事件
     @Override
@@ -276,6 +328,7 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
         }
     }
 
+    //人脸验证通过
     @Override
     public void onFaceCompareSuccess() {
         hideLoadingDialog();
@@ -283,6 +336,7 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
         player.start();
     }
 
+    //人脸颜色不通过
     @Override
     public void onFaceCompareFailed() {
         hideLoadingDialog();
@@ -356,5 +410,4 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
     public List<FaceRecord> getFaceRecords() {
         return faceRecords;
     }
-
 }

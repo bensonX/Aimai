@@ -2,6 +2,7 @@ package com.ins.aimai.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.ins.aimai.R;
 import com.ins.aimai.bean.Comment;
+import com.ins.aimai.common.AppData;
 import com.ins.aimai.common.AppHelper;
 import com.ins.common.utils.GlideUtil;
 import com.ins.common.utils.TimeUtil;
@@ -21,6 +23,8 @@ public class RecycleAdapterVideoCommet extends RecyclerView.Adapter<RecycleAdapt
 
     private Context context;
     private List<Comment> results = new ArrayList<>();
+    //字体大小，默认中号
+    private int sizeType = AppData.Constant.TEXTSIZE_MIDDLE;
 
     public List<Comment> getResults() {
         return results;
@@ -42,6 +46,30 @@ public class RecycleAdapterVideoCommet extends RecyclerView.Adapter<RecycleAdapt
         holder.text_comment_name.setText(AppHelper.Comment.getShadowName(comment.getUserName()));
         holder.text_comment_detail.setText(comment.getContent());
         holder.text_comment_time.setText(TimeUtil.formatTimeRangeBefore(comment.getTimeStamp() - comment.getCreateTime()));
+
+        //动态设置字体大小
+        switch (sizeType) {
+            case AppData.Constant.TEXTSIZE_BIG:
+                holder.text_comment_name.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.text_big_nomal));
+                holder.text_comment_time.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.text_nomal_small));
+                holder.text_comment_detail.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.text_big_nomal));
+                break;
+            case AppData.Constant.TEXTSIZE_MIDDLE:
+                holder.text_comment_name.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.text_nomal));
+                holder.text_comment_time.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.text_small));
+                holder.text_comment_detail.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.text_nomal));
+                break;
+            case AppData.Constant.TEXTSIZE_SMALL:
+                holder.text_comment_name.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.text_nomal_small));
+                holder.text_comment_time.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.text_small_tiny));
+                holder.text_comment_detail.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.text_nomal_small));
+                break;
+        }
+    }
+
+    public void setTextSize(int sizeType) {
+        this.sizeType = sizeType;
+        notifyDataSetChanged();
     }
 
     @Override

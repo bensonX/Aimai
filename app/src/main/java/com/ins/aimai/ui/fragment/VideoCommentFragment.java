@@ -19,6 +19,7 @@ import com.ins.aimai.R;
 import com.ins.aimai.bean.Comment;
 import com.ins.aimai.bean.User;
 import com.ins.aimai.bean.common.CommonBean;
+import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.common.AppData;
 import com.ins.aimai.common.AppHelper;
 import com.ins.aimai.common.AppVali;
@@ -68,8 +69,17 @@ public class VideoCommentFragment extends BaseFragment implements View.OnClickLi
     }
 
     @Override
+    public void onCommonEvent(EventBean event) {
+        if (event.getEvent() == EventBean.EVENT_VIDEO_TEXISIZE) {
+            int sizeType = (int) event.get("sizeType");
+            setTextSize(sizeType);
+        }
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        registEventBus();
         this.position = getArguments().getInt("position");
         this.lessonId = getArguments().getInt("lessonId");
     }
@@ -158,6 +168,10 @@ public class VideoCommentFragment extends BaseFragment implements View.OnClickLi
 
     private void initData() {
         netQueryComments(1);
+    }
+
+    private void setTextSize(int sizeType) {
+        adapter.setTextSize(sizeType);
     }
 
     @Override

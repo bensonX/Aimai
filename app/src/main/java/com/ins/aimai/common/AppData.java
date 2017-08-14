@@ -19,7 +19,8 @@ public class AppData {
         private static final String SHARENAME = "app_config";
         private static final String KEY_TOKEN = "token";
         private static final String KEY_USER = "user";
-        private static final String KEY_TEXTSIZE_EXAM = "video_time";
+        private static final String KEY_TEXTSIZE_EXAM = "textsize_exam";
+        private static final String KEY_TEXTSIZE_VIDEO = "textsize_video";
 
         public static void saveToken(String token) {
             SharedPrefUtilV2.open(SHARENAME).putString(KEY_TOKEN, token);
@@ -53,6 +54,16 @@ public class AppData {
             return SharedPrefUtilV2.open(SHARENAME).getInt(KEY_TEXTSIZE_EXAM);
         }
 
+        public static void saveTextSizeVideo(int textsize) {
+            SharedPrefUtilV2.open(SHARENAME).putInt(KEY_TEXTSIZE_VIDEO, textsize);
+        }
+
+        public static int getTextSizeVideo() {
+            int sizeType = SharedPrefUtilV2.open(SHARENAME).getInt(KEY_TEXTSIZE_VIDEO);
+            if (sizeType == 0) sizeType = AppData.Constant.TEXTSIZE_MIDDLE;
+            return sizeType;
+        }
+
         public static List<CheckPoint> getVideoCheckPoint() {
             return new ArrayList<CheckPoint>() {{
                 add(new CheckPoint(0, 1f / 3f));
@@ -67,6 +78,12 @@ public class AppData {
     public static class Config {
         public static boolean showVali = false;                 //显示验证码（仅测试）
         public static boolean showTestToast = false;            //打印测试信息到窗口（仅测试）
+    }
+
+    public static class Constant {
+        public static final int TEXTSIZE_BIG = 0xfff01;
+        public static final int TEXTSIZE_MIDDLE = 0xfff02;
+        public static final int TEXTSIZE_SMALL = 0xfff03;
     }
 
     /**

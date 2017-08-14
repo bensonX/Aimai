@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="9dp"
             android:layout_marginTop="8dp"
             android:text="hdj1682632"
             android:textColor="@color/com_text_blank_deep_light"
@@ -32,7 +32,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/img_comment_header"
             app:layout_constraintLeft_toRightOf="@+id/img_comment_header"
             app:layout_constraintTop_toTopOf="@+id/img_comment_header"
-            app:layout_constraintVertical_bias="0.14999998" />
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/text_comment_time"

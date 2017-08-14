@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.ins.aimai.bean.Video;
 import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.bean.common.TestBean;
 import com.ins.aimai.bean.common.VideoDirectiry;
+import com.ins.aimai.common.AppData;
 import com.ins.aimai.common.AppHelper;
 import com.ins.aimai.ui.adapter.RecycleAdapterVideoDirectory;
 import com.ins.aimai.ui.base.BaseFragment;
@@ -70,6 +72,9 @@ public class VideoDirectotyFragment extends BaseFragment implements OnRecycleIte
         } else if (event.getEvent() == EventBean.EVENT_VIDEO_START_NEXT) {
             //开始播放下一个视频
             playNext();
+        } else if (event.getEvent() == EventBean.EVENT_VIDEO_TEXISIZE) {
+            int sizeType = (int) event.get("sizeType");
+            setTextSize(sizeType);
         }
     }
 
@@ -117,6 +122,10 @@ public class VideoDirectotyFragment extends BaseFragment implements OnRecycleIte
         adapter.getResults().clear();
         adapter.getResults().addAll(directiries);
         adapter.notifyDataSetChanged();
+    }
+
+    private void setTextSize(int sizeType) {
+        adapter.setTextSize(sizeType);
     }
 
     @Override
