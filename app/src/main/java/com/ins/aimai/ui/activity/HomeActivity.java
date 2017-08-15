@@ -12,6 +12,10 @@ import android.widget.RadioGroup;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.common.AppData;
+import com.ins.aimai.net.BaseCallback;
+import com.ins.aimai.net.NetApi;
+import com.ins.aimai.net.NetParam;
+import com.ins.aimai.net.helper.NetNewMsgHelper;
 import com.ins.aimai.ui.adapter.PagerAdapterHome;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.aimai.utils.ToastUtil;
@@ -19,6 +23,10 @@ import com.ins.common.utils.PermissionsUtil;
 import com.ins.common.utils.StatusBarTextUtil;
 import com.shelwee.update.UpdateHelper;
 import com.tencent.bugly.crashreport.CrashReport;
+
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.Map;
 
 public class HomeActivity extends BaseAppCompatActivity {
 
@@ -138,5 +146,6 @@ public class HomeActivity extends BaseAppCompatActivity {
     }
 
     private void initData() {
+        NetNewMsgHelper.getInstance().netHasNewMsg();
     }
 }

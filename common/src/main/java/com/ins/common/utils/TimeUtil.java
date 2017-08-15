@@ -133,7 +133,7 @@ public class TimeUtil {
         int hour = getHour((int) (l / 1000));
         int minute = getMinite((int) (l / 1000));
         String format;
-        if (day >= 0 && day < 10) {
+        if (day > 0 && day < 10) {
             format = "d天";
         } else if (day >= 10) {
             return getTimeFor("yyyy年M月d日", new Date(System.currentTimeMillis() - l));
@@ -144,7 +144,11 @@ public class TimeUtil {
                 if (minute != 0) {
                     format = "m分钟";
                 } else {
-                    format = "s秒";
+                    if (l / 1000 != 0) {
+                        format = "s秒";
+                    } else {
+                        return "刚刚";
+                    }
                 }
             }
         }

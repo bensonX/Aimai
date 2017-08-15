@@ -76,6 +76,14 @@ public class AppVali {
         }
     }
 
+    public static String faceRecord(String faceId, String path) {
+        if (isEmpty(faceId) || isEmpty(path)) {
+            return "请先进行人像采集";
+        } else {
+            return null;
+        }
+    }
+
     public static String regist_phone(String phone, String phone_old, String cold, String code_old) {
         if (TextUtils.isEmpty(phone)) {
             return "请输入手机号";

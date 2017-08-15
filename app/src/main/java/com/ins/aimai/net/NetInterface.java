@@ -12,6 +12,7 @@ import retrofit2.Call;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -99,6 +100,14 @@ public interface NetInterface {
 
     /**
      * 更新用户信息
+     * java.lang.String showName, java.lang.String avatar, java.lang.Integer cityId, java.lang.Integer definition
+     */
+    @FormUrlEncoded
+    @POST("/api/user/updateUser")
+    Call<ResponseBody> updateUserWithToken(@Header("token") String token, @FieldMap Map<String, Object> param);
+
+    /**
+     * 更新用户信息
      * 修改或忘记密码
      * 找回密码 | 修改密码,旧密码 和 手机号 互斥存在 手机号存在 则 不知道旧密码|忘记密码 修改密码
      * newPwd
@@ -172,6 +181,15 @@ public interface NetInterface {
     //##################################################################
     //#########               课时
     //##################################################################
+
+    /**
+     * 课程首页搜索获取
+     * searchParam
+     * pageNO    pageSize
+     */
+    @FormUrlEncoded
+    @POST("/api/curriculum/queryCurriculumBySearch")
+    Call<ResponseBody> searchLesson(@FieldMap Map<String, Object> param);
 
     /**
      * 课程首页列表获取
@@ -334,6 +352,14 @@ public interface NetInterface {
     @FormUrlEncoded
     @POST("/api/systemInfo/checkSystemInfo")
     Call<ResponseBody> checkMsg(@FieldMap Map<String, Object> param);
+
+
+    /**
+     * 查看消息是否有未阅读的消息 返回 0 不显示小红点 1 显示小红点
+     */
+    @FormUrlEncoded
+    @POST("/api/systemInfo/countCheckInfo")
+    Call<ResponseBody> hasNewMsg(@FieldMap Map<String, Object> param);
 
 
     /**

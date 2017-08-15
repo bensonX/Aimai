@@ -7,6 +7,10 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.ins.aimai.bean.common.EventBean;
+import com.ins.aimai.ui.activity.MsgActivity;
+
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -98,6 +102,7 @@ public class JGReceiver extends BroadcastReceiver {
         return sb.toString();
     }
 
+    //接受的设备ID
     private void processIDMessage(Context context, String id) {
         Log.e("push", "push id:" + id);
     }
@@ -106,37 +111,42 @@ public class JGReceiver extends BroadcastReceiver {
     private void processCustomMessage(Context context, Bundle bundle) {
         String message = bundle.getString(JPushInterface.EXTRA_MESSAGE);
         String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
+        //发送新消息信息
+        EventBus.getDefault().post(new EventBean(EventBean.EVENT_MSG_NEW));
         Log.e("push", "push message:" + message + extras);
     }
 
     private void processNotifyClick(Context context, Bundle bundle) {
-        String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
-        Log.e("push", "push message:" + extras);
-
-        if (!TextUtils.isEmpty(extras)) {
-            //有拖拽字段，跳转消息页面
-            try {
-                JSONObject datajson = new JSONObject(extras);
-                if (datajson.has("info_type")) {
-                    String type = datajson.getString("info_type");
-                    Intent intent = new Intent();
-                    intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
-                    if ("2".equals(type)) {
-                        //跳转订单消息页面
-                    } else if ("1".equals(type)) {
-                        //系统消息
-                        context.startActivity(intent);
-                    } else if ("3".equals(type)) {
-                        //丁一定
-                    } else if ("4".equals(type)) {
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e("startapp", "启动消息页面失败");
-            }
-        } else {
-            //////////启动app
+        Intent intent = new Intent(context, MsgActivity.class);
+        intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+//        String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
+//        Log.e("push", "push message:" + extras);
+//
+//        if (!TextUtils.isEmpty(extras)) {
+//            //有拖拽字段，跳转消息页面
+//            try {
+//                JSONObject datajson = new JSONObject(extras);
+//                if (datajson.has("info_type")) {
+//                    String type = datajson.getString("info_type");
+//                    Intent intent = new Intent();
+//                    intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+//                    if ("2".equals(type)) {
+//                        //跳转订单消息页面
+//                    } else if ("1".equals(type)) {
+//                        //系统消息
+//                        context.startActivity(intent);
+//                    } else if ("3".equals(type)) {
+//                        //丁一定
+//                    } else if ("4".equals(type)) {
+//                    }
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                Log.e("startapp", "启动消息页面失败");
+//            }
+//        } else {
+        //////////启动app
 //            try {
 //                String appPackageName = "com.ins.wojia";
 //                boolean runningApp = AppUtils.isRunningApp(context, appPackageName);
@@ -149,6 +159,6 @@ public class JGReceiver extends BroadcastReceiver {
 //                Log.e("startapp", "启动app失败");
 //                e.printStackTrace();
 //            }
-        }
+//        }
     }
 }

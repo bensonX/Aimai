@@ -109,7 +109,7 @@ public class LessonSearchActivity extends BaseAppCompatActivity implements OnRec
                         String searchParam = edit_query.getText().toString();
                         Map param = netListHelper.getParam(type);
                         param.put("searchParam", searchParam);
-                        return NetApi.NI().queryInfo(param);
+                        return NetApi.NI().searchLesson(param);
                     }
                 },
                 new NetListHelper.OnListLoadCallback<Lesson>() {
@@ -144,6 +144,13 @@ public class LessonSearchActivity extends BaseAppCompatActivity implements OnRec
 
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
+        Lesson lesson = adapter.getResults().get(viewHolder.getLayoutPosition());
+        if (lesson.getType() == 0) {
+            //试听
+            VideoActivity.start(this, lesson.getId());
+        } else {
+            LessonDetailActivity.startByLesson(this, lesson.getId());
+        }
     }
 
     @Override

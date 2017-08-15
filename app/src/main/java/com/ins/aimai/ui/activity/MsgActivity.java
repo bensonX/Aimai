@@ -21,6 +21,7 @@ import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
 import com.ins.aimai.net.helper.NetListHelper;
+import com.ins.aimai.net.helper.NetNewMsgHelper;
 import com.ins.aimai.ui.adapter.RecycleAdapterMsg;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.aimai.utils.ToastUtil;
@@ -135,6 +136,7 @@ public class MsgActivity extends BaseAppCompatActivity implements OnRecycleItemC
         Msg msg = adapter.getResults().get(viewHolder.getLayoutPosition());
         WebActivity.start(this, msg.getTitle(), "http://www.baidu.com");
         netCheckMsg(msg.getId());
+        NetNewMsgHelper.getInstance().netHasNewMsg();
     }
 
     private void netCheckMsg(int id) {
@@ -153,67 +155,4 @@ public class MsgActivity extends BaseAppCompatActivity implements OnRecycleItemC
             }
         });
     }
-
-//    ///////////////////////////////////
-//    //////////////分页查询
-//    ///////////////////////////////////
-//
-//    private int page;
-//    private final int PAGE_COUNT = 10;
-//
-//    /**
-//     * type:0 首次加载 1:下拉刷新 2:上拉加载
-//     *
-//     * @param type
-//     */
-//    private void netQueryMsg(final int type) {
-//        Map map = new HashMap<String, Object>() {{
-//            put("pageNO", type == 0 || type == 1 ? "1" : page + 1 + "");
-//            put("pageSize", PAGE_COUNT + "");
-//        }};
-//        if (type == 0) loadingLayout.showLoadingView();
-//        NetApi.NI().queryMsg(NetParam.newInstance().put(map).build()).enqueue(new BaseCallback<List<Msg>>(new TypeToken<List<Msg>>() {
-//        }.getType()) {
-//            @Override
-//            public void onSuccess(int status, List<Msg> beans, String msg) {
-//                if (!StrUtil.isEmpty(beans)) {
-//                    //下拉加载和首次加载要清除原有数据并把页码置为1，上拉加载不断累加页码
-//                    if (type == 0 || type == 1) {
-//                        adapter.getResults().clear();
-//                        page = 1;
-//                    } else {
-//                        page++;
-//                    }
-//                    adapter.getResults().addAll(beans);
-//                    adapter.notifyDataSetChanged();
-//
-//                    //加载结束恢复列表
-//                    if (type == 0) {
-//                        loadingLayout.showOut();
-//                    } else {
-//                        springView.onFinishFreshAndLoad();
-//                    }
-//                } else {
-//                    //没有数据设置空数据页面，下拉加载不用，仅提示
-//                    if (type == 0 || type == 1) {
-//                        loadingLayout.showLackView();
-//                    } else {
-//                        springView.onFinishFreshAndLoad();
-//                        ToastUtil.showToastShort("没有更多的数据了");
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onError(int status, String msg) {
-//                ToastUtil.showToastShort(msg);
-//                //首次加载发生异常设置error页面，其余仅提示
-//                if (type == 0) {
-//                    loadingLayout.showFailView();
-//                } else {
-//                    springView.onFinishFreshAndLoad();
-//                }
-//            }
-//        });
-//    }
 }

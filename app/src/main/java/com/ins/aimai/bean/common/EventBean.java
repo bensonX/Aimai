@@ -60,6 +60,10 @@ public class EventBean implements Serializable {
     public static final int EVENT_VIDEO_START_NEXT = 0xffa023;
     //改变字体大小（视频播放）
     public static final int EVENT_VIDEO_TEXISIZE = 0xffa024;
+    //有新消息
+    public static final int EVENT_MSG_NEW = 0xffa025;
+    //没有新消息
+    public static final int EVENT_MSG_NEW_NONE = 0xffa026;
 
     private int event;
     private Map<String, Object> map = new HashMap<>();

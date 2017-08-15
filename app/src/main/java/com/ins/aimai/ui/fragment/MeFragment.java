@@ -41,6 +41,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     private TextView text_me_safe;
     private TextView text_me_suggest;
     private TextView text_me_setting;
+    private View img_me_dot;
     private View lay_me_safe;
 
     public static Fragment newInstance(int position) {
@@ -58,6 +59,12 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             case EventBean.EVENT_LOGIN:
             case EventBean.EVENT_USER_UPDATE:
                 setUserData();
+                break;
+            case EventBean.EVENT_MSG_NEW:
+                img_me_dot.setVisibility(View.VISIBLE);
+                break;
+            case EventBean.EVENT_MSG_NEW_NONE:
+                img_me_dot.setVisibility(View.GONE);
                 break;
         }
     }
@@ -94,6 +101,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         img_me_header = (ImageView) rootView.findViewById(R.id.img_me_header);
         text_me_name = (TextView) rootView.findViewById(R.id.text_me_name);
         text_me_grade = (TextView) rootView.findViewById(R.id.text_me_grade);
+        img_me_dot = rootView.findViewById(R.id.img_me_dot);
         lay_me_safe = rootView.findViewById(R.id.lay_me_safe);
 
         rootView.findViewById(R.id.btn_right).setOnClickListener(this);

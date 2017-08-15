@@ -15,6 +15,7 @@ import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
 import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.Info;
+import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.common.ToobarTansColorHelper;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
@@ -68,8 +69,18 @@ public class HomeFragment extends BaseFragment implements OnRecycleItemClickList
     }
 
     @Override
+    public void onCommonEvent(EventBean event) {
+        if (event.getEvent() == EventBean.EVENT_MSG_NEW) {
+            img_msg_dot.setVisibility(View.VISIBLE);
+        } else if (event.getEvent() == EventBean.EVENT_MSG_NEW_NONE) {
+            img_msg_dot.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        registEventBus();
         this.position = getArguments().getInt("position");
     }
 
@@ -158,7 +169,7 @@ public class HomeFragment extends BaseFragment implements OnRecycleItemClickList
                 });
         adapterBanner.setOnBannerClickListener(this);
         //设置toolbar的颜色渐变器及阈值回调
-        ToobarTansColorHelper.getInstance().with(recycler,toolbar).onPointCallback(new ToobarTansColorHelper.OnPointListener() {
+        ToobarTansColorHelper.getInstance().with(recycler, toolbar).onPointCallback(new ToobarTansColorHelper.OnPointListener() {
             @Override
             public void onPoint(boolean upOrDown) {
                 L.e(upOrDown);

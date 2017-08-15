@@ -126,6 +126,7 @@
         <activity android:name=".ui.activity.LessonAllocatActivity" />
         <activity android:name=".ui.activity.LessonSearchActivity" />
         <activity android:name=".ui.activity.LessonDetailCompActivity" />
+        <activity android:name=".ui.activity.FaceResordActivity" />
 
     </application>
 </manifest>

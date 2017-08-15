@@ -16,9 +16,11 @@ import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.aimai.ui.dialog.DialogIdentify;
+import com.ins.aimai.ui.fragment.InfoFragment;
 import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.utils.MD5Util;
 import com.ins.common.utils.StatusBarTextUtil;
+import com.ins.common.utils.StrUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -117,12 +119,17 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
         NetApi.NI().login(param).enqueue(new BaseCallback<User>(User.class) {
             @Override
             public void onSuccess(int status, User user, String msg) {
-                AppData.App.saveUser(user);
-                AppData.App.saveToken(user.getToken());
-                EventBus.getDefault().post(new EventBean(EventBean.EVENT_LOGIN));
-                hideLoadingDialog();
-//                finish();
-                HomeActivity.start(LoginActivity.this);
+                if (!StrUtil.isEmpty(user.getFaceId())) {
+                    AppData.App.saveUser(user);
+                    AppData.App.saveToken(user.getToken());
+                    EventBus.getDefault().post(new EventBean(EventBean.EVENT_LOGIN));
+                    hideLoadingDialog();
+                    HomeActivity.start(LoginActivity.this);
+                } else {
+                    ToastUtil.showToastShort("您必须采集人像信息后才能登陆");
+                    hideLoadingDialog();
+                    FaceResordActivity.start(LoginActivity.this, user);
+                }
             }
 
             @Override
