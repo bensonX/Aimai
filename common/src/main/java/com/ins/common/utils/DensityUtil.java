@@ -12,14 +12,12 @@ public class DensityUtil {
         throw new UnsupportedOperationException("cannot be instantiated");
     }
 
-
     /**
      * dp转px
      */
     public static int dp2px(Context context, float dpVal) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpVal, Resources.getSystem().getDisplayMetrics());
     }
-
 
     /**
      * sp转px
@@ -31,7 +29,6 @@ public class DensityUtil {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, spVal, Resources.getSystem().getDisplayMetrics());
     }
 
-
     /**
      * px转dp
      */
@@ -40,13 +37,10 @@ public class DensityUtil {
         return (pxVal / scale);
     }
 
-
     /**
      * px转sp
      */
     public static float px2sp(Context context, float pxVal) {
         return (pxVal / Resources.getSystem().getDisplayMetrics().scaledDensity);
     }
-
-
 }

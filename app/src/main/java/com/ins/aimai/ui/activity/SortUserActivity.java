@@ -56,6 +56,7 @@ public class SortUserActivity extends BaseAppCompatActivity implements View.OnCl
     private View text_sort_selectall;
 
     private int orderId;
+    private List<User> users;
 
     public static void start(Context context, int orderId) {
         Intent intent = new Intent(context, SortUserActivity.class);
@@ -176,7 +177,7 @@ public class SortUserActivity extends BaseAppCompatActivity implements View.OnCl
 
     public void search(String filterStr) {
         List<User> resultsSort = new ArrayList<>();
-        for (User sortBean : adapter.getResults()) {
+        for (User sortBean : users) {
             if (SortUtil.match(sortBean, filterStr)) {
                 resultsSort.add(sortBean);
             }
@@ -207,6 +208,7 @@ public class SortUserActivity extends BaseAppCompatActivity implements View.OnCl
             @Override
             public void onSuccess(int status, List<User> users, String msg) {
                 if (!StrUtil.isEmpty(users)) {
+                    SortUserActivity.this.users = users;
                     convert(users);
                     freshData(users);
                     loadingLayout.showOut();

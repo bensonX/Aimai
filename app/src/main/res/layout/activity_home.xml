@@ -38,7 +38,7 @@
                 android:id="@+id/tab_2"
                 style="@style/RadioHomeTab"
                 android:drawableTop="@drawable/selector_tab_lesson"
-                android:text="课时" />
+                android:text="课程" />
 
             <RadioButton
                 android:id="@+id/tab_3"

@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.CourseWare;
 import com.ins.aimai.bean.Lesson;
+import com.ins.aimai.bean.Order;
 import com.ins.aimai.bean.Study;
 import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.bean.common.TestBean;
@@ -79,14 +80,24 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
     public static void startByLesson(Context context, int lessonId) {
         Intent intent = new Intent(context, LessonDetailActivity.class);
         intent.putExtra("lessonId", lessonId);
+        intent.putExtra("type", 0);
         context.startActivity(intent);
     }
 
+    public static void startByOrder(Context context, Study study) {
+        startByOrder(context, study.getOrderId(), study.getId());
+    }
+
+    public static void startByOrder(Context context, Order order) {
+        startByOrder(context, order.getId(), order.getCurriculumId());
+    }
+
     //订单页面
-    public static void startByOrder(Context context, int orderId) {
+    private static void startByOrder(Context context, int orderId, int lessonId) {
         if (AppData.App.getUser() != null) {
             Intent intent = new Intent(context, LessonDetailActivity.class);
             intent.putExtra("orderId", orderId);
+            intent.putExtra("type", 1);
             context.startActivity(intent);
         } else {
             LoginActivity.start(context);
@@ -118,13 +129,14 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
     }
 
     private void initBase() {
+        if (getIntent().hasExtra("type")) {
+            type = getIntent().getIntExtra("type", 0);
+        }
         if (getIntent().hasExtra("lessonId")) {
             lessonId = getIntent().getIntExtra("lessonId", 0);
-            type = 0;
         }
         if (getIntent().hasExtra("orderId")) {
             orderId = getIntent().getIntExtra("orderId", 0);
-            type = 1;
         }
     }
 

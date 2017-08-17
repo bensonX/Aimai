@@ -71,6 +71,50 @@ public class AppHelper {
         }
     }
 
+    public static class UserHelp {
+        //判断当前登录用户设置清晰度是否高清，未登录返回否
+        public static boolean isHighDefinition() {
+            User user = AppData.App.getUser();
+            if (user != null && user.getDefinition() == 1) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    public static class LoginHelp {
+        //登录的时候判断用户信息完整性，决定是否需要信息补全
+        public static boolean isNeedRecord(User user) {
+            if (user == null) return false;
+            switch (user.getRoleId()) {
+                case User.USER:
+                    //个人用户如果没有faceId则信息不全
+                    if (StrUtil.isEmpty(user.getFaceId())) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                case User.COMPANY_USER:
+                    //公司用户如果没有所在地则信息不全
+                    if (user.getCity() == null) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                case User.GOVERNMENT_USER:
+                    //政府用户如果没有所在地则信息不全
+                    if (user.getCity() == null) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                default:
+                    return false;
+            }
+        }
+    }
+
     public static class VideoPlay {
 
         //设置video为已播放状态
@@ -165,9 +209,8 @@ public class AppHelper {
             return videos.get(videos.size() - 1);
         }
 
-        //获取下一个待播放视频
+        //获取下一个待播放视频（如果已经是最后一个，返回null；如果当前播放视频不在视频集合里，返回null）
         public static Video getNextVideo(List<Video> videos, Video videoNow) {
-            //返回第一个未播放完的视频，如果都播放完了，返回最后一个,否则返回null
             if (StrUtil.isEmpty(videos) || videoNow == null) return null;
             for (int i = 0; i < videos.size(); i++) {
                 Video video = videos.get(i);
@@ -175,7 +218,20 @@ public class AppHelper {
                     return ListUtil.get(videos, i + 1);
                 }
             }
-            return videos.get(videos.size() - 1);
+            return null;
+        }
+
+        //是否还有下一个视频
+        public static boolean hasNextVideo(Lesson lesson, Video videoNow) {
+            if (lesson == null || StrUtil.isEmpty(lesson.getCourseWares()))
+                return false;
+            List<Video> videos = convertVideosByCourseWares(lesson.getCourseWares());
+            Video nextVideo = getNextVideo(videos, videoNow);
+            if (nextVideo == null) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 

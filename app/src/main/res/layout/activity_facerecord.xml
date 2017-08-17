@@ -25,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="人脸采集"
+                android:text="资料完善"
                 android:textColor="@color/com_blue"
                 android:textSize="@dimen/text_big" />
 
@@ -54,7 +54,51 @@
             <View style="@style/Line_H" />
 
             <LinearLayout
-                android:id="@+id/lay_facerecord_header"
+                android:id="@+id/lay_facerecord_business"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:text="行业"
+                        android:textColor="@color/com_text_blank"
+                        android:textSize="@dimen/text_nomal" />
+
+                    <TextView
+                        android:id="@+id/text_facerecord_business"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:drawableRight="@drawable/ic_me_next"
+                        android:ellipsize="end"
+                        android:hint="请选择行业"
+                        android:maxLines="1"
+                        android:text=""
+                        android:textColor="@color/com_text_blank_deep_light"
+                        android:textColorHint="@color/com_text_dark"
+                        android:textSize="@dimen/text_nomal" />
+
+                </LinearLayout>
+
+                <View
+                    style="@style/Line_H"
+                    android:layout_marginLeft="10dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lay_facerecord_address"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:foreground="?attr/selectableItemBackground"
@@ -63,6 +107,55 @@
 
                 <TextView
                     android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="所在地"
+                    android:textColor="@color/com_text_blank"
+                    android:textSize="@dimen/text_nomal" />
+
+                <TextView
+                    android:id="@+id/text_facerecord_address"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:drawableRight="@drawable/ic_me_next"
+                    android:ellipsize="end"
+                    android:hint="请选择您的所在地"
+                    android:maxLines="1"
+                    android:text=""
+                    android:textColor="@color/com_text_blank_deep_light"
+                    android:textColorHint="@color/com_text_dark"
+                    android:textSize="@dimen/text_nomal" />
+
+            </LinearLayout>
+
+
+            <View style="@style/Line_H" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <View style="@style/Line_H" />
+
+            <LinearLayout
+                android:id="@+id/lay_facerecord_header"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="120dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
@@ -88,11 +181,82 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/lay_facerecord_yyzz"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="上传营业执照"
+                    android:textColor="@color/com_text_blank"
+                    android:textSize="@dimen/text_nomal" />
+
+                <ImageView
+                    android:id="@+id/img_facerecord_yyzz"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="15dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_me_add" />
+
+                <Space style="@style/Space_H" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_me_next" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lay_facerecord_jsx"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:scaleType="centerCrop"
+                    android:text="上传单位介绍信"
+                    android:textColor="@color/com_text_blank"
+                    android:textSize="@dimen/text_nomal" />
+
+                <ImageView
+                    android:id="@+id/img_facerecord_jsx"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/ic_me_add" />
+
+                <Space style="@style/Space_H" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_me_next" />
+
+            </LinearLayout>
+
             <View style="@style/Line_H" />
 
         </LinearLayout>
 
         <TextView
+            android:id="@+id/text_facerecord_note"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"

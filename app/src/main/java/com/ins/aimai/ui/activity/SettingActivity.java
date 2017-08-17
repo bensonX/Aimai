@@ -105,6 +105,7 @@ public class SettingActivity extends BaseAppCompatActivity implements View.OnCli
                 DialogSure.showDialog(this, "确定要退出登录？", new DialogSure.CallBack() {
                     @Override
                     public void onSure() {
+                        EventBus.getDefault().post(new EventBean(EventBean.EVENT_MSG_NEW_NONE));
                         netLogout();
                         getOut();
                     }

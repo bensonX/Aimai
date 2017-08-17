@@ -20,6 +20,8 @@ import com.dl7.player.media.MediaPlayerParams;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.CourseWare;
 import com.ins.aimai.bean.Lesson;
+import com.ins.aimai.bean.Order;
+import com.ins.aimai.bean.Study;
 import com.ins.aimai.bean.Video;
 import com.ins.aimai.bean.VideoStatus;
 import com.ins.aimai.bean.common.EventBean;
@@ -37,6 +39,7 @@ import com.ins.aimai.ui.view.TextTabLayout;
 import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.utils.GlideUtil;
 import com.ins.common.utils.L;
+import com.ins.common.utils.ListUtil;
 import com.ins.common.utils.PermissionsUtil;
 import com.ins.common.utils.StatusBarTextUtil;
 import com.ins.common.utils.StrUtil;
@@ -64,6 +67,7 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
 
     private String[] titles = new String[]{"介绍", "目录", "讲义", "评论"};
 
+    private boolean needFreshTest;  //是否需要刷新学习考题统计（新的需要要求从课程学习页面进入视频播放页后同时刷新考题统计）
     private int lessonId;
     private int orderId;
     private Lesson lesson;  //课程
@@ -73,15 +77,27 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
     //是否自动开始播放
     private boolean autoPlay = false;
 
-    public static void start(Context context, int lessonId) {
+    public static void startByLesson(Context context, int lessonId) {
         Intent intent = new Intent(context, VideoActivity.class);
         intent.putExtra("lessonId", lessonId);
+        intent.putExtra("type", 0);
         context.startActivity(intent);
     }
 
-    public static void startByOrder(Context context, int orderId) {
+    public static void startByOrder(Context context, Study study) {
+        startByOrder(context, study.getOrderId(), study.getId(), true);
+    }
+
+    public static void startByOrder(Context context, Order order) {
+        startByOrder(context, order.getId(), order.getCurriculumId(), false);
+    }
+
+    private static void startByOrder(Context context, int orderId, int lessonId, boolean needFreshTest) {
         Intent intent = new Intent(context, VideoActivity.class);
         intent.putExtra("orderId", orderId);
+        intent.putExtra("lessonId", lessonId);
+        intent.putExtra("needFreshTest", needFreshTest);
+        intent.putExtra("type", 1);
         context.startActivity(intent);
     }
 
@@ -102,7 +118,8 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
             VideoFinishStatus videoFinishStatus = (VideoFinishStatus) event.get("videoFinishStatus");
             if (!videoFinishStatus.isAllHide()) {
                 //如果有试题就提示去做题
-                dialogToExam.setData(videoFinishStatus);
+                boolean hasNextVideo = AppHelper.VideoPlay.hasNextVideo(lesson, video);
+                dialogToExam.setData(videoFinishStatus, hasNextVideo);
                 dialogToExam.show();
             } else {
                 //否则直接播放下一个视频
@@ -131,13 +148,24 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
         initData();
     }
 
+    @Override
+    public void finish() {
+        super.finish();
+        if (needFreshTest) EventBus.getDefault().post(new EventBean(EventBean.EVENT_FRESHTEST));
+    }
+
     private void initBase() {
+        if (getIntent().hasExtra("type")) {
+            type = getIntent().getIntExtra("type", 0);
+        }
         if (getIntent().hasExtra("lessonId")) {
             lessonId = getIntent().getIntExtra("lessonId", 0);
         }
         if (getIntent().hasExtra("orderId")) {
             orderId = getIntent().getIntExtra("orderId", 0);
-            type = 1;
+        }
+        if (getIntent().hasExtra("needFreshTest")) {
+            needFreshTest = getIntent().getBooleanExtra("needFreshTest", false);
         }
         dialogToExam = new DialogToExam(this);
         dialogSureFace = new DialogSureAimai(this, "身份验证", "我们需要验证您是否本人观看，点击‘开始验证’将对您进行人脸识别，如果您取消了本次验证将讲无法继续观看后面的课程", "取消", "开始验证");
@@ -213,7 +241,7 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
         //player.enableDanmaku();
         //player.setDanmakuSource(getResources().openRawResource(R.raw.bili));
         player.setVideoSource(null, AppData.Url.getVideoUrl(video.getLowDefinition()), AppData.Url.getVideoUrl(video.getHighDefinition()), null, null);
-        player.setMediaQuality(IjkPlayerView.MEDIA_QUALITY_HIGH);
+        player.setMediaQuality(AppHelper.UserHelp.isHighDefinition() ? IjkPlayerView.MEDIA_QUALITY_HIGH : IjkPlayerView.MEDIA_QUALITY_MEDIUM);
         if (!AppHelper.VideoPlay.isVideoFreeCtrl(video, type)) {
             VideoStatus videoStatus = video.getVideoStatus();
             player.setNeedLimit(true);

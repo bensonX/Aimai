@@ -19,4 +19,9 @@ public class ListUtil {
             return null;
         }
     }
+
+    //取列表最后一个，如果越界或者空返回null
+    public static <T> T getLast(List<T> list) {
+        return get(list, list.size() - 1);
+    }
 }

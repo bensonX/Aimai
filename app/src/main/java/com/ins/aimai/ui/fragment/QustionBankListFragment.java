@@ -142,10 +142,10 @@ public class QustionBankListFragment extends BaseFragment implements OnRecycleIt
         switch (activity.getType()) {
             case 0:
                 if (examPractice.getExaminationNum() == 0) {
-                    ToastUtil.showToastShort("该课程还没有练习题");
+                    ToastUtil.showToastShort("该课时还没有练习题");
                 }
                 else if (examPractice.getIsStudy() == 0) {
-                    ToastUtil.showToastShort("您还没有学完该课程");
+                    ToastUtil.showToastShort("您还没有学完该课时");
                 }
                 else if (examPractice.getIsExamination() == 1) {
                     //练习题已经做完
@@ -156,7 +156,7 @@ public class QustionBankListFragment extends BaseFragment implements OnRecycleIt
                 break;
             case 1:
                 if (examPractice.getExaminationNum() == 0) {
-                    ToastUtil.showToastShort("该课程没有错题");
+                    ToastUtil.showToastShort("该课时没有错题");
                 }
                 //错题库
                 QuestionAnalysisActivity.startErrorWithCate(getActivity(), orderId, examPractice.getCourseWareId(), lessonName, examPractice.getCourseWareName());

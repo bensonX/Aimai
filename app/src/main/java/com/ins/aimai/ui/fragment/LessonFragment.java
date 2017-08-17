@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -140,7 +139,7 @@ public class LessonFragment extends BaseFragment implements OnLessonClickListene
             @Override
             public void onItemClick(RecyclerView.ViewHolder viewHolder) {
                 Lesson lesson = adapterTasteBanner.getResults().get(viewHolder.getLayoutPosition());
-                VideoActivity.start(getContext(), lesson.getId());
+                VideoActivity.startByLesson(getContext(), lesson.getId());
             }
         });
     }

@@ -3,6 +3,7 @@ package com.ins.aimai.common;
 import android.text.TextUtils;
 
 import com.ins.aimai.bean.Address;
+import com.ins.aimai.bean.Trade;
 import com.ins.aimai.bean.User;
 import com.ins.common.utils.ValidateUtil;
 
@@ -76,11 +77,35 @@ public class AppVali {
         }
     }
 
-    public static String faceRecord(String faceId, String path) {
-        if (isEmpty(faceId) || isEmpty(path)) {
-            return "请先进行人像采集";
+    public static String faceRecord(User user, String faceId, String path, Trade trade, Address address) {
+        if (user.isUser()) {
+            if (address == null) {
+                return "请先选择所在地";
+            } else if (isEmpty(faceId) || isEmpty(path)) {
+                return "请先进行人像采集";
+            } else {
+                return null;
+            }
+        } else if (user.isCompUser()) {
+            if (address == null) {
+                return "请先选择所在地";
+            } else if (trade == null) {
+                return "请先选择行业";
+            } else if (isEmpty(path)) {
+                return "请先录入营业执照";
+            } else {
+                return null;
+            }
+        } else if (user.isGovUser()) {
+            if (address == null) {
+                return "请先选择所在地";
+            } else if (isEmpty(path)) {
+                return "请先录入介绍信";
+            } else {
+                return null;
+            }
         } else {
-            return null;
+            return "不是移动端角色";
         }
     }
 

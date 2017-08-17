@@ -55,6 +55,8 @@ public class LearnTestFragment extends BaseFragment implements View.OnClickListe
     public void onCommonEvent(EventBean event) {
         if (event.getEvent() == EventBean.EVENT_EXAM_SUBMITED) {
             netStatisLearn();
+        } else if (event.getEvent() == EventBean.EVENT_FRESHTEST) {
+            netStatisLearn();
         }
     }
 

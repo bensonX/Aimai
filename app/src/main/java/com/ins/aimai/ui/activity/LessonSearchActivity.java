@@ -1,6 +1,5 @@
 package com.ins.aimai.ui.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,11 +12,9 @@ import android.widget.EditText;
 
 import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
-import com.ins.aimai.bean.Info;
 import com.ins.aimai.bean.Lesson;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.helper.NetListHelper;
-import com.ins.aimai.ui.adapter.RecycleAdapterHomeInfo;
 import com.ins.aimai.ui.adapter.RecycleAdapterLesson;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.common.common.ItemDecorationDivider;
@@ -147,7 +144,7 @@ public class LessonSearchActivity extends BaseAppCompatActivity implements OnRec
         Lesson lesson = adapter.getResults().get(viewHolder.getLayoutPosition());
         if (lesson.getType() == 0) {
             //试听
-            VideoActivity.start(this, lesson.getId());
+            VideoActivity.startByLesson(this, lesson.getId());
         } else {
             LessonDetailActivity.startByLesson(this, lesson.getId());
         }

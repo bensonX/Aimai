@@ -139,6 +139,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             img_me_header.setImageResource(R.drawable.default_header);
             text_me_name.setText("登录");
             text_me_grade.setVisibility(View.GONE);
+            lay_me_safe.setVisibility(View.GONE);
         }
     }
 

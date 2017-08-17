@@ -157,7 +157,7 @@ public class ModelOffiActivity extends BaseAppCompatActivity implements OnRecycl
                     ExamResultActivity.start(this, exam.getPaperId(), exam.getOrderId(), type);
                     return;
                 } else {
-                    DialogSure.showDialog(this, "确定要开始正式考试？", new DialogSure.CallBack() {
+                    DialogSure.showDialog(this, "您确定开始正式考试吗，中途退出或有意外情况均视为交卷，请准备好再进行！", new DialogSure.CallBack() {
                         @Override
                         public void onSure() {
                             ExamActivity.startOfficial(ModelOffiActivity.this, exam);

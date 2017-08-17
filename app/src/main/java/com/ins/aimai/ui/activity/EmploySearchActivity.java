@@ -87,6 +87,7 @@ public class EmploySearchActivity extends BaseAppCompatActivity implements OnRec
         recycler = (RecyclerView) findViewById(R.id.recycler);
         springView = (SpringView) findViewById(R.id.spring);
         findViewById(R.id.btn_right).setOnClickListener(this);
+        findViewById(R.id.btn_left).setOnClickListener(this);
     }
 
     private void initCtrl() {
@@ -139,8 +140,14 @@ public class EmploySearchActivity extends BaseAppCompatActivity implements OnRec
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.btn_left:
+                onBackPressed();
+                break;
             case R.id.btn_right:
-                finish();
+                if (!TextUtils.isEmpty(edit_employ_search.getText().toString())) {
+                    edit_employ_search.setText("");
+                    netQueryUser(0);
+                }
                 break;
         }
     }

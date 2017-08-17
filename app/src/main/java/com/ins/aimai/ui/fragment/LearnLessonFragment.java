@@ -136,9 +136,9 @@ public class LearnLessonFragment extends BaseFragment implements OnRecycleItemCl
         Study study = results.get(viewHolder.getLayoutPosition());
         //个人进入播放页面，其余进入详情页面
         if (AppHelper.isUser()) {
-            VideoActivity.startByOrder(getContext(), study.getOrderId());
+            VideoActivity.startByOrder(getContext(), study);
         } else {
-            LessonDetailActivity.startByOrder(getContext(), study.getOrderId());
+            LessonDetailActivity.startByOrder(getContext(), study);
         }
     }
 

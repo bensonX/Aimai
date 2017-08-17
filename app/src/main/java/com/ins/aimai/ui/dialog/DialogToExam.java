@@ -37,6 +37,7 @@ public class DialogToExam extends Dialog implements View.OnClickListener {
     private View lay_toexam_model;
     private View lay_toexam_office;
     private View lay_toexam_btns;
+    private View lay_toexam_next;
 
     private String msg;
     private String title;
@@ -97,6 +98,7 @@ public class DialogToExam extends Dialog implements View.OnClickListener {
         lay_toexam_model = v.findViewById(R.id.lay_toexam_model);
         lay_toexam_office = v.findViewById(R.id.lay_toexam_office);
         lay_toexam_btns = v.findViewById(R.id.lay_toexam_btns);
+        lay_toexam_next = v.findViewById(R.id.lay_toexam_next);
 
         FontUtils.boldText(text_toexam_title);
         FontUtils.boldText(text_toexam_msg);
@@ -138,7 +140,7 @@ public class DialogToExam extends Dialog implements View.OnClickListener {
         }
     }
 
-    public void setData(VideoFinishStatus videoFinishStatus) {
+    public void setData(VideoFinishStatus videoFinishStatus, boolean hasNext) {
         if (!videoFinishStatus.isShowPractice() && !videoFinishStatus.isShowModel() && !videoFinishStatus.isShowOffi()) {
             lay_toexam_btns.setVisibility(View.GONE);
         } else {
@@ -146,6 +148,7 @@ public class DialogToExam extends Dialog implements View.OnClickListener {
             lay_toexam_model.setVisibility(videoFinishStatus.isShowModel() ? View.VISIBLE : View.GONE);
             lay_toexam_office.setVisibility(videoFinishStatus.isShowOffi() ? View.VISIBLE : View.GONE);
         }
+        lay_toexam_next.setVisibility(hasNext ? View.VISIBLE : View.GONE);
     }
 
     public void setTitle(String title) {

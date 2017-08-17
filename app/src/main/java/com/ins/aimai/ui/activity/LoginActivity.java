@@ -10,6 +10,7 @@ import com.ins.aimai.R;
 import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.bean.User;
 import com.ins.aimai.common.AppData;
+import com.ins.aimai.common.AppHelper;
 import com.ins.aimai.common.AppVali;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
@@ -119,14 +120,14 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
         NetApi.NI().login(param).enqueue(new BaseCallback<User>(User.class) {
             @Override
             public void onSuccess(int status, User user, String msg) {
-                if (!StrUtil.isEmpty(user.getFaceId())) {
+                if (!AppHelper.LoginHelp.isNeedRecord(user)) {
                     AppData.App.saveUser(user);
                     AppData.App.saveToken(user.getToken());
                     EventBus.getDefault().post(new EventBean(EventBean.EVENT_LOGIN));
                     hideLoadingDialog();
                     HomeActivity.start(LoginActivity.this);
                 } else {
-                    ToastUtil.showToastShort("您必须采集人像信息后才能登陆");
+                    ToastUtil.showToastShort("您必须完善个人资料后才能登陆");
                     hideLoadingDialog();
                     FaceResordActivity.start(LoginActivity.this, user);
                 }
