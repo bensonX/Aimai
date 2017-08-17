@@ -2,17 +2,21 @@ package com.ins.aimai.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
@@ -164,10 +168,26 @@ public class VideoCommentFragment extends BaseFragment implements View.OnClickLi
             public void afterTextChanged(Editable s) {
             }
         });
+        setEditPosition();
     }
 
     private void initData() {
         netQueryComments(1);
+    }
+
+    //设置edit板块始终固定在屏幕底部
+    private void setEditPosition() {
+        if (getActivity() instanceof VideoActivity) {
+            AppBarLayout appbar = ((VideoActivity) getActivity()).getAppbar();
+            appbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+                @Override
+                public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                    FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) lay_comment_send.getLayoutParams();
+                    layoutParams.bottomMargin = appBarLayout.getTotalScrollRange() - Math.abs(verticalOffset);
+                    lay_comment_send.setLayoutParams(layoutParams);
+                }
+            });
+        }
     }
 
     private void setTextSize(int sizeType) {

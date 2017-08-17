@@ -22,6 +22,7 @@ import com.ins.aimai.common.AppHelper;
 import com.ins.aimai.ui.adapter.RecycleAdapterVideoDirectory;
 import com.ins.aimai.ui.base.BaseFragment;
 import com.ins.aimai.ui.base.BaseVideoActivity;
+import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.helper.LoadingViewHelper;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
 import com.ins.common.utils.StrUtil;
@@ -130,8 +131,13 @@ public class VideoDirectotyFragment extends BaseFragment implements OnRecycleIte
 
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
-        Video video = adapter.getResults().get(viewHolder.getLayoutPosition());
-        playVideo(video);
+        List<Video> videos = adapter.getResults();
+        Video clickVideo = videos.get(viewHolder.getLayoutPosition());
+        if (AppHelper.VideoPlay.couldPlayVideo(clickVideo, videos)) {
+            playVideo(clickVideo);
+        }else {
+            ToastUtil.showToastShort("你不能直接跳到该视频");
+        }
     }
 
     private void playVideo(Video video) {

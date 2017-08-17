@@ -3,6 +3,7 @@ package com.ins.aimai.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -44,6 +45,7 @@ import com.ins.common.utils.PermissionsUtil;
 import com.ins.common.utils.StatusBarTextUtil;
 import com.ins.common.utils.StrUtil;
 import com.ins.common.utils.others.CommonUtil;
+import com.liaoinstan.springview.listener.AppBarStateChangeListener;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -55,6 +57,7 @@ import tv.danmaku.ijk.media.player.IMediaPlayer;
 public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnInfoListener, OnProgressChageListener, NetFaceHelper.OnFaceCompareCallback, View.OnClickListener {
 
     private CollapsingToolbarLayout collapsingToolbarLayout;
+    private AppBarLayout appbar;
 
     private ImageView btn_right;
     private IjkPlayerView player;
@@ -181,6 +184,7 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
     }
 
     private void initView() {
+        appbar = (AppBarLayout) findViewById(R.id.appbar);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbarLayout);
         btn_right = (ImageView) findViewById(R.id.btn_right);
         tab = (TextTabLayout) findViewById(R.id.tab);
@@ -437,5 +441,9 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
 
     public List<FaceRecord> getFaceRecords() {
         return faceRecords;
+    }
+
+    public AppBarLayout getAppbar() {
+        return appbar;
     }
 }

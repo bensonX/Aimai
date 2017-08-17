@@ -221,6 +221,18 @@ public class AppHelper {
             return null;
         }
 
+        //获取上一个待播放视频
+        public static Video getLastVideo(List<Video> videos, Video videoNow) {
+            if (StrUtil.isEmpty(videos) || videoNow == null) return null;
+            for (int i = 0; i < videos.size(); i++) {
+                Video video = videos.get(i);
+                if (video.getId() == videoNow.getId()) {
+                    return ListUtil.get(videos, i - 1);
+                }
+            }
+            return null;
+        }
+
         //是否还有下一个视频
         public static boolean hasNextVideo(Lesson lesson, Video videoNow) {
             if (lesson == null || StrUtil.isEmpty(lesson.getCourseWares()))
@@ -228,6 +240,22 @@ public class AppHelper {
             List<Video> videos = convertVideosByCourseWares(lesson.getCourseWares());
             Video nextVideo = getNextVideo(videos, videoNow);
             if (nextVideo == null) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        //检查该视频能不能播放（未播放的视频只能按顺序播放）
+        public static boolean couldPlayVideo(Video clickVideo, List<Video> videos) {
+            if (clickVideo == null || StrUtil.isEmpty(videos)) return false;
+            //点击的视频已经是播放完成的视频，则可以播放
+            if (isVideoStatusFinish(clickVideo)) return true;
+            //如果点击的视频是第一个视频，可以播放
+            if (clickVideo.getId() == videos.get(0).getId()) return true;
+            Video lastVideo = getLastVideo(videos, clickVideo);
+            //如果点击的视频的上一个视频是播放完成的，则可以播放，否则不能
+            if (isVideoStatusFinish(lastVideo)) {
                 return true;
             } else {
                 return false;
