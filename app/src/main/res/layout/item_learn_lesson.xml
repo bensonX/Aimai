@@ -89,11 +89,11 @@
             <TextView
                 android:id="@+id/text_item_study_learntime"
                 android:layout_width="0dp"
-                android:layout_height="19dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawableLeft="@drawable/ic_lesson_tv"
+                android:drawableLeft="@drawable/ic_learn_check_small_hot"
                 android:drawablePadding="3dp"
-                android:gravity="bottom"
+                android:gravity="center_vertical"
                 android:text="已学习0小时"
                 android:textColor="@color/com_text_blank"
                 android:textSize="@dimen/text_nomal_small" />
@@ -101,10 +101,10 @@
             <TextView
                 android:id="@+id/text_item_study_totaltime"
                 android:layout_width="wrap_content"
-                android:layout_height="19dp"
-                android:drawableLeft="@drawable/ic_lesson_tv"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_learn_add"
                 android:drawablePadding="3dp"
-                android:gravity="bottom"
+                android:gravity="center_vertical"
                 android:paddingLeft="3dp"
                 android:text="共0小时"
                 android:textColor="@color/com_text_blank"

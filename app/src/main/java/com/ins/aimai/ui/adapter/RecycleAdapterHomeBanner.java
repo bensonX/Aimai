@@ -12,6 +12,7 @@ import com.alibaba.android.vlayout.LayoutHelper;
 import com.bumptech.glide.Glide;
 import com.ins.aimai.R;
 import com.ins.aimai.common.AppData;
+import com.ins.aimai.net.NetApi;
 import com.ins.aimai.ui.activity.InfoActivity;
 import com.ins.aimai.ui.activity.WebActivity;
 import com.ins.common.entity.Image;
@@ -65,19 +66,19 @@ public class RecycleAdapterHomeBanner extends DelegateAdapter.Adapter<RecycleAda
         holder.lay_home_about.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebActivity.start(context, "关于我们", AppData.Url.about);
+                WebActivity.start(context, "关于我们", NetApi.getBaseUrl() + AppData.Url.about);
             }
         });
         holder.lay_home_quali.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebActivity.start(context, "资质", AppData.Url.quelity);
+                WebActivity.start(context, "资质", NetApi.getBaseUrl() + AppData.Url.quelity);
             }
         });
         holder.lay_home_station.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebActivity.start(context, "网点", AppData.Url.netpoint);
+                WebActivity.start(context, "网点", NetApi.getBaseUrl() + AppData.Url.netpoint);
             }
         });
     }

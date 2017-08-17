@@ -13,6 +13,7 @@ import com.ins.aimai.R;
 import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.bean.User;
 import com.ins.aimai.common.AppData;
+import com.ins.aimai.net.NetApi;
 import com.ins.aimai.ui.activity.FavoActivity;
 import com.ins.aimai.ui.activity.LoginActivity;
 import com.ins.aimai.ui.activity.MeDetailActivity;
@@ -20,6 +21,7 @@ import com.ins.aimai.ui.activity.MsgActivity;
 import com.ins.aimai.ui.activity.OrderActivity;
 import com.ins.aimai.ui.activity.SettingActivity;
 import com.ins.aimai.ui.activity.SuggestActivity;
+import com.ins.aimai.ui.activity.WebActivity;
 import com.ins.aimai.ui.base.BaseFragment;
 import com.ins.common.utils.GlideUtil;
 
@@ -162,6 +164,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             case R.id.text_me_grade:
                 break;
             case R.id.text_me_safe:
+                WebActivity.start(getActivity(), "安全巡监", NetApi.getBaseUrl() + AppData.Url.safe);
                 break;
             case R.id.text_me_suggest:
                 SuggestActivity.start(getContext());

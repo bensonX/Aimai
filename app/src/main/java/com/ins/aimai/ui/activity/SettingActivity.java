@@ -99,7 +99,7 @@ public class SettingActivity extends BaseAppCompatActivity implements View.OnCli
                 VersionActivity.start(this);
                 break;
             case R.id.text_setting_about:
-                WebActivity.start(this, "关于我们", "http://www.baidu.com");
+                WebActivity.start(this, "关于我们", NetApi.getBaseUrl() + AppData.Url.about);
                 break;
             case R.id.text_setting_logout:
                 DialogSure.showDialog(this, "确定要退出登录？", new DialogSure.CallBack() {

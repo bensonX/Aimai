@@ -134,6 +134,9 @@ public class ModelOffiActivity extends BaseAppCompatActivity implements OnRecycl
                 if (exam.getExaminationNum() == 0) {
                     ToastUtil.showToastShort("该课程还没有模拟题");
                     return;
+                } else if (exam.getIsFinishCurriculum() == 0) {
+                    ToastUtil.showToastShort("该课程还没有学完");
+                    return;
                 } else if (exam.getIsFinish() == 1) {
                     //已模拟
                     ExamResultActivity.start(this, exam.getPaperId(), exam.getOrderId(), type);
@@ -146,6 +149,9 @@ public class ModelOffiActivity extends BaseAppCompatActivity implements OnRecycl
             case 2:
                 if (exam.getExaminationNum() == 0) {
                     ToastUtil.showToastShort("该课程还没有考试题");
+                    return;
+                } else if (exam.getIsFinishCurriculum() == 0) {
+                    ToastUtil.showToastShort("该课程还没有学完");
                     return;
                 } else if (exam.getPassNum() > 0) {
                     //已通过

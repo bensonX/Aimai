@@ -60,6 +60,8 @@ public class LearnLessonFragment extends BaseFragment implements OnRecycleItemCl
     public void onCommonEvent(EventBean event) {
         if (event.getEvent() == EventBean.EVENT_USER_ALLOCAT) {
             netQueryStudy(1);
+        }else if (event.getEvent() == EventBean.EVENT_FRESH_LERNLESSON) {
+            netQueryStudy(1);
         }
     }
 

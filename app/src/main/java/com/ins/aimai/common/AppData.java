@@ -106,9 +106,10 @@ public class AppData {
         public static String bannerInfo = "api/page/app/bannerInfo";                                            //banner详情?bannerId=1
         public static String newsInfo = "api/page/app/newsInfo";                                                //资讯详情?newsId=2
 
-        public static String quelity = "http://aq415.com/zixun-show.aspx?zixun_id=42";                //资质
-        public static String about = "http://aq415.com/zixun-show.aspx?zixun_id=33";                  //关于我们
-        public static String netpoint = "http://aq415.com/zixun-show.aspx?zixun_id=35";               //网点
+        public static String quelity = "api/page/aptitude";                //资质
+        public static String about = "api/page/aboutUs";                  //关于我们
+        public static String netpoint = "api/page/branch";               //网点
+        public static String safe = "api/page/polling";               //安全巡检
 
         //eyekey人脸识别接口
         public static String eyeCheck = domainEye + "face/Check/checking";                                                //人像解析

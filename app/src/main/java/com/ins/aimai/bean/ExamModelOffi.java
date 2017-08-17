@@ -59,6 +59,8 @@ public class ExamModelOffi implements Serializable {
     //新增字段
     //考试总时长
     private int useTime;
+    //是否看完课程 0:否  1:是
+    private int isFinishCurriculum;
 
     /** 获取 课程ID */
     public int getId() {
@@ -70,7 +72,16 @@ public class ExamModelOffi implements Serializable {
         this.id = id;
     }
 
+    public int getIsFinishCurriculum() {
+        return isFinishCurriculum;
+    }
+
+    public void setIsFinishCurriculum(int isFinishCurriculum) {
+        this.isFinishCurriculum = isFinishCurriculum;
+    }
+
     /** 获取 课程封面 */
+
     public String getCover() {
         return this.cover;
     }

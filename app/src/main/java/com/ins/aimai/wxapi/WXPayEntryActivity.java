@@ -111,6 +111,7 @@ public class WXPayEntryActivity extends BaseAppCompatActivity implements IWXAPIE
                 if (type == 0) {
                     //去我的课程
                     EventBus.getDefault().post(new EventBean(EventBean.EVENT_HOME_TAB_LESSON));
+                    EventBus.getDefault().post(new EventBean(EventBean.EVENT_FRESH_LERNLESSON));
                     HomeActivity.start(this);
                 } else {
                     //重新支付
