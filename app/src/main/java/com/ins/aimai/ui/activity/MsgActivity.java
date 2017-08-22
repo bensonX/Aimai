@@ -134,7 +134,11 @@ public class MsgActivity extends BaseAppCompatActivity implements OnRecycleItemC
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
         Msg msg = adapter.getResults().get(viewHolder.getLayoutPosition());
-        WebActivity.start(this, msg.getTitle(), "http://www.baidu.com");
+        if (msg.isLink()) {
+            WebActivity.start(this, msg.getTitle(), msg.getLinkUrl());
+        } else {
+            WebInfoActivity.start(this, msg);
+        }
         netCheckMsg(msg.getId());
         NetNewMsgHelper.getInstance().netHasNewMsg();
     }

@@ -73,6 +73,19 @@
                         android:textColor="@color/white"
                         android:textSize="@dimen/text_big" />
 
+                    <TextView
+                        android:id="@+id/text_me_introduce"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginRight="40dp"
+                        android:layout_marginTop="7dp"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_nomal"
+                        tools:text="我的介绍非常非常的长，以至于可以占好几行，长到UI都不能正常显示，可以把头像都订到很上面去" />
                 </LinearLayout>
 
             </FrameLayout>

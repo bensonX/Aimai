@@ -172,7 +172,7 @@
                         android:drawablePadding="5dp"
                         android:drawableRight="@drawable/ic_learn_next"
                         android:gravity="center"
-                        android:text="去练习"
+                        android:text="查看"
                         android:textColor="@color/com_text_dark"
                         android:textSize="@dimen/text_nomal_small" />
 

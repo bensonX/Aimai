@@ -96,6 +96,47 @@
                 style="@style/Line_H"
                 android:layout_marginLeft="10dp" />
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="50dp"
+                android:gravity="top"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="介绍"
+                    android:textColor="@color/com_text_blank"
+                    android:textSize="@dimen/text_nomal" />
+
+                <EditText
+                    android:id="@+id/edit_medetail_introduce"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:background="@color/none"
+                    android:lineSpacingExtra="3dp"
+                    android:hint="请输入自己的介绍"
+                    android:maxLines="5"
+                    android:paddingRight="10dp"
+                    android:textColor="@color/com_text_blank_deep_light"
+                    android:textColorHint="@color/com_text_dark"
+                    android:textSize="@dimen/text_nomal" />
+
+            </LinearLayout>
+
+            <View
+                style="@style/Line_H"
+                android:layout_marginLeft="10dp" />
+
             <LinearLayout
                 android:id="@+id/lay_medetail_header"
                 android:layout_width="match_parent"

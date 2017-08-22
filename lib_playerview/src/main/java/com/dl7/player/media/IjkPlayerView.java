@@ -179,8 +179,10 @@ public class IjkPlayerView extends FrameLayout implements View.OnClickListener {
                 final int pos = _setProgress();
                 //只有进度面板和快进面板有一个可见就需要循环消息更新进度
                 boolean fastVisible = mTvFastForward.getVisibility() == VISIBLE;
+                boolean loadingVisible = mLoadingView.getVisibility() == VISIBLE;
                 //由于要实时监听播放进度，所以即便在进度条不可见的状态下也要发送更新消息，所以注释了下面一行代码的验证mIsShowBar || fastVisible
-                if (/*(mIsShowBar || fastVisible) &&*/ mVideoView.isPlaying()) {
+                //视频缓存的时候（加载视图处于显示状态）不能继续计时，所以loadingView不可见的时候（!loadingVisible）才能继续计时
+                if (/*(mIsShowBar || fastVisible) &&*/!loadingVisible && mVideoView.isPlaying()) {
                     // 这里会重复发送MSG，已达到实时更新 Seek 的效果
                     msg = obtainMessage(MSG_UPDATE_SEEK);
                     sendMessageDelayed(msg, 1000 - (pos % 1000));
@@ -359,6 +361,7 @@ public class IjkPlayerView extends FrameLayout implements View.OnClickListener {
         // 触摸控制
         mGestureDetector = new GestureDetector(mAttachActivity, mPlayerGestureListener);
         mFlVideoBox.setClickable(true);
+        //屏蔽多指旋转视频
         mFlVideoBox.setOnTouchListener(mPlayerTouchListener);
         // 屏幕翻转控制
         mOrientationListener = new OrientationEventListener(mAttachActivity) {
@@ -1255,16 +1258,16 @@ public class IjkPlayerView extends FrameLayout implements View.OnClickListener {
                     isDownTouch = false;
                 }
 
-                if (isLandscape) {
-                    _onProgressSlide(-deltaX / mVideoView.getWidth());
-                } else {
-                    float percent = deltaY / mVideoView.getHeight();
-                    if (isVolume) {
-                        _onVolumeSlide(percent);
-                    } else {
-                        _onBrightnessSlide(percent);
-                    }
-                }
+//                if (isLandscape) {
+//                    _onProgressSlide(-deltaX / mVideoView.getWidth());
+//                } else {
+//                    float percent = deltaY / mVideoView.getHeight();
+//                    if (isVolume) {
+//                        _onVolumeSlide(percent);
+//                    } else {
+//                        _onBrightnessSlide(percent);
+//                    }
+//                }
             }
             return super.onScroll(e1, e2, distanceX, distanceY);
         }
@@ -1313,70 +1316,71 @@ public class IjkPlayerView extends FrameLayout implements View.OnClickListener {
     private OnTouchListener mPlayerTouchListener = new OnTouchListener() {
         // 触摸模式：正常、无效、缩放旋转
         private static final int NORMAL = 1;
-        private static final int INVALID_POINTER = 2;
-        private static final int ZOOM_AND_ROTATE = 3;
+        //        private static final int INVALID_POINTER = 2;
+//        private static final int ZOOM_AND_ROTATE = 3;
         // 触摸模式
         private int mode = NORMAL;
         // 缩放的中点
-        private PointF midPoint = new PointF(0, 0);
+//        private PointF midPoint = new PointF(0, 0);
         // 旋转角度
-        private float degree = 0;
+//        private float degree = 0;
         // 用来标识哪两个手指靠得最近，我的做法是取最近的两指中点和余下一指来控制旋转缩放
-        private int fingerFlag = INVALID_VALUE;
+//        private int fingerFlag = INVALID_VALUE;
         // 初始间距
-        private float oldDist;
+//        private float oldDist;
         // 缩放比例
-        private float scale;
+//        private float scale;
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            switch (MotionEventCompat.getActionMasked(event)) {
-                case MotionEvent.ACTION_DOWN:
-                    mode = NORMAL;
-                    mHandler.removeCallbacks(mHideBarRunnable);
-                    break;
-
-                case MotionEvent.ACTION_POINTER_DOWN:
-                    if (event.getPointerCount() == 3 && mIsFullscreen) {
-                        _hideTouchView();
-                        // 进入三指旋转缩放模式，进行相关初始化
-                        mode = ZOOM_AND_ROTATE;
-                        MotionEventUtils.midPoint(midPoint, event);
-                        fingerFlag = MotionEventUtils.calcFingerFlag(event);
-                        degree = MotionEventUtils.rotation(event, fingerFlag);
-                        oldDist = MotionEventUtils.calcSpacing(event, fingerFlag);
-                        // 获取视频的 Matrix
-                        mSaveMatrix = mVideoView.getVideoTransform();
-                    } else {
-                        mode = INVALID_POINTER;
-                    }
-                    break;
-
-                case MotionEvent.ACTION_MOVE:
-                    if (mode == ZOOM_AND_ROTATE) {
-                        // 处理旋转
-                        float newRotate = MotionEventUtils.rotation(event, fingerFlag);
-                        mVideoView.setVideoRotation((int) (newRotate - degree));
-                        // 处理缩放
-                        mVideoMatrix.set(mSaveMatrix);
-                        float newDist = MotionEventUtils.calcSpacing(event, fingerFlag);
-                        scale = newDist / oldDist;
-                        mVideoMatrix.postScale(scale, scale, midPoint.x, midPoint.y);
-                        mVideoView.setVideoTransform(mVideoMatrix);
-                    }
-                    break;
-
-                case MotionEvent.ACTION_POINTER_UP:
-                    if (mode == ZOOM_AND_ROTATE) {
-                        // 调整视频界面，让界面居中显示在屏幕
-                        mIsNeedRecoverScreen = mVideoView.adjustVideoView(scale);
-                        if (mIsNeedRecoverScreen && mIsShowBar) {
-                            mTvRecoverScreen.setVisibility(VISIBLE);
-                        }
-                    }
-                    mode = INVALID_POINTER;
-                    break;
-            }
+            //屏蔽旋转操作
+//            switch (MotionEventCompat.getActionMasked(event)) {
+//                case MotionEvent.ACTION_DOWN:
+//                    mode = NORMAL;
+//                    mHandler.removeCallbacks(mHideBarRunnable);
+//                    break;
+//
+//                case MotionEvent.ACTION_POINTER_DOWN:
+//                    if (event.getPointerCount() == 3 && mIsFullscreen) {
+//                        _hideTouchView();
+//                        // 进入三指旋转缩放模式，进行相关初始化
+//                        mode = ZOOM_AND_ROTATE;
+//                        MotionEventUtils.midPoint(midPoint, event);
+//                        fingerFlag = MotionEventUtils.calcFingerFlag(event);
+//                        degree = MotionEventUtils.rotation(event, fingerFlag);
+//                        oldDist = MotionEventUtils.calcSpacing(event, fingerFlag);
+//                        // 获取视频的 Matrix
+//                        mSaveMatrix = mVideoView.getVideoTransform();
+//                    } else {
+//                        mode = INVALID_POINTER;
+//                    }
+//                    break;
+//
+//                case MotionEvent.ACTION_MOVE:
+//                    if (mode == ZOOM_AND_ROTATE) {
+//                        // 处理旋转
+//                        float newRotate = MotionEventUtils.rotation(event, fingerFlag);
+//                        mVideoView.setVideoRotation((int) (newRotate - degree));
+//                        // 处理缩放
+//                        mVideoMatrix.set(mSaveMatrix);
+//                        float newDist = MotionEventUtils.calcSpacing(event, fingerFlag);
+//                        scale = newDist / oldDist;
+//                        mVideoMatrix.postScale(scale, scale, midPoint.x, midPoint.y);
+//                        mVideoView.setVideoTransform(mVideoMatrix);
+//                    }
+//                    break;
+//
+//                case MotionEvent.ACTION_POINTER_UP:
+//                    if (mode == ZOOM_AND_ROTATE) {
+//                        // 调整视频界面，让界面居中显示在屏幕
+//                        mIsNeedRecoverScreen = mVideoView.adjustVideoView(scale);
+//                        if (mIsNeedRecoverScreen && mIsShowBar) {
+//                            mTvRecoverScreen.setVisibility(VISIBLE);
+//                        }
+//                    }
+//                    mode = INVALID_POINTER;
+//                    break;
+//            }
             // 触屏手势处理
             if (mode == NORMAL) {
                 if (mGestureDetector.onTouchEvent(event)) {
@@ -1472,36 +1476,36 @@ public class IjkPlayerView extends FrameLayout implements View.OnClickListener {
      *
      * @param percent 拖拽百分比
      */
-    private void _onProgressSlide(float percent) {
-        int position = mVideoView.getCurrentPosition();
-        long duration = mVideoView.getDuration();
-        // 单次拖拽最大时间差为100秒或播放时长的1/2
-        long deltaMax = Math.min(100 * 1000, duration / 2);
-        // 计算滑动时间
-        long delta = (long) (deltaMax * percent);
-        // 目标位置
-        mTargetPosition = delta + position;
-        if (mTargetPosition > duration) {
-            mTargetPosition = duration;
-        } else if (mTargetPosition <= 0) {
-            mTargetPosition = 0;
-        }
-        if (needLimit) {
-            //如果是限制快进模式，则后滑的时间不能超过临界时间
-            if (mTargetPosition > getSaveLimitTime()) {
-                mTargetPosition = getSaveLimitTime();
-            }
-        }
-        int deltaTime = (int) ((mTargetPosition - position) / 1000);
-        String desc;
-        // 对比当前位置来显示快进或后退
-        if (mTargetPosition > position) {
-            desc = generateTime(mTargetPosition) + "/" + generateTime(duration) + "\n" + "+" + deltaTime + "秒";
-        } else {
-            desc = generateTime(mTargetPosition) + "/" + generateTime(duration) + "\n" + deltaTime + "秒";
-        }
-        _setFastForward(desc);
-    }
+//    private void _onProgressSlide(float percent) {
+//        int position = mVideoView.getCurrentPosition();
+//        long duration = mVideoView.getDuration();
+//        // 单次拖拽最大时间差为100秒或播放时长的1/2
+//        long deltaMax = Math.min(100 * 1000, duration / 2);
+//        // 计算滑动时间
+//        long delta = (long) (deltaMax * percent);
+//        // 目标位置
+//        mTargetPosition = delta + position;
+//        if (mTargetPosition > duration) {
+//            mTargetPosition = duration;
+//        } else if (mTargetPosition <= 0) {
+//            mTargetPosition = 0;
+//        }
+//        if (needLimit) {
+//            //如果是限制快进模式，则后滑的时间不能超过临界时间
+//            if (mTargetPosition > getSaveLimitTime()) {
+//                mTargetPosition = getSaveLimitTime();
+//            }
+//        }
+//        int deltaTime = (int) ((mTargetPosition - position) / 1000);
+//        String desc;
+//        // 对比当前位置来显示快进或后退
+//        if (mTargetPosition > position) {
+//            desc = generateTime(mTargetPosition) + "/" + generateTime(duration) + "\n" + "+" + deltaTime + "秒";
+//        } else {
+//            desc = generateTime(mTargetPosition) + "/" + generateTime(duration) + "\n" + deltaTime + "秒";
+//        }
+//        _setFastForward(desc);
+//    }
 
     /**
      * 设置声音控制显示
@@ -1523,24 +1527,24 @@ public class IjkPlayerView extends FrameLayout implements View.OnClickListener {
      *
      * @param percent
      */
-    private void _onVolumeSlide(float percent) {
-        if (mCurVolume == INVALID_VALUE) {
-            mCurVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-            if (mCurVolume < 0) {
-                mCurVolume = 0;
-            }
-        }
-        int index = (int) (percent * mMaxVolume) + mCurVolume;
-        if (index > mMaxVolume) {
-            index = mMaxVolume;
-        } else if (index < 0) {
-            index = 0;
-        }
-        // 变更声音
-        mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, index, 0);
-        // 变更进度条
-        _setVolumeInfo(index);
-    }
+//    private void _onVolumeSlide(float percent) {
+//        if (mCurVolume == INVALID_VALUE) {
+//            mCurVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+//            if (mCurVolume < 0) {
+//                mCurVolume = 0;
+//            }
+//        }
+//        int index = (int) (percent * mMaxVolume) + mCurVolume;
+//        if (index > mMaxVolume) {
+//            index = mMaxVolume;
+//        } else if (index < 0) {
+//            index = 0;
+//        }
+//        // 变更声音
+//        mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, index, 0);
+//        // 变更进度条
+//        _setVolumeInfo(index);
+//    }
 
 
     /**
@@ -1573,40 +1577,40 @@ public class IjkPlayerView extends FrameLayout implements View.OnClickListener {
      *
      * @param brightness
      */
-    private void _setBrightnessInfo(float brightness) {
-        if (mFlTouchLayout.getVisibility() == View.GONE) {
-            mFlTouchLayout.setVisibility(View.VISIBLE);
-        }
-        if (mTvBrightness.getVisibility() == View.GONE) {
-            mTvBrightness.setVisibility(View.VISIBLE);
-        }
-        mTvBrightness.setText(Math.ceil(brightness * 100) + "%");
-    }
+//    private void _setBrightnessInfo(float brightness) {
+//        if (mFlTouchLayout.getVisibility() == View.GONE) {
+//            mFlTouchLayout.setVisibility(View.VISIBLE);
+//        }
+//        if (mTvBrightness.getVisibility() == View.GONE) {
+//            mTvBrightness.setVisibility(View.VISIBLE);
+//        }
+//        mTvBrightness.setText(Math.ceil(brightness * 100) + "%");
+//    }
 
     /**
      * 滑动改变亮度大小
      *
      * @param percent
      */
-    private void _onBrightnessSlide(float percent) {
-        if (mCurBrightness < 0) {
-            mCurBrightness = mAttachActivity.getWindow().getAttributes().screenBrightness;
-            if (mCurBrightness < 0.0f) {
-                mCurBrightness = 0.5f;
-            } else if (mCurBrightness < 0.01f) {
-                mCurBrightness = 0.01f;
-            }
-        }
-        WindowManager.LayoutParams attributes = mAttachActivity.getWindow().getAttributes();
-        attributes.screenBrightness = mCurBrightness + percent;
-        if (attributes.screenBrightness > 1.0f) {
-            attributes.screenBrightness = 1.0f;
-        } else if (attributes.screenBrightness < 0.01f) {
-            attributes.screenBrightness = 0.01f;
-        }
-        _setBrightnessInfo(attributes.screenBrightness);
-        mAttachActivity.getWindow().setAttributes(attributes);
-    }
+//    private void _onBrightnessSlide(float percent) {
+//        if (mCurBrightness < 0) {
+//            mCurBrightness = mAttachActivity.getWindow().getAttributes().screenBrightness;
+//            if (mCurBrightness < 0.0f) {
+//                mCurBrightness = 0.5f;
+//            } else if (mCurBrightness < 0.01f) {
+//                mCurBrightness = 0.01f;
+//            }
+//        }
+//        WindowManager.LayoutParams attributes = mAttachActivity.getWindow().getAttributes();
+//        attributes.screenBrightness = mCurBrightness + percent;
+//        if (attributes.screenBrightness > 1.0f) {
+//            attributes.screenBrightness = 1.0f;
+//        } else if (attributes.screenBrightness < 0.01f) {
+//            attributes.screenBrightness = 0.01f;
+//        }
+//        _setBrightnessInfo(attributes.screenBrightness);
+//        mAttachActivity.getWindow().setAttributes(attributes);
+//    }
 
     /**
      * 手势结束调用
@@ -1935,12 +1939,11 @@ public class IjkPlayerView extends FrameLayout implements View.OnClickListener {
      * @return
      */
     public IjkPlayerView setMediaQuality(@MediaQuality int quality) {
-        if (mCurSelectQuality == quality || mVideoSource.get(quality) == null) {
+        if (mVideoSource.get(quality) == null) {
             return this;
         }
         mQualityAdapter.setMediaQuality(quality);
-        mIvMediaQuality.setCompoundDrawablesWithIntrinsicBounds(null,
-                ContextCompat.getDrawable(mAttachActivity, QUALITY_DRAWABLE_RES[quality]), null, null);
+        mIvMediaQuality.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(mAttachActivity, QUALITY_DRAWABLE_RES[quality]), null, null);
         mIvMediaQuality.setText(mMediaQualityDesc[quality]);
         mCurSelectQuality = quality;
         if (mVideoView.isPlaying()) {

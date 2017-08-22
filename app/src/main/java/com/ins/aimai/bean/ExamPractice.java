@@ -29,6 +29,8 @@ public class ExamPractice implements Serializable {
     private int orderId;
     //错题数量
     private int errorNum;
+    //课程名称
+    private String curriculumName;
 
     public int getPaperId() {
         return paperId;
@@ -67,6 +69,14 @@ public class ExamPractice implements Serializable {
     /** 获取 课件名称 */
     public String getCourseWareName() {
         return this.courseWareName;
+    }
+
+    public String getCurriculumName() {
+        return curriculumName;
+    }
+
+    public void setCurriculumName(String curriculumName) {
+        this.curriculumName = curriculumName;
     }
 
     /** 设置 课件名称 */

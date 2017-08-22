@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.ins.aimai.R;
 import com.ins.aimai.bean.ExamResultPojo;
@@ -30,6 +31,7 @@ import java.util.Map;
 
 public class AnswerBoardActivity extends BaseAppCompatActivity implements OnRecycleItemClickListener, View.OnClickListener {
 
+    private TextView text_answerboard_title;
     private RecyclerView recycler;
     private RecycleAdapterAnswerBoard adapter;
 
@@ -37,10 +39,12 @@ public class AnswerBoardActivity extends BaseAppCompatActivity implements OnRecy
     private ArrayList<QuestionBean> questions;
     private int paperId;
     private int orderId;
+    private String title;
 
-    public static void start(Context context, ArrayList<QuestionBean> questions, int paperId, int orderId, int type) {
+    public static void start(Context context, ArrayList<QuestionBean> questions, String title, int paperId, int orderId, int type) {
         Intent intent = new Intent(context, AnswerBoardActivity.class);
         intent.putExtra("questions", questions);
+        intent.putExtra("title", title);
         intent.putExtra("paperId", paperId);
         intent.putExtra("orderId", orderId);
         intent.putExtra("type", type);
@@ -63,6 +67,9 @@ public class AnswerBoardActivity extends BaseAppCompatActivity implements OnRecy
         if (getIntent().hasExtra("questions")) {
             questions = (ArrayList<QuestionBean>) getIntent().getSerializableExtra("questions");
         }
+        if (getIntent().hasExtra("title")) {
+            title = getIntent().getStringExtra("title");
+        }
         if (getIntent().hasExtra("paperId")) {
             paperId = getIntent().getIntExtra("paperId", 0);
         }
@@ -75,6 +82,7 @@ public class AnswerBoardActivity extends BaseAppCompatActivity implements OnRecy
     }
 
     private void initView() {
+        text_answerboard_title = (TextView) findViewById(R.id.text_answerboard_title);
         recycler = (RecyclerView) findViewById(R.id.recycler);
         findViewById(R.id.btn_go).setOnClickListener(this);
     }
@@ -84,6 +92,8 @@ public class AnswerBoardActivity extends BaseAppCompatActivity implements OnRecy
         adapter.setOnItemClickListener(this);
         recycler.setLayoutManager(new GridLayoutManager(this, 5, GridLayoutManager.VERTICAL, false));
         recycler.setAdapter(adapter);
+
+        text_answerboard_title.setText(title);
     }
 
     private void initData() {

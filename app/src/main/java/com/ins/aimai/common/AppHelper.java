@@ -240,9 +240,9 @@ public class AppHelper {
             List<Video> videos = convertVideosByCourseWares(lesson.getCourseWares());
             Video nextVideo = getNextVideo(videos, videoNow);
             if (nextVideo == null) {
-                return true;
-            } else {
                 return false;
+            } else {
+                return true;
             }
         }
 
@@ -355,6 +355,15 @@ public class AppHelper {
                 }
             }
             return true;
+        }
+
+        //检查题目列表的最后一道题是否多选题
+        public static boolean checkLastQuestionIsMult(List<QuestionBean> questions) {
+            if (StrUtil.isEmpty(questions)) {
+                return false;
+            }
+            QuestionBean question = ListUtil.getLast(questions);
+            return question.isMultSelectQuestion();
         }
     }
 

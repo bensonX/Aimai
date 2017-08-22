@@ -246,6 +246,7 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
         //player.setDanmakuSource(getResources().openRawResource(R.raw.bili));
         player.setVideoSource(null, AppData.Url.getVideoUrl(video.getLowDefinition()), AppData.Url.getVideoUrl(video.getHighDefinition()), null, null);
         player.setMediaQuality(AppHelper.UserHelp.isHighDefinition() ? IjkPlayerView.MEDIA_QUALITY_HIGH : IjkPlayerView.MEDIA_QUALITY_MEDIUM);
+//        player.setMediaQuality(IjkPlayerView.MEDIA_QUALITY_HIGH);
         if (!AppHelper.VideoPlay.isVideoFreeCtrl(video, type)) {
             VideoStatus videoStatus = video.getVideoStatus();
             player.setNeedLimit(true);
@@ -317,10 +318,10 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
                     CommonUtil.setEnableCollapsing(collapsingToolbarLayout, true);
                     NetHelper.getInstance().netAddVideoStatus(video.getVideoStatus(), orderId, video.getId(), player.getCurPosition() / 1000, false);
                     break;
-                case MediaPlayerParams.STATE_PLAYING:   //播放中（继续）
-                    CommonUtil.setEnableCollapsing(collapsingToolbarLayout, false);
-                    NetHelper.getInstance().netAddVideoStatus(video.getVideoStatus(), orderId, video.getId(), player.getCurPosition() / 1000, false);
-                    break;
+//                case MediaPlayerParams.STATE_PLAYING:   //播放中（继续）
+//                    CommonUtil.setEnableCollapsing(collapsingToolbarLayout, false);
+//                    NetHelper.getInstance().netAddVideoStatus(video.getVideoStatus(), orderId, video.getId(), player.getCurPosition() / 1000, false);
+//                    break;
                 default:
                     break;
             }

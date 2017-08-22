@@ -59,25 +59,27 @@ public class ExamActivity extends BaseAppCompatActivity implements View.OnClickL
     private int paperId;
     private int orderId;
     private int useTime;    //考试时长（模拟题和正式考试题）
+    private String title;    //课程标题
 
     public static void startPractice(Context context, ExamPractice examPractice) {
-        start(context, 0, examPractice.getPaperId(), examPractice.getOrderId(), 0);
+        start(context, 0, examPractice.getPaperId(), examPractice.getOrderId(), 0, examPractice.getCurriculumName());
     }
 
     public static void startMoldel(Context context, ExamModelOffi exam) {
-        start(context, 1, exam.getPaperId(), exam.getOrderId(), exam.getUseTime());
+        start(context, 1, exam.getPaperId(), exam.getOrderId(), exam.getUseTime(), exam.getCurriculumName());
     }
 
     public static void startOfficial(Context context, ExamModelOffi exam) {
-        start(context, 2, exam.getPaperId(), exam.getOrderId(), exam.getUseTime());
+        start(context, 2, exam.getPaperId(), exam.getOrderId(), exam.getUseTime(), exam.getCurriculumName());
     }
 
-    private static void start(Context context, int type, int paperId, int orderId, int useTime) {
+    private static void start(Context context, int type, int paperId, int orderId, int useTime, String title) {
         Intent intent = new Intent(context, ExamActivity.class);
         intent.putExtra("type", type);
         intent.putExtra("paperId", paperId);
         intent.putExtra("orderId", orderId);
         intent.putExtra("useTime", useTime);
+        intent.putExtra("title", title);
         context.startActivity(intent);
     }
 
@@ -142,6 +144,9 @@ public class ExamActivity extends BaseAppCompatActivity implements View.OnClickL
         }
         if (getIntent().hasExtra("useTime")) {
             useTime = getIntent().getIntExtra("useTime", 0);
+        }
+        if (getIntent().hasExtra("title")) {
+            title = getIntent().getStringExtra("title");
         }
         timer = new ExamCountDownTimer(useTime);
         popTextSize = new PopTextSize(this);
@@ -241,7 +246,7 @@ public class ExamActivity extends BaseAppCompatActivity implements View.OnClickL
                 ViewPagerUtil.next(pager);
                 break;
             case R.id.btn_right_answerboard:
-                AnswerBoardActivity.start(this, questions, paperId, orderId, type);
+                AnswerBoardActivity.start(this, questions, title, paperId, orderId, type);
                 break;
             case R.id.btn_right_textsize:
                 popTextSize.showPopupWindow(btn_right_textsize);

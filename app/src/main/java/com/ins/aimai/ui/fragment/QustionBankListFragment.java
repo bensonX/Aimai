@@ -139,15 +139,14 @@ public class QustionBankListFragment extends BaseFragment implements OnRecycleIt
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
         ExamPractice examPractice = adapter.getResults().get(viewHolder.getLayoutPosition());
+        examPractice.setCurriculumName(lessonName);
         switch (activity.getType()) {
             case 0:
                 if (examPractice.getExaminationNum() == 0) {
                     ToastUtil.showToastShort("该课时还没有练习题");
-                }
-                else if (examPractice.getIsStudy() == 0) {
+                } else if (examPractice.getIsStudy() == 0) {
                     ToastUtil.showToastShort("您还没有学完该课时");
-                }
-                else if (examPractice.getIsExamination() == 1) {
+                } else if (examPractice.getIsExamination() == 1) {
                     //练习题已经做完
                     ExamResultActivity.start(getActivity(), examPractice.getPaperId(), examPractice.getOrderId(), activity.getType());
                 } else {
@@ -159,7 +158,7 @@ public class QustionBankListFragment extends BaseFragment implements OnRecycleIt
                     ToastUtil.showToastShort("该课时没有错题");
                 }
                 //错题库
-                QuestionAnalysisActivity.startErrorWithCate(getActivity(), orderId, examPractice.getCourseWareId(), lessonName, examPractice.getCourseWareName());
+                QuestionAnalysisActivity.startErrorWithCate(getActivity(), orderId, examPractice.getCourseWareId(), examPractice.getCurriculumName(), examPractice.getCourseWareName());
                 break;
         }
     }

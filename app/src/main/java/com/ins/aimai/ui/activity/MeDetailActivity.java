@@ -36,6 +36,7 @@ public class MeDetailActivity extends BaseAppCompatActivity implements View.OnCl
     private CropHelper cropHelper;
 
     private EditText edit_medetail_name;
+    private EditText edit_medetail_introduce;
     private ImageView img_medetail_header;
     private TextView text_medetail_phone;
     private TextView text_medetail_address;
@@ -98,6 +99,7 @@ public class MeDetailActivity extends BaseAppCompatActivity implements View.OnCl
 
     private void initView() {
         edit_medetail_name = (EditText) findViewById(R.id.edit_medetail_name);
+        edit_medetail_introduce = (EditText) findViewById(R.id.edit_medetail_introduce);
         img_medetail_header = (ImageView) findViewById(R.id.img_medetail_header);
         text_medetail_phone = (TextView) findViewById(R.id.text_medetail_phone);
         text_medetail_address = (TextView) findViewById(R.id.text_medetail_address);
@@ -123,6 +125,7 @@ public class MeDetailActivity extends BaseAppCompatActivity implements View.OnCl
         if (user != null) {
             GlideUtil.loadCircleImg(img_medetail_header, R.drawable.default_header, user.getAvatar());
             edit_medetail_name.setText(user.getShowName());
+            edit_medetail_introduce.setText(user.getIntroduce());
             text_medetail_phone.setText(user.getPhone());
             text_medetail_address.setText(user.getCity() != null ? user.getCity().getMergerName() : "");
             text_medetail_trade.setText(user.getTradeName());
@@ -143,11 +146,12 @@ public class MeDetailActivity extends BaseAppCompatActivity implements View.OnCl
         switch (v.getId()) {
             case R.id.btn_right:
                 final String name = edit_medetail_name.getText().toString();
-                String msg = AppVali.updateUser(AppData.App.getUser(), name, path, address);
+                final String introduce = edit_medetail_introduce.getText().toString();
+                String msg = AppVali.updateUser(AppData.App.getUser(), name, introduce, path, address);
                 if (msg != null) {
                     ToastUtil.showToastShort(msg);
                 } else {
-                    uploadAndCommit(name);
+                    uploadAndCommit(name, introduce);
                 }
                 break;
             case R.id.lay_medetail_header:
@@ -178,21 +182,22 @@ public class MeDetailActivity extends BaseAppCompatActivity implements View.OnCl
         //取消相机或相册
     }
 
-    private void uploadAndCommit(final String showName) {
+    private void uploadAndCommit(final String showName, final String introduce) {
         if (!TextUtils.isEmpty(path)) {
             NetUploadHelper.newInstance().netUpload(path, new NetUploadHelper.UploadCallback() {
                 @Override
                 public void uploadfinish(String url) {
-                    netCommit(showName, url);
+                    netCommit(showName, introduce, url);
                 }
             });
         } else {
-            netCommit(showName, null);
+            netCommit(showName, introduce, null);
         }
     }
 
-    private void netCommit(final String showName, final String avatar) {
+    private void netCommit(final String showName, final String introduce, final String avatar) {
         NetParam netParam = new NetParam();
+        netParam.put("introduce", introduce);
         if (!TextUtils.isEmpty(showName)) netParam.put("showName", showName);
         if (!TextUtils.isEmpty(avatar)) netParam.put("avatar", avatar);
         if (address != null) netParam.put("cityId", address.getId());
@@ -203,6 +208,7 @@ public class MeDetailActivity extends BaseAppCompatActivity implements View.OnCl
             public void onSuccess(int status, CommonBean bean, String msg) {
                 ToastUtil.showToastShort(msg);
                 User user = AppData.App.getUser();
+                user.setIntroduce(introduce);
                 if (!TextUtils.isEmpty(avatar)) user.setAvatar(avatar);
                 if (!TextUtils.isEmpty(showName)) user.setShowName(showName);
                 if (address != null) {

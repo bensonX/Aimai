@@ -33,16 +33,10 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     private int position;
     private View rootView;
 
-    private View btn_right;
     private ImageView img_me_header;
     private TextView text_me_name;
-    private TextView text_me_order;
-    private TextView text_me_msg;
-    private TextView text_me_favo;
+    private TextView text_me_introduce;
     private TextView text_me_grade;
-    private TextView text_me_safe;
-    private TextView text_me_suggest;
-    private TextView text_me_setting;
     private View img_me_dot;
     private View lay_me_safe;
 
@@ -102,6 +96,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     private void initView() {
         img_me_header = (ImageView) rootView.findViewById(R.id.img_me_header);
         text_me_name = (TextView) rootView.findViewById(R.id.text_me_name);
+        text_me_introduce = (TextView) rootView.findViewById(R.id.text_me_introduce);
         text_me_grade = (TextView) rootView.findViewById(R.id.text_me_grade);
         img_me_dot = rootView.findViewById(R.id.img_me_dot);
         lay_me_safe = rootView.findViewById(R.id.lay_me_safe);
@@ -129,6 +124,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         if (user != null) {
             GlideUtil.loadCircleImg(img_me_header, R.drawable.default_header, user.getAvatar());
             text_me_name.setText(user.getShowName());
+            text_me_introduce.setText(user.getIntroduce());
             text_me_grade.setText(user.getAccumulate() + "积分");
             text_me_grade.setVisibility(View.VISIBLE);
             //只有政府或公司才有安检入口
@@ -142,6 +138,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             text_me_name.setText("登录");
             text_me_grade.setVisibility(View.GONE);
             lay_me_safe.setVisibility(View.GONE);
+            text_me_introduce.setText("");
         }
     }
 

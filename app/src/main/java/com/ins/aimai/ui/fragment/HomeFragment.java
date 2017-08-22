@@ -15,6 +15,7 @@ import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
 import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.Info;
+import com.ins.aimai.bean.Msg;
 import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.common.ToobarTansColorHelper;
 import com.ins.aimai.net.BaseCallback;
@@ -22,6 +23,7 @@ import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
 import com.ins.aimai.net.helper.NetListHelper;
 import com.ins.aimai.ui.activity.MsgActivity;
+import com.ins.aimai.ui.activity.WebActivity;
 import com.ins.aimai.ui.activity.WebInfoActivity;
 import com.ins.aimai.ui.adapter.RecycleAdapterHomeBanner;
 import com.ins.aimai.ui.adapter.RecycleAdapterHomeInfo;
@@ -194,15 +196,17 @@ public class HomeFragment extends BaseFragment implements OnRecycleItemClickList
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
         Info info = adapterInfo.getResults().get(viewHolder.getLayoutPosition() - 1);
-        WebInfoActivity.start(getContext(), info);
+        if (info.isLink()) {
+            WebActivity.start(getActivity(), info.getTitle(), info.getLinkUrl());
+        } else {
+            WebInfoActivity.start(getActivity(), info);
+        }
     }
 
     @Override
     public void onBannerClick(int position) {
         Image img = adapterBanner.getResults().get(position);
         WebInfoActivity.start(getContext(), img);
-//        String url = NetApi.getBaseUrl() + AppData.Url.bannerInfo + "?bannerId=" + img.getId();
-//        WebActivity.startByLesson(getContext(), img.getTitle(), url);
     }
 
     private void netQueryBanner() {

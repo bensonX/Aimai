@@ -124,22 +124,25 @@ public class ExamFragment extends BaseFragment implements View.OnClickListener, 
     public void onOptionSelect(QuestionView.Option option, int position) {
         //判断dialog为null是为了只弹窗一次
         if (dialogSureCommit == null && AppHelper.Exam.checkIsFinishQuestions(activity.getQuestions())) {
-            dialogSureCommit = new DialogSureAimai(getActivity(), "您已打完所有考题！是否提交考卷？", null, "提交并查看", "返回检阅");
-            dialogSureCommit.setOnCancleListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    activity.showLoadingDialog();
-                    NetExamHelper.getInstance().submitExam(activity.getPaperId(), activity.getOrderId(), ExamCountDownTimer.useTime, activity.getQuestions(), new NetExamHelper.OnExamSubmitCallback() {
-                        @Override
-                        public void onSuccess(ExamResultPojo examResultPojo) {
-                            EventBus.getDefault().post(new EventBean(EventBean.EVENT_EXAM_SUBMITED));
-                            ExamResultActivity.start(activity, activity.getPaperId(), activity.getOrderId(), activity.getType());
-                            activity.finish();
-                        }
-                    });
-                }
-            });
-            dialogSureCommit.show();
+            //最后一道题不是多选题才弹窗
+            if (!AppHelper.Exam.checkLastQuestionIsMult(activity.getQuestions())) {
+                dialogSureCommit = new DialogSureAimai(getActivity(), "您已打完所有考题！是否提交考卷？", null, "提交并查看", "返回检阅");
+                dialogSureCommit.setOnCancleListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        activity.showLoadingDialog();
+                        NetExamHelper.getInstance().submitExam(activity.getPaperId(), activity.getOrderId(), ExamCountDownTimer.useTime, activity.getQuestions(), new NetExamHelper.OnExamSubmitCallback() {
+                            @Override
+                            public void onSuccess(ExamResultPojo examResultPojo) {
+                                EventBus.getDefault().post(new EventBean(EventBean.EVENT_EXAM_SUBMITED));
+                                ExamResultActivity.start(activity, activity.getPaperId(), activity.getOrderId(), activity.getType());
+                                activity.finish();
+                            }
+                        });
+                    }
+                });
+                dialogSureCommit.show();
+            }
         }
     }
 

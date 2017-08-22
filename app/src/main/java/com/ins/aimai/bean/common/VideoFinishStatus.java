@@ -22,6 +22,15 @@ public class VideoFinishStatus implements Serializable {
     @SerializedName("isExaminationQuestion")
     private int isExaminationQuestion;
 
+    public VideoFinishStatus() {
+    }
+
+    public VideoFinishStatus(int isShowExercises, int isSimulationExercise, int isExaminationQuestion) {
+        this.isShowExercises = isShowExercises;
+        this.isSimulationExercise = isSimulationExercise;
+        this.isExaminationQuestion = isExaminationQuestion;
+    }
+
     ///////////////////// 业务方法 //////////////////////
 
     public boolean isShowPractice() {

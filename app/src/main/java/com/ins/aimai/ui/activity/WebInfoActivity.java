@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 
 import com.ins.aimai.R;
 import com.ins.aimai.bean.Info;
+import com.ins.aimai.bean.Msg;
 import com.ins.aimai.common.AppData;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.helper.NetFavoHelper;
@@ -33,6 +34,16 @@ public class WebInfoActivity extends BaseAppCompatActivity implements View.OnCli
     private String digest;  //摘要（用于分享）
     private String img;  //图片（用于分享）
     private String url;
+
+    public static void start(Context context, Msg msg) {
+        Intent intent = new Intent(context, WebInfoActivity.class);
+        intent.putExtra("id", msg.getNewsId());
+        intent.putExtra("title", msg.getTitle());
+        intent.putExtra("digest", msg.getDigest());
+        intent.putExtra("img", msg.getImg());
+        intent.putExtra("url", NetApi.getBaseUrl() + AppData.Url.newsInfo + "?newsId=" + msg.getNewsId());
+        context.startActivity(intent);
+    }
 
     public static void start(Context context, Info info) {
         Intent intent = new Intent(context, WebInfoActivity.class);

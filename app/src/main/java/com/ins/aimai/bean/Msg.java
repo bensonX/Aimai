@@ -44,13 +44,49 @@ public class Msg implements Serializable {
      */
     private int isChecked;
 
+    //新增字段
+    //是否是外链消息
+    private int isLink;
+    //外链地址
+    private String linkUrl;
+    //图片地址
+    private String img;
+
     ////////////////////  业务方法 ////////////////
 
     public boolean isChecked() {
         return isChecked == 1;
     }
 
+    public boolean isLink() {
+        return isLink == 1;
+    }
+
     ///////////////////////////////////////////////
+
+    public int getIsLink() {
+        return isLink;
+    }
+
+    public void setIsLink(int isLink) {
+        this.isLink = isLink;
+    }
+
+    public String getLinkUrl() {
+        return linkUrl;
+    }
+
+    public void setLinkUrl(String linkUrl) {
+        this.linkUrl = linkUrl;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
 
     /**
      * 获取 主键ID

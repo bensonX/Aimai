@@ -48,6 +48,11 @@ public class QuestionBean extends BaseSelectBean implements Serializable {
 
     ////////////////////  业务方法 /////////////////////
 
+    //是否是多选题
+    public boolean isMultSelectQuestion() {
+        return type == 1;
+    }
+
     //是否已经答题
     public boolean isChoosed() {
         if (TextUtils.isEmpty(getChooseStr())) {

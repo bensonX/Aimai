@@ -41,6 +41,36 @@ public class Info implements Serializable {
     /** 被收藏数量 */
     private int collectNum;
 
+    //新增字段
+    //是否是外链消息
+    private int isLink;
+    //外链地址
+    private String linkUrl;
+
+    ////////////////////  业务方法 ////////////////
+
+    public boolean isLink() {
+        return isLink == 1;
+    }
+
+    ///////////////////////////////////////////////
+
+    public int getIsLink() {
+        return isLink;
+    }
+
+    public void setIsLink(int isLink) {
+        this.isLink = isLink;
+    }
+
+    public String getLinkUrl() {
+        return linkUrl;
+    }
+
+    public void setLinkUrl(String linkUrl) {
+        this.linkUrl = linkUrl;
+    }
+
     /** 获取 主键ID */
     public int getId() {
         return this.id;

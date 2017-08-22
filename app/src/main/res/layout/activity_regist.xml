@@ -38,7 +38,7 @@
                 android:layout_gravity="right"
                 android:gravity="center"
                 android:text="下一步"
-                android:textColor="@color/com_text_dark"
+                android:textColor="@color/am_blue"
                 android:textSize="@dimen/text_nomal" />
 
         </android.support.v7.widget.Toolbar>

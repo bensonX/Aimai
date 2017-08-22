@@ -342,7 +342,7 @@ public interface NetInterface {
      * pageSize
      */
     @FormUrlEncoded
-    @POST("/api/systemInfo/geySystemInfo")
+    @POST("/api/systemInfo/getSystemInfo")
     Call<ResponseBody> queryMsg(@FieldMap Map<String, Object> param);
 
     /**

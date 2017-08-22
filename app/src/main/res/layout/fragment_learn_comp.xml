@@ -19,6 +19,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="四川成都市高新区"
+            android:drawableRight="@drawable/ic_down"
+            android:drawablePadding="4dp"
             android:textColor="@color/com_text_blank"
             android:textSize="@dimen/text_big" />
 

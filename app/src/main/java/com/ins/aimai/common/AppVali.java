@@ -135,11 +135,16 @@ public class AppVali {
         }
     }
 
-    public static String updateUser(User user, String showName, String path, Address address) {
+    public static String updateUser(User user, String showName, String introduce, String path, Address address) {
         if (isEmpty(showName)) {
             return "请输入姓名";
-        } else if (showName.trim().equals(user.getShowName().trim()) && TextUtils.isEmpty(path) && address == null) {
-            //如果 没有修改名字，且没有选择照片，且没有选择所在地，则没有任何修改
+        } else if (
+                showName.trim().equals(trim(user.getShowName()))
+                        && introduce.trim().equals(trim(user.getIntroduce()))
+                        && TextUtils.isEmpty(path)
+                        && address == null
+                ) {
+            //如果 没有修改名字，没有改介绍，且没有选择照片，且没有选择所在地，则没有任何修改
             return "没有任何修改";
         } else {
             return null;
@@ -249,5 +254,9 @@ public class AppVali {
 
     private static boolean isEmpty(String str) {
         return str == null || str.trim().equals("");
+    }
+
+    private static String trim(String str) {
+        return str != null ? str.trim() : "";
     }
 }

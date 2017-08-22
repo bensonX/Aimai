@@ -62,6 +62,8 @@ public class LearnLessonFragment extends BaseFragment implements OnRecycleItemCl
             netQueryStudy(1);
         }else if (event.getEvent() == EventBean.EVENT_FRESH_LERNLESSON) {
             netQueryStudy(1);
+        }else if (event.getEvent() == EventBean.EVENT_HOME_TAB_LESSON) {
+            netQueryStudy(1);
         }
     }
 
