@@ -43,18 +43,27 @@
 
             </android.support.v7.widget.Toolbar>
 
+
+            <ImageView
+                android:id="@+id/img_lessondetail_cover"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_bk"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.8" />
+
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/am_bk"
-                app:layout_collapseMode="parallax">
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.5">
 
-                <ImageView
-                    android:id="@+id/img_lessondetail_cover"
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/default_bk" />
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="200dp"
+                    android:background="@color/am_bk" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -213,9 +222,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="60dp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
         android:background="@drawable/shape_rect_cornerbig_white"
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -317,12 +326,12 @@
     <TextView
         android:id="@+id/text_toolbar_title"
         android:layout_width="match_parent"
-        android:paddingTop="20dp"
         android:layout_height="76dp"
         android:layout_marginTop="-100dp"
         android:alpha="0"
         android:elevation="10dp"
         android:gravity="center"
+        android:paddingTop="20dp"
         android:textColor="@color/com_text_blank_deep_light"
         android:textSize="@dimen/text_big"
         android:textStyle="bold"
