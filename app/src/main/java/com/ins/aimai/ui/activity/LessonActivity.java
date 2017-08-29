@@ -157,7 +157,7 @@ public class LessonActivity extends BaseAppCompatActivity implements OnRecycleIt
             put("pageNO", type == 0 || type == 1 ? "1" : page + 1 + "");
             put("pageSize", PAGE_COUNT + "");
             if (cateId != -1) {
-                put("curriculumStageId", cateId);
+                put("curriculumTypeId", cateId);
             } else {
                 put("isRecommend", 1);
             }

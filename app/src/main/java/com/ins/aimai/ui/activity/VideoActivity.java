@@ -202,6 +202,18 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
 
         player.setOnInfoListener(this);
         player.setOnProgressChageListener(this);
+        //设置开始播放拦截（如果没有视频则忽略点击事件并提示）
+        player.setVideoStartIntercept(new IjkPlayerView.VideoStartIntercept() {
+            @Override
+            public boolean onVideoStart() {
+                if (AppHelper.VideoPlay.checkHasVideo(lesson)) {
+                    return false;
+                } else {
+                    ToastUtil.showToastShort("该课程还没有添加视频");
+                    return true;
+                }
+            }
+        });
         //恢复上次选择的字体大小
         int sizeType = AppData.App.getTextSizeVideo();
         EventBean eventBean = new EventBean(EventBean.EVENT_VIDEO_TEXISIZE);
@@ -352,7 +364,8 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
     public void onProgress(int progress, int duration) {
         if (AppHelper.VideoPlay.isVideoFreeCtrl(video, type)) return;
         float lv = (float) progress / (float) duration;
-        if (AppHelper.VideoPlay.needCheckFace(faceRecords, lv)) {
+        float addLv = (float) 60 / (float) duration;
+        if (AppHelper.VideoPlay.needCheckFace(faceRecords, lv, addLv)) {
             if (player.isFullScreen()) {
                 player.setFullScreen(false);
             }

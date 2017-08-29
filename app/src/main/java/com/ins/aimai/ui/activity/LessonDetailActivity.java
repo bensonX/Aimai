@@ -245,10 +245,10 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_lessondetail_watchcount:
-                LearnUserActivity.startWatch(this, lesson.getWatchNum());
+                LearnUserActivity.startWatch(this, lesson);
                 break;
             case R.id.btn_lessondetail_testcount:
-                LearnUserActivity.startExamed(this, lesson.getFinishExamine());
+                LearnUserActivity.startExamed(this, lesson);
                 break;
             case R.id.btn_go:
                 PayDialogActivity.start(this, lessonId);
@@ -286,9 +286,12 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
         }
     }
 
-    private void postIntro(String intro) {
+    private void postIntro(Lesson lesson) {
         EventBean eventBean = new EventBean(EventBean.EVENT_LESSONDETAIL_INTRO);
-        eventBean.put("intro", intro);
+        eventBean.put("intro", lesson.getCurriculumDescribe());
+        eventBean.put("teacherName", lesson.getTeacherName());
+        eventBean.put("teacherIntro", lesson.getTeacherIntroduce());
+        eventBean.put("applyPerson", lesson.getApplyPerson());
         EventBus.getDefault().post(eventBean);
     }
 
@@ -311,7 +314,7 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
             public void onSuccess(int status, Lesson lesson, String msg) {
                 LessonDetailActivity.this.lesson = lesson;
                 setData(lesson);
-                postIntro(lesson.getCurriculumDescribe());
+                postIntro(lesson);
                 postDirectory(lesson.getCourseWares());
                 hideLoadingDialog();
             }

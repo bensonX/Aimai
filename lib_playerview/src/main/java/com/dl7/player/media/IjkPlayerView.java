@@ -956,7 +956,9 @@ public class IjkPlayerView extends FrameLayout implements View.OnClickListener {
         } else if (id == R.id.iv_back_window) {
             mAttachActivity.finish();
         } else if (id == R.id.iv_play || id == R.id.iv_play_circle) {
-            _togglePlayStatus();
+            if (videoStartIntercept != null && !videoStartIntercept.onVideoStart()) {
+                _togglePlayStatus();
+            }
         } else if (id == R.id.iv_fullscreen) {
             _toggleFullScreen();
         } else if (id == R.id.iv_player_lock) {
@@ -2769,5 +2771,17 @@ public class IjkPlayerView extends FrameLayout implements View.OnClickListener {
 
     public void setOnProgressChageListener(OnProgressChageListener onProgressChageListener) {
         this.onProgressChageListener = onProgressChageListener;
+    }
+
+    //////////////////  接口 /////////////////
+
+    private VideoStartIntercept videoStartIntercept;
+
+    public void setVideoStartIntercept(VideoStartIntercept videoStartIntercept) {
+        this.videoStartIntercept = videoStartIntercept;
+    }
+
+    public interface VideoStartIntercept {
+        boolean onVideoStart();
     }
 }

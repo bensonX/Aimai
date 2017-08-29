@@ -13,6 +13,7 @@ import android.view.WindowManager;
 
 import com.ins.aimai.R;
 import com.ins.aimai.bean.common.EventBean;
+import com.ins.aimai.common.AppData;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.aimai.ui.fragment.PayDialogCountFragment;
 import com.ins.aimai.ui.fragment.PayDialogWayFragment;
@@ -32,15 +33,23 @@ public class PayDialogActivity extends BaseAppCompatActivity {
     private boolean isRepay;
 
     public static void startRepay(Context context, int orderId) {
-        Intent intent = new Intent(context, PayDialogActivity.class);
-        intent.putExtra("orderId", orderId);
-        context.startActivity(intent);
+        if (AppData.App.getUser() != null) {
+            Intent intent = new Intent(context, PayDialogActivity.class);
+            intent.putExtra("orderId", orderId);
+            context.startActivity(intent);
+        } else {
+            LoginActivity.start(context);
+        }
     }
 
     public static void start(Context context, int lessonId) {
-        Intent intent = new Intent(context, PayDialogActivity.class);
-        intent.putExtra("lessonId", lessonId);
-        context.startActivity(intent);
+        if (AppData.App.getUser() != null) {
+            Intent intent = new Intent(context, PayDialogActivity.class);
+            intent.putExtra("lessonId", lessonId);
+            context.startActivity(intent);
+        } else {
+            LoginActivity.start(context);
+        }
     }
 
     @Override

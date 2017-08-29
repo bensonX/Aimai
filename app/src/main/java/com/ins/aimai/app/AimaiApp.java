@@ -73,7 +73,8 @@ public class AimaiApp extends MobApplication {
                 .addDomain("192.168.31.205:8080", "(开发服务器：李作焕)")
                 .addDomain("192.168.31.166", "(开发服务器：谢启谋)")
                 .addDomain("192.168.31.110:8080", "(测试服务器)")
-                .addDomain("139.129.111.76:8110", "(远程测试服务器)");
+                .addDomain("139.129.111.76:8110", "(远程测试服务器)")
+                .addDomain("tiger.magic-beans.cn", "(正式服务器)");
     }
 
     private void initFonts() {

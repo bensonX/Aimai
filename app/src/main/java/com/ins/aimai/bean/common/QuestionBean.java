@@ -53,6 +53,11 @@ public class QuestionBean extends BaseSelectBean implements Serializable {
         return type == 1;
     }
 
+    //是否是判断题
+    public boolean isCheckQuestion() {
+        return type == 2;
+    }
+
     //是否已经答题
     public boolean isChoosed() {
         if (TextUtils.isEmpty(getChooseStr())) {
@@ -79,6 +84,15 @@ public class QuestionBean extends BaseSelectBean implements Serializable {
     //获取正确的答案 （A,B,C）
     public String getAnswerStr() {
         if (StrUtil.isEmpty(getOptionBeans())) {
+            return "";
+        }
+        //如果是判断题取id不是0的那个
+        if (isCheckQuestion()) {
+            for (QuestionView.Option option : getOptionBeans()) {
+                if (option.id != 0) {
+                    return NumUtil.intToABC(option.index);
+                }
+            }
             return "";
         }
         String ret = "";

@@ -26,6 +26,12 @@ public class Lesson extends BaseSelectBean implements Serializable {
      * 课程介绍
      */
     private String curriculumDescribe;
+    //讲师名称
+    private String teacherName;
+    //讲师介绍
+    private String teacherIntroduce;
+    //适用人群
+    private String applyPerson;
 
     /**
      * 年度
@@ -222,7 +228,32 @@ public class Lesson extends BaseSelectBean implements Serializable {
         this.countUser = countUser;
     }
 
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
+    }
+
+    public String getTeacherIntroduce() {
+        return teacherIntroduce;
+    }
+
+    public void setTeacherIntroduce(String teacherIntroduce) {
+        this.teacherIntroduce = teacherIntroduce;
+    }
+
+    public String getApplyPerson() {
+        return applyPerson;
+    }
+
+    public void setApplyPerson(String applyPerson) {
+        this.applyPerson = applyPerson;
+    }
+
     /**
+
      * 获取 课程名
      */
     public String getCurriculumName() {

@@ -46,16 +46,17 @@ public class LearnUserActivity extends BaseAppCompatActivity implements OnRecycl
     private int count;
     private int orderId;
 
-    public static void startWatch(Context context, int watchCount) {
-        start(context, watchCount, 0);
+    public static void startWatch(Context context, Lesson lesson) {
+        start(context, lesson.getOrderId(), lesson.getWatchNum(), 0);
     }
 
-    public static void startExamed(Context context, int examedCount) {
-        start(context, examedCount, 1);
+    public static void startExamed(Context context, Lesson lesson) {
+        start(context, lesson.getOrderId(), lesson.getFinishExamine(), 1);
     }
 
-    private static void start(Context context, int count, int flag) {
+    private static void start(Context context, int orderId, int count, int flag) {
         Intent intent = new Intent(context, LearnUserActivity.class);
+        intent.putExtra("orderId", orderId);
         intent.putExtra("count", count);
         intent.putExtra("flag", flag);
         context.startActivity(intent);
@@ -75,6 +76,9 @@ public class LearnUserActivity extends BaseAppCompatActivity implements OnRecycl
     private void initBase() {
         if (getIntent().hasExtra("flag")) {
             flag = getIntent().getIntExtra("flag", 0);
+        }
+        if (getIntent().hasExtra("orderId")) {
+            orderId = getIntent().getIntExtra("orderId", 0);
         }
         if (getIntent().hasExtra("count")) {
             count = getIntent().getIntExtra("count", 0);

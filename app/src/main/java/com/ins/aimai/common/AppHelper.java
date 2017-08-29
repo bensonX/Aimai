@@ -23,6 +23,7 @@ import com.ins.common.utils.NumUtil;
 import com.ins.common.utils.StrUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -147,8 +148,10 @@ public class AppHelper {
         }
 
         //根据播放检查记录判断当前位置是否需要进行视频检查
-        public static boolean needCheckFace(List<FaceRecord> faceRecords, float lv) {
-            for (CheckPoint checkPoint : AppData.App.getVideoCheckPoint()) {
+        //新增需求，在视频60s时验证一次（新增addLv：60/视频总长度的比例）
+        public static boolean needCheckFace(List<FaceRecord> faceRecords, float lv, float addLv) {
+            //其余情况则根据播放位置检查
+            for (CheckPoint checkPoint : getVideoCheckPointAndAdd(addLv)) {
                 if (lv >= checkPoint.getCheckValue()) {
                     int checkIndex = checkPoint.getIndex();
                     int recordsSize = faceRecords.size();
@@ -165,6 +168,16 @@ public class AppHelper {
                 }
             }
             return false;
+        }
+
+        public static List<CheckPoint> getVideoCheckPointAndAdd(float addLv) {
+            List<CheckPoint> points = AppData.App.getVideoCheckPoint();
+            points.add(new CheckPoint(addLv));
+            Collections.sort(points);
+            for (int i = 0; i < points.size(); i++) {
+                points.get(i).setIndex(i);
+            }
+            return points;
         }
 
         //把课件集合中的视频按列表形式返回
@@ -261,6 +274,17 @@ public class AppHelper {
                 return false;
             }
         }
+
+        //检查是否有视频可以播放
+        public static boolean checkHasVideo(Lesson lesson) {
+            if (lesson == null && StrUtil.isEmpty(lesson.getCourseWares())) return false;
+            for (CourseWare course : lesson.getCourseWares()) {
+                if (course != null && !StrUtil.isEmpty(course.getVideos())) {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
     public static class OrderHelp {
@@ -309,10 +333,17 @@ public class AppHelper {
                 }
                 //如果是判断题加一个正确或者错误选项（服务器没有加，移动端帮忙处理）
                 if (type == 2) {
-                    ExaminationItems lastItem = itemses.get(0);
-                    QuestionView.Option option = new QuestionView.Option(lastItem.getItemTitle().contains("正确") ? "错误" : "正确");
-                    option.index = 1;
-                    options.add(option);
+                    QuestionView.Option lastOption = options.get(0);
+                    if (lastOption.content.contains("正确")) {
+                        QuestionView.Option option = new QuestionView.Option("错误");
+                        option.index = 1;
+                        options.add(option);
+                    } else {
+                        QuestionView.Option option = new QuestionView.Option("正确");
+                        lastOption.index = 1;
+                        option.index = 0;
+                        options.add(0, option);
+                    }
                 }
             }
             return options;
