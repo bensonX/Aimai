@@ -2,6 +2,8 @@ package com.ins.aimai.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +19,7 @@ import com.ins.aimai.bean.Order;
 import com.ins.aimai.bean.common.CommonBean;
 import com.ins.aimai.bean.common.TestBean;
 import com.ins.aimai.common.AppData;
+import com.ins.aimai.databinding.ActivityMsgBinding;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
@@ -41,11 +44,9 @@ import retrofit2.Call;
 
 public class MsgActivity extends BaseAppCompatActivity implements OnRecycleItemClickListener {
 
-    private LoadingLayout loadingLayout;
-    private SpringView springView;
-    private RecyclerView recycler;
-    private RecycleAdapterMsg adapter;
+    private ActivityMsgBinding binding;
 
+    private RecycleAdapterMsg adapter;
     private NetListHelper netListHelper;
 
     public static void start(Context context) {
@@ -60,7 +61,7 @@ public class MsgActivity extends BaseAppCompatActivity implements OnRecycleItemC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_msg);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_msg);
         setToolbar();
         initBase();
         initView();
@@ -72,25 +73,25 @@ public class MsgActivity extends BaseAppCompatActivity implements OnRecycleItemC
     }
 
     private void initView() {
-        loadingLayout = (LoadingLayout) findViewById(R.id.loadingLayout);
-        recycler = (RecyclerView) findViewById(R.id.recycler);
-        springView = (SpringView) findViewById(R.id.spring);
+//        loadingLayout = (LoadingLayout) findViewById(R.id.loadingLayout);
+//        recycler = (RecyclerView) findViewById(R.id.recycler);
+//        springView = (SpringView) findViewById(R.id.spring);
     }
 
     private void initCtrl() {
         adapter = new RecycleAdapterMsg(this);
         adapter.setOnItemClickListener(this);
-        recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recycler.setAdapter(adapter);
-        loadingLayout.setOnRefreshListener(new View.OnClickListener() {
+        binding.recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        binding.recycler.setAdapter(adapter);
+        binding.loadingLayout.setOnRefreshListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 netListHelper.netQueryList(0);
             }
         });
-        springView.setHeader(new AliHeader(this, false));
-        springView.setFooter(new AliFooter(this, false));
-        springView.setListener(new SpringView.OnFreshListener() {
+        binding.spring.setHeader(new AliHeader(this, false));
+        binding.spring.setFooter(new AliFooter(this, false));
+        binding.spring.setListener(new SpringView.OnFreshListener() {
             @Override
             public void onRefresh() {
                 netListHelper.netQueryList(1);
@@ -101,7 +102,7 @@ public class MsgActivity extends BaseAppCompatActivity implements OnRecycleItemC
                 netListHelper.netQueryList(2);
             }
         });
-        netListHelper = new NetListHelper<Msg>().init(loadingLayout, springView,
+        netListHelper = new NetListHelper<Msg>().init(binding.loadingLayout, binding.spring,
                 new TypeToken<List<Msg>>() {
                 }.getType(),
                 new NetListHelper.CallHander() {

@@ -1440,7 +1440,9 @@ public class IjkPlayerView extends FrameLayout implements View.OnClickListener {
             mDanmakuPlayerSeek.setSecondaryProgress(percent * 10);
         }
         // 更新播放时间
-        mTvCurTime.setText(generateTime(position));
+        // position不能超过duration
+        int nowPos = position > duration ? duration : position;
+        mTvCurTime.setText(generateTime(nowPos));
         mTvEndTime.setText(generateTime(duration));
         // 返回当前播放进度
         return position;

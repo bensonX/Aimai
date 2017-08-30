@@ -1,7 +1,10 @@
 package com.ins.aimai.bean;
 
 
+import com.ins.common.utils.TimeUtil;
+
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 消息
@@ -60,6 +63,10 @@ public class Msg implements Serializable {
 
     public boolean isLink() {
         return isLink == 1;
+    }
+
+    public String getCreateTimeBind() {
+        return TimeUtil.getTimeFor("yyyy-mm-dd HH:mm", new Date(getCreateTime()));
     }
 
     ///////////////////////////////////////////////

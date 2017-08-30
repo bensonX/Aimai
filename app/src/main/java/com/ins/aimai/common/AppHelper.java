@@ -18,6 +18,7 @@ import com.ins.aimai.bean.common.FaceRecord;
 import com.ins.aimai.bean.common.QuestionBean;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.aimai.ui.view.QuestionView;
+import com.ins.common.utils.L;
 import com.ins.common.utils.ListUtil;
 import com.ins.common.utils.NumUtil;
 import com.ins.common.utils.StrUtil;
@@ -311,7 +312,7 @@ public class AppHelper {
                     questionBean.setTitle(exam.getTitle());     //题目
                     questionBean.setType(exam.getType());       //类型
                     questionBean.setTypeName(exam.getType() == 0 ? "单选题" : (exam.getType() == 1 ? "多选题" : "判断题"));  //类型的文本描述
-                    questionBean.setOptionBeans(transExaminationItem2Potions(exam.getExaminationItemsList(), exam.getType()));  //选项实体
+                    questionBean.setOptionBeans(transExaminationItem2Potions(exam.getExaminationItemsList()));  //选项实体
                     questionBean.setAnalysis(exam.getExaminationKey()); //解析
                     questionBean.setPoint(exam.getEmphasis());          //考点
                     questions.add(questionBean);
@@ -320,7 +321,7 @@ public class AppHelper {
             return questions;
         }
 
-        private static List<QuestionView.Option> transExaminationItem2Potions(List<ExaminationItems> itemses, int type) {
+        private static List<QuestionView.Option> transExaminationItem2Potions(List<ExaminationItems> itemses) {
             List<QuestionView.Option> options = new ArrayList<>();
             if (!StrUtil.isEmpty(itemses)) {
                 for (int i = 0; i < itemses.size(); i++) {
@@ -332,19 +333,19 @@ public class AppHelper {
                     options.add(option);
                 }
                 //如果是判断题加一个正确或者错误选项（服务器没有加，移动端帮忙处理）
-                if (type == 2) {
-                    QuestionView.Option lastOption = options.get(0);
-                    if (lastOption.content.contains("正确")) {
-                        QuestionView.Option option = new QuestionView.Option("错误");
-                        option.index = 1;
-                        options.add(option);
-                    } else {
-                        QuestionView.Option option = new QuestionView.Option("正确");
-                        lastOption.index = 1;
-                        option.index = 0;
-                        options.add(0, option);
-                    }
-                }
+//                if (type == 2) {
+//                    QuestionView.Option lastOption = options.get(0);
+//                    if (lastOption.content.contains("正确")) {
+//                        QuestionView.Option option = new QuestionView.Option("错误");
+//                        option.index = 1;
+//                        options.add(option);
+//                    } else {
+//                        QuestionView.Option option = new QuestionView.Option("正确");
+//                        lastOption.index = 1;
+//                        option.index = 0;
+//                        options.add(0, option);
+//                    }
+//                }
             }
             return options;
         }

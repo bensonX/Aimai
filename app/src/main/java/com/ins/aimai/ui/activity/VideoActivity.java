@@ -364,7 +364,7 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
     public void onProgress(int progress, int duration) {
         if (AppHelper.VideoPlay.isVideoFreeCtrl(video, type)) return;
         float lv = (float) progress / (float) duration;
-        float addLv = (float) 60 / (float) duration;
+        float addLv = (float) 60 / (float) (duration/1000);
         if (AppHelper.VideoPlay.needCheckFace(faceRecords, lv, addLv)) {
             if (player.isFullScreen()) {
                 player.setFullScreen(false);
@@ -392,9 +392,12 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
     ///////////////////////////////
 
     //把数据post给介绍页
-    private void postIntro(String intro) {
+    private void postIntro(Lesson lesson) {
         EventBean eventBean = new EventBean(EventBean.EVENT_LESSONDETAIL_INTRO);
-        eventBean.put("intro", intro);
+        eventBean.put("intro", lesson.getCurriculumDescribe());
+        eventBean.put("teacherName", lesson.getTeacherName());
+        eventBean.put("teacherIntro", lesson.getTeacherIntroduce());
+        eventBean.put("applyPerson", lesson.getApplyPerson());
         EventBus.getDefault().post(eventBean);
     }
 
@@ -419,7 +422,7 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
                 VideoActivity.this.lesson = lesson;
                 convert(lesson);
                 setData(lesson);
-                postIntro(lesson.getCurriculumDescribe());
+                postIntro(lesson);
                 postDirectory(lesson.getCourseWares());
                 hideLoadingDialog();
             }
