@@ -147,8 +147,16 @@ public class OrderFragment extends BaseFragment implements OnRecycleItemClickLis
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
         Order order = adapter.getResults().get(viewHolder.getLayoutPosition());
         if (order.isPay()) {
-            LessonDetailActivity.startByOrder(getActivity(), order);
+            //已付款的订单
+            if (AppHelper.isUser()) {
+                //个人用户点击进入播放
+                VideoActivity.startByOrder(getActivity(), order);
+            } else {
+                //政府和企业用户点击进入详情页
+                LessonDetailActivity.startByOrder(getActivity(), order);
+            }
         } else {
+            //未付款的订单点击进入购买页面
             LessonDetailActivity.startByLesson(getActivity(), order.getCurriculumId());
         }
     }

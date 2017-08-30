@@ -3,6 +3,8 @@ package com.ins.aimai.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 
@@ -19,6 +21,7 @@ import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.aimai.ui.dialog.DialogIdentify;
 import com.ins.aimai.ui.fragment.InfoFragment;
 import com.ins.aimai.utils.ToastUtil;
+import com.ins.common.utils.App;
 import com.ins.common.utils.MD5Util;
 import com.ins.common.utils.StatusBarTextUtil;
 import com.ins.common.utils.StrUtil;
@@ -34,6 +37,14 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
     private DialogIdentify dialogIdentify;
     private EditText edit_login_name;
     private EditText edit_login_psw;
+    private View img_login_name_del;
+    private View img_login_psw_del;
+
+    public static void start() {
+        Intent intent = new Intent(App.getContext(), LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        App.getContext().startActivity(intent);
+    }
 
     public static void start(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -75,12 +86,46 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
     private void initView() {
         edit_login_name = (EditText) findViewById(R.id.edit_login_name);
         edit_login_psw = (EditText) findViewById(R.id.edit_login_psw);
+        img_login_name_del = findViewById(R.id.img_login_name_del);
+        img_login_psw_del = findViewById(R.id.img_login_psw_del);
+        findViewById(R.id.img_login_name_del).setOnClickListener(this);
+        findViewById(R.id.img_login_psw_del).setOnClickListener(this);
         findViewById(R.id.btn_go).setOnClickListener(this);
         findViewById(R.id.btn_login_forgetpsw).setOnClickListener(this);
         findViewById(R.id.btn_login_regist).setOnClickListener(this);
+        img_login_name_del.setVisibility(View.INVISIBLE);
+        img_login_psw_del.setVisibility(View.INVISIBLE);
     }
 
     private void initCtrl() {
+        edit_login_name.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                img_login_name_del.setVisibility(!StrUtil.isEmpty(s.toString()) ? View.VISIBLE : View.INVISIBLE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+        edit_login_psw.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                img_login_psw_del.setVisibility(!StrUtil.isEmpty(s.toString()) ? View.VISIBLE : View.INVISIBLE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
     }
 
     private void initData() {
@@ -104,6 +149,12 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
                 break;
             case R.id.btn_login_regist:
                 dialogIdentify.show();
+                break;
+            case R.id.img_login_name_del:
+                edit_login_name.setText("");
+                break;
+            case R.id.img_login_psw_del:
+                edit_login_psw.setText("");
                 break;
         }
     }

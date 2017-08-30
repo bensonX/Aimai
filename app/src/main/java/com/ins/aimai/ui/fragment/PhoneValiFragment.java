@@ -16,6 +16,7 @@ import com.ins.aimai.interfaces.PagerFragmentInter;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
+import com.ins.aimai.ui.activity.ForgetPswActivity;
 import com.ins.aimai.ui.activity.RegistActivity;
 import com.ins.aimai.ui.base.BaseFragment;
 import com.ins.aimai.utils.ToastUtil;
@@ -126,6 +127,8 @@ public class PhoneValiFragment extends BaseFragment implements View.OnClickListe
         Call<ResponseBody> call;
         if (getActivity() instanceof RegistActivity) {
             call = NetApi.NI().sendMessageRegist(param);
+        } else if (getActivity() instanceof ForgetPswActivity) {
+            call = NetApi.NI().sendMessageForget(param);
         } else {
             call = NetApi.NI().sendMessage(param);
         }

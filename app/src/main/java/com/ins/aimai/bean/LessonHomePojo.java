@@ -1,8 +1,10 @@
 package com.ins.aimai.bean;
 
 import com.google.gson.annotations.SerializedName;
+import com.ins.common.utils.StrUtil;
 
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -22,9 +24,18 @@ public class LessonHomePojo implements Serializable {
 
     ////////////// 业务方法 //////////////
 
+    //把推荐课程也当做一个类别
+    //如果类别中没有课程，那么移除该项
     public void convert() {
         LessonCate lessonCate = new LessonCate(-1, "推荐课程", recommendLessons);
         lessonCates.add(0, lessonCate);
+        Iterator<LessonCate> iterator = lessonCates.iterator();
+        if (iterator.hasNext()) {
+            LessonCate cate = iterator.next();
+            if (StrUtil.isEmpty(cate.getLessons())) {
+                lessonCates.remove(cate);
+            }
+        }
     }
 
     ////////////// get & set //////////////

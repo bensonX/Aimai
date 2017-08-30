@@ -239,6 +239,11 @@ public class VideoCommentFragment extends BaseFragment implements View.OnClickLi
 
                     swip.setRefreshing(false);
                 } else {
+                    if (type == 1) {
+                        adapter.getResults().clear();
+                        adapter.notifyDataSetChanged();
+                        page = 1;
+                    }
                     //这里不提示了
                     //ToastUtil.showToastShort("没有更多的评论了");
                     swip.setRefreshing(false);

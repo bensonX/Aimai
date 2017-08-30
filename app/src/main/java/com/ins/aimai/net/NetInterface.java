@@ -135,6 +135,14 @@ public interface NetInterface {
     Call<ResponseBody> sendMessageRegist(@FieldMap Map<String, Object> param);
 
     /**
+     * 获取验证码并检查该账号是否存在（忘记密码时使用）
+     * String phone
+     */
+    @FormUrlEncoded
+    @POST("/api/user/sendMessageForgetPwd")
+    Call<ResponseBody> sendMessageForget(@FieldMap Map<String, Object> param);
+
+    /**
      * 注册
      */
     @FormUrlEncoded

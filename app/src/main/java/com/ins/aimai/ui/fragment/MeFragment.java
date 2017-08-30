@@ -51,6 +51,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onCommonEvent(EventBean event) {
         switch (event.getEvent()) {
+            case EventBean.EVENT_NOLOGIN:
             case EventBean.EVENT_LOGOUT:
             case EventBean.EVENT_LOGIN:
             case EventBean.EVENT_USER_UPDATE:

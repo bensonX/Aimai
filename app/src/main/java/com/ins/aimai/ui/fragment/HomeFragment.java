@@ -206,7 +206,11 @@ public class HomeFragment extends BaseFragment implements OnRecycleItemClickList
     @Override
     public void onBannerClick(int position) {
         Image img = adapterBanner.getResults().get(position);
-        WebInfoActivity.start(getContext(), img);
+        if (img.isLink()) {
+            WebActivity.start(getActivity(), img.getTitle(), img.getUrl());
+        } else {
+            WebInfoActivity.start(getContext(), img);
+        }
     }
 
     private void netQueryBanner() {

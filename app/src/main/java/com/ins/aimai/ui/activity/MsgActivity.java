@@ -140,6 +140,7 @@ public class MsgActivity extends BaseAppCompatActivity implements OnRecycleItemC
         } else {
             WebInfoActivity.start(this, msg);
         }
+        msg.setIsChecked(1);
         netCheckMsg(msg.getId());
         NetNewMsgHelper.getInstance().netHasNewMsg();
     }

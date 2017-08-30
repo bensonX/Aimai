@@ -10,6 +10,8 @@ import java.util.Map;
 
 public class EventBean implements Serializable {
 
+    //未登录
+    public static final int EVENT_NOLOGIN = 0xffa101;
     //注销
     public static final int EVENT_LOGOUT = 0xffa000;
     //登录

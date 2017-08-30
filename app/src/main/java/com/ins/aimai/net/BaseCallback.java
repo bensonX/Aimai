@@ -1,7 +1,11 @@
 package com.ins.aimai.net;
 
 import com.google.gson.Gson;
+import com.ins.aimai.bean.common.EventBean;
+import com.ins.aimai.common.AppData;
+import com.ins.aimai.ui.activity.LoginActivity;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -64,6 +68,11 @@ public abstract class BaseCallback<T> implements Callback<ResponseBody> {
                     break;
                 case 1005:
                     onError(status, msg);
+                    //统一处理未登录状态
+                    AppData.App.removeUser();
+                    AppData.App.removeToken();
+                    EventBus.getDefault().post(new EventBean(EventBean.EVENT_NOLOGIN));
+                    LoginActivity.start();
                     break;
                 default:
                     onError(status, msg);

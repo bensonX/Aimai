@@ -82,6 +82,15 @@
                     android:inputType="textPersonName"
                     android:maxLength="11" />
 
+                <ImageView
+                    android:id="@+id/img_login_name_del"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:padding="20dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_home_close" />
+
             </LinearLayout>
 
             <View
@@ -112,6 +121,14 @@
                     android:inputType="textPassword"
                     android:maxLength="32" />
 
+                <ImageView
+                    android:id="@+id/img_login_psw_del"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:padding="20dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_home_close" />
             </LinearLayout>
 
 

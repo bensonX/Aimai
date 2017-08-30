@@ -50,6 +50,7 @@
             app:tabIndicatorHeight="1dp"
             app:tabMode="scrollable"
             app:tabSelectedTextColor="@color/com_blue"
+            app:tabTextAppearance="@style/TabLayoutTextBigNomal"
             app:tabTextColor="@color/com_text_dark" />
 
         <View

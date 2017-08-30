@@ -36,6 +36,14 @@ public class Image implements Serializable {
         this.img = img;
     }
 
+    ////////////////////  业务方法 ////////////////
+
+    public boolean isLink() {
+        return isLink == 1;
+    }
+
+    ///////////////////////////////////////////////
+
     public int getIsLink() {
         return isLink;
     }
