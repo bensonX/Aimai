@@ -3,17 +3,17 @@
 #####################################################
 #
 #---------------------------------基本指令区----------------------------------
--optimizationpasses 5  #指定代码的压缩级别 0 - 7
--dontusemixedcaseclassnames  #是否使用大小写混合
--dontskipnonpubliclibraryclasses  #如果应用程序引入的有jar包，并且想混淆jar包里面的class
--dontskipnonpubliclibraryclassmembers #不跳过非公共的库的类成员
--dontpreverify  #混淆时是否做预校验（可去掉加快混淆速度）
--verbose #混淆时是否记录日志（混淆后生产映射文件 map 类名 -> 转化后类名的映射
--printmapping proguardMapping.txt
--optimizations !code/simplification/cast,!field/*,!class/merging/*  #淆采用的算法
--keepattributes *Annotation*,InnerClasses
--keepattributes Signature  #保持泛型
--keepattributes SourceFile,LineNumberTable  #保留行号
+#-optimizationpasses 5  #指定代码的压缩级别 0 - 7
+#-dontusemixedcaseclassnames  #是否使用大小写混合
+#-dontskipnonpubliclibraryclasses  #如果应用程序引入的有jar包，并且想混淆jar包里面的class
+#-dontskipnonpubliclibraryclassmembers #不跳过非公共的库的类成员
+#-dontpreverify  #混淆时是否做预校验（可去掉加快混淆速度）
+#-verbose #混淆时是否记录日志（混淆后生产映射文件 map 类名 -> 转化后类名的映射
+#-printmapping proguardMapping.txt
+#-optimizations !code/simplification/cast,!field/*,!class/merging/*  #淆采用的算法
+#-keepattributes *Annotation*,InnerClasses
+#-keepattributes Signature  #保持泛型
+#-keepattributes SourceFile,LineNumberTable  #保留行号
 #---------------------------------默认保留区---------------------------------
 #-keep public class * extends android.app.Activity  #所有activity的子类不要去混淆
 #-keep public class * extends android.app.Application
@@ -77,8 +77,9 @@
 #}
 
 #---------------------------------1.实体类---------------------------------
-#-keep class cn.magicbeans.model.bean.** { *; }
-#-keep class **.entity.** { *; }
+-keep class com.ins.common.entity.** { *; }
+-keep class **.entity.** { *; }
+-keep class com.ins.aimai.bean.** { *; }
 #---------------------------------2.第三方包-------------------------------
 #极光推送
 -dontwarn cn.jpush.**
@@ -222,3 +223,4 @@ public static java.lang.String TABLENAME;
 -dontwarn android.test.**
 -dontwarn android.support.test.**
 -dontwarn org.junit.**
+

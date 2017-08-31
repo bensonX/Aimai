@@ -87,4 +87,17 @@
 
     </android.support.v7.widget.CardView>
 
+    <CheckBox
+        android:id="@+id/check_vali_clause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_horizontal"
+        android:textSize="@dimen/text_small"
+        android:textColor="@color/com_text_dark"
+        android:button="@drawable/selector_check_learn_small"
+        android:paddingLeft="7dp"
+        tools:text="我已阅读并同意···《使用条款和隐私政策》"/>
+
 </LinearLayout>

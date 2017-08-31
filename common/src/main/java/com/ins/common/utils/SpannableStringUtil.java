@@ -1,16 +1,24 @@
 package com.ins.common.utils;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.text.style.RelativeSizeSpan;
+import android.view.View;
+import android.widget.TextView;
 
 import com.ins.common.common.ConerBkSpan;
 
@@ -109,7 +117,7 @@ public class SpannableStringUtil {
         Drawable drawable = ContextCompat.getDrawable(context, src);
         drawable.setBounds(rect);
         ImageSpan imageSpan = new ImageSpan(drawable);
-        spannableString.setSpan(imageSpan, 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(imageSpan, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return spannableString;
     }
 
@@ -119,7 +127,39 @@ public class SpannableStringUtil {
         int colorText = ContextCompat.getColor(context, colorTextSrc);
         SpannableString spannableString = new SpannableString(title + content);
         ConerBkSpan roundedBackgroundSpan = new ConerBkSpan(colorBk, colorText);
-        spannableString.setSpan(roundedBackgroundSpan, 0, title.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(roundedBackgroundSpan, 0, title.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return spannableString;
     }
+
+    //要使点击事件生效必须给TextView设置如下属性：
+    //textView.setMovementMethod(LinkMovementMethod.getInstance());
+    //如果要屏蔽点击背景色，如下：
+    //textView.setHighlightColor(ContextCompat.getColor(getContext(), android.R.color.transparent));
+    public static SpannableString makeClickStr(SpannableString spannableString, int from, int to, View.OnClickListener onClickListener) {
+        MyClickableSpan clickableSpan = new MyClickableSpan(onClickListener);
+        spannableString.setSpan(clickableSpan, from, to, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return spannableString;
+    }
+
+    public static class MyClickableSpan extends ClickableSpan {
+
+        private View.OnClickListener onClickListener;
+
+        public MyClickableSpan(View.OnClickListener onClickListener) {
+            this.onClickListener = onClickListener;
+        }
+
+        @Override
+        public void updateDrawState(TextPaint ds) {
+            ds.setUnderlineText(false);
+            //ds.setColor(color);			//设置可点击文字字体颜色
+            ds.clearShadowLayer();
+        }
+
+        @Override
+        public void onClick(View widget) {
+            if (onClickListener != null) onClickListener.onClick(widget);
+        }
+    }
+
 }

@@ -7,8 +7,8 @@ android {
         applicationId "com.ins.aimai"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 47
-        versionName "1.0.0.47"
+        versionCode 48
+        versionName "1.0.0.48"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         //使用矢量图兼容库
         vectorDrawables.useSupportLibrary = true
@@ -49,8 +49,9 @@ android {
             signingConfig signingConfigs.myConfig
             buildConfigField "String", "BASE_URL", '"http://tiger.magic-beans.cn/"'
             buildConfigField "String", "BASE_URL_RES", '"http://tiger.magic-beans.cn/"'
-            minifyEnabled false
+            minifyEnabled false      //开启代码混淆
             zipAlignEnabled true
+            shrinkResources true    //移除无用的资源文件
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
