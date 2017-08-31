@@ -10,17 +10,17 @@ import android.view.View;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.User;
 import com.ins.aimai.interfaces.PagerFragmentInter;
+import com.ins.aimai.interfaces.PagerInter;
 import com.ins.aimai.interfaces.RegisterInter;
 import com.ins.aimai.ui.adapter.PagerAdapterRegist;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.common.utils.ViewPagerUtil;
 
 //type: 0 个人 1：公司 2：政府
-public class RegistActivity extends BaseAppCompatActivity implements View.OnClickListener, RegisterInter {
+public class RegistActivity extends BaseAppCompatActivity implements RegisterInter, PagerInter {
 
     private ViewPager pager;
     private PagerAdapterRegist adapterPager;
-    private View btn_right;
 
     private String[] titles = new String[]{"注册", "设置密码", "个人信息"};
     private int type;
@@ -55,8 +55,6 @@ public class RegistActivity extends BaseAppCompatActivity implements View.OnClic
 
     private void initView() {
         pager = (ViewPager) findViewById(R.id.pager);
-        btn_right = findViewById(R.id.btn_right);
-        btn_right.setOnClickListener(this);
     }
 
     private void initCtrl() {
@@ -66,11 +64,6 @@ public class RegistActivity extends BaseAppCompatActivity implements View.OnClic
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 setToolbar(titles[position]);
-                if (position == titles.length - 1) {
-                    btn_right.setVisibility(View.GONE);
-                } else {
-                    btn_right.setVisibility(View.VISIBLE);
-                }
             }
 
             @Override
@@ -86,22 +79,6 @@ public class RegistActivity extends BaseAppCompatActivity implements View.OnClic
     }
 
     private void initData() {
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_right:
-                Fragment currentFragment = adapterPager.getCurrentFragment();
-                if (currentFragment instanceof PagerFragmentInter) {
-                    if (((PagerFragmentInter) currentFragment).next()) {
-                        ViewPagerUtil.next(pager);
-                    }
-                } else {
-                    ViewPagerUtil.next(pager);
-                }
-                break;
-        }
     }
 
     @Override
@@ -123,5 +100,20 @@ public class RegistActivity extends BaseAppCompatActivity implements View.OnClic
     @Override
     public void saveRegister(User register) {
         this.register = register;
+    }
+
+    @Override
+    public void next() {
+        ViewPagerUtil.next(pager);
+    }
+
+    @Override
+    public void last() {
+        ViewPagerUtil.last(pager);
+    }
+
+    @Override
+    public void goPosition(int position) {
+        ViewPagerUtil.goPosition(pager, position);
     }
 }

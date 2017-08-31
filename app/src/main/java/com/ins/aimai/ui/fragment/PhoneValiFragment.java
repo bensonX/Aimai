@@ -13,6 +13,7 @@ import com.ins.aimai.R;
 import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.common.AppVali;
 import com.ins.aimai.interfaces.PagerFragmentInter;
+import com.ins.aimai.interfaces.PagerInter;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
@@ -37,6 +38,7 @@ public class PhoneValiFragment extends BaseFragment implements View.OnClickListe
     private ValiHelper valiHelper;
     private int position;
     private View rootView;
+    private View btn_go;
     private TextView btn_vali;
     private EditText edit_vali_phone;
     private EditText edit_vali_code;
@@ -75,11 +77,13 @@ public class PhoneValiFragment extends BaseFragment implements View.OnClickListe
     }
 
     private void initView() {
+        btn_go = rootView.findViewById(R.id.btn_go);
         btn_vali = (TextView) rootView.findViewById(R.id.btn_vali);
         edit_vali_phone = (EditText) rootView.findViewById(R.id.edit_vali_phone);
         edit_vali_code = (EditText) rootView.findViewById(R.id.edit_vali_code);
         valiHelper = new ValiHelper(btn_vali);
         btn_vali.setOnClickListener(this);
+        btn_go.setOnClickListener(this);
     }
 
     private void initCtrl() {
@@ -100,6 +104,9 @@ public class PhoneValiFragment extends BaseFragment implements View.OnClickListe
                     ToastUtil.showToastShort(msg);
                 }
                 break;
+            case R.id.btn_go:
+                next();
+                break;
         }
     }
 
@@ -113,6 +120,9 @@ public class PhoneValiFragment extends BaseFragment implements View.OnClickListe
         String msg = AppVali.regist_phone(phone, phone_old, code, code_old);
         if (msg == null) {
             EventBus.getDefault().post(new EventBean(EventBean.EVENT_REGIST_PHONE).put("phone", phone_old));
+            if (getActivity() instanceof PagerInter){
+                ((PagerInter) getActivity()).next();
+            }
             return true;
         } else {
             ToastUtil.showToastShort(msg);

@@ -17,12 +17,17 @@ import com.ins.common.utils.L;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import org.greenrobot.eventbus.EventBus;
 
+import paytest.ins.com.helper.PayHelper;
+
 public class WXPayEntryActivity extends BaseAppCompatActivity implements IWXAPIEventHandler, View.OnClickListener {
 
+    private IWXAPI wxapi;
     private int type;
     private TextView text_payresult_title;
     private TextView text_payresult_content;
@@ -37,6 +42,8 @@ public class WXPayEntryActivity extends BaseAppCompatActivity implements IWXAPIE
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        setIntent(intent);
+        wxapi.handleIntent(intent, this);
         if (intent.hasExtra("type")) {
             type = intent.getIntExtra("type", -1);
         }
@@ -47,6 +54,8 @@ public class WXPayEntryActivity extends BaseAppCompatActivity implements IWXAPIE
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payresult);
+        wxapi = WXAPIFactory.createWXAPI(this, PayHelper.appid);
+        wxapi.handleIntent(getIntent(), this);
         setToolbar();
         initBase();
         initView();
@@ -122,13 +131,12 @@ public class WXPayEntryActivity extends BaseAppCompatActivity implements IWXAPIE
 
     @Override
     public void onReq(BaseReq baseReq) {
-
     }
 
     @Override
     public void onResp(BaseResp resp) {
-        L.d("onPayFinish, errCode = " + resp.errCode);
-        L.d("onPayFinish, errStr = " + resp.errStr);
+        L.e("onPayFinish, errCode = " + resp.errCode);
+        L.e("onPayFinish, errStr = " + resp.errStr);
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
             type = resp.errCode;
             setPayData();

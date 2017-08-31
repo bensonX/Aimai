@@ -50,6 +50,14 @@
             </intent-filter>
         </receiver>
 
+        <receiver
+            android:name=".wxapi.AppRegister"
+            android:permission="com.tencent.mm.plugin.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />
+            </intent-filter>
+        </receiver>
+
         <activity
             android:name=".ui.activity.FirstActivity"
             android:theme="@style/AppTheme.NoTitleFullscreen">

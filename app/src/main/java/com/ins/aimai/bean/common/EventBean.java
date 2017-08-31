@@ -68,6 +68,8 @@ public class EventBean implements Serializable {
     public static final int EVENT_MSG_NEW_NONE = 0xffa026;
     //刷新考题统计页面
     public static final int EVENT_FRESHTEST = 0xffa027;
+    //刷新订单页面
+    public static final int EVENT_FRESHORDER = 0xffa028;
 
     private int event;
     private Map<String, Object> map = new HashMap<>();

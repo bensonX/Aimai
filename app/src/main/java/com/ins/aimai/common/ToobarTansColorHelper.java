@@ -49,8 +49,8 @@ public class ToobarTansColorHelper {
     private void initBase() {
         this.context = recyclerView.getContext();
         this.heightMax = Resources.getSystem().getDisplayMetrics().heightPixels / 3;
-        this.colorStart = Color.parseColor("#00ffffff");
-        this.colorEnd = ContextCompat.getColor(context, R.color.am_bk);
+        this.colorStart = Color.parseColor("#002f76b8");
+        this.colorEnd = ContextCompat.getColor(context, R.color.am_blue);
         recyclerView.addOnScrollListener(onScrollListener);
     }
 

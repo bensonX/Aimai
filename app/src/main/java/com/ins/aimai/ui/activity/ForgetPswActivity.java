@@ -9,15 +9,15 @@ import android.view.View;
 
 import com.ins.aimai.R;
 import com.ins.aimai.interfaces.PagerFragmentInter;
+import com.ins.aimai.interfaces.PagerInter;
 import com.ins.aimai.ui.adapter.PagerAdapterForgetPsw;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.common.utils.ViewPagerUtil;
 
-public class ForgetPswActivity extends BaseAppCompatActivity implements View.OnClickListener {
+public class ForgetPswActivity extends BaseAppCompatActivity implements PagerInter {
 
     private ViewPager pager;
     private PagerAdapterForgetPsw adapterPager;
-    private View btn_right;
 
     private String[] titles = new String[]{"忘记密码", "设置新密码"};
 
@@ -42,8 +42,6 @@ public class ForgetPswActivity extends BaseAppCompatActivity implements View.OnC
 
     private void initView() {
         pager = (ViewPager) findViewById(R.id.pager);
-        btn_right = findViewById(R.id.btn_right);
-        btn_right.setOnClickListener(this);
     }
 
     private void initCtrl() {
@@ -53,11 +51,6 @@ public class ForgetPswActivity extends BaseAppCompatActivity implements View.OnC
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 setToolbar(titles[position]);
-                if (position == titles.length - 1) {
-                    btn_right.setVisibility(View.GONE);
-                } else {
-                    btn_right.setVisibility(View.VISIBLE);
-                }
             }
 
             @Override
@@ -76,27 +69,26 @@ public class ForgetPswActivity extends BaseAppCompatActivity implements View.OnC
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_right:
-                Fragment currentFragment = adapterPager.getCurrentFragment();
-                if (currentFragment instanceof PagerFragmentInter) {
-                    if (((PagerFragmentInter) currentFragment).next()) {
-                        ViewPagerUtil.next(pager);
-                    }
-                } else {
-                    ViewPagerUtil.next(pager);
-                }
-                break;
-        }
-    }
-
-    @Override
     public void onBackPressed() {
         if (pager.getCurrentItem() != 0) {
             ViewPagerUtil.last(pager);
         } else {
             finish();
         }
+    }
+
+    @Override
+    public void next() {
+        ViewPagerUtil.next(pager);
+    }
+
+    @Override
+    public void last() {
+        ViewPagerUtil.last(pager);
+    }
+
+    @Override
+    public void goPosition(int position) {
+        ViewPagerUtil.goPosition(pager, position);
     }
 }

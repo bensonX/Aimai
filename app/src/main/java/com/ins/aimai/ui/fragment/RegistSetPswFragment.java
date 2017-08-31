@@ -13,6 +13,7 @@ import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.bean.User;
 import com.ins.aimai.common.AppVali;
 import com.ins.aimai.interfaces.PagerFragmentInter;
+import com.ins.aimai.interfaces.PagerInter;
 import com.ins.aimai.ui.activity.RegistActivity;
 import com.ins.aimai.ui.base.BaseFragment;
 import com.ins.aimai.utils.ToastUtil;
@@ -22,10 +23,11 @@ import org.greenrobot.eventbus.EventBus;
 /**
  * Created by liaoinstan
  */
-public class RegistSetPswFragment extends BaseFragment implements PagerFragmentInter {
+public class RegistSetPswFragment extends BaseFragment implements PagerFragmentInter,View.OnClickListener {
 
     private int position;
     private View rootView;
+    private View btn_go;
 
     private EditText edit_regist_newpsw;
     private EditText edit_regist_newpsw_repeat;
@@ -78,8 +80,10 @@ public class RegistSetPswFragment extends BaseFragment implements PagerFragmentI
     }
 
     private void initView() {
+        btn_go = rootView.findViewById(R.id.btn_go);
         edit_regist_newpsw = (EditText) rootView.findViewById(R.id.edit_regist_newpsw);
         edit_regist_newpsw_repeat = (EditText) rootView.findViewById(R.id.edit_regist_newpsw_repeat);
+        btn_go.setOnClickListener(this);
     }
 
     private void initCtrl() {
@@ -97,10 +101,22 @@ public class RegistSetPswFragment extends BaseFragment implements PagerFragmentI
             User register = activity.getRegister();
             register.setPhone(phone);
             register.setPwd(psw);
+            if (getActivity() instanceof PagerInter){
+                ((PagerInter) getActivity()).next();
+            }
             return true;
         } else {
             ToastUtil.showToastShort(msg);
             return false;
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_go:
+                next();
+                break;
         }
     }
 }

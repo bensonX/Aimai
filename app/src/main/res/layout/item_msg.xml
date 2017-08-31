@@ -7,6 +7,14 @@
         <variable
             name="msg"
             type="com.ins.aimai.bean.Msg" />
+
+        <variable
+            name="onItemClickListener"
+            type="com.ins.common.interfaces.OnRecycleItemClickListener" />
+
+        <variable
+            name="holder"
+            type="com.ins.aimai.ui.adapter.RecycleAdapterMsg.Holder" />
     </data>
 
     <LinearLayout
@@ -14,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@drawable/shape_rect_cornerbig_white"
+        android:onClick="@{()->onItemClickListener.onItemClick(holder)}"
         android:orientation="vertical"
         android:padding="10dp">
 
@@ -32,8 +41,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             android:text="@{msg.getCreateTimeBind()}"
-            android:textSize="@dimen/text_small"
             android:textColor="@{msg.isChecked()?@color/com_text_light:@color/com_text_dark_light}"
+            android:textSize="@dimen/text_small"
             tools:text="2017-07-03 11:20" />
 
         <TextView

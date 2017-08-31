@@ -35,6 +35,8 @@ import com.liaoinstan.springview.container.AliFooter;
 import com.liaoinstan.springview.container.AliHeader;
 import com.liaoinstan.springview.widget.SpringView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +68,8 @@ public class OrderFragment extends BaseFragment implements OnRecycleItemClickLis
     @Override
     public void onCommonEvent(EventBean event) {
         if (event.getEvent() == EventBean.EVENT_PAYRESULT) {
+            netQueryOrder(1);
+        } else if (event.getEvent() == EventBean.EVENT_FRESHORDER) {
             netQueryOrder(1);
         }
     }
@@ -238,7 +242,7 @@ public class OrderFragment extends BaseFragment implements OnRecycleItemClickLis
             @Override
             public void onSuccess(int status, CommonBean com, String msg) {
                 ToastUtil.showToastShort(msg);
-                netQueryOrder(1);
+                EventBus.getDefault().post(new EventBean(EventBean.EVENT_FRESHORDER));
                 AppHelper.hideLoadingDialog(getActivity());
             }
 

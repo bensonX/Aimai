@@ -1,6 +1,7 @@
 package com.ins.aimai.net;
 
 import com.google.gson.Gson;
+import com.ins.aimai.BuildConfig;
 import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.common.AppData;
 import com.ins.aimai.ui.activity.LoginActivity;

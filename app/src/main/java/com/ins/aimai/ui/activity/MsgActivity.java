@@ -73,9 +73,6 @@ public class MsgActivity extends BaseAppCompatActivity implements OnRecycleItemC
     }
 
     private void initView() {
-//        loadingLayout = (LoadingLayout) findViewById(R.id.loadingLayout);
-//        recycler = (RecyclerView) findViewById(R.id.recycler);
-//        springView = (SpringView) findViewById(R.id.spring);
     }
 
     private void initCtrl() {

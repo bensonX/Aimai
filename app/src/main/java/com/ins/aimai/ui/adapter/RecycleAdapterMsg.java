@@ -43,12 +43,15 @@ public class RecycleAdapterMsg extends RecyclerView.Adapter<RecycleAdapterMsg.Ho
     @Override
     public void onBindViewHolder(final RecycleAdapterMsg.Holder holder, final int position) {
         final Msg msg = results.get(position);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) listener.onItemClick(holder);
-            }
-        });
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (listener != null) listener.onItemClick(holder);
+//            }
+//        });
+        holder.binding.setHolder(holder);
+        //databinding中使用listener不需进行空验证，为null自动不会调用
+        holder.binding.setOnItemClickListener(listener);
         holder.binding.setMsg(results.get(position));
     }
 
