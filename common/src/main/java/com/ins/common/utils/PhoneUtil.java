@@ -22,6 +22,8 @@ import android.widget.Toast;
  * 使用建议：
  * 如果APP只需拨打电话并无特殊要求，推荐使用第一种方案，安全易于被用户接受
  * 如果APP需要定制拨号请求，比如钉钉滴滴这样的回拨等复杂需求，则使用第二种
+ *
+ * 下面代码报红请忽略，只要加上<uses-permission android:name="android.permission.CALL_PHONE" />权限即可，但是这个工具库不应该持有一个危险权限，我就是不加，如果使用第二种方式，请在主module加上该权限
  */
 public class PhoneUtil {
 

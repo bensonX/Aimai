@@ -14,7 +14,6 @@ import android.support.v7.widget.RecyclerView;
 public class SwipeHelper {
 
     public static void setSwipeListener(final SwipeRefreshLayout swipe, RecyclerView recyclerView, final OnSwiperFreshListener listener) {
-        //recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {

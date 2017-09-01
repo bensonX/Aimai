@@ -5,7 +5,7 @@ import com.ins.common.entity.BaseSelectBean;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/8/11.
+ * Created by liaoinstan on 2017/8/11.
  */
 
 public class ListUtil {

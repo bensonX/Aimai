@@ -9,6 +9,7 @@ import java.util.TimeZone;
 
 /**
  * 时间处理工具
+ * 进行时间的转换等
  */
 public class TimeUtil {
 

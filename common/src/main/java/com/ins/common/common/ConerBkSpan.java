@@ -15,6 +15,7 @@ import com.ins.common.utils.L;
 
 /**
  * Created by liaoinstan on 2017/7/23.
+ * 一个自定义Span，用在SpanableString中，提供矩形圆角的背景
  */
 
 public class ConerBkSpan extends ReplacementSpan {

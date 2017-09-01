@@ -14,11 +14,12 @@ import java.io.StreamCorruptedException;
 
 /**
  * SharedPreferences工具类，提供便捷的存取方法，主要提供了对象（Object）的存取方法
- * 使用这个封装更完整{@link SharedPrefUtilV2}
+ * 该工具已过时，目前依然保留该副本，使用这个封装更完整{@link SharedPrefUtilV2}
  *
  * 注意：
  * saveObject  readObject 可以存取对象，但是对象一定要实现Serializable可序列化接口
  */
+@Deprecated
 public class SharedPrefUtil {
 
 	public static String PREFERENCE_KEY = "user";

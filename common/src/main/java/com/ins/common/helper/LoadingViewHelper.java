@@ -20,6 +20,9 @@ import android.view.ViewGroup;
  * update: 2017.7.19
  * 目前简单实现了一个LoadingLayout {@link com.ins.common.view.LoadingLayout}
  * 在项目中暂时使用这种方案，有待后期优化
+ *
+ * update: 2017.9.1
+ * 已不再直接使用，现在使用更加易用的封装{@link com.ins.common.view.LoadingLayout}
  */
 public class LoadingViewHelper {
 

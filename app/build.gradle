@@ -30,7 +30,7 @@ android {
         }
     }
     //##########################
-    //配置keystore签名 startByLesson
+    //配置keystore签名 start
     //签名秘钥应避免暴露在受版本控制的文件中
     signingConfigs {
         myConfig {

@@ -16,6 +16,13 @@ import com.ins.common.R;
 
 /**
  * 确定取消弹窗
+ * 可以如下这样调用，更加便捷
+ * DialogSure.showDialog(this, "提示信息？", new DialogSure.CallBack() {
+ *
+ * @Override public void onSure() {
+ * ExamActivity.super.onBackPressed();
+ * }
+ * });
  */
 public class DialogSure extends Dialog {
 

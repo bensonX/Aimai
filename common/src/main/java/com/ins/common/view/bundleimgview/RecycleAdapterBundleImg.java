@@ -87,7 +87,6 @@ public class RecycleAdapterBundleImg extends RecyclerView.Adapter<RecyclerView.V
 
     private void bindTypeItem(final HolderItem holder, int position) {
         final BundleImgEntity bundle = results.get(position);
-        holder.img_bundle_play.setVisibility(View.INVISIBLE);
         holder.img_bundle_show.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,15 +139,11 @@ public class RecycleAdapterBundleImg extends RecyclerView.Adapter<RecyclerView.V
     public class HolderItem extends RecyclerView.ViewHolder {
         private ImageView img_bundle_show;
         private ImageView img_bundle_delete;
-        private ImageView img_bundle_play;
-        private CardView card_bundle;
 
         public HolderItem(View itemView) {
             super(itemView);
             img_bundle_show = (ImageView) itemView.findViewById(R.id.img_bundle_show);
             img_bundle_delete = (ImageView) itemView.findViewById(R.id.img_bundle_delete);
-            img_bundle_play = (ImageView) itemView.findViewById(R.id.img_bundle_play);
-            card_bundle = (CardView) itemView.findViewById(R.id.card_bundle);
             if (enable) {
                 img_bundle_delete.setVisibility(View.VISIBLE);
             } else {

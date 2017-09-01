@@ -8,6 +8,9 @@ import android.widget.TextView;
  * Created by Administrator on 2016/11/22.
  * 获取验证码倒计时工具，设置一个textview 调用start就可以开始倒计时（默认60s）
  * 根据需求修改这个helper，它提供了最基础的功能
+ *
+ * update 2017.9.1
+ * 使用{@link android.os.CountDownTimer}来实现更方便，可以考虑重构一下
  */
 
 public class ValiHelper {

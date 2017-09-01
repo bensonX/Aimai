@@ -4,7 +4,8 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 
 /**
- * Created by Administrator on 2017/8/10.
+ * Created by liaoinstan on 2017/8/10.
+ * 通用工具类（方法不进行分类，一般不常使用）
  */
 
 public class CommonUtil {
