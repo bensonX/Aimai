@@ -88,7 +88,7 @@ public class AddressActivity extends BaseAppCompatActivity implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_right:
-                postAddressAndFinish();
+                postAddressAndFinish(null);
                 break;
         }
     }
@@ -126,20 +126,21 @@ public class AddressActivity extends BaseAppCompatActivity implements View.OnCli
             TabLayoutUtil.setTab(tab, 2, name, true);
 
             //post选择地区消息
-            postAddressAndFinish();
+            postAddressAndFinish(null);
         } else {
             //不会存在这种情况
         }
     }
 
-    private void postAddressAndFinish() {
-        if (address == null) {
+    public void postAddressAndFinish(Address address) {
+        Address postBean = address == null ? this.address : address;
+        if (postBean == null) {
             ToastUtil.showToastShort("请选择地区");
             return;
         }
         EventBean event = new EventBean(EventBean.EVENT_SELECT_ADDRESS);
-        address.setAddress(getToolbarText());
-        event.put("address", address);
+        postBean.setAddress(getToolbarText());
+        event.put("address", postBean);
         EventBus.getDefault().post(event);
         finish();
     }
