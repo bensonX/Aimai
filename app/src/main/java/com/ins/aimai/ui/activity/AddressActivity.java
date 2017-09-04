@@ -13,6 +13,7 @@ import com.ins.aimai.bean.Address;
 import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.ui.adapter.PagerAdapterAddress;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
+import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.utils.TabLayoutUtil;
 import com.ins.common.utils.ViewPagerUtil;
 
@@ -25,6 +26,7 @@ public class AddressActivity extends BaseAppCompatActivity implements View.OnCli
     private PagerAdapterAddress adapterPager;
 
     private String[] titles = new String[]{"省份", "城市", "区县"};
+    private Address address;
     private String province = "";
     private String city = "";
     private String disrict = "";
@@ -86,20 +88,21 @@ public class AddressActivity extends BaseAppCompatActivity implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_right:
-                finish();
+                postAddressAndFinish();
                 break;
         }
     }
 
     private void setToobarText() {
         if (TextUtils.isEmpty(province) && TextUtils.isEmpty(city) && TextUtils.isEmpty(disrict)) {
-            setToolbar("地址选择", false);
+            setToolbar("地址选择");
         } else {
-            setToolbar(province + city + disrict, false);
+            setToolbar(province + city + disrict);
         }
     }
 
     public void next(Address address) {
+        this.address = address;
         String name = address.getName();
         int currentItem = pager.getCurrentItem();
         if (currentItem == 0) {
@@ -123,14 +126,22 @@ public class AddressActivity extends BaseAppCompatActivity implements View.OnCli
             TabLayoutUtil.setTab(tab, 2, name, true);
 
             //post选择地区消息
-            EventBean event = new EventBean(EventBean.EVENT_SELECT_ADDRESS);
-            address.setAddress(getToolbarText());
-            event.put("address", address);
-            EventBus.getDefault().post(event);
-            finish();
+            postAddressAndFinish();
         } else {
             //不会存在这种情况
         }
+    }
+
+    private void postAddressAndFinish() {
+        if (address == null) {
+            ToastUtil.showToastShort("请选择地区");
+            return;
+        }
+        EventBean event = new EventBean(EventBean.EVENT_SELECT_ADDRESS);
+        address.setAddress(getToolbarText());
+        event.put("address", address);
+        EventBus.getDefault().post(event);
+        finish();
     }
 
     @Override

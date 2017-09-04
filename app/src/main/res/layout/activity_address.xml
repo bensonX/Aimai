@@ -29,14 +29,16 @@
                 android:textColor="@color/am_blue"
                 android:textSize="@dimen/text_big" />
 
-            <ImageView
+            <TextView
                 android:id="@+id/btn_right"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
                 android:foreground="?attr/selectableItemBackground"
-                android:scaleType="center"
-                android:src="@drawable/ic_home_close" />
+                android:text="确认"
+                android:textColor="@color/am_blue"
+                android:gravity="center"
+                android:textSize="@dimen/text_big_nomal" />
 
         </android.support.v7.widget.Toolbar>
 

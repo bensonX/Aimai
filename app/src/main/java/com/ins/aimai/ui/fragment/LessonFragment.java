@@ -139,7 +139,7 @@ public class LessonFragment extends BaseFragment implements OnLessonClickListene
             @Override
             public void onItemClick(RecyclerView.ViewHolder viewHolder) {
                 Lesson lesson = adapterTasteBanner.getResults().get(viewHolder.getLayoutPosition());
-                VideoActivity.startByLesson(getContext(), lesson.getId());
+                VideoActivity.startByTaste(getContext(), lesson.getId());
             }
         });
     }

@@ -77,9 +77,10 @@
 #}
 
 #---------------------------------1.实体类---------------------------------
--keep class com.ins.common.entity.** { *; }
+#-keep class com.ins.common.entity.** { *; }
 -keep class **.entity.** { *; }
--keep class com.ins.aimai.bean.** { *; }
+-keep class **.bean.** { *; }
+#-keep class com.ins.aimai.bean.** { *; }
 #---------------------------------2.第三方包-------------------------------
 #极光推送
 -dontwarn cn.jpush.**

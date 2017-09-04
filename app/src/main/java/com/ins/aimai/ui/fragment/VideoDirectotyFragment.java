@@ -19,6 +19,7 @@ import com.ins.aimai.bean.common.TestBean;
 import com.ins.aimai.bean.common.VideoDirectiry;
 import com.ins.aimai.common.AppData;
 import com.ins.aimai.common.AppHelper;
+import com.ins.aimai.ui.activity.VideoActivity;
 import com.ins.aimai.ui.adapter.RecycleAdapterVideoDirectory;
 import com.ins.aimai.ui.base.BaseFragment;
 import com.ins.aimai.ui.base.BaseVideoActivity;
@@ -133,10 +134,16 @@ public class VideoDirectotyFragment extends BaseFragment implements OnRecycleIte
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
         List<Video> videos = adapter.getResults();
         Video clickVideo = videos.get(viewHolder.getLayoutPosition());
-        if (AppHelper.VideoPlay.couldPlayVideo(clickVideo, videos)) {
+        if (getActivity() instanceof VideoActivity && ((VideoActivity) getActivity()).isTaste()) {
+            //如果是试听课程，直接播放
             playVideo(clickVideo);
-        }else {
-            ToastUtil.showToastShort("你不能直接跳到该视频");
+        } else {
+            //不是则检查是否可以播放
+            if (AppHelper.VideoPlay.couldPlayVideo(clickVideo, videos)) {
+                playVideo(clickVideo);
+            } else {
+                ToastUtil.showToastShort("你不能直接跳到该视频");
+            }
         }
     }
 

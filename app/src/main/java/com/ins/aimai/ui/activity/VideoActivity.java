@@ -77,12 +77,21 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
     private Video video;    //选择的video
     private List<FaceRecord> faceRecords;   //选择的video的播放记录
     private int type;
+    private boolean isTaste = false;    //是否是试听课程
     //是否自动开始播放
     private boolean autoPlay = false;
 
     public static void startByLesson(Context context, int lessonId) {
         Intent intent = new Intent(context, VideoActivity.class);
         intent.putExtra("lessonId", lessonId);
+        intent.putExtra("type", 0);
+        context.startActivity(intent);
+    }
+
+    public static void startByTaste(Context context, int lessonId) {
+        Intent intent = new Intent(context, VideoActivity.class);
+        intent.putExtra("lessonId", lessonId);
+        intent.putExtra("isTaste", true);
         intent.putExtra("type", 0);
         context.startActivity(intent);
     }
@@ -160,6 +169,9 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
     private void initBase() {
         if (getIntent().hasExtra("type")) {
             type = getIntent().getIntExtra("type", 0);
+        }
+        if (getIntent().hasExtra("isTaste")) {
+            isTaste = getIntent().getBooleanExtra("isTaste", false);
         }
         if (getIntent().hasExtra("lessonId")) {
             lessonId = getIntent().getIntExtra("lessonId", 0);
@@ -364,7 +376,7 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
     public void onProgress(int progress, int duration) {
         if (AppHelper.VideoPlay.isVideoFreeCtrl(video, type)) return;
         float lv = (float) progress / (float) duration;
-        float addLv = (float) 60 / (float) (duration/1000);
+        float addLv = (float) 60 / (float) (duration / 1000);
         if (AppHelper.VideoPlay.needCheckFace(faceRecords, lv, addLv)) {
             if (player.isFullScreen()) {
                 player.setFullScreen(false);
@@ -462,5 +474,9 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
 
     public AppBarLayout getAppbar() {
         return appbar;
+    }
+
+    public boolean isTaste() {
+        return isTaste;
     }
 }
