@@ -106,7 +106,7 @@ public class BitmapUtil {
 
     //保存图片到指定路径，默认格式JPEG
     public static String saveBitmap(Bitmap bm, String path) {
-        return saveBitmap(bm, path, Bitmap.CompressFormat.JPEG);
+        return saveBitmap(bm, path, Bitmap.CompressFormat.PNG);
     }
 
     /**

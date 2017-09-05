@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import com.ins.aimai.R;
+import com.ins.common.utils.DensityUtil;
 import com.ins.common.utils.L;
 
 /**
@@ -48,7 +49,8 @@ public class ToobarTansColorHelper {
 
     private void initBase() {
         this.context = recyclerView.getContext();
-        this.heightMax = Resources.getSystem().getDisplayMetrics().heightPixels / 3;
+//        this.heightMax = Resources.getSystem().getDisplayMetrics().heightPixels / 3;
+        this.heightMax = DensityUtil.dp2px(context, 200);
         this.colorStart = Color.parseColor("#002f76b8");
         this.colorEnd = ContextCompat.getColor(context, R.color.am_blue);
         recyclerView.addOnScrollListener(onScrollListener);

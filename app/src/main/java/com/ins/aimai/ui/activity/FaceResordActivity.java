@@ -187,7 +187,11 @@ public class FaceResordActivity extends BaseAppCompatActivity implements View.On
                 TradeActivity.start(this);
                 break;
             case R.id.lay_facerecord_address:
-                AddressActivity.start(this);
+                if (AppHelper.isGov(user)) {
+                    AddressActivity.startWithAll(this);
+                } else {
+                    AddressActivity.start(this);
+                }
                 break;
             case R.id.lay_facerecord_header:
                 if (PermissionsUtil.checkCamera(this)) {

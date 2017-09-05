@@ -73,6 +73,15 @@ public class AppHelper {
         }
     }
 
+    //是否为政府用户
+    public static boolean isGov(User user) {
+        if (user != null && user.isGovUser()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static class UserHelp {
         //判断当前登录用户设置清晰度是否高清，未登录返回否
         public static boolean isHighDefinition() {
