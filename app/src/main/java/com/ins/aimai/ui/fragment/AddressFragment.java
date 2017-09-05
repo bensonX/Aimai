@@ -150,7 +150,7 @@ public class AddressFragment extends BaseFragment implements OnRecycleItemClickL
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
         Address address = adapter.getResults().get(viewHolder.getLayoutPosition());
-        if (levelType == 1 && AppHelper.isGov() && address.getId() == 100000 && getActivity() instanceof AddressActivity) {
+        if (levelType == 1 && address.getId() == 100000 && isHasAll()) {
             //如果政府用户选择了“中国”，则直接返回
             ((AddressActivity) getActivity()).postAddressAndFinish(address);
         } else {
@@ -172,14 +172,14 @@ public class AddressFragment extends BaseFragment implements OnRecycleItemClickL
                 } else {
                     adapter.getResults().clear();
                     adapter.getResults().addAll(beans);
-                    //如果是政府用户那么在选择省份的时候第一项增加一个“中国”
-                    if (levelType == 1 && AppHelper.isGov()) {
+                    //如果是政府用户那么在选择省份的时候第一项增加一个“全国”
+                    if (levelType == 1 && isHasAll()) {
                         Address address = new Address();
                         address.setId(100000);
-                        address.setAddress("中国");
-                        address.setName("中国");
-                        address.setShortName("中国");
-                        address.setMergerName("中国");
+                        address.setAddress("全国");
+                        address.setName("全国");
+                        address.setShortName("全国");
+                        address.setMergerName("全国");
                         adapter.getResults().add(0, address);
                     }
                     adapter.notifyDataSetChanged();
@@ -193,5 +193,10 @@ public class AddressFragment extends BaseFragment implements OnRecycleItemClickL
                 springView.onFinishFreshAndLoad();
             }
         });
+    }
+
+    //判断用户是否可以选择全国
+    private boolean isHasAll() {
+        return getActivity() instanceof AddressActivity && ((AddressActivity) getActivity()).isHasAll();
     }
 }

@@ -11,6 +11,7 @@ import android.view.View;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.Address;
 import com.ins.aimai.bean.common.EventBean;
+import com.ins.aimai.common.AppHelper;
 import com.ins.aimai.ui.adapter.PagerAdapterAddress;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.aimai.utils.ToastUtil;
@@ -26,6 +27,7 @@ public class AddressActivity extends BaseAppCompatActivity implements View.OnCli
     private PagerAdapterAddress adapterPager;
 
     private String[] titles = new String[]{"省份", "城市", "区县"};
+    private boolean hasAll; //是否允许选择全国
     private Address address;
     private String province = "";
     private String city = "";
@@ -33,6 +35,16 @@ public class AddressActivity extends BaseAppCompatActivity implements View.OnCli
 
     public static void start(Context context) {
         Intent intent = new Intent(context, AddressActivity.class);
+        //如果是政府那么可以选择全国
+        if (AppHelper.isGov()) {
+            intent.putExtra("hasAll", true);
+        }
+        context.startActivity(intent);
+    }
+
+    public static void startWithAll(Context context) {
+        Intent intent = new Intent(context, AddressActivity.class);
+        intent.putExtra("hasAll", true);
         context.startActivity(intent);
     }
 
@@ -48,6 +60,9 @@ public class AddressActivity extends BaseAppCompatActivity implements View.OnCli
     }
 
     private void initBase() {
+        if (getIntent().hasExtra("hasAll")) {
+            hasAll = getIntent().getBooleanExtra("hasAll", false);
+        }
     }
 
     private void initView() {
@@ -158,5 +173,12 @@ public class AddressActivity extends BaseAppCompatActivity implements View.OnCli
         ViewPagerUtil.last(pager);
         int currentItem = pager.getCurrentItem();
         TabLayoutUtil.setTabCurrent(tab, currentItem);
+    }
+
+    /////////////get & set /////////////////
+
+
+    public boolean isHasAll() {
+        return hasAll;
     }
 }

@@ -252,7 +252,7 @@ public class RegistInfoFragment extends BaseFragment implements View.OnClickList
                 TradeActivity.start(getContext());
                 break;
             case R.id.lay_regist_address:
-                AddressActivity.start(getContext());
+                AddressActivity.startWithAll(getContext());
                 break;
             case R.id.lay_regist_header:
                 if (PermissionsUtil.checkCamera(activity)) {
