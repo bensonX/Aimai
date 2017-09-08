@@ -27,8 +27,8 @@ import retrofit2.Response;
 
 public class NetFaceHelper {
 
-    private static final String app_id = "746ca1d1a4cf44378b2aefda6e69f31b";
-    private static final String app_key = "f9f483ec7aed4b1ca03328814b82127e";
+    private static final String app_id = "290e756d69154ba4b82e88d99c7e4740";
+    private static final String app_key = "e656befe4be64bd8836e707ab5cbc76d";
     //相识度大于多少才算对比成功
     private static final float similarityValue = 70;
 

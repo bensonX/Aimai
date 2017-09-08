@@ -100,7 +100,7 @@
             android:name=".ui.activity.MeDetailActivity"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity android:name=".ui.activity.OrderActivity" />
-        <activity android:name=".ui.activity.FavoActivity"></activity>
+        <activity android:name=".ui.activity.FavoActivity"/>
         <activity android:name=".ui.activity.MsgActivity" />
         <activity android:name=".ui.activity.SuggestActivity" />
         <activity android:name=".ui.activity.SettingActivity" />
@@ -119,9 +119,9 @@
         <activity android:name=".ui.activity.ExamResultActivity" />
         <activity android:name=".ui.activity.SortUserActivity" />
         <activity android:name=".ui.activity.LearnUserActivity" />
-        <activity android:name=".ui.activity.AddressActivity"></activity>
-        <activity android:name=".ui.activity.TradeActivity"></activity>
-        <activity android:name=".ui.activity.ExamActivity"></activity>
+        <activity android:name=".ui.activity.AddressActivity"/>
+        <activity android:name=".ui.activity.TradeActivity"/>
+        <activity android:name=".ui.activity.ExamActivity"/>
         <activity android:name=".ui.activity.EmploySearchActivity" />
         <activity android:name=".ui.activity.EmployAddActivity" />
         <activity android:name=".ui.activity.UserDetailActivity" />

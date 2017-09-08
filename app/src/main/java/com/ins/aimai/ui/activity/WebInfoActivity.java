@@ -22,6 +22,7 @@ import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.common.entity.Image;
 import com.ins.common.utils.GlideUtil;
 import com.ins.common.utils.L;
+import com.ins.common.utils.StrUtil;
 import com.ins.sharesdk.dialog.ShareDialog;
 
 public class WebInfoActivity extends BaseAppCompatActivity implements View.OnClickListener {
@@ -39,7 +40,7 @@ public class WebInfoActivity extends BaseAppCompatActivity implements View.OnCli
         Intent intent = new Intent(context, WebInfoActivity.class);
         intent.putExtra("id", msg.getNewsId());
         intent.putExtra("title", msg.getTitle());
-        intent.putExtra("digest", msg.getDigest());
+        intent.putExtra("digest", !StrUtil.isEmpty(msg.getDigest()) ? msg.getDigest() : msg.getTitle());
         intent.putExtra("img", msg.getImg());
         intent.putExtra("url", NetApi.getBaseUrl() + AppData.Url.newsInfo + "?newsId=" + msg.getNewsId());
         context.startActivity(intent);
@@ -49,7 +50,7 @@ public class WebInfoActivity extends BaseAppCompatActivity implements View.OnCli
         Intent intent = new Intent(context, WebInfoActivity.class);
         intent.putExtra("id", info.getId());
         intent.putExtra("title", info.getTitle());
-        intent.putExtra("digest", info.getDigest());
+        intent.putExtra("digest", !StrUtil.isEmpty(info.getDigest()) ? info.getDigest() : info.getTitle());
         intent.putExtra("img", info.getImage());
         intent.putExtra("url", NetApi.getBaseUrl() + AppData.Url.newsInfo + "?newsId=" + info.getId());
         context.startActivity(intent);
