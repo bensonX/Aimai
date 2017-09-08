@@ -152,9 +152,18 @@ public static java.lang.String TABLENAME;
 -dontwarn android.net.**
 -keep class android.net.SSLCertificateSocketFactory{*;}
 #微信支付
--keep class com.tencent.mm.sdk.** {
-   *;
+-keep class com.tencent.mm.sdk.** {*;}
+
+#glide
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public class * extends com.bumptech.glide.AppGlideModule
+-keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
 }
+-dontwarn com.bumptech.glide.load.engine.bitmap_recycle.LruBitmapPool
+-dontwarn com.bumptech.glide.load.resource.bitmap.Downsampler
+-dontwarn com.bumptech.glide.load.resource.bitmap.HardwareConfigState
 
 #####################################################
 #            新版混淆规则

@@ -17,6 +17,9 @@ import java.util.Random;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
+//import jp.wasabeef.glide.transformations.BlurTransformation;
+//import jp.wasabeef.glide.transformations.CropCircleTransformation;
+
 /**
  * Created by liaoinstan on 2016/10/27.
  * 为Glide定制，将调用统一化，主要用于封装一些常用方法方便调用，比如圆形头像、默认图等
@@ -56,26 +59,61 @@ public class GlideUtil {
         url = getRealImgPath(url);
         DrawableRequestBuilder<Integer> error = Glide.with(context).load(errorSrc).bitmapTransform(new CropCircleTransformation(context));
         Glide.with(context).load(url).thumbnail(error).bitmapTransform(new CropCircleTransformation(context)).crossFade().into(imageView);
+//        RequestOptions myOptions = new RequestOptions()
+//                .circleCrop()
+//                .placeholder(errorSrc)
+//                .error(errorSrc);
+//        Glide.with(context)
+//                .load(url)
+//                .apply(myOptions)
+//                .transition(new DrawableTransitionOptions().crossFade(200))
+//                .into(imageView);
     }
 
     public static void loadImg(ImageView imageView, int errorSrc, String url) {
         url = getRealImgPath(url);
         DrawableRequestBuilder<Integer> error = Glide.with(context).load(errorSrc);
         Glide.with(context).load(url).thumbnail(error).crossFade().into(imageView);
+//        RequestOptions myOptions = new RequestOptions()
+//                .placeholder(errorSrc)
+//                .error(errorSrc);
+//        Glide.with(context)
+//                .load(url)
+//                .apply(myOptions)
+//                .transition(new DrawableTransitionOptions().crossFade(200))
+//                .into(imageView);
     }
 
     public static void loadCircleImg(ImageView imageView, int src) {
         Glide.with(context).load(src).bitmapTransform(new CropCircleTransformation(context)).crossFade().into(imageView);
+//        RequestOptions myOptions = new RequestOptions()
+//                .circleCrop();
+//        Glide.with(context)
+//                .load(src)
+//                .apply(myOptions)
+//                .transition(new DrawableTransitionOptions().crossFade(200))
+//                .into(imageView);
     }
 
     public static void loadImg(ImageView imageView, int src) {
         Glide.with(context).load(src).crossFade().into(imageView);
+//        Glide.with(context)
+//                .load(src)
+//                .transition(new DrawableTransitionOptions().crossFade(200))
+//                .into(imageView);
     }
 
     //加载一张图进行高斯模糊处理
     public static void loadBlurImg(Context context, ImageView imageView, String url) {
         url = getRealImgPath(url);
         Glide.with(context).load(url).bitmapTransform(new BlurTransformation(context)).crossFade().into(imageView);
+//        RequestOptions myOptions = new RequestOptions()
+//                .transform(new BlurTransformation(25));
+//        Glide.with(context)
+//                .load(url)
+//                .apply(myOptions)
+//                .transition(new DrawableTransitionOptions().crossFade(200))
+//                .into(imageView);
     }
 
     //#########################################

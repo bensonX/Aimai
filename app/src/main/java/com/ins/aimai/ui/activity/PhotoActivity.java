@@ -13,10 +13,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.github.chrisbanes.photoview.PhotoViewAttacher;
 import com.ins.aimai.R;
@@ -145,13 +141,14 @@ public class PhotoActivity extends AppCompatActivity {
 
     private void loadImg(PhotoView photoView, String url) {
         final PhotoViewAttacher attacher = new PhotoViewAttacher(photoView);
-        Glide.with(this).load(GlideUtil.getRealImgPath(url)).error(R.drawable.default_bk_img).crossFade().into(new GlideDrawableImageViewTarget(photoView) {
-            @Override
-            public void onResourceReady(GlideDrawable drawable, GlideAnimation anim) {
-                super.onResourceReady(drawable, anim);
-                //在这里添加一些图片加载完成的操作
-                attacher.update();
-            }
-        });
+        GlideUtil.loadImg(photoView, R.drawable.default_bk_img, GlideUtil.getRealImgPath(url));
+//        Glide.with(this).load(GlideUtil.getRealImgPath(url)).error(R.drawable.default_bk_img).crossFade().into(new GlideDrawableImageViewTarget(photoView) {
+//            @Override
+//            public void onResourceReady(GlideDrawable drawable, GlideAnimation anim) {
+//                super.onResourceReady(drawable, anim);
+//                //在这里添加一些图片加载完成的操作
+//                attacher.update();
+//            }
+//        });
     }
 }
