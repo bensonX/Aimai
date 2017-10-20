@@ -47,8 +47,10 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.myConfig
-            buildConfigField "String", "BASE_URL", '"http://app.aimaiap.com/"'
-            buildConfigField "String", "BASE_URL_RES", '"http://multimedia.aimaiap.com/"'
+//            buildConfigField "String", "BASE_URL", '"http://app.aimaiap.com/"'
+//            buildConfigField "String", "BASE_URL_RES", '"http://multimedia.aimaiap.com/"'
+            buildConfigField "String", "BASE_URL", '"http://192.168.31.110:8080/"'
+            buildConfigField "String", "BASE_URL_RES", '"http://192.168.31.110:8080/"'
             minifyEnabled true      //开启代码混淆
             zipAlignEnabled true    //是否zip对齐优化
             shrinkResources true    //移除无用的资源文件
@@ -81,7 +83,6 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile project(':common')
     //阿里巴巴vlayout
     compile('com.alibaba.android:vlayout:1.0.9@aar') {
         transitive = true
@@ -100,15 +101,14 @@ dependencies {
     compile project(':lib_domain')
     //极光推送
     compile 'cn.jiguang.sdk:jpush:3.0.3'
-    // 此处以JPush 3.0.3 版本为例。
     compile 'cn.jiguang.sdk:jcore:1.1.1'
-    // 此处以JCore 1.1.1 版本为例。
-    compile project(':lib_camera')
-    compile project(':lib_sharesdk')
-    compile project(':lib_pay')
     //photoView
     compile 'com.github.chrisbanes:PhotoView:2.0.0'
     compile project(':lib_version')
     //bugly
     compile 'com.tencent.bugly:crashreport:latest.release'
+    compile project(':common')
+    compile project(':lib_camera')
+    compile project(':lib_sharesdk')
+    compile project(':lib_pay')
 }

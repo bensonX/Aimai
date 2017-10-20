@@ -82,7 +82,7 @@ public class MeDetailActivity extends BaseAppCompatActivity implements View.OnCl
 
     private void initBase() {
         cropHelper = new CropHelper(this, this);
-        cropHelper.setNeedCrop(true);
+        cropHelper.setNeedCrop(false);
         popupPhoto = new DialogPopupPhoto(this);
         popupPhoto.setOnStartListener(new DialogPopupPhoto.OnStartListener() {
             @Override
