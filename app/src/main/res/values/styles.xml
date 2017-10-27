@@ -82,4 +82,6 @@
     <style name="TabLayoutTextBigNomal">
         <item name="android:textSize">@dimen/text_big_nomal</item>
     </style>
+
+    <style name="MyProgressBar" parent="Base.Widget.AppCompat.ProgressBar"/>
 </resources>
