@@ -376,7 +376,7 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
     public void onProgress(int progress, int duration) {
         if (AppHelper.VideoPlay.isVideoFreeCtrl(video, type)) return;
         float lv = (float) progress / (float) duration;
-        float addLv = (float) 60 / (float) (duration / 1000);
+        float addLv = (float) 60 * 4 / (float) (duration / 1000); //4分钟处要进行验证
         if (AppHelper.VideoPlay.needCheckFace(faceRecords, lv, addLv)) {
             if (player.isFullScreen()) {
                 player.setFullScreen(false);

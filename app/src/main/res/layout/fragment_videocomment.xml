@@ -13,16 +13,16 @@
             android:id="@+id/recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="50dp"
-            android:clipToPadding="false" />
+            android:clipToPadding="false"
+            android:paddingBottom="50dp" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <LinearLayout
-        android:layout_gravity="bottom"
         android:id="@+id/lay_comment_send"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
         android:orientation="vertical">
 
         <View style="@style/Line_H" />
@@ -60,12 +60,13 @@
                 android:layout_height="35dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="15dp"
-                android:background="@drawable/selector_corner_blue_dark_enable"
+                android:background="@drawable/shape_rect_corner_blue"
+                android:foreground="?attr/selectableItemBackground"
                 android:gravity="center"
                 android:text="发送"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_nomal" />
-
+            <!--android:background="@drawable/selector_corner_blue_dark_enable"-->
         </LinearLayout>
 
     </LinearLayout>

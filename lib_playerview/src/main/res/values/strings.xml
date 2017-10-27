@@ -5,7 +5,7 @@
 
     <string-array name="media_quality">
         <item>流畅</item>
-        <item>清晰</item>
+        <item>标清</item>
         <item>高清</item>
         <item>超清</item>
         <item>1080P</item>

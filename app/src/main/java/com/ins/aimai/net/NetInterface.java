@@ -191,6 +191,14 @@ public interface NetInterface {
     //##################################################################
 
     /**
+     * 判断某课程是否购买
+     * curriculumId
+     */
+    @FormUrlEncoded
+    @POST("/api/curriculum/isBuy")
+    Call<ResponseBody> lessonIsBuy(@FieldMap Map<String, Object> param);
+
+    /**
      * 课程首页搜索获取
      * searchParam
      * pageNO    pageSize

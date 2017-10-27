@@ -20,6 +20,8 @@ import com.ins.aimai.interfaces.OnLessonClickListener;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
+import com.ins.aimai.net.helper.NetLessonHelper;
+import com.ins.aimai.ui.activity.HomeActivity;
 import com.ins.aimai.ui.activity.LessonDetailActivity;
 import com.ins.aimai.ui.activity.LessonSearchActivity;
 import com.ins.aimai.ui.activity.VideoActivity;
@@ -33,6 +35,8 @@ import com.ins.common.view.LoadingLayout;
 import com.liaoinstan.springview.container.AliFooter;
 import com.liaoinstan.springview.container.AliHeader;
 import com.liaoinstan.springview.widget.SpringView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.Map;
 
@@ -149,8 +153,25 @@ public class LessonFragment extends BaseFragment implements OnLessonClickListene
     }
 
     @Override
-    public void onLessonClick(Lesson lesson) {
-        LessonDetailActivity.startByLesson(getContext(), lesson.getId());
+    public void onLessonClick(final Lesson lesson) {
+        NetLessonHelper.getInstance().netLessonIsBuy(lesson.getId(), new NetLessonHelper.IsBuyCallback() {
+            @Override
+            public void onYes() {
+                ToastUtil.showToastLong("您已经购买过该课程，可以直接观看");
+                //去我的课程
+                EventBus.getDefault().post(new EventBean(EventBean.EVENT_HOME_TAB_LESSON));
+            }
+
+            @Override
+            public void onNo() {
+                LessonDetailActivity.startByLesson(getContext(), lesson.getId());
+            }
+
+            @Override
+            public void onError() {
+                LessonDetailActivity.startByLesson(getContext(), lesson.getId());
+            }
+        });
     }
 
     @Override
@@ -201,4 +222,6 @@ public class LessonFragment extends BaseFragment implements OnLessonClickListene
             }
         });
     }
+
+
 }

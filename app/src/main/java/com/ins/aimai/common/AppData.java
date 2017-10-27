@@ -66,8 +66,9 @@ public class AppData {
 
         public static List<CheckPoint> getVideoCheckPoint() {
             return new ArrayList<CheckPoint>() {{
-                add(new CheckPoint(0, 1f / 3f));
-                add(new CheckPoint(1, 2f / 3f));
+                //FIXME:这里添加检查人像的时间节点（比如1/3处，2/3处），2017/10/27的需求变动取消了这个功能，只在视频4分钟处进行验证
+                //add(new CheckPoint(0, 1f / 3f));
+                //add(new CheckPoint(1, 2f / 3f));
             }};
         }
     }
