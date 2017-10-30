@@ -125,6 +125,16 @@ public class DialogSure extends Dialog {
         } else {
             text_dialog_title.setVisibility(View.VISIBLE);
         }
+        if (TextUtils.isEmpty(cancelStr)) {
+            text_cancle.setVisibility(View.GONE);
+        } else {
+            text_cancle.setVisibility(View.VISIBLE);
+        }
+        if (TextUtils.isEmpty(sureStr)) {
+            text_ok.setVisibility(View.GONE);
+        } else {
+            text_ok.setVisibility(View.VISIBLE);
+        }
     }
 
     public void setOnCancleListener(View.OnClickListener listener) {

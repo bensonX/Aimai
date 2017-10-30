@@ -38,6 +38,7 @@ import com.ins.aimai.ui.dialog.DialogSureAimai;
 import com.ins.aimai.ui.dialog.DialogToExam;
 import com.ins.aimai.ui.view.TextTabLayout;
 import com.ins.aimai.utils.ToastUtil;
+import com.ins.common.ui.dialog.DialogSure;
 import com.ins.common.utils.GlideUtil;
 import com.ins.common.utils.L;
 import com.ins.common.utils.ListUtil;
@@ -136,6 +137,9 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
             } else {
                 //否则直接播放下一个视频
                 EventBus.getDefault().post(new EventBean(EventBean.EVENT_VIDEO_START_NEXT));
+            }
+            if (videoFinishStatus.isShowNote()) {
+                new DialogSure(this, "", "恭喜您通过考核！").show();
             }
         } else if (event.getEvent() == EventBean.EVENT_VIDEO_START_NEXT) {
             autoPlay = true;

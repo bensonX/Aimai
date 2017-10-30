@@ -21,6 +21,9 @@ public class VideoFinishStatus implements Serializable {
     //是否提示去做考试题
     @SerializedName("isExaminationQuestion")
     private int isExaminationQuestion;
+    //是否弹窗提示
+    @SerializedName("isShowNote")
+    private int isShowNote;
 
     public VideoFinishStatus() {
     }
@@ -43,6 +46,10 @@ public class VideoFinishStatus implements Serializable {
 
     public boolean isShowOffi() {
         return isExaminationQuestion == 1;
+    }
+
+    public boolean isShowNote() {
+        return isShowNote == 1;
     }
 
     public boolean isAllHide() {
@@ -74,5 +81,13 @@ public class VideoFinishStatus implements Serializable {
 
     public void setIsExaminationQuestion(int isExaminationQuestion) {
         this.isExaminationQuestion = isExaminationQuestion;
+    }
+
+    public int getIsShowNote() {
+        return isShowNote;
+    }
+
+    public void setIsShowNote(int isShowNote) {
+        this.isShowNote = isShowNote;
     }
 }
