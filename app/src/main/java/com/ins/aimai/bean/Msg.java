@@ -66,7 +66,7 @@ public class Msg implements Serializable {
     }
 
     public String getCreateTimeBind() {
-        return TimeUtil.getTimeFor("yyyy-mm-dd HH:mm", new Date(getCreateTime()));
+        return TimeUtil.getTimeFor("yyyy-MM-dd HH:mm", new Date(getCreateTime()));
     }
 
     ///////////////////////////////////////////////
