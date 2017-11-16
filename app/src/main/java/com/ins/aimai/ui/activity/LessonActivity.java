@@ -12,6 +12,7 @@ import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.Lesson;
 import com.ins.aimai.bean.common.EventBean;
+import com.ins.aimai.common.AppData;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
@@ -144,10 +145,14 @@ public class LessonActivity extends BaseAppCompatActivity implements OnRecycleIt
         NetLessonHelper.getInstance().netLessonIsBuy(lesson.getId(), new NetLessonHelper.IsBuyCallback() {
             @Override
             public void onYes() {
-                ToastUtil.showToastLong("您已经购买过该课程，可以直接观看");
-                //去我的课程
-                EventBus.getDefault().post(new EventBean(EventBean.EVENT_HOME_TAB_LESSON));
-                finish();
+                if (AppData.App.getUser().isUser()) {
+                    ToastUtil.showToastLong("您已经购买过该课程，可以直接观看");
+                    //去我的课程
+                    EventBus.getDefault().post(new EventBean(EventBean.EVENT_HOME_TAB_LESSON));
+                    finish();
+                } else {
+                    LessonDetailActivity.startByLesson(LessonActivity.this, lesson.getId());
+                }
             }
 
             @Override
@@ -158,6 +163,7 @@ public class LessonActivity extends BaseAppCompatActivity implements OnRecycleIt
             @Override
             public void onNoPay() {
                 OrderActivity.start(LessonActivity.this);
+                ToastUtil.showToastLong("该课程订单已存在，请直接付款");
             }
         });
     }

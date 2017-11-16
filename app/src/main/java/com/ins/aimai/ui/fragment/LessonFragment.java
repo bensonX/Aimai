@@ -16,12 +16,14 @@ import com.ins.aimai.R;
 import com.ins.aimai.bean.Lesson;
 import com.ins.aimai.bean.LessonHomePojo;
 import com.ins.aimai.bean.common.EventBean;
+import com.ins.aimai.common.AppData;
 import com.ins.aimai.interfaces.OnLessonClickListener;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
 import com.ins.aimai.net.helper.NetLessonHelper;
 import com.ins.aimai.ui.activity.HomeActivity;
+import com.ins.aimai.ui.activity.LessonActivity;
 import com.ins.aimai.ui.activity.LessonDetailActivity;
 import com.ins.aimai.ui.activity.LessonSearchActivity;
 import com.ins.aimai.ui.activity.OrderActivity;
@@ -155,12 +157,17 @@ public class LessonFragment extends BaseFragment implements OnLessonClickListene
 
     @Override
     public void onLessonClick(final Lesson lesson) {
+
         NetLessonHelper.getInstance().netLessonIsBuy(lesson.getId(), new NetLessonHelper.IsBuyCallback() {
             @Override
             public void onYes() {
-                ToastUtil.showToastLong("您已经购买过该课程，可以直接观看");
-                //去我的课程
-                EventBus.getDefault().post(new EventBean(EventBean.EVENT_HOME_TAB_LESSON));
+                if (AppData.App.getUser().isUser()) {
+                    ToastUtil.showToastLong("您已经购买过该课程，可以直接观看");
+                    //去我的课程
+                    EventBus.getDefault().post(new EventBean(EventBean.EVENT_HOME_TAB_LESSON));
+                } else {
+                    LessonDetailActivity.startByLesson(getContext(), lesson.getId());
+                }
             }
 
             @Override
@@ -171,6 +178,7 @@ public class LessonFragment extends BaseFragment implements OnLessonClickListene
             @Override
             public void onNoPay() {
                 OrderActivity.start(getActivity());
+                ToastUtil.showToastLong("该课程订单已存在，请直接付款");
             }
         });
     }
