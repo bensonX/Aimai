@@ -291,13 +291,13 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
     private void setTextSize(int sizeType) {
         switch (sizeType) {
             case AppData.Constant.TEXTSIZE_BIG:
-                tab.setTextSize(15);
+                tab.setTextSize(16);
                 break;
             case AppData.Constant.TEXTSIZE_MIDDLE:
-                tab.setTextSize(14);
+                tab.setTextSize(15);
                 break;
             case AppData.Constant.TEXTSIZE_SMALL:
-                tab.setTextSize(13);
+                tab.setTextSize(14);
                 break;
         }
     }
@@ -335,7 +335,9 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
                 case MediaPlayerParams.STATE_COMPLETED:
                     //播放完成
                     AppHelper.VideoPlay.setVideoStatusFinish(video);
-                    NetHelper.getInstance().netAddVideoStatus(video.getVideoStatus(), orderId, video.getId(), player.getCurPosition() / 1000, true);
+                    //FIXME:视频播放完成传播放进度去总时间，如果取当前时间可能出现取整丢失精度出现1秒误差，导致服务器获取到的进度为99.9%
+                    //NetHelper.getInstance().netAddVideoStatus(video.getVideoStatus(), orderId, video.getId(), player.getCurPosition() / 1000, true);
+                    NetHelper.getInstance().netAddVideoStatus(video.getVideoStatus(), orderId, video.getId(), video.getHighDefinitionSeconds(), true);
                     EventBus.getDefault().post(new EventBean(EventBean.EVENT_VIDEO_FINISH));
                     player.stop();
                     break;

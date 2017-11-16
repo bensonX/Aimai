@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -110,6 +111,9 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
             int count = (int) event.get("count");
             lesson.setAllocationNum(lesson.getAllocationNum() + count);
             setData(lesson);
+        } else if (event.getEvent() == EventBean.EVENT_VIDEO_TEXISIZE) {
+            int sizeType = (int) event.get("sizeType");
+            setTextSize(sizeType);
         }
     }
 
@@ -169,6 +173,7 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
     private void initCtrl() {
         adapterPager = new PagerAdapterLessonDetail(getSupportFragmentManager(), titles, lessonId);
         pager.setAdapter(adapterPager);
+        pager.setOffscreenPageLimit(2);
         tab.setupWithViewPager(pager);
         setTab();
 
@@ -209,6 +214,16 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
         } else {
             lay_lessondetail_count.setVisibility(View.GONE);
         }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //恢复上次选择的字体大小
+                int sizeType = AppData.App.getTextSizeVideo();
+                EventBean eventBean = new EventBean(EventBean.EVENT_VIDEO_TEXISIZE);
+                eventBean.put("sizeType", sizeType);
+                EventBus.getDefault().post(eventBean);
+            }
+        },500);
     }
 
     private void initData() {
@@ -263,6 +278,28 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
                     ToastUtil.showToastShort("所购课程已全部分配完");
                 }
                 break;
+        }
+    }
+
+    private void setTextSize(int sizeType) {
+        switch (sizeType) {
+            case AppData.Constant.TEXTSIZE_BIG:
+                setTextSize(tab,16);
+                break;
+            case AppData.Constant.TEXTSIZE_MIDDLE:
+                setTextSize(tab,15);
+                break;
+            case AppData.Constant.TEXTSIZE_SMALL:
+                setTextSize(tab,14);
+                break;
+        }
+    }
+
+    public void setTextSize(TabLayout tab,float textSize) {
+        for (int i = 0; i < tab.getTabCount(); i++) {
+            TabLayout.Tab t = tab.getTabAt(i);
+            TextView textView = (TextView) ((ViewGroup) t.getCustomView()).getChildAt(0);
+            textView.setTextSize(textSize);
         }
     }
 

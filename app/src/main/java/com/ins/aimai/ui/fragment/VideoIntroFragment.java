@@ -113,13 +113,13 @@ public class VideoIntroFragment extends BaseFragment {
     private void setTextSize(int sizeType) {
         switch (sizeType) {
             case AppData.Constant.TEXTSIZE_BIG:
-                setTextSize(R.dimen.text_big_nomal, R.dimen.text_nomal);
+                setTextSize(R.dimen.text_big, R.dimen.text_big_nomal);
                 break;
             case AppData.Constant.TEXTSIZE_MIDDLE:
-                setTextSize(R.dimen.text_nomal, R.dimen.text_nomal_small);
+                setTextSize(R.dimen.text_big_nomal, R.dimen.text_nomal);
                 break;
             case AppData.Constant.TEXTSIZE_SMALL:
-                setTextSize(R.dimen.text_nomal_small, R.dimen.text_small);
+                setTextSize(R.dimen.text_nomal, R.dimen.text_nomal_small);
                 break;
         }
     }

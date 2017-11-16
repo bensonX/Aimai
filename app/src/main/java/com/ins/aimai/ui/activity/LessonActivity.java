@@ -11,9 +11,11 @@ import android.view.View;
 import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.Lesson;
+import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
+import com.ins.aimai.net.helper.NetLessonHelper;
 import com.ins.aimai.ui.adapter.RecycleAdapterLesson;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.aimai.utils.ToastUtil;
@@ -24,6 +26,8 @@ import com.ins.common.view.LoadingLayout;
 import com.liaoinstan.springview.container.AliFooter;
 import com.liaoinstan.springview.container.AliHeader;
 import com.liaoinstan.springview.widget.SpringView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.List;
@@ -136,8 +140,26 @@ public class LessonActivity extends BaseAppCompatActivity implements OnRecycleIt
 
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
-        Lesson lesson = adapter.getResults().get(viewHolder.getLayoutPosition());
-        LessonDetailActivity.startByLesson(this, lesson.getId());
+        final Lesson lesson = adapter.getResults().get(viewHolder.getLayoutPosition());
+        NetLessonHelper.getInstance().netLessonIsBuy(lesson.getId(), new NetLessonHelper.IsBuyCallback() {
+            @Override
+            public void onYes() {
+                ToastUtil.showToastLong("您已经购买过该课程，可以直接观看");
+                //去我的课程
+                EventBus.getDefault().post(new EventBean(EventBean.EVENT_HOME_TAB_LESSON));
+                finish();
+            }
+
+            @Override
+            public void onNo() {
+                LessonDetailActivity.startByLesson(LessonActivity.this, lesson.getId());
+            }
+
+            @Override
+            public void onError() {
+                LessonDetailActivity.startByLesson(LessonActivity.this, lesson.getId());
+            }
+        });
     }
 
     ///////////////////////////////////

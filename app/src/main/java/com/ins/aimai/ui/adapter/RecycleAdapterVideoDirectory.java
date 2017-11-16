@@ -59,16 +59,16 @@ public class RecycleAdapterVideoDirectory extends RecyclerView.Adapter<RecycleAd
         //动态设置字体大小
         switch (sizeType) {
             case AppData.Constant.TEXTSIZE_BIG:
+                holder.text_directory_title.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.text_big));
+                holder.text_directory_time.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.text_nomal));
+                break;
+            case AppData.Constant.TEXTSIZE_MIDDLE:
                 holder.text_directory_title.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.text_big_nomal));
                 holder.text_directory_time.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.text_nomal_small));
                 break;
-            case AppData.Constant.TEXTSIZE_MIDDLE:
+            case AppData.Constant.TEXTSIZE_SMALL:
                 holder.text_directory_title.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.text_nomal));
                 holder.text_directory_time.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.text_small));
-                break;
-            case AppData.Constant.TEXTSIZE_SMALL:
-                holder.text_directory_title.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.text_nomal_small));
-                holder.text_directory_time.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.text_small_tiny));
                 break;
         }
     }
