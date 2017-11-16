@@ -1,11 +1,8 @@
 package com.ins.aimai.net.helper;
 
-import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.Map;
 
@@ -32,15 +29,34 @@ public class NetLessonHelper {
         NetApi.NI().lessonIsBuy(param).enqueue(new BaseCallback<Integer>(Integer.class) {
             @Override
             public void onSuccess(int status, Integer isBuy, String msg) {
+//                if (callback != null) {
+//                    if (isBuy == 1) callback.onYes();
+//                    else callback.onNo();
+//                }
                 if (callback != null) {
-                    if (isBuy == 1) callback.onYes();
-                    else callback.onNo();
+                    switch (isBuy) {
+                        case -1:
+                            //有订单，该订单已经支付
+                            callback.onYes();
+                            break;
+                        case -2:
+                            //有订单，该订单未支付
+                            callback.onNoPay();
+                            break;
+                        case 0:
+                            //没有订单
+                            callback.onNo();
+                            break;
+                        default:
+                            callback.onNo();
+                            break;
+                    }
                 }
             }
 
             @Override
             public void onError(int status, String msg) {
-                if (callback != null) callback.onError();
+                if (callback != null) callback.onNo();
             }
         });
     }
@@ -50,6 +66,6 @@ public class NetLessonHelper {
 
         void onNo();
 
-        void onError();
+        void onNoPay();
     }
 }

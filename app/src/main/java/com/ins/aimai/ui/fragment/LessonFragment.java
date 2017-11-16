@@ -24,6 +24,7 @@ import com.ins.aimai.net.helper.NetLessonHelper;
 import com.ins.aimai.ui.activity.HomeActivity;
 import com.ins.aimai.ui.activity.LessonDetailActivity;
 import com.ins.aimai.ui.activity.LessonSearchActivity;
+import com.ins.aimai.ui.activity.OrderActivity;
 import com.ins.aimai.ui.activity.VideoActivity;
 import com.ins.aimai.ui.adapter.RecycleAdapterLessonCate;
 import com.ins.aimai.ui.adapter.RecycleAdapterLessonTasteBanner;
@@ -168,8 +169,8 @@ public class LessonFragment extends BaseFragment implements OnLessonClickListene
             }
 
             @Override
-            public void onError() {
-                LessonDetailActivity.startByLesson(getContext(), lesson.getId());
+            public void onNoPay() {
+                OrderActivity.start(getActivity());
             }
         });
     }

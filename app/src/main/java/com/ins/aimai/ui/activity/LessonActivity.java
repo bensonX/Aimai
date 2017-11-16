@@ -156,8 +156,8 @@ public class LessonActivity extends BaseAppCompatActivity implements OnRecycleIt
             }
 
             @Override
-            public void onError() {
-                LessonDetailActivity.startByLesson(LessonActivity.this, lesson.getId());
+            public void onNoPay() {
+                OrderActivity.start(LessonActivity.this);
             }
         });
     }
