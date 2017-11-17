@@ -32,6 +32,9 @@ public class PayDialogActivity extends BaseAppCompatActivity {
     //是否重新支付
     private boolean isRepay;
 
+    //是否不进行支付，（价格为0时绕过支付直接生产订单）
+    private boolean didntPay;
+
     public static void startRepay(Context context, int orderId) {
         if (AppData.App.getUser() != null) {
             Intent intent = new Intent(context, PayDialogActivity.class);
@@ -43,9 +46,14 @@ public class PayDialogActivity extends BaseAppCompatActivity {
     }
 
     public static void start(Context context, int lessonId) {
+        start(context, lessonId, false);
+    }
+
+    public static void start(Context context, int lessonId, boolean didntPay) {
         if (AppData.App.getUser() != null) {
             Intent intent = new Intent(context, PayDialogActivity.class);
             intent.putExtra("lessonId", lessonId);
+            intent.putExtra("didntPay", didntPay);
             context.startActivity(intent);
         } else {
             LoginActivity.start(context);
@@ -99,6 +107,9 @@ public class PayDialogActivity extends BaseAppCompatActivity {
     }
 
     private void initBase() {
+        if (getIntent().hasExtra("didntPay")) {
+            didntPay = getIntent().getBooleanExtra("didntPay", false);
+        }
         if (getIntent().hasExtra("lessonId")) {
             lessonId = getIntent().getIntExtra("lessonId", 0);
         }
@@ -189,5 +200,9 @@ public class PayDialogActivity extends BaseAppCompatActivity {
 
     public void setOrderId(int orderId) {
         this.orderId = orderId;
+    }
+
+    public boolean isDidntPay() {
+        return didntPay;
     }
 }

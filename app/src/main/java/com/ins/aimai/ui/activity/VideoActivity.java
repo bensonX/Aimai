@@ -47,6 +47,7 @@ import com.ins.common.utils.StatusBarTextUtil;
 import com.ins.common.utils.StrUtil;
 import com.ins.common.utils.others.CommonUtil;
 import com.liaoinstan.springview.listener.AppBarStateChangeListener;
+import com.shelwee.update.utils.NetWorkUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -197,6 +198,9 @@ public class VideoActivity extends BaseVideoActivity implements IMediaPlayer.OnI
                 }
             }
         });
+        //检查是否wifi连接，否则给出提示
+        int type = new NetWorkUtils(this).getNetType();
+        if (type!=1) ToastUtil.showToastShort("您正在使用流量播放，可能产生额外流量费用");
     }
 
     private void initView() {

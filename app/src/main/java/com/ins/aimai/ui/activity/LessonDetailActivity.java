@@ -69,6 +69,7 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
     private View lay_lessondetail_btn_comp;
     private View lay_lessondetail_btn_user;
     private View btn_right;
+    private TextView btn_go;
 
     private String[] titles = new String[]{"介绍", "目录", "评论"};
 
@@ -114,6 +115,9 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
         } else if (event.getEvent() == EventBean.EVENT_VIDEO_TEXISIZE) {
             int sizeType = (int) event.get("sizeType");
             setTextSize(sizeType);
+        } else if (event.getEvent() == EventBean.EVENT_PAYRESULT) {
+            //价格为0支付成功后关闭该页面
+            if (lesson != null && lesson.getPrice() == 0) finish();
         }
     }
 
@@ -163,11 +167,12 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
         lay_lessondetail_btn_comp = findViewById(R.id.lay_lessondetail_btn_comp);
         lay_lessondetail_btn_user = findViewById(R.id.lay_lessondetail_btn_user);
         btn_right = findViewById(R.id.btn_right);
-        findViewById(R.id.btn_go).setOnClickListener(this);
+        btn_go = (TextView) findViewById(R.id.btn_go);
         findViewById(R.id.btn_go_allot).setOnClickListener(this);
         btn_lessondetail_watchcount.setOnClickListener(this);
         btn_lessondetail_testcount.setOnClickListener(this);
         btn_right.setOnClickListener(this);
+        btn_go.setOnClickListener(this);
     }
 
     private void initCtrl() {
@@ -223,7 +228,7 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
                 eventBean.put("sizeType", sizeType);
                 EventBus.getDefault().post(eventBean);
             }
-        },500);
+        }, 500);
     }
 
     private void initData() {
@@ -243,6 +248,11 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
             btn_lessondetail_unwatchcount.setText(lesson.getCountUser() - lesson.getWatchNum() + "人未观看");
             btn_lessondetail_testcount.setText(lesson.getFinishExamine() + "人已考核");
             btn_lessondetail_countalloc.setText(lesson.getAllocationNum() + "/" + lesson.getNumber());
+
+            //如果价格为0，设置立刻购买为免费获取
+            if (lesson.getPrice() == 0) {
+                btn_go.setText("免费获取");
+            }
 
             //设置标签数据
             adapter.getResults().clear();
@@ -266,7 +276,7 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
                 LearnUserActivity.startExamed(this, lesson);
                 break;
             case R.id.btn_go:
-                PayDialogActivity.start(this, lessonId);
+                PayDialogActivity.start(this, lessonId, lesson.getPrice() == 0 ? true : false);
                 break;
             case R.id.btn_right:
                 NetFavoHelper.getInstance().netAddCollect(lessonId, 1);
@@ -284,18 +294,18 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
     private void setTextSize(int sizeType) {
         switch (sizeType) {
             case AppData.Constant.TEXTSIZE_BIG:
-                setTextSize(tab,16);
+                setTextSize(tab, 16);
                 break;
             case AppData.Constant.TEXTSIZE_MIDDLE:
-                setTextSize(tab,15);
+                setTextSize(tab, 15);
                 break;
             case AppData.Constant.TEXTSIZE_SMALL:
-                setTextSize(tab,14);
+                setTextSize(tab, 14);
                 break;
         }
     }
 
-    public void setTextSize(TabLayout tab,float textSize) {
+    public void setTextSize(TabLayout tab, float textSize) {
         for (int i = 0; i < tab.getTabCount(); i++) {
             TabLayout.Tab t = tab.getTabAt(i);
             TextView textView = (TextView) ((ViewGroup) t.getCustomView()).getChildAt(0);

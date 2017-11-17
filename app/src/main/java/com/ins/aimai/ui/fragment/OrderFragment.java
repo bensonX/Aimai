@@ -149,21 +149,20 @@ public class OrderFragment extends BaseFragment implements OnRecycleItemClickLis
 
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
-        //FIXME:新的改动：订单不能再点击了
-//        Order order = adapter.getResults().get(viewHolder.getLayoutPosition());
-//        if (order.isPay()) {
-//            //已付款的订单
-//            if (AppHelper.isUser()) {
-//                //个人用户点击进入播放
-//                VideoActivity.startByOrder(getActivity(), order);
-//            } else {
-//                //政府和企业用户点击进入详情页
-//                LessonDetailActivity.startByOrder(getActivity(), order);
-//            }
-//        } else {
-//            //未付款的订单点击进入购买页面
-//            LessonDetailActivity.startByLesson(getActivity(), order.getCurriculumId());
-//        }
+        Order order = adapter.getResults().get(viewHolder.getLayoutPosition());
+        if (order.isPay()) {
+            //已付款的订单
+            if (AppHelper.isUser()) {
+                //个人用户点击进入播放
+                VideoActivity.startByOrder(getActivity(), order);
+            } else {
+                //政府和企业用户点击进入详情页
+                LessonDetailActivity.startByOrder(getActivity(), order);
+            }
+        } else {
+            //未付款的订单点击进入购买页面
+            //LessonDetailActivity.startByLesson(getActivity(), order.getCurriculumId());
+        }
     }
 
     ///////////////////////////////////

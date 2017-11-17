@@ -34,8 +34,26 @@ public class WXPayEntryActivity extends BaseAppCompatActivity implements IWXAPIE
     private TextView btn_payresult_left;
     private TextView btn_payresult_right;
 
-    public static void start(Context context) {
+//    public static void start(Context context) {
+//        Intent intent = new Intent(context, WXPayEntryActivity.class);
+//        context.startActivity(intent);
+//    }
+
+    public static void startPaySuccess(Context context) {
         Intent intent = new Intent(context, WXPayEntryActivity.class);
+        intent.putExtra("type", 0);
+        context.startActivity(intent);
+    }
+
+    public static void startPayFail(Context context) {
+        Intent intent = new Intent(context, WXPayEntryActivity.class);
+        intent.putExtra("type", -1);
+        context.startActivity(intent);
+    }
+
+    public static void startPayCancel(Context context) {
+        Intent intent = new Intent(context, WXPayEntryActivity.class);
+        intent.putExtra("type", -2);
         context.startActivity(intent);
     }
 

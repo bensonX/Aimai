@@ -1,7 +1,6 @@
 package com.ins.aimai.common;
 
 import android.app.Activity;
-import android.content.Intent;
 
 import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.net.BaseCallback;
@@ -79,23 +78,26 @@ public class PayHelperEx extends PayHelper {
 
     @Override
     protected void onPaySuccess() {
-        Intent intent = new Intent(activity, WXPayEntryActivity.class);
-        intent.putExtra("type", 0);
-        activity.startActivity(intent);
+        WXPayEntryActivity.startPaySuccess(activity);
+//        Intent intent = new Intent(activity, WXPayEntryActivity.class);
+//        intent.putExtra("type", 0);
+//        activity.startActivity(intent);
     }
 
     @Override
     protected void onPayFail() {
-        Intent intent = new Intent(activity, WXPayEntryActivity.class);
-        intent.putExtra("type", -1);
-        activity.startActivity(intent);
+        WXPayEntryActivity.startPayFail(activity);
+//        Intent intent = new Intent(activity, WXPayEntryActivity.class);
+//        intent.putExtra("type", -1);
+//        activity.startActivity(intent);
     }
 
     @Override
     protected void onPayCancel() {
-        Intent intent = new Intent(activity, WXPayEntryActivity.class);
-        intent.putExtra("type", -2);
-        activity.startActivity(intent);
+        WXPayEntryActivity.startPayCancel(activity);
+//        Intent intent = new Intent(activity, WXPayEntryActivity.class);
+//        intent.putExtra("type", -2);
+//        activity.startActivity(intent);
     }
 
 }

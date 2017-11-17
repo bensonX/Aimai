@@ -21,6 +21,7 @@ import com.ins.aimai.net.NetParam;
 import com.ins.aimai.ui.activity.PayDialogActivity;
 import com.ins.aimai.ui.base.BaseFragment;
 import com.ins.aimai.utils.ToastUtil;
+import com.ins.aimai.wxapi.WXPayEntryActivity;
 import com.ins.common.utils.EditTextUtil;
 import com.ins.common.utils.NumUtil;
 import com.ins.common.utils.StrUtil;
@@ -160,9 +161,14 @@ public class PayDialogCountFragment extends BaseFragment implements View.OnClick
         NetApi.NI().addOrder(param).enqueue(new BaseCallback<Integer>(Integer.class) {
             @Override
             public void onSuccess(int status, Integer orderId, String msg) {
-                //保存orderId
-                activity.setOrderId(orderId);
-                activity.next();
+                if (!activity.isDidntPay()) {
+                    //保存orderId
+                    activity.setOrderId(orderId);
+                    activity.next();
+                } else {
+                    //价格为0，绕过实际支付
+                    WXPayEntryActivity.startPaySuccess(activity);
+                }
             }
 
             @Override
