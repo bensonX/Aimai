@@ -99,6 +99,7 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
         if (AppData.App.getUser() != null) {
             Intent intent = new Intent(context, LessonDetailActivity.class);
             intent.putExtra("orderId", orderId);
+            intent.putExtra("lessonId", lessonId);
             intent.putExtra("type", 1);
             context.startActivity(intent);
         } else {
@@ -283,7 +284,7 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
                 break;
             case R.id.btn_go_allot:
                 if (lesson.getAllocationNum() < lesson.getNumber()) {
-                    SortUserActivity.start(this, orderId);
+                    SortUserActivity.start(this, lessonId);
                 } else {
                     ToastUtil.showToastShort("所购课程已全部分配完");
                 }

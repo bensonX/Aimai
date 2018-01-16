@@ -69,6 +69,16 @@ public class AppVali {
         }
     }
 
+    public static String email(String email) {
+        if (TextUtils.isEmpty(email)) {
+            return "请输入邮箱";
+        } else if (!ValidateUtil.Email(email)) {
+            return "请输入正确的邮箱";
+        } else {
+            return null;
+        }
+    }
+
     public static String content(String content) {
         if (isEmpty(content)) {
             return "请输入内容";
@@ -116,6 +126,20 @@ public class AppVali {
             return "您的手机号与验证码不匹配";
         } else if (!ValidateUtil.Mobile(phone_old)) {
             return "请输入正确的手机号";
+        } else if (!cold.equals(code_old)) {
+            return "验证码不正确";
+        } else {
+            return null;
+        }
+    }
+
+    public static String vali_email(String email, String email_old, String cold, String code_old) {
+        if (TextUtils.isEmpty(email)) {
+            return "请输入邮箱";
+        } else if (!email.equals(email_old)) {
+            return "您的邮箱与验证码不匹配";
+        } else if (!ValidateUtil.Email(email_old)) {
+            return "请输入正确的邮箱";
         } else if (!cold.equals(code_old)) {
             return "验证码不正确";
         } else {

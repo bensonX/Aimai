@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/am_bk"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context=".ui.activity.ModifyPswActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <View style="@style/Line_H" />
+
+        <com.ins.common.view.EmojiEditText
+            android:id="@+id/edit_vali_email"
+            style="@style/EditMeItem"
+            android:hint="输入您的邮箱地址"
+            android:inputType="textEmailAddress"
+            android:maxLength="32" />
+
+        <View
+            style="@style/Line_H"
+            android:layout_marginLeft="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.ins.common.view.EmojiEditText
+                android:id="@+id/edit_vali_code"
+                style="@style/EditMeItem"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:hint="输入验证码"
+                android:inputType="number"
+                android:maxLength="4" />
+
+            <TextView
+                android:id="@+id/btn_vali"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/selector_corner_blue_dark_enable"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:paddingBottom="6dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="6dp"
+                android:text="获取验证码"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+        <View style="@style/Line_H" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="15dp"
+        app:cardBackgroundColor="@color/am_blue"
+        app:cardCornerRadius="5dp"
+        app:cardUseCompatPadding="true">
+
+        <TextView
+            android:id="@+id/btn_go"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center"
+            android:text="下一步"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_big" />
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

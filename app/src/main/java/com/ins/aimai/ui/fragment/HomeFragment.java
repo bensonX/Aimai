@@ -97,7 +97,6 @@ public class HomeFragment extends BaseFragment implements OnRecycleItemClickList
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setToolbar(false);
-        toolbar.bringToFront();
         initBase();
         initView();
         initCtrl();
@@ -171,12 +170,13 @@ public class HomeFragment extends BaseFragment implements OnRecycleItemClickList
                 });
         adapterBanner.setOnBannerClickListener(this);
         //设置toolbar的颜色渐变器及阈值回调
-        ToobarTansColorHelper.getInstance().with(recycler, toolbar).onPointCallback(new ToobarTansColorHelper.OnPointListener() {
-            @Override
-            public void onPoint(boolean upOrDown) {
-                L.e(upOrDown);
-            }
-        });
+        //FIXME:2018/1/16 的更新取消了这个功能
+//        ToobarTansColorHelper.getInstance().with(recycler, toolbar).onPointCallback(new ToobarTansColorHelper.OnPointListener() {
+//            @Override
+//            public void onPoint(boolean upOrDown) {
+//                L.e(upOrDown);
+//            }
+//        });
     }
 
     private void initData() {

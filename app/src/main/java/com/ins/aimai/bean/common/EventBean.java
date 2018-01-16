@@ -70,6 +70,8 @@ public class EventBean implements Serializable {
     public static final int EVENT_FRESHTEST = 0xffa027;
     //刷新订单页面
     public static final int EVENT_FRESHORDER = 0xffa028;
+    //验证邮箱
+    public static final int EVENT_VALI_EMAIL = 0xffa029;
 
     private int event;
     private Map<String, Object> map = new HashMap<>();

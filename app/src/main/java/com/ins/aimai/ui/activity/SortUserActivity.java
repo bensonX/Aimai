@@ -55,12 +55,12 @@ public class SortUserActivity extends BaseAppCompatActivity implements View.OnCl
     private LinearLayoutManager layoutManager;
     private View text_sort_selectall;
 
-    private int orderId;
+    private int lessonId;
     private List<User> users;
 
-    public static void start(Context context, int orderId) {
+    public static void start(Context context, int lessonId) {
         Intent intent = new Intent(context, SortUserActivity.class);
-        intent.putExtra("orderId", orderId);
+        intent.putExtra("lessonId", lessonId);
         context.startActivity(intent);
     }
 
@@ -76,8 +76,8 @@ public class SortUserActivity extends BaseAppCompatActivity implements View.OnCl
     }
 
     private void initBase() {
-        if (getIntent().hasExtra("orderId")) {
-            orderId = getIntent().getIntExtra("orderId", 0);
+        if (getIntent().hasExtra("lessonId")) {
+            lessonId = getIntent().getIntExtra("lessonId", 0);
         }
     }
 
@@ -197,7 +197,7 @@ public class SortUserActivity extends BaseAppCompatActivity implements View.OnCl
 
     private void netQueryUserAlloc() {
         Map<String, Object> param = new NetParam()
-                .put("orderId", orderId)
+                .put("curriculumId", lessonId)
                 .put("isAllocation", 1)
                 .put("pageNO", 1)
                 .put("pageSize", 1000)
@@ -233,7 +233,7 @@ public class SortUserActivity extends BaseAppCompatActivity implements View.OnCl
 
     private void netAddAllocation(final String ids) {
         Map<String, Object> param = new NetParam()
-                .put("orderId", orderId)
+                .put("curriculumId", lessonId)
                 .put("userIds", ids)
                 .put("number", 1)
                 .build();

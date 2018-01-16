@@ -27,6 +27,7 @@ public class SettingActivity extends BaseAppCompatActivity implements View.OnCli
 
     private TextView text_setting_catchsize;
     private TextView text_setting_version_name;
+    private TextView text_setting_email_note;
     private View lay_setting_logout;
 
     public static void start(Context context) {
@@ -51,8 +52,10 @@ public class SettingActivity extends BaseAppCompatActivity implements View.OnCli
     private void initView() {
         text_setting_catchsize = (TextView) findViewById(R.id.text_setting_catchsize);
         text_setting_version_name = (TextView) findViewById(R.id.text_setting_version_name);
+        text_setting_email_note = (TextView) findViewById(R.id.text_setting_email_note);
         lay_setting_logout = findViewById(R.id.lay_setting_logout);
         findViewById(R.id.text_setting_definition).setOnClickListener(this);
+        findViewById(R.id.text_setting_email).setOnClickListener(this);
         findViewById(R.id.text_setting_modifypsw).setOnClickListener(this);
         findViewById(R.id.text_setting_clear).setOnClickListener(this);
         findViewById(R.id.text_setting_version).setOnClickListener(this);
@@ -78,6 +81,9 @@ public class SettingActivity extends BaseAppCompatActivity implements View.OnCli
         switch (v.getId()) {
             case R.id.text_setting_definition:
                 DefinitionActivity.start(this);
+                break;
+            case R.id.text_setting_email:
+                BindEmailActivity.start(this);
                 break;
             case R.id.text_setting_modifypsw:
                 ModifySelectActivity.start(this);

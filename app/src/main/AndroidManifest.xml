@@ -135,6 +135,7 @@
         <activity android:name=".ui.activity.LessonSearchActivity" />
         <activity android:name=".ui.activity.LessonDetailCompActivity" />
         <activity android:name=".ui.activity.FaceResordActivity" />
+        <activity android:name=".ui.activity.BindEmailActivity" />
 
     </application>
 </manifest>
