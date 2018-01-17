@@ -133,16 +133,14 @@ public class AppVali {
         }
     }
 
-    public static String vali_email(String email, String email_old, String cold, String code_old) {
+    public static String vali_email(String email, String email_old) {
         if (TextUtils.isEmpty(email)) {
             return "请输入邮箱";
         } else if (!email.equals(email_old)) {
             return "您的邮箱与验证码不匹配";
         } else if (!ValidateUtil.Email(email_old)) {
             return "请输入正确的邮箱";
-        } else if (!cold.equals(code_old)) {
-            return "验证码不正确";
-        } else {
+        }else {
             return null;
         }
     }

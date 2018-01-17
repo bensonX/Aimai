@@ -181,6 +181,8 @@ public class User extends SortBean implements Serializable {
     private int safeNum;
     //通过时间
     private long passTime;
+    //邮箱
+    private String email;
 
     //####################### 逻辑方法 ##########################
 
@@ -257,6 +259,14 @@ public class User extends SortBean implements Serializable {
 
     public void setFinishCourseWareNum(int finishCourseWareNum) {
         this.finishCourseWareNum = finishCourseWareNum;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getTradeName() {

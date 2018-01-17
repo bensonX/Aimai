@@ -93,12 +93,14 @@ public class RecycleAdapterHomeBanner extends DelegateAdapter.Adapter<RecycleAda
             }
         });
 
-        if (isSpan){
+        if (isSpan) {
             holder.lay_home_sort.setVisibility(View.GONE);
             holder.text_home_span.setText("展开");
-        }else {
+            holder.text_home_span.setSelected(true);
+        } else {
             holder.lay_home_sort.setVisibility(View.VISIBLE);
             holder.text_home_span.setText("收起");
+            holder.text_home_span.setSelected(false);
         }
 
         holder.adapterProvince.clear();

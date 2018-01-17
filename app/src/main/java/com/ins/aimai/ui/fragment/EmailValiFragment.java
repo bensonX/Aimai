@@ -3,44 +3,37 @@ package com.ins.aimai.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.text.SpannableString;
-import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ins.aimai.R;
+import com.ins.aimai.bean.User;
+import com.ins.aimai.bean.common.CommonBean;
 import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.common.AppData;
+import com.ins.aimai.common.AppHelper;
 import com.ins.aimai.common.AppVali;
 import com.ins.aimai.interfaces.PagerFragmentInter;
 import com.ins.aimai.interfaces.PagerInter;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
-import com.ins.aimai.ui.activity.ForgetPswActivity;
-import com.ins.aimai.ui.activity.RegistActivity;
-import com.ins.aimai.ui.activity.WebActivity;
+import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.aimai.ui.base.BaseFragment;
 import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.helper.ValiHelper;
-import com.ins.common.utils.SpannableStringUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.Map;
 
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-
 /**
  * Created by liaoinstan
  */
-public class EmailValiFragment extends BaseFragment implements View.OnClickListener, PagerFragmentInter {
+public class EmailValiFragment extends BaseFragment implements View.OnClickListener {
 
     private ValiHelper valiHelper;
     private int position;
@@ -102,63 +95,48 @@ public class EmailValiFragment extends BaseFragment implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_vali:
+            case R.id.btn_vali: {
                 String emali = edit_vali_email.getText().toString();
                 String msg = AppVali.email(emali);
                 if (msg == null) {
-                    netSendMessage(emali);
+                    netSendMessageEmail(emali);
                 } else {
                     ToastUtil.showToastShort(msg);
                 }
                 break;
-            case R.id.btn_go:
-                if (getActivity() instanceof PagerInter) {
-                    ((PagerInter) getActivity()).next();
-                }
-//                next();
-                break;
-        }
-    }
-
-    //页面进行下一步后会回调该方法，返回true，继续跳转，否则拦截
-    public boolean next() {
-        String email = edit_vali_email.getText().toString();
-        String code = edit_vali_code.getText().toString();
-        String email_old = valiHelper.phone;
-        String code_old = valiHelper.valicode;
-
-        String msg = AppVali.vali_email(email, email_old, code, code_old);
-        if (msg == null) {
-            EventBus.getDefault().post(new EventBean(EventBean.EVENT_VALI_EMAIL).put("email", email_old));
-            if (getActivity() instanceof PagerInter) {
-                ((PagerInter) getActivity()).next();
             }
-            return true;
-        } else {
-            ToastUtil.showToastShort(msg);
-            return false;
+            case R.id.btn_go: {
+                String email = edit_vali_email.getText().toString();
+                String code = edit_vali_code.getText().toString();
+                String email_old = valiHelper.phone;
+
+                String msg = AppVali.vali_email(email, email_old);
+                if (msg == null) {
+                    netUpdateEmail(email, code);
+                } else {
+                    ToastUtil.showToastShort(msg);
+                }
+                break;
+            }
         }
     }
 
-    private void netSendMessage(final String phone) {
-        Map<String, Object> param = new NetParam()
-                .put("phone", phone)
-                .build();
-        Call<ResponseBody> call;
-        if (getActivity() instanceof RegistActivity) {
-            call = NetApi.NI().sendMessageRegist(param);
-        } else if (getActivity() instanceof ForgetPswActivity) {
-            call = NetApi.NI().sendMessageForget(param);
-        } else {
-            call = NetApi.NI().sendMessage(param);
+    public void next() {
+        if (getActivity() instanceof PagerInter) {
+            ((PagerInter) getActivity()).next();
         }
-        call.enqueue(new BaseCallback<String>(String.class) {
+    }
+
+    private void netSendMessageEmail(final String email) {
+        Map<String, Object> param = new NetParam()
+                .put("email", email)
+                .put("flag", AppHelper.UserHelp.hasEmail() ? 1 : 0)//0:绑定邮箱 1:换绑
+                .build();
+        NetApi.NI().sendMessageEmail(param).enqueue(new BaseCallback<CommonBean>(CommonBean.class) {
             @Override
-            public void onSuccess(int status, String bean, String msg) {
-                valiHelper.phone = phone;
-                valiHelper.valicode = bean;
+            public void onSuccess(int status, CommonBean bean, String msg) {
+                valiHelper.phone = email;
                 valiHelper.start();
-                ToastUtil.showToastShortDebug(bean);
             }
 
             @Override
@@ -166,5 +144,45 @@ public class EmailValiFragment extends BaseFragment implements View.OnClickListe
                 ToastUtil.showToastShort(msg);
             }
         });
+    }
+
+    private void netUpdateEmail(final String email, final String code) {
+        showLoadingDialog();
+        Map<String, Object> param = new NetParam()
+                .put("email", email)
+                .put("code", code)
+                .build();
+        NetApi.NI().updateEmail(param).enqueue(new BaseCallback<CommonBean>(CommonBean.class) {
+            @Override
+            public void onSuccess(int status, CommonBean bean, String msg) {
+                hideLoadingDialog();
+                ToastUtil.showToastShort(msg);
+                User user = AppData.App.getUser();
+                user.setEmail(email);
+                AppData.App.saveUser(user);
+                EventBus.getDefault().post(new EventBean(EventBean.EVENT_VALI_EMAIL).put("email", email));
+                next();
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+                ToastUtil.showToastShort(msg);
+                hideLoadingDialog();
+            }
+        });
+    }
+
+    private void showLoadingDialog() {
+//        if (getActivity() instanceof BaseAppCompatActivity){
+//            ((BaseAppCompatActivity) getActivity()).showLoadingDialog();
+//        }
+        btn_go.setEnabled(false);
+    }
+
+    private void hideLoadingDialog() {
+//        if (getActivity() instanceof BaseAppCompatActivity){
+//            ((BaseAppCompatActivity) getActivity()).hideLoadingDialog();
+//        }
+        btn_go.setEnabled(true);
     }
 }

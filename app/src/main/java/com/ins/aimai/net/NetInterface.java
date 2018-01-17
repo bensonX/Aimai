@@ -115,8 +115,17 @@ public interface NetInterface {
      * phone
      */
     @FormUrlEncoded
-    @POST("/api//user/setPwd")
+    @POST("/api/user/setPwd")
     Call<ResponseBody> setPwd(@FieldMap Map<String, Object> param);
+
+    /**
+     * 更新邮箱接口
+     * email
+     * code
+     */
+    @FormUrlEncoded
+    @POST("/api/user/updateEmail")
+    Call<ResponseBody> updateEmail(@FieldMap Map<String, Object> param);
 
     /**
      * 获取验证码
@@ -141,6 +150,15 @@ public interface NetInterface {
     @FormUrlEncoded
     @POST("/api/user/sendMessageForgetPwd")
     Call<ResponseBody> sendMessageForget(@FieldMap Map<String, Object> param);
+
+    /**
+     * 使用邮箱获取验证码
+     * String email
+     * flag ：0:绑定邮箱 1:换绑
+     */
+    @FormUrlEncoded
+    @POST("/api/user/sendEmailCode")
+    Call<ResponseBody> sendMessageEmail(@FieldMap Map<String, Object> param);
 
     /**
      * 注册

@@ -92,6 +92,16 @@ public class AppHelper {
                 return false;
             }
         }
+
+        //判断当前登录用户是否已经绑定邮箱
+        public static boolean hasEmail() {
+            User user = AppData.App.getUser();
+            if (user != null && !TextUtils.isEmpty(user.getEmail())) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 
     public static class LoginHelp {

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ins.aimai.R;
+import com.ins.aimai.bean.User;
 import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.common.AppData;
 import com.ins.aimai.common.AppVali;
@@ -37,11 +39,12 @@ import retrofit2.Call;
 /**
  * Created by liaoinstan
  */
-public class EmailValiResultFragment extends BaseFragment implements View.OnClickListener{
+public class EmailValiResultFragment extends BaseFragment implements View.OnClickListener {
 
     private int position;
     private View rootView;
     private View btn_go;
+    private TextView text_bindemailresult_email;
 
     public static Fragment newInstance(int position) {
         EmailValiResultFragment fragment = new EmailValiResultFragment();
@@ -49,6 +52,15 @@ public class EmailValiResultFragment extends BaseFragment implements View.OnClic
         bundle.putInt("position", position);
         fragment.setArguments(bundle);
         return fragment;
+    }
+
+    @Override
+    public void onCommonEvent(EventBean event) {
+        switch (event.getEvent()) {
+            case EventBean.EVENT_VALI_EMAIL:
+                setData();
+                break;
+        }
     }
 
     @Override
@@ -78,6 +90,7 @@ public class EmailValiResultFragment extends BaseFragment implements View.OnClic
 
     private void initView() {
         btn_go = rootView.findViewById(R.id.btn_go);
+        text_bindemailresult_email = (TextView) rootView.findViewById(R.id.text_bindemailresult_email);
         btn_go.setOnClickListener(this);
     }
 
@@ -85,6 +98,16 @@ public class EmailValiResultFragment extends BaseFragment implements View.OnClic
     }
 
     private void initData() {
+        setData();
+    }
+
+    private void setData() {
+        User user = AppData.App.getUser();
+        if (user != null && !TextUtils.isEmpty(user.getEmail())) {
+            text_bindemailresult_email.setText(user.getEmail());
+        } else {
+            text_bindemailresult_email.setText("您还没有邮箱");
+        }
     }
 
     @Override

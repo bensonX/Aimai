@@ -4,8 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.view.MenuItem;
 
 import com.ins.aimai.R;
+import com.ins.aimai.bean.common.EventBean;
+import com.ins.aimai.common.AppHelper;
 import com.ins.aimai.interfaces.PagerInter;
 import com.ins.aimai.ui.adapter.PagerAdapterBindEmail;
 import com.ins.aimai.ui.adapter.PagerAdapterForgetPsw;
@@ -61,18 +64,22 @@ public class BindEmailActivity extends BaseAppCompatActivity implements PagerInt
 
             }
         });
+        if (AppHelper.UserHelp.hasEmail()){
+            pager.setCurrentItem(1,false);
+        }
     }
 
     private void initData() {
     }
 
     @Override
-    public void onBackPressed() {
-        if (pager.getCurrentItem() != 0) {
-            ViewPagerUtil.last(pager);
-        } else {
-            finish();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
