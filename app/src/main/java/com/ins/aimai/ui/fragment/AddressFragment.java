@@ -17,6 +17,7 @@ import com.ins.aimai.common.AppHelper;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
+import com.ins.aimai.net.helper.NetAddressHelper;
 import com.ins.aimai.ui.activity.AddressActivity;
 import com.ins.aimai.ui.adapter.RecycleAdapterAddress;
 import com.ins.aimai.ui.base.BaseFragment;
@@ -160,35 +161,27 @@ public class AddressFragment extends BaseFragment implements OnRecycleItemClickL
     }
 
     private void netGetAddress(int id) {
-        NetParam netParam = new NetParam();
-        netParam.put("levelType", levelType);
-        if (id != 0) netParam.put("cityId", id);
-        Map<String, Object> param = netParam.build();
-        NetApi.NI().queryCity(param).enqueue(new BaseCallback<List<Address>>(new TypeToken<List<Address>>() {
-        }.getType()) {
+        NetAddressHelper.getInstance().netGetAddress(id, levelType, new NetAddressHelper.AddressCallback() {
             @Override
-            public void onSuccess(int status, List<Address> beans, String msg) {
-                if (StrUtil.isEmpty(beans)) {
-                } else {
-                    adapter.getResults().clear();
-                    adapter.getResults().addAll(beans);
-                    //如果是政府用户那么在选择省份的时候第一项增加一个“全国”
-                    if (levelType == 1 && isHasAll()) {
-                        Address address = new Address();
-                        address.setId(100000);
-                        address.setAddress("全国");
-                        address.setName("全国");
-                        address.setShortName("全国");
-                        address.setMergerName("全国");
-                        adapter.getResults().add(0, address);
-                    }
-                    adapter.notifyDataSetChanged();
-                    springView.onFinishFreshAndLoad();
+            public void onSuccess(List<Address> addressList) {
+                adapter.getResults().clear();
+                adapter.getResults().addAll(addressList);
+                //如果是政府用户那么在选择省份的时候第一项增加一个“全国”
+                if (levelType == 1 && isHasAll()) {
+                    Address address = new Address();
+                    address.setId(100000);
+                    address.setAddress("全国");
+                    address.setName("全国");
+                    address.setShortName("全国");
+                    address.setMergerName("全国");
+                    adapter.getResults().add(0, address);
                 }
+                adapter.notifyDataSetChanged();
+                springView.onFinishFreshAndLoad();
             }
 
             @Override
-            public void onError(int status, String msg) {
+            public void onError(String msg) {
                 ToastUtil.showToastShort(msg);
                 springView.onFinishFreshAndLoad();
             }

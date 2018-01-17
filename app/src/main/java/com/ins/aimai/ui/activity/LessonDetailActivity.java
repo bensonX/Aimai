@@ -234,6 +234,7 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
 
     private void initData() {
         netQueryLessonDetail();
+        NetFavoHelper.getInstance().netIsCollect(lessonId, 1, btn_right);
     }
 
     private void setData(Lesson lesson) {
@@ -280,7 +281,7 @@ public class LessonDetailActivity extends BaseAppCompatActivity implements View.
                 PayDialogActivity.start(this, lessonId, lesson.getPrice() == 0 ? true : false);
                 break;
             case R.id.btn_right:
-                NetFavoHelper.getInstance().netAddCollect(lessonId, 1);
+                NetFavoHelper.getInstance().netAddCollect(lessonId, 1, btn_right);
                 break;
             case R.id.btn_go_allot:
                 if (lesson.getAllocationNum() < lesson.getNumber()) {

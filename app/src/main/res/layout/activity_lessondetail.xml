@@ -39,7 +39,7 @@
                     android:layout_gravity="right"
                     android:foreground="?attr/selectableItemBackground"
                     android:scaleType="center"
-                    android:src="@drawable/ic_lesson_favo" />
+                    android:src="@drawable/selector_lesson_favo" />
 
             </android.support.v7.widget.Toolbar>
 

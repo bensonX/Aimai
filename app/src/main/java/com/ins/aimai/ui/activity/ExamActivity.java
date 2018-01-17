@@ -50,6 +50,7 @@ public class ExamActivity extends BaseAppCompatActivity implements View.OnClickL
     private TextView text_exam_count;
     private TextView text_time;
     private View btn_pause;
+    private View btn_right_favo;
 
     private PopTextSize popTextSize;
     private ExamCountDownTimer timer;
@@ -164,7 +165,8 @@ public class ExamActivity extends BaseAppCompatActivity implements View.OnClickL
         text_exam_num = (TextView) findViewById(R.id.text_exam_num);
         text_exam_count = (TextView) findViewById(R.id.text_exam_count);
         findViewById(R.id.btn_left).setOnClickListener(this);
-        findViewById(R.id.btn_right_favo).setOnClickListener(this);
+        btn_right_favo = findViewById(R.id.btn_right_favo);
+        btn_right_favo.setOnClickListener(this);
         findViewById(R.id.btn_right_answerboard).setOnClickListener(this);
         btn_right_textsize.setOnClickListener(this);
         btn_last.setOnClickListener(this);
@@ -252,7 +254,7 @@ public class ExamActivity extends BaseAppCompatActivity implements View.OnClickL
                 popTextSize.showPopupWindow(btn_right_textsize);
                 break;
             case R.id.btn_right_favo:
-                NetFavoHelper.getInstance().netAddCollect(questions.get(pager.getCurrentItem()).getId(), 2);
+                NetFavoHelper.getInstance().netAddCollect(questions.get(pager.getCurrentItem()).getId(), 2, btn_right_favo);
                 break;
             case R.id.btn_pause:
                 if (btn_pause.isSelected()) {

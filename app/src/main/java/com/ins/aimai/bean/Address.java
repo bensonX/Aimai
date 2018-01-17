@@ -21,6 +21,11 @@ public class Address extends BaseSelectBean implements Serializable {
     public Address() {
     }
 
+    public Address(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     //////////////// 业务方法 /////////////////////
 
     public String getMergerNameNoDot() {

@@ -52,7 +52,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
                 android:scaleType="center"
-                android:src="@drawable/ic_home_favo" />
+                android:src="@drawable/selector_home_favo" />
 
             <ImageView
                 android:id="@+id/btn_right_textsize"

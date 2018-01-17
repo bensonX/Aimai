@@ -135,7 +135,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -148,9 +148,10 @@
                 android:textSize="@dimen/text_nomal" />
 
             <TextView
+                android:id="@+id/text_address_whole"
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
-                android:background="@drawable/shape_rect_corner_none_line_blue"
+                android:background="@drawable/selector_home_sort"
                 android:gravity="center"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
@@ -160,88 +161,155 @@
 
             <Spinner
                 android:id="@+id/spinner_province"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="25dp"
-                android:layout_marginLeft="15dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp" />
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_home_sort"
+                android:dropDownWidth="120dp" />
 
             <Spinner
                 android:id="@+id/spinner_city"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="25dp"
-                android:layout_marginLeft="15dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp" />
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_home_sort"
+                android:dropDownWidth="120dp" />
 
         </LinearLayout>
 
-        <RadioGroup
-            android:id="@+id/radio_type"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="15dp"
+                android:layout_marginTop="3dp"
                 android:text="类型"
                 android:textColor="@color/com_text_dark"
                 android:textSize="@dimen/text_nomal" />
 
-            <RadioButton
-                android:id="@+id/radio_type_comp"
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:background="@drawable/selector_home_sort"
-                android:button="@null"
-                android:checked="true"
-                android:foreground="?attr/selectableItemBackground"
-                android:gravity="center"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:text="企业新闻"
-                android:textColor="@color/text_blue_blank_check"
-                android:textSize="@dimen/text_nomal" />
+            <com.ins.aimai.ui.view.FlowRadioGroup
+                android:id="@+id/radiogroup_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/radio_type_bis"
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:layout_marginLeft="15dp"
-                android:background="@drawable/selector_home_sort"
-                android:button="@null"
-                android:foreground="?attr/selectableItemBackground"
-                android:gravity="center"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:text="行业新闻"
-                android:textColor="@color/text_blue_blank_check"
-                android:textSize="@dimen/text_nomal" />
+                <RadioButton
+                    android:id="@+id/radio_type_bis"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/selector_home_sort"
+                    android:button="@null"
+                    android:checked="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:tag="1"
+                    android:text="行业动态"
+                    android:textColor="@color/text_blue_blank_check"
+                    android:textSize="@dimen/text_nomal" />
 
-            <RadioButton
-                android:id="@+id/radio_type_gov"
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:layout_marginLeft="15dp"
-                android:background="@drawable/selector_home_sort"
-                android:button="@null"
-                android:foreground="?attr/selectableItemBackground"
-                android:gravity="center"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:text="政府咨询"
-                android:textColor="@color/text_blue_blank_check"
-                android:textSize="@dimen/text_nomal" />
+                <RadioButton
+                    android:id="@+id/radio_type_comp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/selector_home_sort"
+                    android:button="@null"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:tag="2"
+                    android:text="重大新闻"
+                    android:textColor="@color/text_blue_blank_check"
+                    android:textSize="@dimen/text_nomal" />
 
-        </RadioGroup>
+                <RadioButton
+                    android:id="@+id/radio_type_safeaccident"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/selector_home_sort"
+                    android:button="@null"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:tag="3"
+                    android:text="安全事故"
+                    android:textColor="@color/text_blue_blank_check"
+                    android:textSize="@dimen/text_nomal" />
+
+                <RadioButton
+                    android:id="@+id/radio_type_safeknow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/selector_home_sort"
+                    android:button="@null"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:tag="4"
+                    android:text="安全常识"
+                    android:textColor="@color/text_blue_blank_check"
+                    android:textSize="@dimen/text_nomal"
+                    app:layout_wrapBefore="true" />
+
+                <RadioButton
+                    android:id="@+id/radio_type_exam"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/selector_home_sort"
+                    android:button="@null"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:tag="5"
+                    android:text="考试"
+                    android:textColor="@color/text_blue_blank_check"
+                    android:textSize="@dimen/text_nomal" />
+
+                <RadioButton
+                    android:id="@+id/radio_type_other"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/selector_home_sort"
+                    android:button="@null"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:tag="6"
+                    android:text="其他"
+                    android:textColor="@color/text_blue_blank_check"
+                    android:textSize="@dimen/text_nomal" />
+
+            </com.ins.aimai.ui.view.FlowRadioGroup>
+
+        </LinearLayout>
 
         <RadioGroup
-            android:id="@+id/radio_sort"
+            android:id="@+id/radiogroup_sort"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -264,6 +332,7 @@
                 android:gravity="center"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
+                android:tag="0"
                 android:text="热门"
                 android:textColor="@color/text_blue_blank_check"
                 android:textSize="@dimen/text_nomal" />
@@ -279,6 +348,7 @@
                 android:gravity="center"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
+                android:tag="1"
                 android:text="最新"
                 android:textColor="@color/text_blue_blank_check"
                 android:textSize="@dimen/text_nomal" />
@@ -290,7 +360,7 @@
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:background="@drawable/shape_rect_corner_none_line_blue"
             android:button="@null"
             android:foreground="?attr/selectableItemBackground"

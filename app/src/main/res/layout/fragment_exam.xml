@@ -10,15 +10,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!--<TextView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="300dp"-->
-            <!--android:background="#cccccc"-->
-            <!--android:gravity="center"-->
-            <!--android:text="答题面板"-->
-            <!--android:textColor="@color/white"-->
-            <!--android:textSize="18sp" />-->
-
         <com.ins.aimai.ui.view.QuestionView
             android:id="@+id/questionView"
             android:background="@color/white"

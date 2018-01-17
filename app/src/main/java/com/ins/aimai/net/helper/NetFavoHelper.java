@@ -1,6 +1,7 @@
 package com.ins.aimai.net.helper;
 
 import android.content.Context;
+import android.view.View;
 
 import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.bean.Lesson;
@@ -35,8 +36,13 @@ public class NetFavoHelper {
         return instance;
     }
 
-
     public void netAddCollect(int id, int type) {
+        netAddCollect(id, type, null);
+    }
+
+    //添加或收藏，并设置favoButton收藏按钮的selected状态
+    public void netAddCollect(int id, int type, final View favoButton) {
+        favoButton.setEnabled(false);
         Map<String, Object> param = new NetParam()
                 .put("type", type)
                 .put("targetId", id)
@@ -45,11 +51,39 @@ public class NetFavoHelper {
             @Override
             public void onSuccess(int status, CommonBean com, String msg) {
                 ToastUtil.showToastShort(msg);
+                favoButton.setEnabled(true);
+                if (favoButton != null) {
+                    favoButton.setSelected(!favoButton.isSelected());
+                }
             }
 
             @Override
             public void onError(int status, String msg) {
                 ToastUtil.showToastShort(msg);
+                favoButton.setEnabled(true);
+            }
+        });
+    }
+
+    //检查是否收藏，如果已收藏则把favoButton置为selected状态
+    public void netIsCollect(int id, int type, final View favoButton) {
+        favoButton.setEnabled(false);
+        Map<String, Object> param = new NetParam()
+                .put("type", type)
+                .put("targetId", id)
+                .build();
+        NetApi.NI().isCollect(param).enqueue(new BaseCallback<Integer>(Integer.class) {
+            @Override
+            public void onSuccess(int status, Integer bean, String msg) {
+                favoButton.setEnabled(true);
+                if (favoButton != null) {
+                    favoButton.setSelected((bean != null && bean == 1) ? true : false);
+                }
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+                favoButton.setEnabled(true);
             }
         });
     }

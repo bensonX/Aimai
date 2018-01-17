@@ -10,6 +10,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.ins.aimai.R;
@@ -29,6 +30,7 @@ public class WebInfoActivity extends BaseAppCompatActivity implements View.OnCli
 
     private WebView webView;
     private ProgressBar progressBar;
+    private ImageView btn_right_favo;
 
     private int id;
     private String title;
@@ -101,8 +103,9 @@ public class WebInfoActivity extends BaseAppCompatActivity implements View.OnCli
     private void initView() {
         webView = (WebView) findViewById(R.id.webview);
         progressBar = (ProgressBar) findViewById(R.id.progress);
+        btn_right_favo = (ImageView) findViewById(R.id.btn_right_favo);
+        btn_right_favo.setOnClickListener(this);
         findViewById(R.id.btn_right_share).setOnClickListener(this);
-        findViewById(R.id.btn_right_favo).setOnClickListener(this);
     }
 
     private void initCtrl() {
@@ -156,13 +159,14 @@ public class WebInfoActivity extends BaseAppCompatActivity implements View.OnCli
 
     private void initData() {
         webView.loadUrl(url);
+        NetFavoHelper.getInstance().netIsCollect(id, 0, btn_right_favo);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_right_favo:
-                NetFavoHelper.getInstance().netAddCollect(id, 0);
+                NetFavoHelper.getInstance().netAddCollect(id, 0, btn_right_favo);
                 break;
             case R.id.btn_right_share:
                 new ShareDialog(this)

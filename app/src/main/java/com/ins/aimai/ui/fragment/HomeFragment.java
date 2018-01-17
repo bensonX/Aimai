@@ -1,6 +1,5 @@
 package com.ins.aimai.ui.fragment;
 
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,10 +13,9 @@ import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
 import com.google.gson.reflect.TypeToken;
 import com.ins.aimai.R;
+import com.ins.aimai.bean.Address;
 import com.ins.aimai.bean.Info;
-import com.ins.aimai.bean.Msg;
 import com.ins.aimai.bean.common.EventBean;
-import com.ins.aimai.common.ToobarTansColorHelper;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
@@ -31,7 +29,6 @@ import com.ins.aimai.ui.base.BaseFragment;
 import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.entity.Image;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
-import com.ins.common.utils.L;
 import com.ins.common.view.BannerView;
 import com.ins.common.view.LoadingLayout;
 import com.liaoinstan.springview.container.AliFooter;
@@ -46,7 +43,7 @@ import retrofit2.Call;
 /**
  * Created by liaoinstan
  */
-public class HomeFragment extends BaseFragment implements OnRecycleItemClickListener, BannerView.OnBannerClickListener, View.OnClickListener {
+public class HomeFragment extends BaseFragment implements OnRecycleItemClickListener, BannerView.OnBannerClickListener, View.OnClickListener, RecycleAdapterHomeBanner.OnFilterSelectListenner {
 
     private int position;
     private View rootView;
@@ -61,6 +58,9 @@ public class HomeFragment extends BaseFragment implements OnRecycleItemClickList
     private RecycleAdapterHomeInfo adapterInfo;
 
     private NetListHelper netListHelper;
+    private int cityId;
+    private int type;
+    private int sort;
 
     public static Fragment newInstance(int position) {
         HomeFragment fragment = new HomeFragment();
@@ -149,8 +149,11 @@ public class HomeFragment extends BaseFragment implements OnRecycleItemClickList
                 }.getType(),
                 new NetListHelper.CallHander() {
                     @Override
-                    public Call getCall(int type) {
-                        Map param = netListHelper.getParam(type);
+                    public Call getCall(int freshType) {
+                        Map param = netListHelper.getParam(freshType);
+                        param.put("cityId", cityId);
+                        param.put("type", type);
+                        param.put("sort", sort);
                         return NetApi.NI().queryInfo(param);
                     }
                 },
@@ -169,6 +172,7 @@ public class HomeFragment extends BaseFragment implements OnRecycleItemClickList
                     }
                 });
         adapterBanner.setOnBannerClickListener(this);
+        adapterBanner.setOnFilterSelectListenner(this);
         //设置toolbar的颜色渐变器及阈值回调
         //FIXME:2018/1/16 的更新取消了这个功能
 //        ToobarTansColorHelper.getInstance().with(recycler, toolbar).onPointCallback(new ToobarTansColorHelper.OnPointListener() {
@@ -211,6 +215,25 @@ public class HomeFragment extends BaseFragment implements OnRecycleItemClickList
         } else {
             WebInfoActivity.start(getContext(), img);
         }
+    }
+
+    @Override
+    public void onSpinnerSelect(int levelType, Address address) {
+        this.cityId = address.getId();
+        ToastUtil.showToastShort(cityId + address.getName());
+        netListHelper.netQueryList(1);
+    }
+
+    @Override
+    public void onTypeSelect(int type) {
+        this.type = type;
+        netListHelper.netQueryList(1);
+    }
+
+    @Override
+    public void onSortSelect(int sort) {
+        this.sort = sort;
+        netListHelper.netQueryList(1);
     }
 
     private void netQueryBanner() {

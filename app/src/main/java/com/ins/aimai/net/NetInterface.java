@@ -51,6 +51,10 @@ public interface NetInterface {
      * 资讯列表
      * pageNO
      * pageSize
+     * searchParam 搜索参数
+     * cityId 城市ID
+     * type 新闻类型
+     * sort 排序 0:热门 1:最新
      */
     @FormUrlEncoded
     @POST("/api/news/queryNewsList")
@@ -195,6 +199,15 @@ public interface NetInterface {
     @FormUrlEncoded
     @POST("/api/collect/addCollect")
     Call<ResponseBody> addCollect(@FieldMap Map<String, Object> param);
+
+    /**
+     * 当前用户是否已经收藏
+     * type 收藏类型 参数类型:int  0:资讯 1:课程 2：考题
+     * targetId
+     */
+    @FormUrlEncoded
+    @POST("/api/collect/isCollect")
+    Call<ResponseBody> isCollect(@FieldMap Map<String, Object> param);
 
     /**
      * 通过类型 获取收藏
