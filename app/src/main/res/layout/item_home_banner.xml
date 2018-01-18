@@ -156,26 +156,44 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:text="全国"
-                android:textColor="@color/am_blue"
+                android:textColor="@color/text_blue_blank_check"
                 android:textSize="@dimen/text_nomal" />
 
-            <Spinner
-                android:id="@+id/spinner_province"
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/text_address_province"
+                android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:layout_marginLeft="10dp"
-                android:layout_weight="1"
                 android:background="@drawable/selector_home_sort"
-                android:dropDownWidth="120dp" />
+                android:drawablePadding="7dp"
+                android:drawableRight="@drawable/ic_spinner_down"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:minLines="1"
+                android:minWidth="80dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="省"
+                android:textColor="@color/text_blue_blank_check"
+                android:textSize="@dimen/text_nomal" />
 
-            <Spinner
-                android:id="@+id/spinner_city"
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/text_address_city"
+                android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:layout_marginLeft="10dp"
-                android:layout_weight="1"
                 android:background="@drawable/selector_home_sort"
-                android:dropDownWidth="120dp" />
+                android:drawablePadding="7dp"
+                android:drawableRight="@drawable/ic_spinner_down"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:minLines="1"
+                android:minWidth="80dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="市"
+                android:textColor="@color/text_blue_blank_check"
+                android:textSize="@dimen/text_nomal" />
 
         </LinearLayout>
 
@@ -207,7 +225,6 @@
                     android:layout_marginRight="10dp"
                     android:background="@drawable/selector_home_sort"
                     android:button="@null"
-                    android:checked="true"
                     android:foreground="?attr/selectableItemBackground"
                     android:gravity="center"
                     android:paddingLeft="10dp"
@@ -327,7 +344,6 @@
                 android:layout_height="25dp"
                 android:background="@drawable/selector_home_sort"
                 android:button="@null"
-                android:checked="true"
                 android:foreground="?attr/selectableItemBackground"
                 android:gravity="center"
                 android:paddingLeft="10dp"

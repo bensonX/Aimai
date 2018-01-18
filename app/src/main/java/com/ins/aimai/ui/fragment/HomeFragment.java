@@ -58,9 +58,9 @@ public class HomeFragment extends BaseFragment implements OnRecycleItemClickList
     private RecycleAdapterHomeInfo adapterInfo;
 
     private NetListHelper netListHelper;
-    private int cityId;
-    private int type;
-    private int sort;
+    private Integer cityId;
+    private Integer type;
+    private Integer sort;
 
     public static Fragment newInstance(int position) {
         HomeFragment fragment = new HomeFragment();
@@ -151,9 +151,9 @@ public class HomeFragment extends BaseFragment implements OnRecycleItemClickList
                     @Override
                     public Call getCall(int freshType) {
                         Map param = netListHelper.getParam(freshType);
-                        param.put("cityId", cityId);
-                        param.put("type", type);
-                        param.put("sort", sort);
+                        if (cityId != null && cityId != 0) param.put("cityId", cityId);
+                        if (type != null) param.put("type", type);
+                        if (type != null) param.put("sort", sort);
                         return NetApi.NI().queryInfo(param);
                     }
                 },
@@ -220,7 +220,6 @@ public class HomeFragment extends BaseFragment implements OnRecycleItemClickList
     @Override
     public void onSpinnerSelect(int levelType, Address address) {
         this.cityId = address.getId();
-        ToastUtil.showToastShort(cityId + address.getName());
         netListHelper.netQueryList(1);
     }
 

@@ -1,6 +1,7 @@
 package com.ins.aimai.ui.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.helper.NetAddressHelper;
 import com.ins.aimai.ui.activity.InfoActivity;
 import com.ins.aimai.ui.activity.WebActivity;
+import com.ins.aimai.ui.dialog.DialogAddress;
 import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.entity.Image;
 import com.ins.common.utils.GlideUtil;
@@ -35,6 +37,10 @@ public class RecycleAdapterHomeBanner extends DelegateAdapter.Adapter<RecycleAda
     private LayoutHelper layoutHelper;
     private List<Image> results = new ArrayList<>();
 
+    private DialogAddress dialogAddress;
+    private List<Address> provinceList = new ArrayList<>();
+    private List<Address> cityList = new ArrayList<>();
+
     private boolean isSpan = false;//是否折叠
 
     public List<Image> getResults() {
@@ -44,6 +50,7 @@ public class RecycleAdapterHomeBanner extends DelegateAdapter.Adapter<RecycleAda
     public RecycleAdapterHomeBanner(Context context, LayoutHelper layoutHelper) {
         this.context = context;
         this.layoutHelper = layoutHelper;
+        dialogAddress = new DialogAddress(context);
     }
 
     @Override
@@ -58,6 +65,7 @@ public class RecycleAdapterHomeBanner extends DelegateAdapter.Adapter<RecycleAda
 
     @Override
     public RecycleAdapterHomeBanner.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+        netGetAddress(0, 1);
         return new Holder(LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false));
     }
 
@@ -108,30 +116,45 @@ public class RecycleAdapterHomeBanner extends DelegateAdapter.Adapter<RecycleAda
             holder.text_home_span.setSelected(false);
         }
 
-        netGetAddress(0, 1, holder);
+        dialogAddress.setOnAddressListenner(new DialogAddress.OnAddressListenner() {
+            @Override
+            public void onAddressSelect(int level, Address address) {
+                if (level == 1) {
+                    netGetAddress(address.getId(), 2);
+                    holder.text_address_province.setText(address.getName());
+                    holder.text_address_city.setText("市");
+                    setSelection(holder, holder.text_address_province);
+                } else {
+                    holder.text_address_city.setText(address.getName());
+                    setSelection(holder, holder.text_address_city);
+                }
+                if (onFilterSelectListenner != null) {
+                    onFilterSelectListenner.onSpinnerSelect(level, address);
+                }
+                dialogAddress.dismiss();
+            }
+        });
         holder.text_address_whole.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setSelection(holder, v);
+                if (onFilterSelectListenner != null) {
+                    onFilterSelectListenner.onSpinnerSelect(0, new Address(0, "全国"));
+                }
             }
         });
-        holder.spinner_province.setOnItemSelectedListener(new OnSimpleItemSelectedListener() {
+        holder.text_address_province.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Address address = holder.adapterProvince.getResults().get(position);
-                netGetAddress(address.getId(), 2, holder);
-                setSelection(holder, holder.spinner_province);
-                if (onFilterSelectListenner != null)
-                    onFilterSelectListenner.onSpinnerSelect(1, address);
+            public void onClick(View v) {
+                dialogAddress.setData(1, provinceList);
+                dialogAddress.show();
             }
         });
-        holder.spinner_city.setOnItemSelectedListener(new OnSimpleItemSelectedListener() {
+        holder.text_address_city.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Address address = holder.adapterCity.getResults().get(position);
-                setSelection(holder, holder.spinner_city);
-                if (onFilterSelectListenner != null)
-                    onFilterSelectListenner.onSpinnerSelect(2, address);
+            public void onClick(View v) {
+                dialogAddress.setData(2, cityList);
+                dialogAddress.show();
             }
         });
         holder.radiogroup_type.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -157,22 +180,22 @@ public class RecycleAdapterHomeBanner extends DelegateAdapter.Adapter<RecycleAda
         return 1;
     }
 
-    private void setSelection(Holder holder, View view) {
-        switch (view.getId()) {
+    private void setSelection(Holder holder, View v) {
+        switch (v.getId()) {
             case R.id.text_address_whole:
                 holder.text_address_whole.setSelected(true);
-                holder.spinner_province.setSelected(false);
-                holder.spinner_city.setSelected(false);
+                holder.text_address_province.setSelected(false);
+                holder.text_address_city.setSelected(false);
                 break;
-            case R.id.spinner_province:
+            case R.id.text_address_province:
                 holder.text_address_whole.setSelected(false);
-                holder.spinner_province.setSelected(true);
-                holder.spinner_city.setSelected(false);
+                holder.text_address_province.setSelected(true);
+                holder.text_address_city.setSelected(false);
                 break;
-            case R.id.spinner_city:
+            case R.id.text_address_city:
                 holder.text_address_whole.setSelected(false);
-                holder.spinner_province.setSelected(false);
-                holder.spinner_city.setSelected(true);
+                holder.text_address_province.setSelected(false);
+                holder.text_address_city.setSelected(true);
                 break;
         }
     }
@@ -187,13 +210,10 @@ public class RecycleAdapterHomeBanner extends DelegateAdapter.Adapter<RecycleAda
         private View btn_home_more;
         private View lay_home_sort;
         private TextView text_address_whole;
-        private Spinner spinner_province;
-        private Spinner spinner_city;
+        private TextView text_address_province;
+        private TextView text_address_city;
         private RadioGroup radiogroup_type;
         private RadioGroup radiogroup_sort;
-
-        private ListAdapterAddress adapterProvince;
-        private ListAdapterAddress adapterCity;
 
         public Holder(View itemView) {
             super(itemView);
@@ -204,12 +224,11 @@ public class RecycleAdapterHomeBanner extends DelegateAdapter.Adapter<RecycleAda
             lay_home_sort = itemView.findViewById(R.id.lay_home_sort);
             text_home_span = (TextView) itemView.findViewById(R.id.text_home_span);
             text_address_whole = (TextView) itemView.findViewById(R.id.text_address_whole);
-            spinner_province = (Spinner) itemView.findViewById(R.id.spinner_province);
-            spinner_city = (Spinner) itemView.findViewById(R.id.spinner_city);
+            text_address_province = (TextView) itemView.findViewById(R.id.text_address_province);
+            text_address_city = (TextView) itemView.findViewById(R.id.text_address_city);
             radiogroup_type = (RadioGroup) itemView.findViewById(R.id.radiogroup_type);
             radiogroup_sort = (RadioGroup) itemView.findViewById(R.id.radiogroup_sort);
             banner = (BannerView) itemView.findViewById(R.id.banner);
-
             banner.showTitle(false);
             banner.setOnLoadImgListener(new BannerView.OnLoadImgListener() {
                 @Override
@@ -217,13 +236,7 @@ public class RecycleAdapterHomeBanner extends DelegateAdapter.Adapter<RecycleAda
                     GlideUtil.loadImg(imageView, defaultSrc, imgurl);
                 }
             });
-            adapterProvince = new ListAdapterAddress(context);
-            adapterCity = new ListAdapterAddress(context);
-            spinner_province.setAdapter(adapterProvince);
-            spinner_city.setAdapter(adapterCity);
-            //FIXME:在设置事件之前把选择定位到第一条，解决事件默认触发的BUG
-            spinner_province.setSelection(0, true);
-            spinner_city.setSelection(0, true);
+            text_address_whole.setSelected(true);
         }
     }
 
@@ -247,21 +260,18 @@ public class RecycleAdapterHomeBanner extends DelegateAdapter.Adapter<RecycleAda
         void onSortSelect(int sort);
     }
 
-    private void netGetAddress(int id, final int levelType, final Holder holder) {
+    private void netGetAddress(int id, final int levelType) {
         NetAddressHelper.getInstance().netGetAddress(id, levelType, new NetAddressHelper.AddressCallback() {
             @Override
             public void onSuccess(List<Address> addressList) {
-                addressList.add(0, new Address(0, "全部"));
                 switch (levelType) {
                     case 1:
-                        holder.adapterProvince.getResults().clear();
-                        holder.adapterProvince.getResults().addAll(addressList);
-                        holder.adapterProvince.notifyDataSetChanged();
+                        provinceList.clear();
+                        provinceList.addAll(addressList);
                         break;
                     case 2:
-                        holder.adapterCity.getResults().clear();
-                        holder.adapterCity.getResults().addAll(addressList);
-                        holder.adapterCity.notifyDataSetChanged();
+                        cityList.clear();
+                        cityList.addAll(addressList);
                         break;
                 }
             }

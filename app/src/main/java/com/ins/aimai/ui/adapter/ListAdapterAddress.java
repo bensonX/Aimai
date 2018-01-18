@@ -9,9 +9,6 @@ import android.widget.TextView;
 
 import com.ins.aimai.R;
 import com.ins.aimai.bean.Address;
-import com.ins.aimai.bean.Video;
-import com.ins.aimai.common.AppHelper;
-import com.ins.common.utils.TimeUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +46,7 @@ public class ListAdapterAddress extends BaseAdapter {
         ViewHolder holder = null;
         if (convertView == null) {
             inflater = LayoutInflater.from(context);
-            convertView = inflater.inflate(R.layout.lay_spinner_item, parent, false);
+            convertView = inflater.inflate(R.layout.item_address_dialog, parent, false);
             holder = new ViewHolder();
             holder.text_spinner_title = (TextView) convertView.findViewById(R.id.text_spinner_title);
             convertView.setTag(holder);
