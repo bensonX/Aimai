@@ -281,8 +281,7 @@
                     android:tag="4"
                     android:text="安全常识"
                     android:textColor="@color/text_blue_blank_check"
-                    android:textSize="@dimen/text_nomal"
-                    app:layout_wrapBefore="true" />
+                    android:textSize="@dimen/text_nomal" />
 
                 <RadioButton
                     android:id="@+id/radio_type_exam"

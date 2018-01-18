@@ -7,8 +7,8 @@ android {
         applicationId "com.ins.aimai"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 64
-        versionName "1.0.1.8"
+        versionCode 65
+        versionName "1.0.1.9"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         //使用矢量图兼容库
         vectorDrawables.useSupportLibrary = true
@@ -114,7 +114,7 @@ dependencies {
     //bugly
     compile 'com.tencent.bugly:crashreport:latest.release'
     //flexboxLayout
-    compile 'com.google.android:flexbox:0.3.2'
+//    compile 'com.google.android:flexbox:0.3.2'
     compile project(':common')
     compile project(':lib_camera')
     compile project(':lib_sharesdk')
