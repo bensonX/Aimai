@@ -7,8 +7,8 @@ android {
         applicationId "com.ins.aimai"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 65
-        versionName "1.0.1.9"
+        versionCode 66
+        versionName "1.0.2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         //使用矢量图兼容库
         vectorDrawables.useSupportLibrary = true
@@ -47,10 +47,10 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.myConfig
-            buildConfigField "String", "BASE_URL", '"http://app.aimaiap.com/"'
-            buildConfigField "String", "BASE_URL_RES", '"http://multimedia.aimaiap.com/"'
-//            buildConfigField "String", "BASE_URL", '"http://192.168.31.110:8080/"'
-//            buildConfigField "String", "BASE_URL_RES", '"http://192.168.31.110:8080/"'
+//            buildConfigField "String", "BASE_URL", '"http://app.aimaiap.com/"'
+//            buildConfigField "String", "BASE_URL_RES", '"http://multimedia.aimaiap.com/"'
+            buildConfigField "String", "BASE_URL", '"http://139.129.111.76:8110/"'
+            buildConfigField "String", "BASE_URL_RES", '"http://139.129.111.76:8110/"'
             minifyEnabled true      //开启代码混淆
             zipAlignEnabled true    //是否zip对齐优化
             shrinkResources true    //移除无用的资源文件

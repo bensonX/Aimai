@@ -26,6 +26,7 @@ import com.ins.aimai.ui.dialog.DialogAddress;
 import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.entity.Image;
 import com.ins.common.utils.GlideUtil;
+import com.ins.common.utils.StrUtil;
 import com.ins.common.view.BannerView;
 
 import java.util.ArrayList;
@@ -146,15 +147,19 @@ public class RecycleAdapterHomeBanner extends DelegateAdapter.Adapter<RecycleAda
         holder.text_address_province.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialogAddress.setData(1, provinceList);
-                dialogAddress.show();
+                if (!StrUtil.isEmpty(provinceList)) {
+                    dialogAddress.setData(1, provinceList);
+                    dialogAddress.show();
+                }
             }
         });
         holder.text_address_city.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialogAddress.setData(2, cityList);
-                dialogAddress.show();
+                if (!StrUtil.isEmpty(cityList)) {
+                    dialogAddress.setData(2, cityList);
+                    dialogAddress.show();
+                }
             }
         });
         holder.radiogroup_type.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {

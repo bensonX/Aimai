@@ -153,10 +153,10 @@ public class SortUserActivity extends BaseAppCompatActivity implements View.OnCl
                 }
                 break;
             case R.id.text_sort_selectall:
-                if (text_sort_selectall.isSelected()){
+                if (text_sort_selectall.isSelected()) {
                     text_sort_selectall.setSelected(false);
                     adapter.setSelectAll(false);
-                }else {
+                } else {
                     text_sort_selectall.setSelected(true);
                     adapter.setSelectAll(true);
                 }
@@ -176,13 +176,15 @@ public class SortUserActivity extends BaseAppCompatActivity implements View.OnCl
     }
 
     public void search(String filterStr) {
-        List<User> resultsSort = new ArrayList<>();
-        for (User sortBean : users) {
-            if (SortUtil.match(sortBean, filterStr)) {
-                resultsSort.add(sortBean);
+        if (!StrUtil.isEmpty(users)) {
+            List<User> resultsSort = new ArrayList<>();
+            for (User sortBean : users) {
+                if (SortUtil.match(sortBean, filterStr)) {
+                    resultsSort.add(sortBean);
+                }
             }
+            freshData(resultsSort);
         }
-        freshData(resultsSort);
     }
 
     //给Edit设置Hint文字（带图片）

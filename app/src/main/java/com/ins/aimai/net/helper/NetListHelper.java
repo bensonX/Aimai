@@ -77,7 +77,7 @@ public class NetListHelper<T> {
                     }
                 } else {
                     //没有数据设置空数据页面，下拉加载不用，仅提示
-                    if (type == 0 || type == 1) {
+                    if (type == 0) {
                         loadingLayout.showLackView();
                     } else {
                         springView.onFinishFreshAndLoad();
