@@ -9,6 +9,7 @@ import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.bean.common.FaceRecord;
 import com.ins.aimai.bean.common.VideoFinishStatus;
 import com.ins.aimai.common.AppData;
+import com.ins.aimai.common.AppHelper;
 import com.ins.aimai.net.BaseCallback;
 import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.NetParam;
@@ -21,6 +22,9 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
 
 /**
  * Created by Administrator on 2017/7/21.
@@ -95,11 +99,18 @@ public class NetHelper {
     //查询课程详情
     public void netQueryLessonDetail(int type, int lessonId, int orderId, final OnLessonCallback callback) {
         if (type == 0) {
+            //FIXME：企业用户调用queryLessonDetailComp接口，其他调用queryLessonDetail
             Map<String, Object> param = new NetParam()
                     .put("curriculumId", lessonId)
                     .build();
             if (callback != null) callback.onStart();
-            NetApi.NI().queryLessonDetail(param).enqueue(new BaseCallback<Lesson>(Lesson.class) {
+            Call<ResponseBody> call;
+            if (AppHelper.isCompUser()) {
+                call = NetApi.NI().queryLessonDetailComp(param);
+            } else {
+                call = NetApi.NI().queryLessonDetail(param);
+            }
+            call.enqueue(new BaseCallback<Lesson>(Lesson.class) {
                 @Override
                 public void onSuccess(int status, Lesson lesson, String msg) {
                     if (callback != null) callback.onSuccess(status, lesson, msg);

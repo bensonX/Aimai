@@ -63,6 +63,16 @@ public class AppHelper {
         }
     }
 
+    //判断当前登录用户是否为企业用户，未登录返回否
+    public static boolean isCompUser() {
+        User user = AppData.App.getUser();
+        if (user != null && user.isCompUser()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     //判断当前登录用户是否为政府用户，未登录返回否
     public static boolean isGov() {
         User user = AppData.App.getUser();

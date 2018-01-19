@@ -13,9 +13,11 @@ import com.ins.common.utils.ValidateUtil;
 
 public class AppVali {
 
-    public static String login(String userName, String psw) {
+    public static String login(String userName, String psw, String code) {
         if (TextUtils.isEmpty(userName)) {
             return "请输入手机号";
+        } else if (TextUtils.isEmpty(code)) {
+            return "请输入验证码";
         } else if (!ValidateUtil.Mobile(userName)) {
             return "请输入正确的手机号";
         } else if (TextUtils.isEmpty(psw)) {
@@ -140,7 +142,7 @@ public class AppVali {
             return "您的邮箱与验证码不匹配";
         } else if (!ValidateUtil.Email(email_old)) {
             return "请输入正确的邮箱";
-        }else {
+        } else {
             return null;
         }
     }

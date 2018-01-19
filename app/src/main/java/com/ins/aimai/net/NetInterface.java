@@ -75,6 +75,7 @@ public interface NetInterface {
     /**
      * 登录
      * java.lang.String phone, java.lang.String password, java.lang.Integer deviceType, java.lang.Integer deviceToken, java.lang.Integer isWechat
+     * code
      */
     @FormUrlEncoded
     @POST("/api/user/login")
@@ -138,6 +139,14 @@ public interface NetInterface {
     @FormUrlEncoded
     @POST("/api/user/sendMessage")
     Call<ResponseBody> sendMessage(@FieldMap Map<String, Object> param);
+
+    /**
+     * 登录时获取验证码
+     * String phone
+     */
+    @FormUrlEncoded
+    @POST("/api/user/getLoginCode")
+    Call<ResponseBody> sendMessageLogin(@FieldMap Map<String, Object> param);
 
     /**
      * 获取验证码并验证手机号是否重复（注册时使用）
@@ -263,6 +272,14 @@ public interface NetInterface {
     @FormUrlEncoded
     @POST("/api/curriculum/queryCurriculumById")
     Call<ResponseBody> queryLessonDetail(@FieldMap Map<String, Object> param);
+
+    /**
+     * 企业通过curriculumId查询课程详情
+     * curriculumId
+     */
+    @FormUrlEncoded
+    @POST("/api/curriculum/getCurriculumByCurriculumId")
+    Call<ResponseBody> queryLessonDetailComp(@FieldMap Map<String, Object> param);
 
     /**
      * 通过orderID 查询课程详情

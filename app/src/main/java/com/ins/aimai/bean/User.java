@@ -183,6 +183,8 @@ public class User extends SortBean implements Serializable {
     private long passTime;
     //邮箱
     private String email;
+    //是否异常登录
+    private int isException;
 
     //####################### 逻辑方法 ##########################
 
@@ -420,6 +422,14 @@ public class User extends SortBean implements Serializable {
      */
     public int getCityId() {
         return this.cityId;
+    }
+
+    public int getIsException() {
+        return isException;
+    }
+
+    public void setIsException(int isException) {
+        this.isException = isException;
     }
 
     /**

@@ -7,6 +7,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.ins.aimai.R;
 import com.ins.aimai.bean.common.EventBean;
@@ -21,6 +22,7 @@ import com.ins.aimai.ui.base.BaseAppCompatActivity;
 import com.ins.aimai.ui.dialog.DialogIdentify;
 import com.ins.aimai.ui.fragment.InfoFragment;
 import com.ins.aimai.utils.ToastUtil;
+import com.ins.common.helper.ValiHelper;
 import com.ins.common.utils.App;
 import com.ins.common.utils.MD5Util;
 import com.ins.common.utils.StatusBarTextUtil;
@@ -31,14 +33,20 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.Map;
 
 import cn.jpush.android.api.JPushInterface;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
 
 public class LoginActivity extends BaseAppCompatActivity implements View.OnClickListener {
+
+    private ValiHelper valiHelper;
 
     private DialogIdentify dialogIdentify;
     private EditText edit_login_name;
     private EditText edit_login_psw;
+    private EditText edit_login_code;
     private View img_login_name_del;
     private View img_login_psw_del;
+    private TextView btn_vali;
 
     public static void start() {
         Intent intent = new Intent(App.getContext(), LoginActivity.class);
@@ -86,15 +94,19 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
     private void initView() {
         edit_login_name = (EditText) findViewById(R.id.edit_login_name);
         edit_login_psw = (EditText) findViewById(R.id.edit_login_psw);
+        edit_login_code = (EditText) findViewById(R.id.edit_login_code);
         img_login_name_del = findViewById(R.id.img_login_name_del);
         img_login_psw_del = findViewById(R.id.img_login_psw_del);
+        btn_vali = findViewById(R.id.btn_vali);
         findViewById(R.id.img_login_name_del).setOnClickListener(this);
         findViewById(R.id.img_login_psw_del).setOnClickListener(this);
         findViewById(R.id.btn_go).setOnClickListener(this);
+        findViewById(R.id.btn_vali).setOnClickListener(this);
         findViewById(R.id.btn_login_forgetpsw).setOnClickListener(this);
         findViewById(R.id.btn_login_regist).setOnClickListener(this);
         img_login_name_del.setVisibility(View.INVISIBLE);
         img_login_psw_del.setVisibility(View.INVISIBLE);
+        valiHelper = new ValiHelper(btn_vali);
     }
 
     private void initCtrl() {
@@ -134,16 +146,18 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_go:
+            case R.id.btn_go: {
                 String name = edit_login_name.getText().toString();
                 String psw = edit_login_psw.getText().toString();
-                String msg = AppVali.login(name, psw);
+                String code = edit_login_code.getText().toString();
+                String msg = AppVali.login(name, psw, code);
                 if (msg == null) {
-                    netLogin(name, psw);
+                    netLogin(name, psw, code);
                 } else {
                     ToastUtil.showToastShort(msg);
                 }
                 break;
+            }
             case R.id.btn_login_forgetpsw:
                 ForgetPswActivity.start(this);
                 break;
@@ -156,16 +170,26 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
             case R.id.img_login_psw_del:
                 edit_login_psw.setText("");
                 break;
+            case R.id.btn_vali:
+                String phone = edit_login_name.getText().toString();
+                String msg = AppVali.phone(phone);
+                if (msg == null) {
+                    netSendMessageLogin(phone);
+                } else {
+                    ToastUtil.showToastShort(msg);
+                }
+                break;
         }
     }
 
-    private void netLogin(String phone, String password) {
+    private void netLogin(String phone, String password, String code) {
         Map<String, Object> param = new NetParam()
                 .put("phone", phone)
                 .put("password", MD5Util.md5(password))
                 .put("deviceType", 0)
                 .put("deviceToken", JPushInterface.getRegistrationID(this))
                 .put("isWechat", 0)
+                .put("code", code)
                 .build();
         showLoadingDialog();
         NetApi.NI().login(param).enqueue(new BaseCallback<User>(User.class) {
@@ -182,12 +206,35 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
                     hideLoadingDialog();
                     FaceResordActivity.start(LoginActivity.this, user);
                 }
+                if (user.getIsException()==1){
+                    ToastUtil.showToastShort("本次登录信息异常");
+                }
             }
 
             @Override
             public void onError(int status, String msg) {
                 ToastUtil.showToastShort(msg);
                 hideLoadingDialog();
+            }
+        });
+    }
+
+    private void netSendMessageLogin(final String phone) {
+        Map<String, Object> param = new NetParam()
+                .put("phone", phone)
+                .build();
+        NetApi.NI().sendMessageLogin(param).enqueue(new BaseCallback<String>(String.class) {
+            @Override
+            public void onSuccess(int status, String bean, String msg) {
+                valiHelper.phone = phone;
+                valiHelper.valicode = bean;
+                valiHelper.start();
+                ToastUtil.showToastShortDebug(bean);
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+                ToastUtil.showToastShort(msg);
             }
         });
     }
