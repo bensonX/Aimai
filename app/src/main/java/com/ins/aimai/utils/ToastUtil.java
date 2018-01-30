@@ -49,10 +49,11 @@ public final class ToastUtil {
         showToast(context, msg, Toast.LENGTH_SHORT, false);
     }
 
+    //FIXME:妈卖批，正式版又要暂时弹出测试消息，记得正式发布的时候关闭
     public static void showToastShortDebug(String msg) {
-        if (debug) {
+//        if (debug) {
             showToast(context, msg, Toast.LENGTH_SHORT, false);
-        }
+//        }
     }
 
     public static void showToastShort(String msg, boolean needStyle) {

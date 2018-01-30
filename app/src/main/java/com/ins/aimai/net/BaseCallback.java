@@ -5,6 +5,8 @@ import com.ins.aimai.BuildConfig;
 import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.common.AppData;
 import com.ins.aimai.ui.activity.LoginActivity;
+import com.ins.aimai.utils.ToastUtil;
+import com.ins.common.utils.L;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONObject;
@@ -58,10 +60,14 @@ public abstract class BaseCallback<T> implements Callback<ResponseBody> {
                 data = root.getString("data");
             }
             T t;
-            if (data != null && !data.equals("")) {
-                t = gson.fromJson(data, type);
-            } else {
-                t = null;
+            if (type.equals(String.class)){
+                t = (T) data;
+            }else {
+                if (data != null && !data.equals("")) {
+                    t = gson.fromJson(data, type);
+                } else {
+                    t = null;
+                }
             }
             switch (status) {
                 case 200:

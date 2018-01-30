@@ -12,6 +12,7 @@ import com.ins.aimai.R;
 import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.ui.dialog.DialogLoading;
 import com.ins.common.base.CommonBaseAppCompatActivity;
+import com.umeng.analytics.MobclickAgent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -35,6 +36,18 @@ public class BaseAppCompatActivity extends CommonBaseAppCompatActivity {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     @Override

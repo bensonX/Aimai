@@ -30,7 +30,7 @@ public class PayHelperEx extends PayHelper {
         super(activity);
     }
 
-    public static PayHelperEx newInstance(Activity activity){
+    public static PayHelperEx newInstance(Activity activity) {
         return new PayHelperEx(activity);
     }
 
@@ -39,10 +39,9 @@ public class PayHelperEx extends PayHelper {
         Map<String, Object> param = new NetParam()
                 .put("orderId", orderId)
                 .build();
-        NetApi.NI().signZhifubao(param).enqueue(new BaseCallback<LinkedHashMap<String, String>>(new TypeToken<LinkedHashMap<String, String>>() {
-        }.getType()) {
+        NetApi.NI().signZhifubao(param).enqueue(new BaseCallback<String>(String.class){
             @Override
-            public void onSuccess(int status, LinkedHashMap<String, String> map, String msg) {
+            public void onSuccess(int status, String map, String msg) {
                 callZhifubao(map);
             }
 

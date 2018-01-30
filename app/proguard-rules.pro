@@ -165,6 +165,9 @@ public static java.lang.String TABLENAME;
 -dontwarn com.bumptech.glide.load.resource.bitmap.Downsampler
 -dontwarn com.bumptech.glide.load.resource.bitmap.HardwareConfigState
 
+#友盟统计
+-keep class com.umeng.commonsdk.** {*;}
+
 #####################################################
 #            新版混淆规则
 #####################################################

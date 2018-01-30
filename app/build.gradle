@@ -7,8 +7,8 @@ android {
         applicationId "com.ins.aimai"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 66
-        versionName "1.0.2.0"
+        versionCode 68
+        versionName "1.0.2.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         //使用矢量图兼容库
         vectorDrawables.useSupportLibrary = true
@@ -47,10 +47,10 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.myConfig
-//            buildConfigField "String", "BASE_URL", '"http://app.aimaiap.com/"'
-//            buildConfigField "String", "BASE_URL_RES", '"http://multimedia.aimaiap.com/"'
-            buildConfigField "String", "BASE_URL", '"http://139.129.111.76:8110/"'
-            buildConfigField "String", "BASE_URL_RES", '"http://139.129.111.76:8110/"'
+            buildConfigField "String", "BASE_URL", '"http://app.aimaiap.com/"'
+            buildConfigField "String", "BASE_URL_RES", '"http://multimedia.aimaiap.com/"'
+//            buildConfigField "String", "BASE_URL", '"http://139.129.111.76:8110/"'
+//            buildConfigField "String", "BASE_URL_RES", '"http://139.129.111.76:8110/"'
             minifyEnabled true      //开启代码混淆
             zipAlignEnabled true    //是否zip对齐优化
             shrinkResources true    //移除无用的资源文件
@@ -114,9 +114,12 @@ dependencies {
     //bugly
     compile 'com.tencent.bugly:crashreport:latest.release'
     //flexboxLayout
-//    compile 'com.google.android:flexbox:0.3.2'
+    //    compile 'com.google.android:flexbox:0.3.2'
     compile project(':common')
     compile project(':lib_camera')
     compile project(':lib_sharesdk')
     compile project(':lib_pay')
+    //友盟
+    compile 'com.umeng.sdk:common:latest.integration'
+    compile 'com.umeng.sdk:analytics:latest.integration'
 }

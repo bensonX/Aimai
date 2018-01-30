@@ -15,6 +15,8 @@ import com.ins.domain.launcher.DomainLauncher;
 import com.mob.MobApplication;
 import com.mob.MobSDK;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.commonsdk.UMConfigure;
 
 import cn.jpush.android.api.JPushInterface;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -29,6 +31,7 @@ public class AimaiApp extends MobApplication {
         initFonts();
         initJpush();
         initBugly();
+        initUmeng();
     }
 
     private void initSetting() {
@@ -43,6 +46,11 @@ public class AimaiApp extends MobApplication {
         ToastUtil.setDebug(BuildConfig.DEBUG);
         ToastUtil.setStyle(R.layout.lay_toast, R.id.toast_tv);
         GlideUtil.init(this);
+    }
+
+    private void initUmeng() {
+        UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, null);
+        MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
     }
 
     private void initJpush() {

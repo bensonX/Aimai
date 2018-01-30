@@ -41,9 +41,9 @@ public class PayHelper {
     ///////////////////////////////
 
     //启动支付宝支付
-    public void callZhifubao(LinkedHashMap<String, String> map) {
+    public void callZhifubao(String map) {
         onPayStart();
-        final String orderInfo = SignUtils.getOrderInfo(map);
+        final String orderInfo = map;
         Log.e("orderInfo", orderInfo);
         Runnable payRunnable = new Runnable() {
 
