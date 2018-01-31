@@ -118,7 +118,11 @@ public class AppData {
         public static String eyeCompare = domainEye + "face/Match/match_compare";                                        //人像对比
 
         public static String getVideoUrl(String url) {
-            return domainRes + "video/" + url;
+            if (url.startsWith("http")) {
+                return url;
+            } else {
+                return domainRes + "video/" + url;
+            }
         }
     }
 }

@@ -98,7 +98,7 @@ public class RecycleAdapterLessonAllocat extends DelegateAdapter.Adapter<Recycle
         String ids = "";
         for (Lesson lesson : results) {
             if (lesson.isSelect()) {
-                ids += lesson.getOrderId() + ",";
+                ids += lesson.getId() + ",";
             }
         }
         ids = StrUtil.subLastChart(ids, ",");

@@ -670,7 +670,7 @@ public interface NetInterface {
     /**
      * 给用户批量分配课程
      * userId
-     * orderIds     订单ID集合 逗号隔开 类型:string
+     * curriculumIds     课程ID集合 逗号隔开 类型:string
      * number       分配的数量 一期功能 默认传 1 类型:int
      */
     @FormUrlEncoded

@@ -42,7 +42,7 @@ public class RecycleAdapterHomeBanner extends DelegateAdapter.Adapter<RecycleAda
     private List<Address> provinceList = new ArrayList<>();
     private List<Address> cityList = new ArrayList<>();
 
-    private boolean isSpan = false;//是否折叠
+    private boolean isSpan = true;//是否折叠
 
     public List<Image> getResults() {
         return results;

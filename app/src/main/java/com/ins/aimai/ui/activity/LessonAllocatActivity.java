@@ -189,7 +189,7 @@ public class LessonAllocatActivity extends BaseAppCompatActivity implements View
     private void netLessonAllocat(final String ids) {
         Map<String, Object> param = new NetParam()
                 .put("userId", userId)
-                .put("orderIds", ids)
+                .put("curriculumIds", ids)
                 .put("number", 1)
                 .build();
         showLoadingDialog();

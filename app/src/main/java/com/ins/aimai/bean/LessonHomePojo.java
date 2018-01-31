@@ -33,7 +33,8 @@ public class LessonHomePojo implements Serializable {
         while (iterator.hasNext()) {
             LessonCate cate = iterator.next();
             if (StrUtil.isEmpty(cate.getLessons())) {
-                lessonCates.remove(cate);
+                iterator.remove();
+                //lessonCates.remove(cate);
             }
         }
     }
