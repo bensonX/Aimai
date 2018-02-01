@@ -20,10 +20,10 @@ import com.ins.aimai.net.NetParam;
 import com.ins.aimai.net.helper.NetNewMsgHelper;
 import com.ins.aimai.ui.adapter.PagerAdapterHome;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
+import com.ins.aimai.utils.StatusBarUtil;
 import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.utils.L;
 import com.ins.common.utils.PermissionsUtil;
-import com.ins.common.utils.StatusBarTextUtil;
 import com.shelwee.update.UpdateHelper;
 import com.tencent.bugly.crashreport.CrashReport;
 
@@ -69,8 +69,9 @@ public class HomeActivity extends BaseAppCompatActivity {
         updateHelper = new UpdateHelper.Builder(this).checkUrl(VersionActivity.versionUrl).isHintNewVersion(false).build();
         updateHelper.check();
 
-        StatusBarTextUtil.transparencyBar(HomeActivity.this);
-        StatusBarTextUtil.StatusBarLightMode(HomeActivity.this);
+        StatusBarUtil.setBarOverlap(HomeActivity.this);
+        StatusBarUtil.setTranslucent(HomeActivity.this);
+        StatusBarUtil.setTextDark(HomeActivity.this);
 
         initBase();
         initView();
@@ -108,16 +109,16 @@ public class HomeActivity extends BaseAppCompatActivity {
                 group_tab.check(tabsId[position]);
                 switch (position) {
                     case 0:
-                        StatusBarTextUtil.StatusBarLightMode(HomeActivity.this);
+                        StatusBarUtil.setTextDark(HomeActivity.this);
                         break;
                     case 1:
-                        StatusBarTextUtil.StatusBarLightMode(HomeActivity.this);
+                        StatusBarUtil.setTextDark(HomeActivity.this);
                         break;
                     case 2:
-                        StatusBarTextUtil.StatusBarLightMode(HomeActivity.this);
+                        StatusBarUtil.setTextDark(HomeActivity.this);
                         break;
                     case 3:
-                        StatusBarTextUtil.StatusBarDarkMode(HomeActivity.this);
+                        StatusBarUtil.setTextLight(HomeActivity.this);
                         break;
                 }
             }

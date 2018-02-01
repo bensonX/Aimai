@@ -11,7 +11,9 @@ import android.widget.TextView;
 import com.ins.aimai.R;
 import com.ins.aimai.bean.common.EventBean;
 import com.ins.aimai.ui.dialog.DialogLoading;
+import com.ins.aimai.utils.StatusBarUtil;
 import com.ins.common.base.CommonBaseAppCompatActivity;
+import com.ins.common.utils.DensityUtil;
 import com.umeng.analytics.MobclickAgent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -35,6 +37,7 @@ public class BaseAppCompatActivity extends CommonBaseAppCompatActivity {
         if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
+        StatusBarUtil.setTextDark(this);
         super.onCreate(savedInstanceState);
     }
 
@@ -83,6 +86,9 @@ public class BaseAppCompatActivity extends CommonBaseAppCompatActivity {
         if (toolbar != null) {
             if (toolbar.getNavigationIcon() == null) {
                 toolbar.setNavigationIcon(R.drawable.ic_back);
+                //FIXME:客户反馈说安卓导航栏太高了ios合适，不想每个页面都去改了，就这里统一改了
+                //FIXME:最好还是去每个页面改了比较好，暂时不想弄
+                toolbar.getLayoutParams().height = DensityUtil.dp2px(this,45);
             }
             toolbar.setTitle("");
             setSupportActionBar(toolbar);

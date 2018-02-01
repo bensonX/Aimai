@@ -14,7 +14,7 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="76dp"
+            android:layout_height="65dp"
             android:background="@color/white"
             android:paddingTop="20dp"
             app:popupTheme="@style/AppTheme.PopupOverlay">
