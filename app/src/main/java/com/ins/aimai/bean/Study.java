@@ -79,6 +79,7 @@ public class Study implements Serializable {
     //新增字段
     //是否通过考试
     private int passNum;
+    private int studyStatus; //学习状态  1：可以学习   0：停止  1：暂停
 
     ///////////////////////  业务方法 /////////////////////
 
@@ -104,6 +105,10 @@ public class Study implements Serializable {
      */
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean enable() {
+        return studyStatus == 1;
     }
 
     /**

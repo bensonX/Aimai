@@ -136,6 +136,7 @@ public class LearnLessonFragment extends BaseFragment implements OnRecycleItemCl
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
         List<Study> results = adapter.getResults();
         Study study = results.get(viewHolder.getLayoutPosition());
+        if (!study.enable()) ToastUtil.showToastShort("课程已停止，无法播放，请观看其他课程");
         //个人进入播放页面，其余进入详情页面
         if (AppHelper.isUser()) {
             VideoActivity.startByOrder(getContext(), study);

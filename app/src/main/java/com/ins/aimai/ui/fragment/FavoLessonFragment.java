@@ -17,6 +17,7 @@ import com.ins.aimai.net.helper.NetListHelper;
 import com.ins.aimai.ui.activity.LessonDetailActivity;
 import com.ins.aimai.ui.adapter.RecycleAdapterFavoLesson;
 import com.ins.aimai.ui.base.BaseFragment;
+import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
 import com.ins.common.view.LoadingLayout;
 import com.liaoinstan.springview.container.AliFooter;
@@ -140,6 +141,7 @@ public class FavoLessonFragment extends BaseFragment implements OnRecycleItemCli
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
         Lesson lesson = adapter.getResults().get(viewHolder.getLayoutPosition());
+        if (!lesson.enable()) ToastUtil.showToastShort("课程已停止，无法播放，请观看其他课程");
         LessonDetailActivity.startByLesson(getActivity(), lesson.getId());
     }
 }
