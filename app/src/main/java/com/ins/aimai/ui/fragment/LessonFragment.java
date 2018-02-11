@@ -157,7 +157,10 @@ public class LessonFragment extends BaseFragment implements OnLessonClickListene
 
     @Override
     public void onLessonClick(final Lesson lesson) {
-        if (!lesson.enable()) ToastUtil.showToastShort("课程已停止，无法播放，请观看其他课程");
+        if (!lesson.enable()) {
+            ToastUtil.showToastShort("课程已停止，无法播放，请观看其他课程");
+            return;
+        }
 
         NetLessonHelper.getInstance().netLessonIsBuy(lesson.getId(), new NetLessonHelper.IsBuyCallback() {
             @Override

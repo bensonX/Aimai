@@ -43,7 +43,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:text="查看全部"
-            android:textColor="@color/com_text_dark"
+            android:textColor="@color/com_text_light"
             android:textSize="@dimen/text_small" />
 
     </LinearLayout>

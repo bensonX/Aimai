@@ -60,29 +60,42 @@ public class StatusBarUtil {
 
     //设置状态栏深色文字
     public static void setTextDark(Activity activity) {
+        Window window = activity.getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             //6.0以上调用系统方法
-            Window window = activity.getWindow();
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);   //清除4.4设置的透明样式
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             int flag = window.getDecorView().getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
             window.getDecorView().setSystemUiVisibility(flag);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            //5.0 - 6.0
+            FlymeAndMIUIText(window, true);
         }
     }
 
     //设置状态栏浅色文字
     public static void setTextLight(Activity activity) {
+        Window window = activity.getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             //6.0以上调用系统方法
-            Window window = activity.getWindow();
             int flag = window.getDecorView().getSystemUiVisibility() & ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
             window.getDecorView().setSystemUiVisibility(flag);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            //5.0 - 6.0
+            FlymeAndMIUIText(window, false);
         }
     }
 
     //####################################################################################
     //####################################################################################
     //####################################################################################
+
+    //尝试使用魅族和小米的API设置字体颜色
+    public static void FlymeAndMIUIText(Window window, boolean dark) {
+        if (!FlymeSetStatusBarLightMode(window, dark)) {
+            MIUISetStatusBarLightMode(window, dark);
+        }
+    }
 
     /**
      * 设置状态栏图标为深色和魅族特定的文字风格

@@ -141,7 +141,10 @@ public class FavoLessonFragment extends BaseFragment implements OnRecycleItemCli
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
         Lesson lesson = adapter.getResults().get(viewHolder.getLayoutPosition());
-        if (!lesson.enable()) ToastUtil.showToastShort("课程已停止，无法播放，请观看其他课程");
+        if (!lesson.enable()) {
+            ToastUtil.showToastShort("课程已停止，无法播放，请观看其他课程");
+            return;
+        }
         LessonDetailActivity.startByLesson(getActivity(), lesson.getId());
     }
 }

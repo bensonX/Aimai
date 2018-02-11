@@ -60,7 +60,7 @@ public class LearnLessonFragment extends BaseFragment implements OnRecycleItemCl
     public void onCommonEvent(EventBean event) {
         if (event.getEvent() == EventBean.EVENT_USER_ALLOCAT) {
             netQueryStudy(1);
-        }else if (event.getEvent() == EventBean.EVENT_HOME_TAB_LESSON) {
+        } else if (event.getEvent() == EventBean.EVENT_HOME_TAB_LESSON) {
             netQueryStudy(0);
         }
     }
@@ -136,7 +136,10 @@ public class LearnLessonFragment extends BaseFragment implements OnRecycleItemCl
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
         List<Study> results = adapter.getResults();
         Study study = results.get(viewHolder.getLayoutPosition());
-        if (!study.enable()) ToastUtil.showToastShort("课程已停止，无法播放，请观看其他课程");
+        if (!study.enable()) {
+            ToastUtil.showToastShort("课程已停止，无法播放，请观看其他课程");
+            return;
+        }
         //个人进入播放页面，其余进入详情页面
         if (AppHelper.isUser()) {
             VideoActivity.startByOrder(getContext(), study);
