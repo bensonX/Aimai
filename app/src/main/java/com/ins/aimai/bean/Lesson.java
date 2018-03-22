@@ -164,7 +164,7 @@ public class Lesson extends BaseSelectBean implements Serializable {
     private int watchNum;   //观看人数
     private int finishExamine;  //以考核人数
     private int countUser;  //总人数
-    private int studyStatus; //学习状态  1：可以学习   0：停止  1：暂停
+    private int studyStatus; //学习状态  1：可以学习   0：停止  2：暂停
 
 
     /////////////////////  业务方法 /////////////////

@@ -17,6 +17,7 @@ import com.ins.aimai.net.NetApi;
 import com.ins.aimai.net.helper.NetListHelper;
 import com.ins.aimai.ui.adapter.RecycleAdapterLesson;
 import com.ins.aimai.ui.base.BaseAppCompatActivity;
+import com.ins.aimai.utils.ToastUtil;
 import com.ins.common.common.ItemDecorationDivider;
 import com.ins.common.interfaces.OnRecycleItemClickListener;
 import com.ins.common.view.LoadingLayout;
@@ -142,6 +143,10 @@ public class LessonSearchActivity extends BaseAppCompatActivity implements OnRec
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder) {
         Lesson lesson = adapter.getResults().get(viewHolder.getLayoutPosition());
+//        if (!lesson.enable()) {
+//            ToastUtil.showToastShort("课程已停止，无法播放，请观看其他课程");
+//            return;
+//        }
         if (lesson.getType() == 0) {
             //试听
             VideoActivity.startByLesson(this, lesson.getId());

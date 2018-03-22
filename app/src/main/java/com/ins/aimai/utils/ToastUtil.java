@@ -50,9 +50,9 @@ public final class ToastUtil {
     }
 
     public static void showToastShortDebug(String msg) {
-        if (debug) {
+//        if (debug) {
             showToast(context, msg, Toast.LENGTH_SHORT, false);
-        }
+//        }
     }
 
     public static void showToastShort(String msg, boolean needStyle) {

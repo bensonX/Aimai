@@ -218,7 +218,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:ellipsize="end"
-                    android:hint="暂无"
+                    android:hint="不限"
                     android:maxLines="1"
                     android:textColor="@color/com_text_blank_deep_light"
                     android:textColorHint="@color/com_text_dark"
